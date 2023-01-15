@@ -23,4 +23,5 @@ class AppColorsLightTheme{
   static const primaryColor = Color(0xffCCB48C);
   static const secondaryColor =  Color(0xffF98BB0);
   static const smoothPageIndicatorGreyColor =  Color(0xffE6E6E6);
+  static const authTextFieldFillColor =  Color(0xffF9F9F9);
 }

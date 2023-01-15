@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:touch_of_beauty/core/assets_path/font_path.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
+import '../../../../core/app_theme/light_theme.dart';
+import '../widgets/auht_text_form_field.dart';
 import '../widgets/auth_button.dart';
-import '../widgets/register_type_widget.dart';
+import '../widgets/phone_form_field.dart';
 
 class ChooseTypeScreen extends StatelessWidget {
   const ChooseTypeScreen({Key? key}) : super(key: key);
@@ -51,7 +53,97 @@ class ChooseTypeScreen extends StatelessWidget {
                   fontSize: 14.sp),
             ),
             SizedBox(height: 30.h,),
-            ChooseRegisterType(type: type,),
+            StatefulBuilder(
+              builder: (context, setState) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 162.w,
+                      height: 44.h,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          setState((){
+                            type = true;
+                          });
+                        },
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(22.r),
+                            ),
+                          ),
+                          side: MaterialStateProperty.all(
+                            BorderSide(
+                                color: type?AppColorsLightTheme.primaryColor:AppColorsLightTheme.smoothPageIndicatorGreyColor,
+                                width: 0.8.w),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            if(type)const Icon(
+                              Icons.check_circle,
+                              color: AppColorsLightTheme.primaryColor,
+                            ),
+                            Expanded(
+                              child: Text(
+                                'طالب خدمة',
+                                textAlign:TextAlign.center,
+                                style: TextStyle(
+                                    color: const Color(0xff666666),
+                                    fontFamily: FontPath.almaraiBold,
+                                    fontSize: 14.sp),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 162.w,
+                      height: 44.h,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          setState((){
+                            type = false;
+                          });
+                        },
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(22.r),
+                            ),
+                          ),
+                          side: MaterialStateProperty.all(
+                            BorderSide(
+                                color: !type?AppColorsLightTheme.primaryColor:AppColorsLightTheme.smoothPageIndicatorGreyColor,
+                                width: 0.8.w),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            if(!type)const Icon(
+                              Icons.check_circle,
+                              color: AppColorsLightTheme.primaryColor,
+                            ),
+                            Expanded(
+                              child: Text(
+                                'مقدمة خدمة' ,
+                                textAlign:TextAlign.center,
+                                style: TextStyle(
+                                    color: const Color(0xff666666),
+                                    fontFamily: FontPath.almaraiBold,
+                                    fontSize: 14.sp),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
             SizedBox(height: 30.h,),
             AuthButton(
               buttonTitle: 'استمرار',
@@ -59,7 +151,8 @@ class ChooseTypeScreen extends StatelessWidget {
                 print(type);
               },
               width: double.infinity,
-            )
+            ),
+            PhoneFormField(),
           ],
         ),
       ),
