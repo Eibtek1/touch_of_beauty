@@ -6,6 +6,7 @@ import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'features/authentication/presentation/screens/choose_type_screen.dart';
+import 'features/authentication/presentation/screens/login_screen.dart';
 import 'features/intro_screens/screens/onboarding_screen.dart';
 
 void main() {
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
           ),
           // onGenerateRoute: AppRouter.generateRoute,
           // initialRoute: ScreenName.splashscreen,
-          home: const ChooseTypeScreen(),
+          home: const LoginScreen(),
         );
       },
     );
