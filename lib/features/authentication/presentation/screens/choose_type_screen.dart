@@ -6,7 +6,6 @@ import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import '../../../../core/app_router/screens_name.dart';
 import '../../../../core/app_theme/light_theme.dart';
 import '../widgets/auth_button.dart';
-import '../widgets/phone_form_field.dart';
 
 class ChooseTypeScreen extends StatelessWidget {
   const ChooseTypeScreen({Key? key}) : super(key: key);

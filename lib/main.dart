@@ -4,9 +4,8 @@ import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/app_router/app_router.dart';
 import 'core/app_router/screens_name.dart';
-import 'features/authentication/presentation/screens/otp_screen.dart';
-import 'features/authentication/presentation/screens/user_register.dart';
-import 'features/authentication/presentation/screens/vendor_register.dart';
+import 'features/user/presentation/screens/main_layout.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -33,9 +32,9 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: createMaterialColor(AppColorsLightTheme.primaryColor),
           ),
-          onGenerateRoute: AppRouter.generateRoute,
-          initialRoute: ScreenName.splashscreen,
-          // home: const OtpScreen(),
+          // onGenerateRoute: AppRouter.generateRoute,
+          // initialRoute: ScreenName.splashscreen,
+          home: const MainLayout(),
         );
       },
     );
