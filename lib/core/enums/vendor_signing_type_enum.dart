@@ -1,0 +1,3 @@
+enum VendorSigningType{
+center,freelancer
+}

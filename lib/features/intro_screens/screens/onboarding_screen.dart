@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/features/intro_screens/widgets/boarding_button.dart';
 import '../../../core/assets_path/images_path.dart';
@@ -86,9 +87,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: CustomButton(
               isLast: isLast,
               isLastTap: () {
-                if (kDebugMode) {
-                  print('isLastTap');
-                }
+                  Navigator.pushReplacementNamed(context, ScreenName.chooseRegisterType);
               },
               isTapped: () {
                 pageViewController.nextPage(duration: const Duration(milliseconds: 200), curve: Curves.fastOutSlowIn);

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
+import 'package:touch_of_beauty/features/authentication/presentation/screens/choose_type_screen.dart';
+import 'package:touch_of_beauty/features/authentication/presentation/screens/login_screen.dart';
+import 'package:touch_of_beauty/features/authentication/presentation/screens/user_register.dart';
 import 'package:touch_of_beauty/features/intro_screens/screens/onboarding_screen.dart';
 import 'package:touch_of_beauty/features/intro_screens/screens/splash_screen.dart';
+
+import '../../features/authentication/presentation/screens/vendor_register.dart';
 
 
 
@@ -13,6 +18,14 @@ class AppRouter {
           return MaterialPageRoute(builder: (BuildContext context) { return const SplashScreen(); });
         case ScreenName.onboardingScreen:
           return MaterialPageRoute(builder: (BuildContext context) { return const OnboardingScreen(); });
+        case ScreenName.chooseRegisterType:
+          return _animateRouteBuilder(const ChooseTypeScreen());
+        case ScreenName.loginScreen:
+          return _animateRouteBuilder(const LoginScreen());
+        case ScreenName.userRegister:
+          return _animateRouteBuilder(const UserRegisterScreen());
+        case ScreenName.vendorRegister:
+          return _animateRouteBuilder(const VendorRegisterScreen());
         default:
           return _errorRoute();
       }

@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:touch_of_beauty/core/assets_path/font_path.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
+import '../../../../core/app_router/screens_name.dart';
 import '../../../../core/app_theme/light_theme.dart';
-import '../widgets/auht_text_form_field.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/phone_form_field.dart';
 
@@ -148,11 +148,11 @@ class ChooseTypeScreen extends StatelessWidget {
             AuthButton(
               buttonTitle: 'استمرار',
               isTapped: () {
-                print(type);
+                if(type)Navigator.pushNamed(context, ScreenName.userRegister);
+                if(!type)Navigator.pushNamed(context, ScreenName.vendorRegister);
               },
               width: double.infinity,
             ),
-            PhoneFormField(),
           ],
         ),
       ),

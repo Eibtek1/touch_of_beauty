@@ -15,15 +15,15 @@ class AuthTextFormField extends StatelessWidget {
       validator: validate,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15.r),
+            borderRadius: BorderRadius.circular(20.r),
             borderSide: const BorderSide(
                 color: AppColorsLightTheme.authTextFieldFillColor)),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15.r),
+            borderRadius: BorderRadius.circular(20.r),
             borderSide: const BorderSide(
                 color: AppColorsLightTheme.authTextFieldFillColor)),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15.r),
+            borderRadius: BorderRadius.circular(20.r),
             borderSide: const BorderSide(
                 color: AppColorsLightTheme.authTextFieldFillColor)),
         filled: true,
