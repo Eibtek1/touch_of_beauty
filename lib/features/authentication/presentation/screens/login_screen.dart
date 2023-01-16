@@ -52,13 +52,18 @@ class LoginScreen extends StatelessWidget {
             SizedBox(
               height: 8.h,
             ),
-            Text(
-              'هل نسيت كلمة المرور؟',
-              textAlign: TextAlign.end,
-              style: TextStyle(
-                  color: const Color(0xffAAADB5),
-                  fontFamily: FontPath.almaraiLight,
-                  fontSize: 13.sp),
+            InkWell(
+              onTap: (){
+                Navigator.pushNamed(context, ScreenName.forgetPasswordScreen);
+              },
+              child: Text(
+                'هل نسيت كلمة المرور؟',
+                textAlign: TextAlign.end,
+                style: TextStyle(
+                    color: const Color(0xffAAADB5),
+                    fontFamily: FontPath.almaraiLight,
+                    fontSize: 13.sp),
+              ),
             ),
             SizedBox(
               height: 8.h,

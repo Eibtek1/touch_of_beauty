@@ -4,4 +4,5 @@ class ImagePath{
   static const onboarding2 = 'assets/images/onboarding2.png';
   static const onboarding3 = 'assets/images/onboarding3.png';
   static const authLogo = 'assets/images/auth_logo.png';
+  static const phoneLogo = 'assets/images/phone_logo.png';
 }

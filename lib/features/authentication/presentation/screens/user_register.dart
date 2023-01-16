@@ -115,13 +115,15 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
               height: 15.h,
             ),
             AuthButton(
-                buttonTitle: 'تسجيل', isTapped: () {}, width: double.infinity),
+                buttonTitle: 'تسجيل', isTapped: () {
+                  Navigator.pushNamed(context, ScreenName.otpScreen);
+            }, width: double.infinity),
             SizedBox(
               height: 25.h,
             ),
             InkWell(
               onTap: (){
-                Navigator.pushReplacementNamed(context, ScreenName.loginScreen);
+                Navigator.pushNamedAndRemoveUntil(context, ScreenName.loginScreen,(route) => false);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
