@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/features/authentication/presentation/screens/choose_type_screen.dart';
+import 'package:touch_of_beauty/features/authentication/presentation/screens/forget_password_screen.dart';
 import 'package:touch_of_beauty/features/authentication/presentation/screens/login_screen.dart';
+import 'package:touch_of_beauty/features/authentication/presentation/screens/otp_screen.dart';
 import 'package:touch_of_beauty/features/authentication/presentation/screens/user_register.dart';
 import 'package:touch_of_beauty/features/intro_screens/screens/onboarding_screen.dart';
 import 'package:touch_of_beauty/features/intro_screens/screens/splash_screen.dart';
@@ -26,6 +28,10 @@ class AppRouter {
           return _animateRouteBuilder(const UserRegisterScreen());
         case ScreenName.vendorRegister:
           return _animateRouteBuilder(const VendorRegisterScreen());
+        case ScreenName.otpScreen:
+          return _animateRouteBuilder(const OtpScreen());
+        case ScreenName.forgetPasswordScreen:
+          return _animateRouteBuilder(const ForgetPasswordScreen());
         default:
           return _errorRoute();
       }

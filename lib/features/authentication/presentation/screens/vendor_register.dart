@@ -170,7 +170,7 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
             ),
             InkWell(
               onTap: (){
-                Navigator.pushReplacementNamed(context, ScreenName.loginScreen);
+                Navigator.pushNamedAndRemoveUntil(context, ScreenName.loginScreen,(route) => false);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
