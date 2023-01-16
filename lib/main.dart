@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:touch_of_beauty/core/app_router/app_router.dart';
-import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
-import 'features/authentication/presentation/screens/choose_type_screen.dart';
-import 'features/authentication/presentation/screens/login_screen.dart';
-import 'features/intro_screens/screens/onboarding_screen.dart';
+import 'core/app_router/app_router.dart';
+import 'core/app_router/screens_name.dart';
+import 'features/authentication/presentation/screens/user_register.dart';
+import 'features/authentication/presentation/screens/vendor_register.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,9 +32,9 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: createMaterialColor(AppColorsLightTheme.primaryColor),
           ),
-          // onGenerateRoute: AppRouter.generateRoute,
-          // initialRoute: ScreenName.splashscreen,
-          home: const LoginScreen(),
+          onGenerateRoute: AppRouter.generateRoute,
+          initialRoute: ScreenName.splashscreen,
+          // home: const VendorRegisterScreen(),
         );
       },
     );
