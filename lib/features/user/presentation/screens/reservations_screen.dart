@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/reservation_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/reservation_state.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/images_path.dart';
-import '../widgets/home_screen_widgets/grid_item_builder.dart';
+import '../widgets/reservation_widgets/all_orders_widget.dart';
+import '../widgets/reservation_widgets/end_orders.dart';
+import '../widgets/reservation_widgets/ordered_orders_widget.dart';
 
 class ReservationsScreen extends StatefulWidget {
   const ReservationsScreen({Key? key}) : super(key: key);
@@ -65,81 +68,76 @@ class _ReservationsScreenState extends State<ReservationsScreen>
           ),
           body: DefaultTabController(
             length: 3,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 100.h,
-                  child: TabBar(
-                    isScrollable: true,
-                    indicatorColor: Colors.transparent,
-                    overlayColor: MaterialStateProperty.all(Colors.transparent),
-                    tabs: List.generate(
-                      titles.length,
-                      (index) => ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          backgroundColor: cubit.tabBarCIndex == index
-                              ? Colors.grey
-                              : Colors.purple,
-                          shape: const StadiumBorder(),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 25.w, vertical: 12.h),
-                        ),
-                        onPressed: () {
-                          tabController!.animateTo(index);
-                          cubit.changeTabBarCurrentIndex(index);
-                        },
-                        child: Text(
-                          titles[index],
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: FontPath.almaraiBold,
-                              fontSize: 12.sp),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 70.h,
+                    child: TabBar(
+                      isScrollable: true,
+                      indicatorColor: Colors.transparent,
+                      overlayColor:
+                          MaterialStateProperty.all(Colors.transparent),
+                      tabs: List.generate(
+                        titles.length,
+                        (index) => ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor: cubit.tabBarCIndex == index
+                                ? AppColorsLightTheme.secondaryColor
+                                    .withOpacity(0.2)
+                                : AppColorsLightTheme.authTextFieldFillColor,
+                            shape: const StadiumBorder(),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 19.w, vertical: 12.h),
+                          ),
+                          onPressed: () {
+                            tabController!.animateTo(index);
+                            cubit.changeTabBarCurrentIndex(index);
+                          },
+                          child: Text(
+                            titles[index],
+                            style: TextStyle(
+                                color: cubit.tabBarCIndex == index
+                                    ? Colors.pink
+                                    : Colors.grey,
+                                fontFamily: FontPath.almaraiBold,
+                                fontSize: 12.sp),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: TabBarView(
-                    controller: tabController,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      GridView.builder(
-                          itemCount: itemsList.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4,
-                            childAspectRatio: 1,
-                          ),
-                          itemBuilder: (context, index) => GridItemBuilder(
-                                model: itemsList[index],
-                              )),
-                      GridView.builder(
-                          itemCount: itemsList.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4,
-                            childAspectRatio: 1,
-                          ),
-                          itemBuilder: (context, index) => GridItemBuilder(
-                                model: itemsList[index],
-                              )),
-                      GridView.builder(
-                        itemCount: itemsList.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 4,
-                          childAspectRatio: 1,
+                  const Divider(),
+                  Expanded(
+                    child: TabBarView(
+                      controller: tabController,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: [
+                        ListView.builder(
+                          itemCount: 3,
+                          itemBuilder: (BuildContext context, int index) {
+                            return const AllOrdersWidgetItem();
+                          },
                         ),
-                        itemBuilder: (context, index) => GridItemBuilder(
-                          model: itemsList[index],
+                        ListView.builder(
+                          itemCount: 3,
+                          itemBuilder: (BuildContext context, int index) {
+                            return const OrderedOrdersWidgetBuilder();
+                          },
                         ),
-                      ),
-                    ],
+                        ListView.builder(
+                          itemCount: 3,
+                          itemBuilder: (BuildContext context, int index) {
+                            return const EndOrdersWidgetBuilder();
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

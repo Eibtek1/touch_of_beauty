@@ -7,4 +7,6 @@ class SvgPath{
   static const profileIcon = 'assets/svg/profile.svg';
   static const menu = 'assets/svg/menu.svg';
   static const searchAppBar = 'assets/svg/search_appbar.svg';
+  static const chatIcon = 'assets/svg/chatIcon.svg';
+  static const editIcon = 'assets/svg/editIcon.svg';
 }

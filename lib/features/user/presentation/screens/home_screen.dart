@@ -65,247 +65,246 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-
                 children: [
-              SizedBox(
-                height: 24.h,
-              ),
-              Text(
-                'ما الذي تريد أن تفعل؟',
-                style: TextStyle(
-                    fontSize: 16.sp,
-                    fontFamily: FontPath.almaraiBold,
-                    color: const Color(0xff1E2432)),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: itemsList.length,
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    childAspectRatio: 1,
+                  SizedBox(
+                    height: 24.h,
                   ),
-                  itemBuilder: (context, index) => GridItemBuilder(
-                        model: itemsList[index],
-                      )),
-              SizedBox(
-                height: 35.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
                   Text(
-                    'صالون مميز',
+                    'ما الذي تريد أن تفعل؟',
                     style: TextStyle(
                         fontSize: 16.sp,
                         fontFamily: FontPath.almaraiBold,
                         color: const Color(0xff1E2432)),
                   ),
-                  Text(
-                    'شاهد الكل',
-                    style: TextStyle(
-                        fontSize: 16.sp,
-                        fontFamily: FontPath.almaraiBold,
-                        color: AppColorsLightTheme.secondaryColor),
+                  SizedBox(
+                    height: 15.h,
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              SizedBox(
-                height: 195.h,
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: 3.h),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 4,
-                  itemBuilder: (BuildContext context, int index) {
-                    return const SalonItemBuilder();
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              Text(
-                'الصالونات التي تتبعها',
-                style: TextStyle(
-                    fontSize: 16.sp,
-                    fontFamily: FontPath.almaraiBold,
-                    color: const Color(0xff1E2432)),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              SizedBox(
-                height: 75.h,
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: 1.h),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 8,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      height: 71.h,
-                      width: 71.w,
-                      padding: EdgeInsets.all(2.r),
-                      decoration: BoxDecoration(
-                          border:
-                              Border.all(color: Colors.grey, width: 0.9.w),
-                          shape: BoxShape.circle),
-                      child: Image.asset(itemsList[index]['image']),
-                    );
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'احدث العروض',
-                    style: TextStyle(
-                        fontSize: 16.sp,
-                        fontFamily: FontPath.almaraiBold,
-                        color: const Color(0xff1E2432)),
+                  GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: itemsList.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4,
+                        childAspectRatio: 1,
+                      ),
+                      itemBuilder: (context, index) => GridItemBuilder(
+                            model: itemsList[index],
+                          )),
+                  SizedBox(
+                    height: 35.h,
                   ),
-                  Text(
-                    'شاهد الكل',
-                    style: TextStyle(
-                        fontSize: 16.sp,
-                        fontFamily: FontPath.almaraiBold,
-                        color: AppColorsLightTheme.secondaryColor),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'صالون مميز',
+                        style: TextStyle(
+                            fontSize: 16.sp,
+                            fontFamily: FontPath.almaraiBold,
+                            color: const Color(0xff1E2432)),
+                      ),
+                      Text(
+                        'شاهد الكل',
+                        style: TextStyle(
+                            fontSize: 16.sp,
+                            fontFamily: FontPath.almaraiBold,
+                            color: AppColorsLightTheme.secondaryColor),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              Container(
-                height: 133.h,
-                width: 377.w,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8.r),
-                    boxShadow: [
-                      BoxShadow(
-                          color: const Color(0xff000000).withOpacity(0.29),
-                          offset: Offset(0, 3.h),
-                          blurRadius: 6.r)
-                    ]),
-                child: Row(
-                  children: [
-                    Stack(
-                      children: [
-                        SizedBox(
-                          height: double.infinity,
-                          width: 122.w,
-                          child: Image.asset(
-                            ImagePath.carouselImage1,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Positioned(
-                            top: 14.h,
-                            left: 14.w,
-                            child: CircleAvatar(
-                              radius: 10.r,
-                              backgroundColor: Colors.white,
-                              child: Center(
-                                child: Icon(
-                                  Icons.favorite_border,
-                                  color: AppColorsLightTheme.secondaryColor,
-                                  size: 12.r,
-                                ),
-                              ),
-                            ))
-                      ],
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  SizedBox(
+                    height: 195.h,
+                    child: ListView.builder(
+                      padding: EdgeInsets.symmetric(vertical: 3.h),
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 4,
+                      itemBuilder: (BuildContext context, int index) {
+                        return const SalonItemBuilder();
+                      },
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.w),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Text(
-                            'شعر. الأظافر. الوجه',
-                            style: TextStyle(
-                              fontSize: 8.sp,
-                              fontFamily: FontPath.almaraiRegular,
-                              color: const Color(0xffCCB48C),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 8.h,
-                          ),
-                          Text(
-                            'صالون خانة الجمال',
-                            style: TextStyle(
-                                fontSize: 12.sp,
-                                fontFamily: FontPath.almaraiBold,
-                                color: const Color(0xff1E2432)),
-                          ),
-                          SizedBox(
-                            height: 8.h,
-                          ),
-                          Text(
-                            'الطريق العام الخرج - الرياض (365)',
-                            style: TextStyle(
-                              fontSize: 11.sp,
-                              fontFamily: FontPath.almaraiRegular,
-                              color: const Color(0xff666666),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 12.h,
-                          ),
-                          Row(
-                            children: [
-                              RatingBar.builder(
-                                itemSize: 14.r,
-                                ignoreGestures: true,
-                                initialRating: 4,
-                                minRating: 1,
-                                unratedColor: Colors.white,
-                                direction: Axis.horizontal,
-                                allowHalfRating: true,
-                                itemCount: 5,
-                                // itemPadding: EdgeInsets.symmetric(horizontal: 4.0.w),
-                                itemBuilder: (context, _) => const Icon(
-                                  Icons.star,
-                                  color: AppColorsLightTheme.secondaryColor,
-                                ),
-                                onRatingUpdate: (rating) {},
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  Text(
+                    'الصالونات التي تتبعها',
+                    style: TextStyle(
+                        fontSize: 16.sp,
+                        fontFamily: FontPath.almaraiBold,
+                        color: const Color(0xff1E2432)),
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  SizedBox(
+                    height: 75.h,
+                    child: ListView.builder(
+                      padding: EdgeInsets.symmetric(vertical: 1.h),
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 8,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          height: 71.h,
+                          width: 71.w,
+                          padding: EdgeInsets.all(2.r),
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: Colors.grey, width: 0.9.w),
+                              shape: BoxShape.circle),
+                          child: Image.asset(itemsList[index]['image']),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'احدث العروض',
+                        style: TextStyle(
+                            fontSize: 16.sp,
+                            fontFamily: FontPath.almaraiBold,
+                            color: const Color(0xff1E2432)),
+                      ),
+                      Text(
+                        'شاهد الكل',
+                        style: TextStyle(
+                            fontSize: 16.sp,
+                            fontFamily: FontPath.almaraiBold,
+                            color: AppColorsLightTheme.secondaryColor),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  Container(
+                    height: 133.h,
+                    width: 377.w,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8.r),
+                        boxShadow: [
+                          BoxShadow(
+                              color: const Color(0xff000000).withOpacity(0.29),
+                              offset: Offset(0, 3.h),
+                              blurRadius: 6.r)
+                        ]),
+                    child: Row(
+                      children: [
+                        Stack(
+                          children: [
+                            SizedBox(
+                              height: double.infinity,
+                              width: 122.w,
+                              child: Image.asset(
+                                ImagePath.carouselImage1,
+                                fit: BoxFit.cover,
                               ),
+                            ),
+                            Positioned(
+                                top: 14.h,
+                                left: 14.w,
+                                child: CircleAvatar(
+                                  radius: 10.r,
+                                  backgroundColor: Colors.white,
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.favorite_border,
+                                      color: AppColorsLightTheme.secondaryColor,
+                                      size: 12.r,
+                                    ),
+                                  ),
+                                ))
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
                               SizedBox(
-                                width: 50.w,
+                                height: 20.h,
                               ),
                               Text(
-                                '85% -',
+                                'شعر. الأظافر. الوجه',
                                 style: TextStyle(
-                                  fontSize: 12.sp,
+                                  fontSize: 8.sp,
+                                  fontFamily: FontPath.almaraiRegular,
+                                  color: const Color(0xffCCB48C),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8.h,
+                              ),
+                              Text(
+                                'صالون خانة الجمال',
+                                style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontFamily: FontPath.almaraiBold,
+                                    color: const Color(0xff1E2432)),
+                              ),
+                              SizedBox(
+                                height: 8.h,
+                              ),
+                              Text(
+                                'الطريق العام الخرج - الرياض (365)',
+                                style: TextStyle(
+                                  fontSize: 11.sp,
                                   fontFamily: FontPath.almaraiRegular,
                                   color: const Color(0xff666666),
                                 ),
                               ),
+                              SizedBox(
+                                height: 12.h,
+                              ),
+                              Row(
+                                children: [
+                                  RatingBar.builder(
+                                    itemSize: 14.r,
+                                    ignoreGestures: true,
+                                    initialRating: 4,
+                                    minRating: 1,
+                                    unratedColor: Colors.white,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    // itemPadding: EdgeInsets.symmetric(horizontal: 4.0.w),
+                                    itemBuilder: (context, _) => const Icon(
+                                      Icons.star,
+                                      color: AppColorsLightTheme.secondaryColor,
+                                    ),
+                                    onRatingUpdate: (rating) {},
+                                  ),
+                                  SizedBox(
+                                    width: 50.w,
+                                  ),
+                                  Text(
+                                    '85% -',
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontFamily: FontPath.almaraiRegular,
+                                      color: const Color(0xff666666),
+                                    ),
+                                  ),
+                                ],
+                              )
                             ],
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(

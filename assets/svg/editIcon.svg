@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="23.439" height="21.24" viewBox="0 0 23.439 21.24">
+  <g id="Group_88669" data-name="Group 88669" transform="translate(-20.046 -54.263)">
+    <path id="Icon_awesome-edit" data-name="Icon awesome-edit" d="M18.206,16.416v4.826H3.034V6.071h10.9a.583.583,0,0,0,.4-.166l1.9-1.9a.569.569,0,0,0-.4-.972H2.276A2.276,2.276,0,0,0,0,5.312V22a2.276,2.276,0,0,0,2.276,2.276H18.965A2.276,2.276,0,0,0,21.24,22V14.52a.57.57,0,0,0-.972-.4l-1.9,1.9A.583.583,0,0,0,18.206,16.416Z" transform="translate(20.046 51.227)" fill="#fff"/>
+    <path id="Icon_material-edit" data-name="Icon material-edit" d="M4.5,15.236v2.826H7.326L15.66,9.728,12.834,6.9ZM17.845,7.542a.75.75,0,0,0,0-1.062L16.082,4.717a.75.75,0,0,0-1.062,0L13.64,6.1l2.826,2.826Z" transform="translate(25.419 50.721)" fill="#fff"/>
+  </g>
+</svg>
