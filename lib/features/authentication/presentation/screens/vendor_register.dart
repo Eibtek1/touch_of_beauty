@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/app_router/screens_name.dart';
 import '../../../../core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/font_path.dart';
@@ -20,6 +19,7 @@ class VendorRegisterScreen extends StatefulWidget {
 class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
   TextEditingController dateController = TextEditingController();
   VendorSigningType vendorSigningType = VendorSigningType.center;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -72,33 +72,39 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
             SizedBox(
               height: 14.h,
             ),
-            ShowSatePickerWidget(height: 46.h, title: dateController, onTap: (){
-              showDatePicker(
-                context: context,
-                initialDate:DateTime(2001),
-                firstDate: DateTime(1990),
-                lastDate: DateTime.now(),
-                builder: (context, child) {
-                  return Theme(
-                    data: ThemeData().copyWith(
-                      colorScheme: const ColorScheme.light(
-                          primary: AppColorsLightTheme.secondaryColor,
-                          secondary: Colors.white),
-                      dialogBackgroundColor: Colors.white,
-                    ),
-                    child: child!,
-                  );
-                },
-              ).then((value) {
-                setState(() {
-                  dateController.text = value!.toString().split(' ').first;
+            ShowSatePickerWidget(
+              height: 46.h,
+              title: dateController,
+              onTap: () {
+                showDatePicker(
+                  context: context,
+                  initialDate: DateTime(2001),
+                  firstDate: DateTime(1990),
+                  lastDate: DateTime.now(),
+                  builder: (context, child) {
+                    return Theme(
+                      data: ThemeData().copyWith(
+                        colorScheme: const ColorScheme.light(
+                            primary: AppColorsLightTheme.secondaryColor,
+                            secondary: Colors.white),
+                        dialogBackgroundColor: Colors.white,
+                      ),
+                      child: child!,
+                    );
+                  },
+                ).then((value) {
+                  setState(() {
+                    dateController.text = value!.toString().split(' ').first;
+                  });
                 });
-              });
-            },),
-            if(vendorSigningType == VendorSigningType.center)SizedBox(
-              height: 14.h,
+              },
             ),
-            if(vendorSigningType == VendorSigningType.center)const AuthTextFormField(hintText: 'اسم الصالون'),
+            if (vendorSigningType == VendorSigningType.center)
+              SizedBox(
+                height: 14.h,
+              ),
+            if (vendorSigningType == VendorSigningType.center)
+              const AuthTextFormField(hintText: 'اسم الصالون'),
             SizedBox(
               height: 14.h,
             ),
@@ -116,15 +122,13 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
             Row(
               children: <Widget>[
                 SizedBox(
-                  width: 100.w,
+                  width: 125.w,
                   child: RadioListTile<VendorSigningType>(
                     activeColor: AppColorsLightTheme.secondaryColor,
                     title: Text(
                       'مركز',
                       style: TextStyle(
-                          fontFamily:
-                          FontPath.almaraiLight,
-                          fontSize: 13.sp),
+                          fontFamily: FontPath.almaraiLight, fontSize: 12.sp),
                     ),
                     value: VendorSigningType.center,
                     groupValue: vendorSigningType,
@@ -136,14 +140,13 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                   ),
                 ),
                 SizedBox(
-                  width: 120.w,
+                  width: 125.w,
                   child: RadioListTile<VendorSigningType>(
                     activeColor: AppColorsLightTheme.secondaryColor,
                     title: Text('عمل حر',
                         style: TextStyle(
-                            fontFamily:
-                            FontPath.almaraiLight,
-                            fontSize: 13.sp)),
+                            fontFamily: FontPath.almaraiLight,
+                            fontSize: 12.sp)),
                     value: VendorSigningType.freelancer,
                     groupValue: vendorSigningType,
                     onChanged: (VendorSigningType? value) {
@@ -164,13 +167,18 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
             ),
             const AuthTextFormField(hintText: 'اعد كتابة كلمة المرور'),
             AuthButton(
-                buttonTitle: 'تسجيل', isTapped: () {}, width: double.infinity),
+                buttonTitle: 'تسجيل',
+                isTapped: () {
+                  Navigator.pushNamed(context, ScreenName.otpScreen);
+                },
+                width: double.infinity),
             SizedBox(
               height: 25.h,
             ),
             InkWell(
-              onTap: (){
-                Navigator.pushNamedAndRemoveUntil(context, ScreenName.loginScreen,(route) => false);
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, ScreenName.loginScreen, (route) => false);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -200,4 +208,6 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
       ),
     );
   }
+
+
 }
