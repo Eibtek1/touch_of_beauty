@@ -9,4 +9,11 @@ class SvgPath{
   static const searchAppBar = 'assets/svg/search_appbar.svg';
   static const chatIcon = 'assets/svg/chatIcon.svg';
   static const editIcon = 'assets/svg/editIcon.svg';
+  static const calender = 'assets/svg/calender.svg';
+  static const email = 'assets/svg/email.svg';
+  static const gender = 'assets/svg/gender.svg';
+  static const location = 'assets/svg/location (2).svg';
+  static const phone = 'assets/svg/phone.svg';
+  static const profileFilledColorIcon = 'assets/svg/profile filled color.svg';
+  static const notificationBill = 'assets/svg/notificationBill.svg';
 }
