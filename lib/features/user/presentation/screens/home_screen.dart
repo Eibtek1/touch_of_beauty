@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import 'package:touch_of_beauty/features/user/presentation/widgets/home_screen_widgets/custom_appbar.dart';
@@ -26,9 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Map<String, dynamic>> itemsList = [
     {'image': ImagePath.babyCare, 'title': "العناية بالطفل"},
-    {'image': ImagePath.beautyCenter, 'title': "فسم التجميل"},
+    {'image': ImagePath.beautyCenter, 'title': "قسم التجميل"},
     {'image': ImagePath.hairCare, 'title': "العناية بالشعر"},
-    {'image': ImagePath.makeup, 'title': "فسم المكياج"},
+    {'image': ImagePath.makeup, 'title': "قسم المكياج"},
     {'image': ImagePath.naturalTherapy, 'title': "العلاج الطبيعي"},
     {
       'image': ImagePath.photography,
@@ -88,9 +89,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisCount: 4,
                         childAspectRatio: 1,
                       ),
-                      itemBuilder: (context, index) => GridItemBuilder(
-                            model: itemsList[index],
-                          )),
+                      itemBuilder: (context, index) => InkWell(
+                        onTap: (){
+                          Navigator.pushNamed(context, ScreenName.userCategoryDetailsScreen,arguments: itemsList[index]['title']);
+                        },
+                        child: GridItemBuilder(
+                              model: itemsList[index],
+                            ),
+                      )),
                   SizedBox(
                     height: 35.h,
                   ),
@@ -104,12 +110,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontFamily: FontPath.almaraiBold,
                             color: const Color(0xff1E2432)),
                       ),
-                      Text(
-                        'شاهد الكل',
-                        style: TextStyle(
-                            fontSize: 16.sp,
-                            fontFamily: FontPath.almaraiBold,
-                            color: AppColorsLightTheme.secondaryColor),
+                      InkWell(
+                        onTap: (){
+                          Navigator.pushNamed(context, ScreenName.allCentersScreen);
+                        },
+                        child: Text(
+                          'شاهد الكل',
+                          style: TextStyle(
+                              fontSize: 16.sp,
+                              fontFamily: FontPath.almaraiBold,
+                              color: AppColorsLightTheme.secondaryColor),
+                        ),
                       ),
                     ],
                   ),

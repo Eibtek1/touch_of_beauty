@@ -15,4 +15,5 @@ class ImagePath{
   static const photography = 'assets/images/photography.png';//dummy data
   static const selfCare = 'assets/images/self care.png';//dummy data
   static const skinCare = 'assets/images/skin care.png';//dummy data
+  static const rectangle = 'assets/images/Rectangle 6887.png';//dummy data
 }
