@@ -11,6 +11,8 @@ import 'package:touch_of_beauty/features/user/presentation/screens/home_screen_s
 import 'package:touch_of_beauty/features/user/presentation/screens/main_layout.dart';
 
 import '../../features/authentication/presentation/screens/vendor_register.dart';
+import '../../features/user/presentation/screens/home_screen_screens/all_centers_screen.dart';
+import '../../features/user/presentation/screens/home_screen_screens/categories_details_screen.dart';
 
 
 
@@ -26,6 +28,9 @@ class AppRouter {
           return MaterialPageRoute(builder: (BuildContext context) { return const OnboardingScreen(); });
         case ScreenName.chooseRegisterType:
           return _animateRouteBuilder(const ChooseTypeScreen());
+        case ScreenName.userCategoryDetailsScreen:
+          final arg = settings.arguments;
+          return _animateRouteBuilder(CategoryDetailsScreen(title: arg,));
         case ScreenName.userSearchScreen:
           return _animateRouteBuilder( SearchScreen());
         case ScreenName.loginScreen:
@@ -36,6 +41,8 @@ class AppRouter {
           return _animateRouteBuilder(const VendorRegisterScreen());
         case ScreenName.otpScreen:
           return _animateRouteBuilder(const OtpScreen());
+        case ScreenName.allCentersScreen:
+          return _animateRouteBuilder(const AllCentersScreen());
         case ScreenName.forgetPasswordScreen:
           return _animateRouteBuilder(const ForgetPasswordScreen());
         default:
@@ -49,8 +56,8 @@ class AppRouter {
   static PageRouteBuilder _animateRouteBuilder(Widget to, {double x = 1, double y = 0}) {
     return PageRouteBuilder(
       pageBuilder: (_, __, ___) => to,
-      transitionDuration: const Duration(milliseconds: 200),
-      reverseTransitionDuration: const Duration(milliseconds: 200),
+      transitionDuration: const Duration(milliseconds: 190),
+      reverseTransitionDuration: const Duration(milliseconds: 190),
       transitionsBuilder: (context, animation, animationTime, child) {
         final tween = Tween<Offset>(begin: Offset(x, y), end: Offset.zero);
         return SlideTransition(
