@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:touch_of_beauty/features/user/buisness_logic/reservation_state.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/reservation_cubit/reservation_state.dart';
 class ReservationCubit extends Cubit<ReservationState> {
   ReservationCubit() : super(ReservationInitial());
   static ReservationCubit get(context) => BlocProvider.of(context);

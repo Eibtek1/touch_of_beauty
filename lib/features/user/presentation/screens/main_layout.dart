@@ -9,14 +9,14 @@ import 'package:touch_of_beauty/features/user/presentation/screens/reservations_
 import 'home_screen.dart';
 import 'notification_screen.dart';
 
-class MainLayout extends StatefulWidget {
-  const MainLayout({Key? key}) : super(key: key);
+class UserMainLayout extends StatefulWidget {
+  const UserMainLayout({Key? key}) : super(key: key);
 
   @override
-  State<MainLayout> createState() => _MainLayoutState();
+  State<UserMainLayout> createState() => _UserMainLayoutState();
 }
 
-class _MainLayoutState extends State<MainLayout> {
+class _UserMainLayoutState extends State<UserMainLayout> {
   int cIndex = 0;
   List<Widget> screens= [
     const HomeScreen(),

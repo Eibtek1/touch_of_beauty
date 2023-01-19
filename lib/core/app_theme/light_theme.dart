@@ -24,4 +24,6 @@ class AppColorsLightTheme{
   static const secondaryColor =  Color(0xffF98BB0);
   static const smoothPageIndicatorGreyColor =  Color(0xffE6E6E6);
   static const authTextFieldFillColor =  Color(0xffF9F9F9);
+  static const searchScreenTextColor =  Color(0xff3C475C);
+  AppColorsLightTheme._();
 }

@@ -7,6 +7,8 @@ import 'package:touch_of_beauty/features/authentication/presentation/screens/otp
 import 'package:touch_of_beauty/features/authentication/presentation/screens/user_register.dart';
 import 'package:touch_of_beauty/features/intro_screens/screens/onboarding_screen.dart';
 import 'package:touch_of_beauty/features/intro_screens/screens/splash_screen.dart';
+import 'package:touch_of_beauty/features/user/presentation/screens/home_screen_screens/search_screen.dart';
+import 'package:touch_of_beauty/features/user/presentation/screens/main_layout.dart';
 
 import '../../features/authentication/presentation/screens/vendor_register.dart';
 
@@ -18,10 +20,14 @@ class AppRouter {
       switch (settings.name) {
         case ScreenName.splashscreen:
           return MaterialPageRoute(builder: (BuildContext context) { return const SplashScreen(); });
+        case ScreenName.userMainLayout:
+          return MaterialPageRoute(builder: (BuildContext context) { return const UserMainLayout(); });
         case ScreenName.onboardingScreen:
           return MaterialPageRoute(builder: (BuildContext context) { return const OnboardingScreen(); });
         case ScreenName.chooseRegisterType:
           return _animateRouteBuilder(const ChooseTypeScreen());
+        case ScreenName.userSearchScreen:
+          return _animateRouteBuilder( SearchScreen());
         case ScreenName.loginScreen:
           return _animateRouteBuilder(const LoginScreen());
         case ScreenName.userRegister:
