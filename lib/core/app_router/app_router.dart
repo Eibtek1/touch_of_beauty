@@ -13,6 +13,7 @@ import 'package:touch_of_beauty/features/user/presentation/screens/main_layout.d
 import '../../features/authentication/presentation/screens/vendor_register.dart';
 import '../../features/user/presentation/screens/home_screen_screens/all_centers_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/categories_details_screen.dart';
+import '../../features/user/presentation/screens/home_screen_screens/our_services_screen.dart';
 
 
 
@@ -43,6 +44,8 @@ class AppRouter {
           return _animateRouteBuilder(const OtpScreen());
         case ScreenName.allCentersScreen:
           return _animateRouteBuilder(const AllCentersScreen());
+        case ScreenName.ourServicesScreen:
+          return _animateRouteBuilder(const OurServicesScreen());
         case ScreenName.forgetPasswordScreen:
           return _animateRouteBuilder(const ForgetPasswordScreen());
         default:

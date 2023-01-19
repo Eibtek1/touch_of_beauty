@@ -7,6 +7,7 @@ import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/home_screen_widgets/all_centers_item.dart';
+import '../../widgets/home_screen_widgets/center_details_bottom_sheet.dart';
 
 class AllCentersScreen extends StatelessWidget {
   const AllCentersScreen({Key? key}) : super(key: key);
@@ -57,7 +58,7 @@ class AllCentersScreen extends StatelessWidget {
             height: 20.h,
           ),
           const Divider(),
-          Expanded(child: ListView.builder(itemBuilder: (BuildContext context, int index) { return AllCentersItemBuilder(); },itemCount: 5,))
+          Expanded(child: ListView.builder(itemBuilder: (BuildContext context, int index) { return InkWell(onTap:(){showBottomSheet(context: context, builder: (context)=> CenterDetailsBottomSheet());},child: const AllCentersItemBuilder()); },itemCount: 5,))
         ],
       ),
     );

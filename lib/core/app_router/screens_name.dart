@@ -11,4 +11,5 @@ class ScreenName{
   static const userCategoryDetailsScreen = 'categories_details_screen.dart';
   static const userSearchScreen = 'user_search_screen';
   static const allCentersScreen = 'all_centers_screen.dart';
+  static const ourServicesScreen = 'our_services_screen.dart';
 }

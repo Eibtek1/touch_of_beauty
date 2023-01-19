@@ -3,16 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
-
 import '../../../../../core/assets_path/font_path.dart';
 import '../../widgets/custom_text_field.dart';
-import '../../widgets/home_screen_widgets/center_categories_details_item.dart';
-import '../../widgets/home_screen_widgets/services_bottom_sheet.dart';
+import '../../widgets/home_screen_widgets/center_services_item.dart';
 
-class CategoryDetailsScreen extends StatelessWidget {
-  final dynamic title;
+class OurServicesScreen extends StatelessWidget {
 
-  const CategoryDetailsScreen({Key? key, required this.title})
+  const OurServicesScreen({Key? key})
       : super(key: key);
 
   @override
@@ -22,7 +19,7 @@ class CategoryDetailsScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(
-            title,
+            'خدماتنا',
             style: TextStyle(
                 color: const Color(0xff263238),
                 fontFamily: FontPath.almaraiBold,
@@ -49,7 +46,7 @@ class CategoryDetailsScreen extends StatelessWidget {
                     width: 45.w,
                     decoration: BoxDecoration(
                         color:
-                            AppColorsLightTheme.secondaryColor.withOpacity(0.2),
+                        AppColorsLightTheme.secondaryColor.withOpacity(0.2),
                         shape: BoxShape.circle),
                     child: Center(
                       child: SvgPicture.asset(SvgPath.settingsSliders),
@@ -95,7 +92,7 @@ class CategoryDetailsScreen extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {},
                     style:
-                        ElevatedButton.styleFrom(shape: const StadiumBorder()),
+                    ElevatedButton.styleFrom(shape: const StadiumBorder()),
                     child: Text(
                       'الخدمات المنزلية',
                       style: TextStyle(
@@ -108,7 +105,7 @@ class CategoryDetailsScreen extends StatelessWidget {
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                         backgroundColor:
-                            AppColorsLightTheme.authTextFieldFillColor,
+                        AppColorsLightTheme.authTextFieldFillColor,
                         shape: const StadiumBorder()),
                     child: Text('الخدمات بالمركز',
                         style: TextStyle(
@@ -129,16 +126,7 @@ class CategoryDetailsScreen extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
-                    child: InkWell(
-                      onTap: () {
-                        showBottomSheet(context: context,shape:  RoundedRectangleBorder( // <-- SEE HERE
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(25.0.r),
-                          ),
-                        ), builder: (context) => ServicesBottomSheet());
-                      },
-                      child: const CenterCategoryItem(),
-                    ),
+                    child:  const CenterServicesCategoryItem(),
                   );
                 },
               ),

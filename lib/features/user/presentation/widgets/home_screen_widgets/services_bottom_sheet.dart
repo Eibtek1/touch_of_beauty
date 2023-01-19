@@ -8,11 +8,13 @@ import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import 'package:touch_of_beauty/features/user/presentation/widgets/custom_button.dart';
 import '../../../../../core/assets_path/font_path.dart';
 
-class CustomBottomSheet extends StatelessWidget {
-  CustomBottomSheet({Key? key}) : super(key: key);
+class ServicesBottomSheet extends StatelessWidget {
+  ServicesBottomSheet({Key? key}) : super(key: key);
   final List<String> boarding = [
     ImagePath.onboarding2,
     ImagePath.onboarding3,
+    ImagePath.gallary10,
+
   ];
   final pageViewController = PageController();
 

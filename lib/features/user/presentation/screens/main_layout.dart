@@ -66,19 +66,19 @@ class _UserMainLayoutState extends State<UserMainLayout> {
                       color: cIndex == 1
                           ? AppColorsLightTheme.primaryColor
                           : Colors.grey),
-                  label: 'الرئيسية'),
+                  label: 'حجزاتي'),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(SvgPath.notificationIcon,
                       color: cIndex == 2
                           ? AppColorsLightTheme.primaryColor
                           : Colors.grey),
-                  label: 'الرئيسية'),
+                  label: 'اشعارات'),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(SvgPath.profileIcon,
                       color: cIndex == 3
                           ? AppColorsLightTheme.primaryColor
                           : Colors.grey),
-                  label: 'الرئيسية'),
+                  label: 'الملف الشخصي'),
             ],
           ),
         ),
