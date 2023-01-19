@@ -89,7 +89,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   Navigator.pushReplacementNamed(context, ScreenName.chooseRegisterType);
               },
               isTapped: () {
-                pageViewController.nextPage(duration: const Duration(milliseconds: 200), curve: Curves.fastOutSlowIn);
+                pageViewController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.fastOutSlowIn);
               },
             ),
           )

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../widgets/auth_button.dart';
@@ -57,7 +58,9 @@ class _OtpScreenState extends State<OtpScreen> {
               PinFieldBuilder(controller: pinController,),
               SizedBox(height: 30.h,),
               AuthButton(
-                  buttonTitle: 'تأكيد الرقم', isTapped: () {}, width: double.infinity),
+                  buttonTitle: 'تأكيد الرقم', isTapped: () {
+                    Navigator.pushNamedAndRemoveUntil(context, ScreenName.userMainLayout, (route) => false);
+              }, width: double.infinity),
 
             ],
           ),
