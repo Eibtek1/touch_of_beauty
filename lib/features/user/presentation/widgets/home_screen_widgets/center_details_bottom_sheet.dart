@@ -343,7 +343,9 @@ class CenterDetailsBottomSheet extends StatelessWidget {
                         color: const Color(0xff1E2432)),
                   ),
                   InkWell(
-                    onTap: (){},
+                    onTap: (){
+                      Navigator.pushNamed(context, ScreenName.galleryScreen);
+                    },
                     child: Text(
                       'شاهد الكل',
                       style: TextStyle(

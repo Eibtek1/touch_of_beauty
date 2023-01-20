@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 
+import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/home_screen_widgets/center_categories_details_item.dart';
@@ -44,15 +45,20 @@ class CategoryDetailsScreen extends StatelessWidget {
                   SizedBox(
                     width: 10.w,
                   ),
-                  Container(
-                    height: 45.h,
-                    width: 45.w,
-                    decoration: BoxDecoration(
-                        color:
-                            AppColorsLightTheme.secondaryColor.withOpacity(0.2),
-                        shape: BoxShape.circle),
-                    child: Center(
-                      child: SvgPicture.asset(SvgPath.settingsSliders),
+                  InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, ScreenName.userSearchScreen);
+                    },
+                    child: Container(
+                      height: 45.h,
+                      width: 45.w,
+                      decoration: BoxDecoration(
+                          color:
+                              AppColorsLightTheme.secondaryColor.withOpacity(0.2),
+                          shape: BoxShape.circle),
+                      child: Center(
+                        child: SvgPicture.asset(SvgPath.settingsSliders),
+                      ),
                     ),
                   )
                 ],
