@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 
 import '../../../../../core/assets_path/font_path.dart';
@@ -73,7 +74,9 @@ class EndOrdersWidgetBuilder extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            IconButton(onPressed: (){}, icon: SvgPicture.asset(SvgPath.chatIcon,width: 50.w,height: 50.h,))
+            IconButton(onPressed: (){
+              Navigator.pushNamed(context, ScreenName.chatScreen,arguments: 'مقدم الخدمة');
+            }, icon: SvgPicture.asset(SvgPath.chatIcon,width: 50.w,height: 50.h,))
           ],
         ),
       ),

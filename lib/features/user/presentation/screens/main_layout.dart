@@ -26,59 +26,61 @@ class _UserMainLayoutState extends State<UserMainLayout> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: screens[cIndex],
-      bottomNavigationBar: SizedBox(
-        height: 70.h,
-        child: BottomNavigationBar(
-          backgroundColor: Colors.white,
-          selectedFontSize: 13.sp,
-          unselectedFontSize: 12.sp,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          selectedItemColor: AppColorsLightTheme.primaryColor,
-          unselectedItemColor: Colors.grey,
-          currentIndex: cIndex,
-          selectedLabelStyle: const TextStyle(
-            color: AppColorsLightTheme.primaryColor,
-          ),
-          unselectedLabelStyle: const TextStyle(
-            color: Colors.grey,
-          ),
-          onTap: (index) {
-            setState(() {
-              cIndex = index;
-            });
-          },
-          items: [
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                SvgPath.homeIcon,
-                color: cIndex == 0
-                    ? AppColorsLightTheme.primaryColor
-                    : Colors.grey,
-              ),
-              label: 'الرئيسية',
+    return SafeArea(
+      child: Scaffold(
+        body: screens[cIndex],
+        bottomNavigationBar: SizedBox(
+          height: 70.h,
+          child: BottomNavigationBar(
+            backgroundColor: Colors.white,
+            selectedFontSize: 13.sp,
+            unselectedFontSize: 12.sp,
+            showSelectedLabels: true,
+            showUnselectedLabels: true,
+            selectedItemColor: AppColorsLightTheme.primaryColor,
+            unselectedItemColor: Colors.grey,
+            currentIndex: cIndex,
+            selectedLabelStyle: const TextStyle(
+              color: AppColorsLightTheme.primaryColor,
             ),
-            BottomNavigationBarItem(
-                icon: SvgPicture.asset(SvgPath.reservationIcon,
-                    color: cIndex == 1
-                        ? AppColorsLightTheme.primaryColor
-                        : Colors.grey),
-                label: 'حجزاتي'),
-            BottomNavigationBarItem(
-                icon: SvgPicture.asset(SvgPath.notificationIcon,
-                    color: cIndex == 2
-                        ? AppColorsLightTheme.primaryColor
-                        : Colors.grey),
-                label: 'اشعارات'),
-            BottomNavigationBarItem(
-                icon: SvgPicture.asset(SvgPath.profileIcon,
-                    color: cIndex == 3
-                        ? AppColorsLightTheme.primaryColor
-                        : Colors.grey),
-                label: 'الملف الشخصي'),
-          ],
+            unselectedLabelStyle: const TextStyle(
+              color: Colors.grey,
+            ),
+            onTap: (index) {
+              setState(() {
+                cIndex = index;
+              });
+            },
+            items: [
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  SvgPath.homeIcon,
+                  color: cIndex == 0
+                      ? AppColorsLightTheme.primaryColor
+                      : Colors.grey,
+                ),
+                label: 'الرئيسية',
+              ),
+              BottomNavigationBarItem(
+                  icon: SvgPicture.asset(SvgPath.reservationIcon,
+                      color: cIndex == 1
+                          ? AppColorsLightTheme.primaryColor
+                          : Colors.grey),
+                  label: 'حجزاتي'),
+              BottomNavigationBarItem(
+                  icon: SvgPicture.asset(SvgPath.notificationIcon,
+                      color: cIndex == 2
+                          ? AppColorsLightTheme.primaryColor
+                          : Colors.grey),
+                  label: 'اشعارات'),
+              BottomNavigationBarItem(
+                  icon: SvgPicture.asset(SvgPath.profileIcon,
+                      color: cIndex == 3
+                          ? AppColorsLightTheme.primaryColor
+                          : Colors.grey),
+                  label: 'الملف الشخصي'),
+            ],
+          ),
         ),
       ),
     );
