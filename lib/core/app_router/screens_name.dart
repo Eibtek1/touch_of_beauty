@@ -16,4 +16,5 @@ class ScreenName{
   static const offersScreen = 'offers_screen.dart';
   static const complainsScreen = 'complains_screen.dart';
   static const chatScreen = 'chat_screen.dart';
+  static const chooseAddressScreen = 'choose_address_screen.dart';
 }
