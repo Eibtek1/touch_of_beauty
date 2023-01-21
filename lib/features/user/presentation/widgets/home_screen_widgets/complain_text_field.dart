@@ -6,7 +6,8 @@ import '../../../../../core/assets_path/font_path.dart';
 class ComplainTextField extends StatelessWidget {
   final String hintText;
   final double height;
-  const ComplainTextField({Key? key, required this.hintText, required this.height}) : super(key: key);
+  final TextInputType keyboardType;
+  const ComplainTextField({Key? key, required this.hintText, required this.height, this.keyboardType = TextInputType.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,8 @@ class ComplainTextField extends StatelessWidget {
         expands: true,
         maxLines: null,
         minLines: null,
+        keyboardType: keyboardType,
+        cursorColor: Colors.blue,
         decoration: InputDecoration(
             border: InputBorder.none,
             hintStyle: TextStyle(

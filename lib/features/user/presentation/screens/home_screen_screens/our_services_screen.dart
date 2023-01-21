@@ -5,6 +5,7 @@ import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/home_screen_widgets/center_services_item.dart';
 
@@ -136,7 +137,19 @@ class OurServicesScreen extends StatelessWidget {
                   );
                 },
               ),
-            )
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: CustomUserButton(buttonTitle: 'اطلب الأن', isTapped: (){
+                Navigator.pushNamed(context, ScreenName.chooseAddressScreen);
+              }, width: double.infinity),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
           ],
         ),
       ),
