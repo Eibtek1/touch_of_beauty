@@ -17,4 +17,5 @@ class SvgPath{
   static const profileFilledColorIcon = 'assets/svg/profile filled color.svg';
   static const notificationBill = 'assets/svg/notificationBill.svg';
   static const settingsSliders = 'assets/svg/settings-sliders.svg';
+  static const chatActionsAppBarIcon = 'assets/svg/chatActionsAppBarIcon.svg';
 }
