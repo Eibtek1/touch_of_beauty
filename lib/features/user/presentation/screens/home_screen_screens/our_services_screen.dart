@@ -143,8 +143,8 @@ class OurServicesScreen extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: CustomUserButton(buttonTitle: 'اطلب الأن', isTapped: (){
-                Navigator.pushNamed(context, ScreenName.chooseAddressScreen);
+              child: CustomUserButton(buttonTitle: 'اطلب الأن',paddingVertical: 16.h, paddingHorizontal: 45.w, isTapped: (){
+                Navigator.pushNamed(context, ScreenName.reserveOrderScreen);
               }, width: double.infinity),
             ),
             SizedBox(

@@ -36,42 +36,42 @@ class ChooseAddressScreen extends StatelessWidget {
               SizedBox(
                 height: 30.h,
               ),
-              ComplainTextField(
+              CustomUserTextField(
                 hintText: 'المدينة',
                 height: 44.h,
               ),
               SizedBox(
                 height: 18.h,
               ),
-              ComplainTextField(
+              CustomUserTextField(
                 hintText: 'المنطقة',
                 height: 44.h,
               ),
               SizedBox(
                 height: 18.h,
               ),
-              ComplainTextField(
+              CustomUserTextField(
                 hintText: 'اسم الشارع',
                 height: 44.h,
               ),
               SizedBox(
                 height: 18.h,
               ),
-              ComplainTextField(
+              CustomUserTextField(
                 hintText: 'رقم المبني',
                 height: 44.h,
               ),
               SizedBox(
                 height: 18.h,
               ),
-              ComplainTextField(
+              CustomUserTextField(
                 hintText: 'رقم الطابق',
                 height: 44.h,
               ),
               SizedBox(
                 height: 18.h,
               ),
-              ComplainTextField(
+              CustomUserTextField(
                 keyboardType: TextInputType.phone,
                 hintText: 'رقم الهاتف',
                 height: 44.h,
@@ -81,7 +81,7 @@ class ChooseAddressScreen extends StatelessWidget {
               ),
               CustomUserButton(
                   buttonTitle: 'تأكيد الطلب',
-                  isTapped: () {},
+                  isTapped: () {},paddingVertical: 16.h, paddingHorizontal: 45.w,
                   width: double.infinity),
             ],
           ),

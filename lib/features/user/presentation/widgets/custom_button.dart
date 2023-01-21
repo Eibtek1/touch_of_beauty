@@ -7,12 +7,14 @@ class CustomUserButton extends StatelessWidget {
   final Function isTapped;
   final double? height;
   final double width;
+  final double paddingVertical;
+  final double paddingHorizontal;
 
   const CustomUserButton(
       {Key? key,
       required this.buttonTitle,
       required this.isTapped,
-      required this.width, this.height})
+      required this.width, this.height, required this.paddingVertical, required this.paddingHorizontal, })
       : super(key: key);
 
   @override
@@ -23,7 +25,7 @@ class CustomUserButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: const StadiumBorder(),
-          padding: EdgeInsets.symmetric(horizontal: 45.w, vertical: 16.h),
+          padding: EdgeInsets.symmetric(horizontal: paddingHorizontal, vertical: paddingVertical),
         ),
         onPressed: () {
           isTapped();
