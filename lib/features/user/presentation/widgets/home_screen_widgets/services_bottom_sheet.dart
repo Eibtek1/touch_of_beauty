@@ -299,7 +299,7 @@ class ServicesBottomSheet extends StatelessWidget {
               CustomUserButton(
                   buttonTitle: 'اطلب الخدمة',
                   isTapped: () {},
-                  width: double.infinity),
+                  width: double.infinity,paddingVertical: 16.h, paddingHorizontal: 45.w),
               SizedBox(
                 height: 10.h,
               ),

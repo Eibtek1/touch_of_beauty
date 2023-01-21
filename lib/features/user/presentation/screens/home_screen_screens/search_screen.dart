@@ -167,7 +167,7 @@ class SearchScreen extends StatelessWidget{
             SizedBox(
               height: 22.h,
             ),
-            CustomUserButton(buttonTitle: 'بحث', isTapped: (){}, width: double.infinity),
+            CustomUserButton(buttonTitle: 'بحث', isTapped: (){}, width: double.infinity,paddingVertical: 16.h, paddingHorizontal: 45.w),
             SizedBox(
               height: 22.h,
             ),
