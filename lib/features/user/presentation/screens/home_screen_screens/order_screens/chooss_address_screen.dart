@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import '../../../../../../core/assets_path/font_path.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/home_screen_widgets/complain_text_field.dart';
@@ -81,7 +82,9 @@ class ChooseAddressScreen extends StatelessWidget {
               ),
               CustomUserButton(
                   buttonTitle: 'تأكيد الطلب',
-                  isTapped: () {},paddingVertical: 16.h, paddingHorizontal: 45.w,
+                  isTapped: () {
+                    Navigator.pushNamed(context, ScreenName.orderDetailsScreen);
+                  },paddingVertical: 16.h, paddingHorizontal: 45.w,
                   width: double.infinity),
             ],
           ),
