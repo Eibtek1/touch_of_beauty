@@ -18,6 +18,7 @@ import '../../features/user/presentation/screens/home_screen_screens/complains_s
 import '../../features/user/presentation/screens/home_screen_screens/gallery_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/offers_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/chooss_address_screen.dart';
+import '../../features/user/presentation/screens/home_screen_screens/order_screens/order_details_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/reserve_order_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/our_services_screen.dart';
 
@@ -35,6 +36,8 @@ class AppRouter {
           return MaterialPageRoute(builder: (BuildContext context) { return const OnboardingScreen(); });
         case ScreenName.chooseRegisterType:
           return _animateRouteBuilder(const ChooseTypeScreen());
+        case ScreenName.orderDetailsScreen:
+          return _animateRouteBuilder(const OrderDetailsScreen());
         case ScreenName.userCategoryDetailsScreen:
           final arg = settings.arguments;
           return _animateRouteBuilder(CategoryDetailsScreen(title: arg,));

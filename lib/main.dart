@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
               ),
               onGenerateRoute: AppRouter.generateRoute,
               initialRoute: ScreenName.splashscreen,
-              // home: ReserveOrderScreen(),
+              // home: OrderDetailsScreen(),
             ));
       },
     );
