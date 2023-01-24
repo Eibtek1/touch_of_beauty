@@ -19,6 +19,7 @@ import '../../features/user/presentation/screens/home_screen_screens/gallery_scr
 import '../../features/user/presentation/screens/home_screen_screens/offers_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/chooss_address_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/order_details_screen.dart';
+import '../../features/user/presentation/screens/home_screen_screens/order_screens/payment_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/reserve_order_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/our_services_screen.dart';
 
@@ -53,6 +54,8 @@ class AppRouter {
           return _animateRouteBuilder(const OtpScreen());
         case ScreenName.chooseAddressScreen:
           return _animateRouteBuilder(const ChooseAddressScreen());
+        case ScreenName.paymentScreen:
+          return _animateRouteBuilder(const PaymentScreen());
         case ScreenName.reserveOrderScreen:
           return _animateRouteBuilder(ReserveOrderScreen());
         case ScreenName.allCentersScreen:
