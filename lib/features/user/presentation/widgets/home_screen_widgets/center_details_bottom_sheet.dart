@@ -13,21 +13,21 @@ class CenterDetailsBottomSheet extends StatelessWidget {
    CenterDetailsBottomSheet({Key? key}) : super(key: key);
 
   final List<String> galleryList =[
-    ImagePath.gallary1,
-    ImagePath.gallary2,
-    ImagePath.gallary3,
-    ImagePath.gallary4,
-    ImagePath.gallary5,
-    ImagePath.gallary6,
-    ImagePath.gallary7,
-    ImagePath.gallary8,
-    ImagePath.gallary9,
-    ImagePath.gallary10,
-    ImagePath.gallary11,
-    ImagePath.gallary12,
-    ImagePath.gallary13,
-    ImagePath.gallary14,
-    ImagePath.gallary15,
+    ImagePath.gallery1,
+    ImagePath.gallery2,
+    ImagePath.gallery3,
+    ImagePath.gallery4,
+    ImagePath.gallery5,
+    ImagePath.gallery6,
+    ImagePath.gallery7,
+    ImagePath.gallery8,
+    ImagePath.gallery9,
+    ImagePath.gallery10,
+    ImagePath.gallery11,
+    ImagePath.gallery12,
+    ImagePath.gallery13,
+    ImagePath.gallery14,
+    ImagePath.gallery15,
   ];
 
   @override

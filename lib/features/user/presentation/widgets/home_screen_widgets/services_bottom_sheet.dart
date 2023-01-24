@@ -13,7 +13,7 @@ class ServicesBottomSheet extends StatelessWidget {
   final List<String> boarding = [
     ImagePath.onboarding2,
     ImagePath.onboarding3,
-    ImagePath.gallary10,
+    ImagePath.gallery10,
 
   ];
   final pageViewController = PageController();
