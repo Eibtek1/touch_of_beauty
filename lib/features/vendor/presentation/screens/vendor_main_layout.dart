@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_centers_screen.dart';
-import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_home_screen.dart';
 import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_messages_screen.dart';
 import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_more_screen.dart';
+import 'package:touch_of_beauty/features/vendor/presentation/screens/vendors_home_screen.dart';
 import '../../../../core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/svg_path.dart';
 

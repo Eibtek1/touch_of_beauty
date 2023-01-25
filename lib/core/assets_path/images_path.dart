@@ -5,6 +5,7 @@ class ImagePath {
   static const onboarding3 = 'assets/images/onboarding3.png';
   static const authLogo = 'assets/images/auth_logo.png';
   static const phoneLogo = 'assets/images/phone_logo.png';
+  static const vendorLogo = 'assets/images/vendor_logo.png';
   static const carouselImage1 = 'assets/images/cursol image1.png'; //dummy data
   static const carouselImage2 = 'assets/images/cursol image2.png'; //dummy data
   static const babyCare = 'assets/images/baby care.png'; //dummy data

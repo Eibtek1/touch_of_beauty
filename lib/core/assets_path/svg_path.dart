@@ -22,4 +22,7 @@ class SvgPath{
   static const centersIcon = 'assets/svg/centersIcon.svg';
   static const messagesIcon = 'assets/svg/messagesIcon.svg';
   static const moreIcon = 'assets/svg/moreIcon.svg';
+  static const calender2 = 'assets/svg/calender2.svg';
+  static const bag = 'assets/svg/bag.svg';
+  static const clock = 'assets/svg/clock.svg';
 }

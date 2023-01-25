@@ -1,12 +1,14 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:touch_of_beauty/features/freelancer/presentation/screens/freelancer_more_screen.dart';
+
 import '../../../../core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/svg_path.dart';
 import 'freelancer_centers_screen.dart';
 import 'freelancer_home_screen.dart';
 import 'freelancer_messages_screen.dart';
+import 'freelancer_more_screen.dart';
 
 class FreelancerMainLayout extends StatefulWidget {
   const FreelancerMainLayout({Key? key}) : super(key: key);
@@ -81,6 +83,7 @@ class _UserMainLayoutState extends State<FreelancerMainLayout> {
             ],
           ),
         ),
+
       ),
     );
   }

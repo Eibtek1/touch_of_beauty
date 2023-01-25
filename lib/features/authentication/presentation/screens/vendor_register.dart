@@ -169,7 +169,7 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
             AuthButton(
                 buttonTitle: 'تسجيل',
                 isTapped: () {
-                  Navigator.pushNamed(context, ScreenName.otpScreen);
+                  Navigator.pushNamed(context, ScreenName.otpScreen,arguments: vendorSigningType);
                 },
                 width: double.infinity),
             SizedBox(

@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -93,15 +95,15 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                       underline: const SizedBox.shrink(),
                       items: itemsList
                           .map((e) => DropdownMenuItem(
-                                value: e,
-                                child: Text(
-                                  e,
-                                  style: TextStyle(
-                                      color: const Color(0xff666666),
-                                      fontFamily: FontPath.almaraiRegular,
-                                      fontSize: 14.sp),
-                                ),
-                              ))
+                        value: e,
+                        child: Text(
+                          e,
+                          style: TextStyle(
+                              color: const Color(0xff666666),
+                              fontFamily: FontPath.almaraiRegular,
+                              fontSize: 14.sp),
+                        ),
+                      ))
                           .toList(),
                       onChanged: (val) {
                         setState(() {
@@ -140,11 +142,11 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
       height: 340.h,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10.r),
-        boxShadow: [
-          BoxShadow(offset: const Offset(0, 0),blurRadius: 10.r,color: Colors.black.withOpacity(0.14))
-        ]
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10.r),
+          boxShadow: [
+            BoxShadow(offset: const Offset(0, 0),blurRadius: 10.r,color: Colors.black.withOpacity(0.14))
+          ]
       ),
       child: Column(
         children: [
@@ -215,3 +217,4 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
     );
   }
 }
+

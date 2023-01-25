@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
+import 'package:touch_of_beauty/core/enums/vendor_signing_type_enum.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/pin_field_builder.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({Key? key}) : super(key: key);
+  final dynamic registerType;
+  const OtpScreen({Key? key, this.registerType}) : super(key: key);
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -59,7 +61,13 @@ class _OtpScreenState extends State<OtpScreen> {
               SizedBox(height: 30.h,),
               AuthButton(
                   buttonTitle: 'تأكيد الرقم', isTapped: () {
-                    Navigator.pushNamedAndRemoveUntil(context, ScreenName.userMainLayout, (route) => false);
+                    if(widget.registerType == null){
+                      Navigator.pushNamedAndRemoveUntil(context, ScreenName.userMainLayout, (route) => false);
+                    }else if(widget.registerType == VendorSigningType.center){
+                      Navigator.pushNamedAndRemoveUntil(context, ScreenName.vendorMainLayout, (route) => false);
+                    }else{
+                      Navigator.pushNamedAndRemoveUntil(context, ScreenName.freelancerMainLayout, (route) => false);
+                    }
               }, width: double.infinity),
 
             ],

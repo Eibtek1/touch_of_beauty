@@ -9,9 +9,9 @@ import 'package:touch_of_beauty/features/intro_screens/screens/onboarding_screen
 import 'package:touch_of_beauty/features/intro_screens/screens/splash_screen.dart';
 import 'package:touch_of_beauty/features/user/presentation/screens/home_screen_screens/search_screen.dart';
 import 'package:touch_of_beauty/features/user/presentation/screens/user_main_layout.dart';
-
 import '../../features/authentication/presentation/screens/vendor_register.dart';
 import '../../features/chat/screens/chat_screen.dart';
+import '../../features/freelancer/presentation/screens/freelance_main_layout.dart';
 import '../../features/user/presentation/screens/home_screen_screens/all_centers_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/categories_details_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/complains_screen.dart';
@@ -22,6 +22,7 @@ import '../../features/user/presentation/screens/home_screen_screens/order_scree
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/payment_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/reserve_order_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/our_services_screen.dart';
+import '../../features/vendor/presentation/screens/vendor_main_layout.dart';
 
 
 
@@ -33,6 +34,10 @@ class AppRouter {
           return MaterialPageRoute(builder: (BuildContext context) { return const SplashScreen(); });
         case ScreenName.userMainLayout:
           return MaterialPageRoute(builder: (BuildContext context) { return const UserMainLayout(); });
+        case ScreenName.vendorMainLayout:
+          return MaterialPageRoute(builder: (BuildContext context) { return const VendorMainLayout(); });
+        case ScreenName.freelancerMainLayout:
+          return MaterialPageRoute(builder: (BuildContext context) { return const FreelancerMainLayout(); });
         case ScreenName.onboardingScreen:
           return MaterialPageRoute(builder: (BuildContext context) { return const OnboardingScreen(); });
         case ScreenName.chooseRegisterType:
@@ -51,7 +56,8 @@ class AppRouter {
         case ScreenName.vendorRegister:
           return _animateRouteBuilder(const VendorRegisterScreen());
         case ScreenName.otpScreen:
-          return _animateRouteBuilder(const OtpScreen());
+          final args = settings.arguments;
+          return _animateRouteBuilder( OtpScreen(registerType: args,));
         case ScreenName.chooseAddressScreen:
           return _animateRouteBuilder(const ChooseAddressScreen());
         case ScreenName.paymentScreen:

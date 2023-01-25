@@ -15,7 +15,6 @@ class FreelancerHomeScreen extends StatefulWidget {
 }
 
 List<String> itemsList = [
-  'في المركز',
   'في المنزل',
 ];
 
