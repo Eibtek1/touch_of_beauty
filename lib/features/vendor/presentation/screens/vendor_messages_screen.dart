@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/images_path.dart';
 
@@ -38,16 +39,26 @@ class VendorMessagesScreen extends StatelessWidget {
         ),
       ),
       body: ListView.builder(
-        itemBuilder: (BuildContext context, int index) {return buildChatItem(image: itemsList[index]['image'], name: itemsList[index]['title']);},itemCount: itemsList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return InkWell(
+            onTap: (){
+              Navigator.pushNamed(context, ScreenName.chatScreen,arguments: 'مستخدم');
+            },
+            child: buildChatItem(
+                image: itemsList[index]['image'],
+                name: itemsList[index]['title']),
+          );
+        },
+        itemCount: itemsList.length,
       ),
     );
   }
 
   Widget buildChatItem({required String image, required String name}) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 15.h,horizontal: 20.w),
+      padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 11.w,vertical: 11.h),
+        padding: EdgeInsets.symmetric(horizontal: 11.w, vertical: 11.h),
         height: 75.h,
         width: double.infinity,
         decoration: BoxDecoration(
@@ -73,7 +84,9 @@ class VendorMessagesScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(width: 10.w,),
+            SizedBox(
+              width: 10.w,
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -114,5 +127,4 @@ class VendorMessagesScreen extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -7,6 +7,8 @@ class ScreenName{
   static const loginScreen = 'login_screen.dart';
   static const otpScreen = 'otp_screen.dart';
   static const userMainLayout = 'user_main_layout.dart';
+  static const vendorMainLayout = 'vendor_main_layout.dart';
+  static const freelancerMainLayout = 'freelancer_main_layout.dart';
   static const forgetPasswordScreen = 'forget_password_screen.dart';
   static const userCategoryDetailsScreen = 'categories_details_screen.dart';
   static const userSearchScreen = 'user_search_screen';
@@ -16,7 +18,7 @@ class ScreenName{
   static const offersScreen = 'offers_screen.dart';
   static const complainsScreen = 'complains_screen.dart';
   static const chatScreen = 'chat_screen.dart';
-  static const chooseAddressScreen = 'chat_screen.dart';
+  static const chooseAddressScreen = 'choose_address_screen.dart';
   static const reserveOrderScreen = 'reserve_order_screen.dart';
   static const orderDetailsScreen = 'order_details_screen.dart';
   static const paymentScreen = 'payment_screen.dart';
