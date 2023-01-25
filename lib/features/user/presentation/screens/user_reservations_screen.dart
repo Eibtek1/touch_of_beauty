@@ -10,14 +10,14 @@ import '../widgets/reservation_widgets/all_orders_widget.dart';
 import '../widgets/reservation_widgets/end_orders.dart';
 import '../widgets/reservation_widgets/ordered_orders_widget.dart';
 
-class ReservationsScreen extends StatefulWidget {
-  const ReservationsScreen({Key? key}) : super(key: key);
+class UserReservationsScreen extends StatefulWidget {
+  const UserReservationsScreen({Key? key}) : super(key: key);
 
   @override
-  State<ReservationsScreen> createState() => _ReservationsScreenState();
+  State<UserReservationsScreen> createState() => _UserReservationsScreenState();
 }
 
-class _ReservationsScreenState extends State<ReservationsScreen>
+class _UserReservationsScreenState extends State<UserReservationsScreen>
     with TickerProviderStateMixin {
   List<Map<String, dynamic>> itemsList = [
     {'image': ImagePath.babyCare, 'title': "العناية بالطفل"},

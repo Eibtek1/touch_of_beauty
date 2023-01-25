@@ -29,7 +29,7 @@ class _ChatTextFieldState extends State<ChatTextField> {
             child: TextField(
               expands: true,
               maxLines: null,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: InputBorder.none
               ),
               onTap: (){

@@ -8,7 +8,7 @@ import 'package:touch_of_beauty/features/authentication/presentation/screens/use
 import 'package:touch_of_beauty/features/intro_screens/screens/onboarding_screen.dart';
 import 'package:touch_of_beauty/features/intro_screens/screens/splash_screen.dart';
 import 'package:touch_of_beauty/features/user/presentation/screens/home_screen_screens/search_screen.dart';
-import 'package:touch_of_beauty/features/user/presentation/screens/main_layout.dart';
+import 'package:touch_of_beauty/features/user/presentation/screens/user_main_layout.dart';
 
 import '../../features/authentication/presentation/screens/vendor_register.dart';
 import '../../features/chat/screens/chat_screen.dart';

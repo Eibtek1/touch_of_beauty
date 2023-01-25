@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 
 import '../../../../../../core/assets_path/font_path.dart';
@@ -51,7 +52,9 @@ class OrderDetailsScreen extends StatelessWidget {
             ),
             CustomUserButton(
                 buttonTitle: 'اطلب الخدمة',
-                isTapped: () {},paddingVertical: 16.h, paddingHorizontal: 45.w,
+                isTapped: () {
+                  Navigator.pushNamed(context, ScreenName.paymentScreen);
+                },paddingVertical: 16.h, paddingHorizontal: 45.w,
                 width: double.infinity),
           ],
         ),
