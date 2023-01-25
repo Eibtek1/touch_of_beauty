@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../widgets/notification_widget/notification_item_builder.dart';
 
-class NotificationScreen extends StatelessWidget {
-  const NotificationScreen({Key? key}) : super(key: key);
+class UserNotificationScreen extends StatelessWidget {
+  const UserNotificationScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

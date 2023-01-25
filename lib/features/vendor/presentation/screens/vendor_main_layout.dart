@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
-import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
-import 'package:touch_of_beauty/features/user/presentation/screens/profile_screen.dart';
-import 'package:touch_of_beauty/features/user/presentation/screens/reservations_screen.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_centers_screen.dart';
+import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_home_screen.dart';
+import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_messages_screen.dart';
+import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_more_screen.dart';
+import '../../../../core/app_theme/light_theme.dart';
+import '../../../../core/assets_path/svg_path.dart';
 
-import 'home_screen.dart';
-import 'notification_screen.dart';
-
-class UserMainLayout extends StatefulWidget {
-  const UserMainLayout({Key? key}) : super(key: key);
+class VendorMainLayout extends StatefulWidget {
+  const VendorMainLayout({Key? key}) : super(key: key);
 
   @override
-  State<UserMainLayout> createState() => _UserMainLayoutState();
+  State<VendorMainLayout> createState() => _UserMainLayoutState();
 }
 
-class _UserMainLayoutState extends State<UserMainLayout> {
+class _UserMainLayoutState extends State<VendorMainLayout> {
   int cIndex = 0;
   List<Widget> screens= [
-    const HomeScreen(),
-    const ReservationsScreen(),
-    const NotificationScreen(),
-    const ProfileScreen(),
+    const VendorHomeScreen(),
+     VendorMessagesScreen(),
+    const VendorCentersScreen(),
+    const VendorMoreScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -62,23 +61,23 @@ class _UserMainLayoutState extends State<UserMainLayout> {
                 label: 'الرئيسية',
               ),
               BottomNavigationBarItem(
-                  icon: SvgPicture.asset(SvgPath.reservationIcon,
+                  icon: SvgPicture.asset(SvgPath.messagesIcon,
                       color: cIndex == 1
                           ? AppColorsLightTheme.primaryColor
                           : Colors.grey),
-                  label: 'حجزاتي'),
+                  label: 'محادثاتي'),
               BottomNavigationBarItem(
-                  icon: SvgPicture.asset(SvgPath.notificationIcon,
+                  icon: SvgPicture.asset(SvgPath.centersIcon,
                       color: cIndex == 2
                           ? AppColorsLightTheme.primaryColor
                           : Colors.grey),
-                  label: 'اشعارات'),
+                  label: 'صالوني'),
               BottomNavigationBarItem(
-                  icon: SvgPicture.asset(SvgPath.profileIcon,
+                  icon: SvgPicture.asset(SvgPath.moreIcon,
                       color: cIndex == 3
                           ? AppColorsLightTheme.primaryColor
                           : Colors.grey),
-                  label: 'الملف الشخصي'),
+                  label: 'المزيد'),
             ],
           ),
         ),

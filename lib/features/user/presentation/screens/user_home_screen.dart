@@ -11,14 +11,14 @@ import '../widgets/home_screen_widgets/grid_item_builder.dart';
 import '../widgets/home_screen_widgets/offers_item_builder.dart';
 import '../widgets/home_screen_widgets/salon_item.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class UserHomeScreen extends StatefulWidget {
+  const UserHomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<UserHomeScreen> createState() => _UserHomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _UserHomeScreenState extends State<UserHomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<String> imagesList = [

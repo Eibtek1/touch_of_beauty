@@ -19,4 +19,7 @@ class SvgPath{
   static const settingsSliders = 'assets/svg/settings-sliders.svg';
   static const chatActionsAppBarIcon = 'assets/svg/chatActionsAppBarIcon.svg';
   static const appleIcon = 'assets/svg/appleIcon.svg';
+  static const centersIcon = 'assets/svg/centersIcon.svg';
+  static const messagesIcon = 'assets/svg/messagesIcon.svg';
+  static const moreIcon = 'assets/svg/moreIcon.svg';
 }
