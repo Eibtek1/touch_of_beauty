@@ -9,8 +9,8 @@ import '../../widgets/divider_builder.dart';
 import '../../widgets/order/custom_container.dart';
 import '../../widgets/order/services_item_builder.dart';
 
-class HomeOrderDetailsScreen extends StatelessWidget {
-  const HomeOrderDetailsScreen({Key? key}) : super(key: key);
+class CenterOrderDetailsScreen extends StatelessWidget {
+  const CenterOrderDetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +27,15 @@ class HomeOrderDetailsScreen extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Icon(
-                      Icons.arrow_back_rounded,
-                      size: 24.r,
-                      color: Colors.white,
+                    InkWell(
+                      onTap: (){
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.arrow_back_rounded,
+                        size: 24.r,
+                        color: Colors.white,
+                      ),
                     ),
                     Expanded(
                       child: Text(

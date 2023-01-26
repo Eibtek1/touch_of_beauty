@@ -22,5 +22,8 @@ class ScreenName{
   static const reserveOrderScreen = 'reserve_order_screen.dart';
   static const orderDetailsScreen = 'order_details_screen.dart';
   static const paymentScreen = 'payment_screen.dart';
+  static const orderInCenterDetailsScreen = 'center_order_details.dart';
+  static const orderInHomeDetailsScreen = 'home_order_details.dart';
+  static const vendorNotificationScreen = 'vendor_notification.dart';
 
 }

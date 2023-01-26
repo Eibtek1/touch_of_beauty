@@ -25,4 +25,6 @@ class SvgPath{
   static const calender2 = 'assets/svg/calender2.svg';
   static const bag = 'assets/svg/bag.svg';
   static const clock = 'assets/svg/clock.svg';
+  static const edit = 'assets/svg/edit.svg';
+  static const paperPin = 'assets/svg/paper pin.svg';
 }

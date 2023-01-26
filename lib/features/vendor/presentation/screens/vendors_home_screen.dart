@@ -1,8 +1,7 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import '../../../../core/assets_path/font_path.dart';
@@ -48,12 +47,12 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                           fontSize: 17.sp),
                     ),
                   ),
-                  SvgPicture.asset(
+                  IconButton(onPressed: (){Navigator.pushNamed(context, ScreenName.vendorNotificationScreen);}, icon: SvgPicture.asset(
                     SvgPath.notificationBill,
                     color: Colors.white,
                     height: 28.h,
                     width: 23.w,
-                  ),
+                  )),
                 ],
               ),
               SizedBox(
@@ -95,15 +94,15 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                       underline: const SizedBox.shrink(),
                       items: itemsList
                           .map((e) => DropdownMenuItem(
-                        value: e,
-                        child: Text(
-                          e,
-                          style: TextStyle(
-                              color: const Color(0xff666666),
-                              fontFamily: FontPath.almaraiRegular,
-                              fontSize: 14.sp),
-                        ),
-                      ))
+                                value: e,
+                                child: Text(
+                                  e,
+                                  style: TextStyle(
+                                      color: const Color(0xff666666),
+                                      fontFamily: FontPath.almaraiRegular,
+                                      fontSize: 14.sp),
+                                ),
+                              ))
                           .toList(),
                       onChanged: (val) {
                         setState(() {
@@ -136,18 +135,20 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
     );
   }
 
-  Widget orderItemBuilder(){
+  Widget orderItemBuilder() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 24.h,horizontal: 10.w),
+      padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 10.w),
       height: 340.h,
       width: double.infinity,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10.r),
           boxShadow: [
-            BoxShadow(offset: const Offset(0, 0),blurRadius: 10.r,color: Colors.black.withOpacity(0.14))
-          ]
-      ),
+            BoxShadow(
+                offset: const Offset(0, 0),
+                blurRadius: 10.r,
+                color: Colors.black.withOpacity(0.14))
+          ]),
       child: Column(
         children: [
           Text(
@@ -158,7 +159,9 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                 fontFamily: FontPath.almaraiRegular,
                 fontSize: 14.sp),
           ),
-          SizedBox(height: 17.h,),
+          SizedBox(
+            height: 17.h,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -166,22 +169,41 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
               customContainer(title: 'رقم الطلب', bodyTitle: '13455'),
             ],
           ),
-          SizedBox(height: 13.h,),
+          SizedBox(
+            height: 13.h,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              customContainer(title: 'اجمالي سعر الخدمات', bodyTitle: '100 ريال سعودي'),
+              customContainer(
+                  title: 'اجمالي سعر الخدمات', bodyTitle: '100 ريال سعودي'),
               customContainer(title: 'عدد الخدمات', bodyTitle: '10 خدمات'),
             ],
           ),
-          SizedBox(height: 17.h,),
-          CustomVendorButton(buttonTitle: 'عرض تفاصيل الطلب', isTapped: (){}, width: double.infinity, paddingVertical: 12.h, paddingHorizontal: 45.w)
+          SizedBox(
+            height: 17.h,
+          ),
+          CustomVendorButton(
+              buttonTitle: 'عرض تفاصيل الطلب',
+              isTapped: () {
+                if(value == 'في المركز'){
+                  Navigator.pushNamed(context, ScreenName.orderInCenterDetailsScreen);
+                }else{
+                  Navigator.pushNamed(context, ScreenName.orderInHomeDetailsScreen);
+                }
+              },
+              width: double.infinity,
+              paddingVertical: 12.h,
+              paddingHorizontal: 45.w)
         ],
       ),
     );
   }
 
-  Widget customContainer({required String title,required String bodyTitle,}){
+  Widget customContainer({
+    required String title,
+    required String bodyTitle,
+  }) {
     return Container(
       height: 88.h,
       width: 150.w,
@@ -189,7 +211,6 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
         color: AppColorsLightTheme.authTextFieldFillColor,
         borderRadius: BorderRadius.circular(10.r),
         border: Border.all(color: AppColorsLightTheme.primaryColor),
-
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -203,7 +224,9 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                 fontFamily: FontPath.almaraiRegular,
                 fontSize: 14.sp),
           ),
-          SizedBox(height: 12.h,),
+          SizedBox(
+            height: 12.h,
+          ),
           Text(
             bodyTitle,
             textAlign: TextAlign.center,
@@ -217,4 +240,3 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
     );
   }
 }
-
