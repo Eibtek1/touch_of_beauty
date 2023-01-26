@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/reservation_cubit/reservation_cubit.dart';
+import 'core/app_router/app_router.dart';
+import 'core/app_router/screens_name.dart';
+import 'features/vendor/presentation/screens/order_screens/center_orders_details_screen.dart';
 import 'features/vendor/presentation/screens/vendor_main_layout.dart';
 
 void main() {
@@ -38,7 +41,7 @@ class MyApp extends StatelessWidget {
               ),
               // onGenerateRoute: AppRouter.generateRoute,
               // initialRoute: ScreenName.splashscreen,
-              home: const VendorMainLayout(),
+              home: const HomeOrderDetailsScreen(),
             ));
       },
     );
