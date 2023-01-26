@@ -6,8 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/reservation_cubit/reservation_cubit.dart';
 import 'core/app_router/app_router.dart';
 import 'core/app_router/screens_name.dart';
-import 'features/vendor/presentation/screens/order_screens/center_orders_details_screen.dart';
-import 'features/vendor/presentation/screens/vendor_main_layout.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,27 +20,28 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 812),
       builder: (BuildContext context, Widget? child) {
         return MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (context) => ReservationCubit()),
+          providers: [
+            BlocProvider(create: (context) => ReservationCubit()),
+          ],
+          child: MaterialApp(
+            title: 'لمسة جمال',
+            localizationsDelegates: const [
+              GlobalCupertinoLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
             ],
-            child: MaterialApp(
-              title: 'لمسة جمال',
-              localizationsDelegates: const [
-                GlobalCupertinoLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-              ],
-              supportedLocales: const [
-                Locale("ar", "AE") // OR Locale('ar', 'AE') OR Other RTL locales
-              ],
-              theme: ThemeData(
-                primarySwatch:
-                    createMaterialColor(AppColorsLightTheme.primaryColor),
-              ),
-              // onGenerateRoute: AppRouter.generateRoute,
-              // initialRoute: ScreenName.splashscreen,
-              home: const HomeOrderDetailsScreen(),
-            ));
+            supportedLocales: const [
+              Locale("ar", "AE") // OR Locale('ar', 'AE') OR Other RTL locales
+            ],
+            theme: ThemeData(
+              primarySwatch:
+                  createMaterialColor(AppColorsLightTheme.primaryColor),
+            ),
+            onGenerateRoute: AppRouter.generateRoute,
+            initialRoute: ScreenName.splashscreen,
+            // home: const HomeOrderDetailsScreen(),
+          ),
+        );
       },
     );
   }

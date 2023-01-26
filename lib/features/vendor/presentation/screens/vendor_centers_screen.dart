@@ -6,6 +6,7 @@ import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/svg_path.dart';
 import '../../../freelancer/presentation/widgets/screen_layout_widget.dart';
+import '../widgets/screen_layout_widget-with_logo.dart';
 
 class VendorCentersScreen extends StatelessWidget {
   const VendorCentersScreen({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class VendorCentersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BackgroundScreenWidget(
+      body: BackgroundScreenWithLogoWidget(
         firstContainerBackgroundHeight: 151.h,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -43,14 +44,7 @@ class VendorCentersScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 40.h,
-              ),
-              Center(
-                child: Image.asset(
-                  ImagePath.vendorLogo,
-                  height: 104.h,
-                  width: 104.w,
-                ),
+                height: 186.h,
               ),
               buildItem(svgImage: SvgPath.centersIcon, title: 'بيانات المركز'),
               SizedBox(
