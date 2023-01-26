@@ -25,6 +25,7 @@ import '../../features/user/presentation/screens/home_screen_screens/our_service
 import '../../features/vendor/presentation/screens/order_screens/center_orders_details_screen.dart';
 import '../../features/vendor/presentation/screens/order_screens/home_orders_details_screen.dart';
 import '../../features/vendor/presentation/screens/vendor_main_layout.dart';
+import '../../features/vendor/presentation/screens/vendor_notification_screen.dart';
 
 
 
@@ -48,6 +49,8 @@ class AppRouter {
           return _animateRouteBuilder(const CenterOrderDetailsScreen());
         case ScreenName.orderInHomeDetailsScreen:
           return _animateRouteBuilder(const HomeOrderDetailsScreen());
+        case ScreenName.vendorNotificationScreen:
+          return _animateRouteBuilder(const VendorNotificationScreen());
         case ScreenName.orderDetailsScreen:
           return _animateRouteBuilder(const OrderDetailsScreen());
         case ScreenName.userCategoryDetailsScreen:

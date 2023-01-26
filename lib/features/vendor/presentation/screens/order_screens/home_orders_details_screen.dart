@@ -28,10 +28,15 @@ class HomeOrderDetailsScreen extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Icon(
-                      Icons.arrow_back_rounded,
-                      size: 24.r,
-                      color: Colors.white,
+                    InkWell(
+                      onTap: (){
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.arrow_back_rounded,
+                        size: 24.r,
+                        color: Colors.white,
+                      ),
                     ),
                     Expanded(
                       child: Text(

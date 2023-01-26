@@ -24,5 +24,6 @@ class ScreenName{
   static const paymentScreen = 'payment_screen.dart';
   static const orderInCenterDetailsScreen = 'center_order_details.dart';
   static const orderInHomeDetailsScreen = 'home_order_details.dart';
+  static const vendorNotificationScreen = 'vendor_notification.dart';
 
 }

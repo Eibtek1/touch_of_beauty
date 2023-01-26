@@ -47,12 +47,12 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                           fontSize: 17.sp),
                     ),
                   ),
-                  SvgPicture.asset(
+                  IconButton(onPressed: (){Navigator.pushNamed(context, ScreenName.vendorNotificationScreen);}, icon: SvgPicture.asset(
                     SvgPath.notificationBill,
                     color: Colors.white,
                     height: 28.h,
                     width: 23.w,
-                  ),
+                  )),
                 ],
               ),
               SizedBox(
