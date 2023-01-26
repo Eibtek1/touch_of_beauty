@@ -46,7 +46,11 @@ class VendorCentersScreen extends StatelessWidget {
                 height: 40.h,
               ),
               Center(
-                child: Image.asset(ImagePath.vendorLogo,height: 104.h,width: 104.w,),
+                child: Image.asset(
+                  ImagePath.vendorLogo,
+                  height: 104.h,
+                  width: 104.w,
+                ),
               ),
               buildItem(svgImage: SvgPath.centersIcon, title: 'بيانات المركز'),
               SizedBox(
@@ -76,17 +80,21 @@ class VendorCentersScreen extends StatelessWidget {
   }
 
   Widget buildItem({
-  required String svgImage,
-  required String title,
-}){
+    required String svgImage,
+    required String title,
+  }) {
     return ListTile(
-      leading: SvgPicture.asset(svgImage,color: AppColorsLightTheme.primaryColor,),
-      title: Text(title,
-      style: TextStyle(
-        color: const Color(0xff3C475C),
-        fontSize: 14.sp,
-        fontFamily: FontPath.almaraiRegular
-      ),),
+      leading: SvgPicture.asset(
+        svgImage,
+        color: AppColorsLightTheme.primaryColor,
+      ),
+      title: Text(
+        title,
+        style: TextStyle(
+            color: const Color(0xff3C475C),
+            fontSize: 14.sp,
+            fontFamily: FontPath.almaraiRegular),
+      ),
       trailing: const Icon(Icons.arrow_forward_ios),
     );
   }
