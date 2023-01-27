@@ -40,9 +40,9 @@ class MyApp extends StatelessWidget {
               primarySwatch:
                   createMaterialColor(AppColorsLightTheme.primaryColor),
             ),
-            // onGenerateRoute: AppRouter.generateRoute,
-            // initialRoute: ScreenName.splashscreen,
-            home: const EditCenterDetailsScreen(),
+            onGenerateRoute: AppRouter.generateRoute,
+            initialRoute: ScreenName.splashscreen,
+            // home: const EditCenterDetailsScreen(),
           ),
         );
       },
