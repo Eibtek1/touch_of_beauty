@@ -5,7 +5,7 @@ import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/svg_path.dart';
-import '../widgets/screen_layout_widget-with_logo.dart';
+import '../widgets/screen_layout_widget_with_logo.dart';
 
 class VendorCentersScreen extends StatelessWidget {
   const VendorCentersScreen({Key? key}) : super(key: key);
@@ -57,12 +57,16 @@ class VendorCentersScreen extends StatelessWidget {
                 height: 10.h,
               ),
               const Divider(),
-              buildItem(svgImage: SvgPath.clock, title: 'مواعيد العمل', onTap: (){}),
+              buildItem(svgImage: SvgPath.clock, title: 'مواعيد العمل', onTap: (){
+                Navigator.pushNamed(context, ScreenName.centerWorkingTimeScreen);
+              }),
               SizedBox(
                 height: 10.h,
               ),
               const Divider(),
-              buildItem(svgImage: SvgPath.bag, title: 'خدماتي', onTap: (){}),
+              buildItem(svgImage: SvgPath.bag, title: 'خدماتي', onTap: (){
+                Navigator.pushNamed(context, ScreenName.servicesScreen);
+              }),
               SizedBox(
                 height: 10.h,
               ),

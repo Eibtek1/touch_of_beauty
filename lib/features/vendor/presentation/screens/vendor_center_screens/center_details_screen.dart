@@ -8,7 +8,7 @@ import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 
 import '../../../../../core/assets_path/font_path.dart';
 import '../../widgets/center_details/custom_container.dart';
-import '../../widgets/screen_layout_widget-with_logo.dart';
+import '../../widgets/screen_layout_widget_with_logo.dart';
 
 class CenterDetailsScreen extends StatelessWidget {
   const CenterDetailsScreen({Key? key}) : super(key: key);

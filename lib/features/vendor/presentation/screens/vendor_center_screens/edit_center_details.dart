@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:touch_of_beauty/features/vendor/presentation/widgets/custom_vendor_button.dart';
-
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
@@ -10,7 +9,7 @@ import '../../../../../core/assets_path/images_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
 import '../../widgets/center_details/custo_text_form_field.dart';
 import '../../widgets/center_details/custom_container.dart';
-import '../../widgets/screen_layout_widget-with_logo.dart';
+import '../../widgets/screen_layout_widget_with_logo.dart';
 
 class EditCenterDetailsScreen extends StatefulWidget {
   const EditCenterDetailsScreen({Key? key}) : super(key: key);

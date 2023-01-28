@@ -3,13 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/assets_path/font_path.dart';
 
 class TimeDropDownWidget extends StatefulWidget {
-  final bool isMorning;
 
-  const TimeDropDownWidget({Key? key, this.isMorning = true}) : super(key: key);
+  const TimeDropDownWidget({Key? key}) : super(key: key);
 
   @override
   State<TimeDropDownWidget> createState() => _TimeDropDownWidgetState();
 }
+
 List<String> timeMorningList = [
   '1 صباحا',
   '2 صباحا',
@@ -23,8 +23,6 @@ List<String> timeMorningList = [
   '10 صباحا',
   '11 صباحا',
   '12 صباحا',
-];
-List<String> timeEveningList = [
   '1 مساء',
   '2 مساء',
   '3 مساء',
@@ -38,9 +36,11 @@ List<String> timeEveningList = [
   '11 مساء',
   '12 مساء',
 ];
-class _TimeDropDownWidgetState extends State<TimeDropDownWidget> {
 
-  String value = timeEveningList.first;
+
+class _TimeDropDownWidgetState extends State<TimeDropDownWidget> {
+  String timeMorningValue = timeMorningList.first;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,35 +57,22 @@ class _TimeDropDownWidgetState extends State<TimeDropDownWidget> {
       child: DropdownButton(
         underline: const SizedBox.shrink(),
         isExpanded: true,
-        items: widget.isMorning
-            ? timeMorningList
-                .map((e) => DropdownMenuItem(
-                        value: value,
-                        child: Text(
-                      e,
-                      style: TextStyle(
-                          color: const Color(0xff3C475C),
-                          fontFamily: FontPath.almaraiRegular,
-                          fontSize: 10.sp),
-                    ),))
-                .toList()
-            : timeEveningList
-                .map((e) => DropdownMenuItem(
-                        value: value,
-                        child: Text(
-                      e,
-                      style: TextStyle(
-                          color: const Color(0xff3C475C),
-                          fontFamily: FontPath.almaraiRegular,
-                          fontSize: 10.sp),
-                    )))
-                .toList(),
+        items: timeMorningList.map((e) => DropdownMenuItem(
+            value: e,
+            child: Text(
+              e,
+              style: TextStyle(
+                  color: const Color(0xff3C475C),
+                  fontFamily: FontPath.almaraiRegular,
+                  fontSize: 10.sp),
+            ),
+          ),).toList(),
         onChanged: (val) {
           setState(() {
-            value = val!;
+            timeMorningValue = val!;
           });
         },
-        value: value,
+        value: timeMorningValue,
       ),
     );
   }
