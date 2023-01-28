@@ -10,7 +10,8 @@ import 'features/vendor/presentation/screens/vendor_center_screens/add_services_
 import 'features/vendor/presentation/screens/vendor_center_screens/center_details_screen.dart';
 import 'features/vendor/presentation/screens/vendor_center_screens/center_working_time_screen.dart';
 import 'features/vendor/presentation/screens/vendor_center_screens/edit_center_details.dart';
-import 'features/vendor/presentation/screens/vendor_center_screens/services_screen.dart';
+import 'features/vendor/presentation/screens/vendor_center_screens/vendor_reservations_screen.dart';
+import 'features/vendor/presentation/screens/vendor_center_screens/vendor_services_screen.dart';
 import 'features/vendor/presentation/screens/vendor_notification_screen.dart';
 
 void main() {
@@ -43,9 +44,9 @@ class MyApp extends StatelessWidget {
               primarySwatch:
                   createMaterialColor(AppColorsLightTheme.primaryColor),
             ),
-            // onGenerateRoute: AppRouter.generateRoute,
-            // initialRoute: ScreenName.splashscreen,
-            home:  ServicesScreen(),
+            onGenerateRoute: AppRouter.generateRoute,
+            initialRoute: ScreenName.splashscreen,
+            // home:  VendorReservationsScreen(),
           ),
         );
       },

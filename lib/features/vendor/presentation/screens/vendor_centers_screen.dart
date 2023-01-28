@@ -65,13 +65,15 @@ class VendorCentersScreen extends StatelessWidget {
               ),
               const Divider(),
               buildItem(svgImage: SvgPath.bag, title: 'خدماتي', onTap: (){
-                Navigator.pushNamed(context, ScreenName.servicesScreen);
+                Navigator.pushNamed(context, ScreenName.vendorServicesScreen);
               }),
               SizedBox(
                 height: 10.h,
               ),
               const Divider(),
-              buildItem(svgImage: SvgPath.calender2, title: 'حجوزاتي', onTap: (){}),
+              buildItem(svgImage: SvgPath.calender2, title: 'حجوزاتي', onTap: (){
+                Navigator.pushNamed(context, ScreenName.vendorReservationsScreen);
+              }),
               SizedBox(
                 height: 10.h,
               ),
