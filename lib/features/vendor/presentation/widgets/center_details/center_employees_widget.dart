@@ -14,7 +14,7 @@ class CenterEmployeesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     InputBorder outlineBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(16.r),
-      borderSide: BorderSide(color: Colors.transparent)
+      borderSide: const BorderSide(color: Colors.transparent)
     );
     return Column(
       children: [

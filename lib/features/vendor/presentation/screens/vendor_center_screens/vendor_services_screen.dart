@@ -11,8 +11,8 @@ import '../../../../freelancer/presentation/widgets/custom_vendor_button.dart';
 import '../../../../user/presentation/widgets/home_screen_widgets/grid_item_builder.dart';
 import '../../widgets/screen_layout_widget_with_logo.dart';
 
-class ServicesScreen extends StatelessWidget {
-  ServicesScreen({Key? key}) : super(key: key);
+class VendorServicesScreen extends StatelessWidget {
+  VendorServicesScreen({Key? key}) : super(key: key);
   final List<Map<String, dynamic>> itemsList = [
     {'image': ImagePath.babyCare, 'title': "العناية بالطفل"},
     {'image': ImagePath.beautyCenter, 'title': "قسم التجميل"},
@@ -101,7 +101,9 @@ class ServicesScreen extends StatelessWidget {
                     )),
               ),
               const Spacer(),
-              CustomVendorButton(buttonTitle: 'اضافة خدمة جديدة', isTapped: (){}, width: double.infinity, paddingVertical: 14.h, paddingHorizontal: 45.w),
+              CustomVendorButton(buttonTitle: 'اضافة خدمة جديدة', isTapped: (){
+                Navigator.pushNamed(context, ScreenName.addToServicesScreen);
+              }, width: double.infinity, paddingVertical: 14.h, paddingHorizontal: 45.w),
               SizedBox(
                 height: 40.h,
               ),

@@ -12,6 +12,8 @@ import 'package:touch_of_beauty/features/user/presentation/screens/user_main_lay
 import '../../features/authentication/presentation/screens/vendor_register.dart';
 import '../../features/chat/screens/chat_screen.dart';
 import '../../features/freelancer/presentation/screens/freelance_main_layout.dart';
+import '../../features/freelancer/presentation/screens/freelancer_center_screens/freelancer_services_screen.dart';
+import '../../features/freelancer/presentation/screens/freelancer_notification_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/all_centers_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/categories_details_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/complains_screen.dart';
@@ -24,10 +26,12 @@ import '../../features/user/presentation/screens/home_screen_screens/order_scree
 import '../../features/user/presentation/screens/home_screen_screens/our_services_screen.dart';
 import '../../features/vendor/presentation/screens/order_screens/center_orders_details_screen.dart';
 import '../../features/vendor/presentation/screens/order_screens/home_orders_details_screen.dart';
+import '../../features/vendor/presentation/screens/vendor_center_screens/add_services_screen.dart';
 import '../../features/vendor/presentation/screens/vendor_center_screens/center_details_screen.dart';
 import '../../features/vendor/presentation/screens/vendor_center_screens/center_working_time_screen.dart';
 import '../../features/vendor/presentation/screens/vendor_center_screens/edit_center_details.dart';
-import '../../features/vendor/presentation/screens/vendor_center_screens/services_screen.dart';
+import '../../features/vendor/presentation/screens/vendor_center_screens/vendor_reservations_screen.dart';
+import '../../features/vendor/presentation/screens/vendor_center_screens/vendor_services_screen.dart';
 import '../../features/vendor/presentation/screens/vendor_main_layout.dart';
 import '../../features/vendor/presentation/screens/vendor_notification_screen.dart';
 
@@ -55,6 +59,8 @@ class AppRouter {
           return _animateRouteBuilder(const HomeOrderDetailsScreen());
         case ScreenName.vendorNotificationScreen:
           return _animateRouteBuilder(const VendorNotificationScreen());
+        case ScreenName.freelancerNotificationScreen:
+          return _animateRouteBuilder(const FreelancerNotificationScreen());
         case ScreenName.orderDetailsScreen:
           return _animateRouteBuilder(const OrderDetailsScreen());
         case ScreenName.userCategoryDetailsScreen:
@@ -64,8 +70,14 @@ class AppRouter {
           return _animateRouteBuilder( SearchScreen());
         case ScreenName.editCenterScreen:
           return _animateRouteBuilder( const EditCenterDetailsScreen());
-        case ScreenName.servicesScreen:
-          return _animateRouteBuilder( ServicesScreen());
+        case ScreenName.vendorServicesScreen:
+          return _animateRouteBuilder( VendorServicesScreen());
+        case ScreenName.freelancerServicesScreen:
+          return _animateRouteBuilder( FreelancerServicesScreen());
+        case ScreenName.vendorReservationsScreen:
+          return _animateRouteBuilder( const VendorReservationsScreen());
+        case ScreenName.addToServicesScreen:
+          return _animateRouteBuilder( const AddServicesScreen());
         case ScreenName.centerWorkingTimeScreen:
           return _animateRouteBuilder( const CenterWorkingTimeScreen());
         case ScreenName.detailsCenterScreen:

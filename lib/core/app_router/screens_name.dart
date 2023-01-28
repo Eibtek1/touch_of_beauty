@@ -25,9 +25,13 @@ class ScreenName{
   static const orderInCenterDetailsScreen = 'center_order_details.dart';
   static const orderInHomeDetailsScreen = 'home_order_details.dart';
   static const vendorNotificationScreen = 'vendor_notification.dart';
+  static const freelancerNotificationScreen = 'freelancer_notification.dart';
   static const editCenterScreen = 'edit_center.dart';
   static const detailsCenterScreen = 'center_details.dart';
   static const centerWorkingTimeScreen = 'center_working_time_screen.dart';
-  static const servicesScreen = 'services_screen.dart';
+  static const vendorServicesScreen = 'vendor_services_screen.dart';
+  static const freelancerServicesScreen = 'freelancer_services_screen.dart';
+  static const vendorReservationsScreen = 'vendor_reservations_screen.dart';
+  static const addToServicesScreen = 'add_to_services_screen.dart';
 
 }
