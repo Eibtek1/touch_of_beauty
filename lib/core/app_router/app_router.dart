@@ -24,6 +24,10 @@ import '../../features/user/presentation/screens/home_screen_screens/order_scree
 import '../../features/user/presentation/screens/home_screen_screens/our_services_screen.dart';
 import '../../features/vendor/presentation/screens/order_screens/center_orders_details_screen.dart';
 import '../../features/vendor/presentation/screens/order_screens/home_orders_details_screen.dart';
+import '../../features/vendor/presentation/screens/vendor_center_screens/center_details_screen.dart';
+import '../../features/vendor/presentation/screens/vendor_center_screens/center_working_time_screen.dart';
+import '../../features/vendor/presentation/screens/vendor_center_screens/edit_center_details.dart';
+import '../../features/vendor/presentation/screens/vendor_center_screens/services_screen.dart';
 import '../../features/vendor/presentation/screens/vendor_main_layout.dart';
 import '../../features/vendor/presentation/screens/vendor_notification_screen.dart';
 
@@ -58,6 +62,14 @@ class AppRouter {
           return _animateRouteBuilder(CategoryDetailsScreen(title: arg,));
         case ScreenName.userSearchScreen:
           return _animateRouteBuilder( SearchScreen());
+        case ScreenName.editCenterScreen:
+          return _animateRouteBuilder( const EditCenterDetailsScreen());
+        case ScreenName.servicesScreen:
+          return _animateRouteBuilder( ServicesScreen());
+        case ScreenName.centerWorkingTimeScreen:
+          return _animateRouteBuilder( const CenterWorkingTimeScreen());
+        case ScreenName.detailsCenterScreen:
+          return _animateRouteBuilder( const CenterDetailsScreen());
         case ScreenName.loginScreen:
           return _animateRouteBuilder(const LoginScreen());
         case ScreenName.userRegister:

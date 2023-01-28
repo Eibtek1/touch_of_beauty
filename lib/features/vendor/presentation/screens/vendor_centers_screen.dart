@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
-import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/svg_path.dart';
-import '../../../freelancer/presentation/widgets/screen_layout_widget.dart';
-import '../widgets/screen_layout_widget-with_logo.dart';
+import '../widgets/screen_layout_widget_with_logo.dart';
 
 class VendorCentersScreen extends StatelessWidget {
   const VendorCentersScreen({Key? key}) : super(key: key);
@@ -35,33 +34,44 @@ class VendorCentersScreen extends StatelessWidget {
                           fontSize: 17.sp),
                     ),
                   ),
-                  SvgPicture.asset(
-                    SvgPath.notificationBill,
-                    color: Colors.white,
-                    height: 28.h,
-                    width: 23.w,
+                  InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, ScreenName.vendorNotificationScreen);
+                    },
+                    child: SvgPicture.asset(
+                      SvgPath.notificationBill,
+                      color: Colors.white,
+                      height: 28.h,
+                      width: 23.w,
+                    ),
                   ),
                 ],
               ),
               SizedBox(
                 height: 186.h,
               ),
-              buildItem(svgImage: SvgPath.centersIcon, title: 'بيانات المركز'),
+              buildItem(svgImage: SvgPath.centersIcon, title: 'بيانات المركز', onTap: (){
+                Navigator.pushNamed(context, ScreenName.detailsCenterScreen);
+              }),
               SizedBox(
                 height: 10.h,
               ),
               const Divider(),
-              buildItem(svgImage: SvgPath.clock, title: 'مواعيد العمل'),
+              buildItem(svgImage: SvgPath.clock, title: 'مواعيد العمل', onTap: (){
+                Navigator.pushNamed(context, ScreenName.centerWorkingTimeScreen);
+              }),
               SizedBox(
                 height: 10.h,
               ),
               const Divider(),
-              buildItem(svgImage: SvgPath.bag, title: 'خدماتي'),
+              buildItem(svgImage: SvgPath.bag, title: 'خدماتي', onTap: (){
+                Navigator.pushNamed(context, ScreenName.servicesScreen);
+              }),
               SizedBox(
                 height: 10.h,
               ),
               const Divider(),
-              buildItem(svgImage: SvgPath.calender2, title: 'حجوزاتي'),
+              buildItem(svgImage: SvgPath.calender2, title: 'حجوزاتي', onTap: (){}),
               SizedBox(
                 height: 10.h,
               ),
@@ -76,8 +86,12 @@ class VendorCentersScreen extends StatelessWidget {
   Widget buildItem({
     required String svgImage,
     required String title,
+    required Function onTap
   }) {
     return ListTile(
+      onTap: (){
+        onTap();
+      },
       leading: SvgPicture.asset(
         svgImage,
         color: AppColorsLightTheme.primaryColor,

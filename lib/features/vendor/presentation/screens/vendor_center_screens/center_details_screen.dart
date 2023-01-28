@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 
 import '../../../../../core/assets_path/font_path.dart';
 import '../../widgets/center_details/custom_container.dart';
-import '../../widgets/screen_layout_widget-with_logo.dart';
+import '../../widgets/screen_layout_widget_with_logo.dart';
 
 class CenterDetailsScreen extends StatelessWidget {
   const CenterDetailsScreen({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class CenterDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColorsLightTheme.primaryColor,
+        foregroundColor: Colors.white,
         toolbarHeight: 60.h,
         centerTitle: true,
         title: Text(
@@ -30,7 +32,9 @@ class CenterDetailsScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, ScreenName.editCenterScreen);
+              },
               icon: SvgPicture.asset(
                 SvgPath.edit,
                 width: 31.w,
@@ -48,6 +52,31 @@ class CenterDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Row(
+              //   children: [
+              //     Icon(Icons.arrow_back_rounded,color: Colors.white,),
+              //     Expanded(child: Text(
+              //       'بيانات المركز',
+              //       style: TextStyle(
+              //         fontSize: 17.sp,
+              //         fontFamily: FontPath.almaraiBold,
+              //         color: Colors.white,
+              //       ),
+              //     )),
+              //     IconButton(
+              //         onPressed: () {
+              //           Navigator.pushNamed(context, ScreenName.editCenterScreen);
+              //         },
+              //         icon: SvgPicture.asset(
+              //           SvgPath.edit,
+              //           width: 31.w,
+              //           height: 31.h,
+              //         )),
+              //     SizedBox(
+              //       width: 12.w,
+              //     ),
+              //   ],
+              // ),
               SizedBox(
                 height: 130.h,
               ),

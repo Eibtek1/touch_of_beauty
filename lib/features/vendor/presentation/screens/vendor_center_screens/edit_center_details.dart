@@ -1,27 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:touch_of_beauty/features/vendor/presentation/widgets/custom_vendor_button.dart';
+import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/images_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
+import '../../widgets/center_details/custo_text_form_field.dart';
 import '../../widgets/center_details/custom_container.dart';
-import '../../widgets/screen_layout_widget-with_logo.dart';
+import '../../widgets/screen_layout_widget_with_logo.dart';
 
-class EditCenterDetailsScreen extends StatelessWidget {
+class EditCenterDetailsScreen extends StatefulWidget {
   const EditCenterDetailsScreen({Key? key}) : super(key: key);
 
+  @override
+  State<EditCenterDetailsScreen> createState() => _EditCenterDetailsScreenState();
+}
+
+class _EditCenterDetailsScreenState extends State<EditCenterDetailsScreen> {
+  final TextEditingController centerNameController = TextEditingController();
+  final TextEditingController centerDetailsController = TextEditingController();
+  final TextEditingController centerPhoneController = TextEditingController();
+  @override
+  void initState() {
+    centerNameController.text = 'مركز خانة الجمال';
+    centerDetailsController.text = 'لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا';
+    centerPhoneController.text ='051515151';
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColorsLightTheme.primaryColor,
+        foregroundColor: Colors.white,
+
         toolbarHeight: 60.h,
         centerTitle: true,
         title: Text(
-          'بيانات المركز',
+          'تعديل بيانات المركز',
           style: TextStyle(
             fontSize: 17.sp,
             fontFamily: FontPath.almaraiBold,
@@ -30,7 +49,9 @@ class EditCenterDetailsScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, ScreenName.vendorNotificationScreen);
+              },
               icon: SvgPicture.asset(
                 SvgPath.notificationBill,
                 width: 23.w,
@@ -65,23 +86,46 @@ class EditCenterDetailsScreen extends StatelessWidget {
                     SizedBox(
                       height: 11.h,
                     ),
-                    Container(
-                      height: 147.h,
-                      width: double.infinity,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.r),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(0, 0),
-                              color: Colors.black.withOpacity(0.14),
-                              blurRadius: 10.r,
-                            )
-                          ]),
-                      child: Image.asset(
-                        ImagePath.onboarding3,
-                        fit: BoxFit.cover,
-                      ),
+                    Stack(
+                      children: [
+                        Container(
+                          height: 147.h,
+                          width: double.infinity,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.r),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(0, 0),
+                                  color: Colors.black.withOpacity(0.14),
+                                  blurRadius: 10.r,
+                                )
+                              ]),
+                          child: Image.asset(
+                            ImagePath.onboarding3,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Positioned(
+                          top: 10.h,
+                          left: 12.w,
+                          child: Row(
+                            children: [
+                               Icon(
+                                Icons.delete_outline_rounded,
+                                color: Colors.white,
+                                size: 27.r,
+                              ),
+                              SizedBox(width: 5.w,),
+                              SvgPicture.asset(
+                                SvgPath.edit,
+                                width: 22.w,
+                                height: 22.h,
+                              )
+                            ],
+                          ),
+                        )
+                      ],
                     ),
                     SizedBox(
                       height: 10.h,
@@ -134,18 +178,10 @@ class EditCenterDetailsScreen extends StatelessWidget {
                     SizedBox(
                       height: 5.h,
                     ),
-                    CustomDetailsContainer(
+                    CustomTextFormField(
                       height: 44.h,
                       width: double.infinity,
-                      child: Text(
-                        'مركز خانة الجمال',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontFamily: FontPath.almaraiBold,
-                          color: const Color(0xff8B8989),
-                        ),
-                      ),
+                      controller: centerNameController,
                     ),
                     SizedBox(
                       height: 14.h,
@@ -161,28 +197,10 @@ class EditCenterDetailsScreen extends StatelessWidget {
                     SizedBox(
                       height: 5.h,
                     ),
-                    CustomDetailsContainer(
+                    CustomTextFormField(
                       height: 190.h,
                       width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              'لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا',
-                              textAlign: TextAlign.start,
-                              maxLines: 5,
-                              style: TextStyle(
-                                height: 1.3.h,
-                                overflow: TextOverflow.ellipsis,
-                                fontSize: 12.sp,
-                                fontFamily: FontPath.almaraiRegular,
-                                color: const Color(0xff8B8989),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                      controller: centerDetailsController,
                     ),
                     SizedBox(
                       height: 14.h,
@@ -198,18 +216,10 @@ class EditCenterDetailsScreen extends StatelessWidget {
                     SizedBox(
                       height: 5.h,
                     ),
-                    CustomDetailsContainer(
+                    CustomTextFormField(
                       height: 44.h,
                       width: double.infinity,
-                      child: Text(
-                        'رقم الهاتف',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontFamily: FontPath.almaraiBold,
-                          color: const Color(0xff8B8989),
-                        ),
-                      ),
+                      controller: centerPhoneController,
                     ),
                     SizedBox(
                       height: 14.h,
@@ -277,10 +287,18 @@ class EditCenterDetailsScreen extends StatelessWidget {
                               color: const Color(0xff8B8989),
                             ),
                           ),
-                          SvgPicture.asset(SvgPath.paperPin,height: 22.h,width: 21.w,),
+                          SvgPicture.asset(
+                            SvgPath.paperPin,
+                            height: 22.h,
+                            width: 21.w,
+                          ),
                         ],
                       ),
                     ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CustomVendorButton(buttonTitle: 'تعديل', isTapped: (){}, width: double.infinity, paddingVertical: 12.h, paddingHorizontal: 45.w),
                     SizedBox(
                       height: 20.h,
                     ),
