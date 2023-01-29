@@ -12,7 +12,11 @@ import 'package:touch_of_beauty/features/user/presentation/screens/user_main_lay
 import '../../features/authentication/presentation/screens/vendor_register.dart';
 import '../../features/chat/screens/chat_screen.dart';
 import '../../features/freelancer/presentation/screens/freelance_main_layout.dart';
+import '../../features/freelancer/presentation/screens/freelancer_center_screens/edit_freelancer_details.dart';
+import '../../features/freelancer/presentation/screens/freelancer_center_screens/freelancer_add_services_screen.dart';
+import '../../features/freelancer/presentation/screens/freelancer_center_screens/freelancer_details_screen.dart';
 import '../../features/freelancer/presentation/screens/freelancer_center_screens/freelancer_services_screen.dart';
+import '../../features/freelancer/presentation/screens/freelancer_center_screens/freelancer_working_time_screen.dart';
 import '../../features/freelancer/presentation/screens/freelancer_notification_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/all_centers_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/categories_details_screen.dart';
@@ -70,14 +74,22 @@ class AppRouter {
           return _animateRouteBuilder( SearchScreen());
         case ScreenName.editCenterScreen:
           return _animateRouteBuilder( const EditCenterDetailsScreen());
+        case ScreenName.freelancerDetailsScreen:
+          return _animateRouteBuilder( const FreelancerDetailsScreen());
+        case ScreenName.freelancerEditDetailsScreen:
+          return _animateRouteBuilder( const EditFreelancerDetailsScreen());
+        case ScreenName.freelancerTimeScreen:
+          return _animateRouteBuilder( const FreelancerWorkingTimeScreen());
         case ScreenName.vendorServicesScreen:
           return _animateRouteBuilder( VendorServicesScreen());
         case ScreenName.freelancerServicesScreen:
           return _animateRouteBuilder( FreelancerServicesScreen());
         case ScreenName.vendorReservationsScreen:
           return _animateRouteBuilder( const VendorReservationsScreen());
-        case ScreenName.addToServicesScreen:
+        case ScreenName.vendorAddToServicesScreen:
           return _animateRouteBuilder( const AddServicesScreen());
+        case ScreenName.freelancerAddToServicesScreen:
+          return _animateRouteBuilder( const FreelancerAddServicesScreen());
         case ScreenName.centerWorkingTimeScreen:
           return _animateRouteBuilder( const CenterWorkingTimeScreen());
         case ScreenName.detailsCenterScreen:

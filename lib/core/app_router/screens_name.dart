@@ -31,7 +31,11 @@ class ScreenName{
   static const centerWorkingTimeScreen = 'center_working_time_screen.dart';
   static const vendorServicesScreen = 'vendor_services_screen.dart';
   static const freelancerServicesScreen = 'freelancer_services_screen.dart';
+  static const freelancerDetailsScreen = 'freelancer_details_screen.dart';
+  static const freelancerTimeScreen = 'freelancer_time_screen.dart';
+  static const freelancerEditDetailsScreen = 'freelancer_Edit_details_screen.dart';
   static const vendorReservationsScreen = 'vendor_reservations_screen.dart';
-  static const addToServicesScreen = 'add_to_services_screen.dart';
+  static const vendorAddToServicesScreen = 'add_to_services_screen.dart';
+  static const freelancerAddToServicesScreen = 'freelancer_add_to_services_screen.dart';
 
 }

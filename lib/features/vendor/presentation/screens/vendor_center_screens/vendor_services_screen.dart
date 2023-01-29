@@ -102,7 +102,7 @@ class VendorServicesScreen extends StatelessWidget {
               ),
               const Spacer(),
               CustomVendorButton(buttonTitle: 'اضافة خدمة جديدة', isTapped: (){
-                Navigator.pushNamed(context, ScreenName.addToServicesScreen);
+                Navigator.pushNamed(context, ScreenName.vendorAddToServicesScreen);
               }, width: double.infinity, paddingVertical: 14.h, paddingHorizontal: 45.w),
               SizedBox(
                 height: 40.h,
