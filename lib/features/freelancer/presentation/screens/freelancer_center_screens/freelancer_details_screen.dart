@@ -6,11 +6,11 @@ import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import '../../../../../core/assets_path/font_path.dart';
-import '../../widgets/center_details/custom_container.dart';
-import '../../widgets/screen_layout_widget_with_logo.dart';
+import '../../../../vendor/presentation/widgets/center_details/custom_container.dart';
+import '../../../../vendor/presentation/widgets/screen_layout_widget_with_logo.dart';
 
-class CenterDetailsScreen extends StatelessWidget {
-  const CenterDetailsScreen({Key? key}) : super(key: key);
+class FreelancerDetailsScreen extends StatelessWidget {
+  const FreelancerDetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class CenterDetailsScreen extends StatelessWidget {
         toolbarHeight: 60.h,
         centerTitle: true,
         title: Text(
-          'بيانات المركز',
+          'بيانات مقدم الخدمة',
           style: TextStyle(
             fontSize: 17.sp,
             fontFamily: FontPath.almaraiBold,
@@ -31,14 +31,15 @@ class CenterDetailsScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, ScreenName.editCenterScreen);
-              },
-              icon: SvgPicture.asset(
-                SvgPath.edit,
-                width: 31.w,
-                height: 31.h,
-              )),
+            onPressed: () {
+              Navigator.pushNamed(context, ScreenName.freelancerEditDetailsScreen);
+            },
+            icon: SvgPicture.asset(
+              SvgPath.edit,
+              width: 31.w,
+              height: 31.h,
+            ),
+          ),
           SizedBox(
             width: 12.w,
           ),
@@ -51,31 +52,6 @@ class CenterDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Row(
-              //   children: [
-              //     Icon(Icons.arrow_back_rounded,color: Colors.white,),
-              //     Expanded(child: Text(
-              //       'بيانات المركز',
-              //       style: TextStyle(
-              //         fontSize: 17.sp,
-              //         fontFamily: FontPath.almaraiBold,
-              //         color: Colors.white,
-              //       ),
-              //     )),
-              //     IconButton(
-              //         onPressed: () {
-              //           Navigator.pushNamed(context, ScreenName.editCenterScreen);
-              //         },
-              //         icon: SvgPicture.asset(
-              //           SvgPath.edit,
-              //           width: 31.w,
-              //           height: 31.h,
-              //         )),
-              //     SizedBox(
-              //       width: 12.w,
-              //     ),
-              //   ],
-              // ),
               SizedBox(
                 height: 130.h,
               ),
@@ -83,7 +59,7 @@ class CenterDetailsScreen extends StatelessWidget {
                 child: ListView(
                   children: [
                     Text(
-                      'صور للصالون أو الخدمات المقدمة',
+                      'صور متجر مقدم الخدمة',
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontFamily: FontPath.almaraiBold,
@@ -155,7 +131,7 @@ class CenterDetailsScreen extends StatelessWidget {
                       height: 44.h,
                       width: double.infinity,
                       child: Text(
-                        'مركز خانة الجمال',
+                        'متجر اونلاين',
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           fontSize: 14.sp,
@@ -273,7 +249,11 @@ class CenterDetailsScreen extends StatelessWidget {
                               color: const Color(0xff8B8989),
                             ),
                           ),
-                          SvgPicture.asset(SvgPath.paperPin,height: 22.h,width: 21.w,),
+                          SvgPicture.asset(
+                            SvgPath.paperPin,
+                            height: 22.h,
+                            width: 21.w,
+                          ),
                         ],
                       ),
                     ),

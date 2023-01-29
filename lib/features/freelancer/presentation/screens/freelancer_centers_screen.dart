@@ -51,15 +51,15 @@ class FreelancerCentersScreen extends StatelessWidget {
               SizedBox(
                 height: 186.h,
               ),
-              buildItem(svgImage: SvgPath.centersIcon, title: 'بيانات المركز', onTap: (){
-                Navigator.pushNamed(context, ScreenName.detailsCenterScreen);
+              buildItem(svgImage: SvgPath.centersIcon, title: 'بيانات مقدم الخدمة', onTap: (){
+                Navigator.pushNamed(context, ScreenName.freelancerDetailsScreen);
               }),
               SizedBox(
                 height: 10.h,
               ),
               const Divider(),
               buildItem(svgImage: SvgPath.clock, title: 'مواعيد العمل', onTap: (){
-                Navigator.pushNamed(context, ScreenName.centerWorkingTimeScreen);
+                Navigator.pushNamed(context, ScreenName.freelancerTimeScreen);
               }),
               SizedBox(
                 height: 10.h,
