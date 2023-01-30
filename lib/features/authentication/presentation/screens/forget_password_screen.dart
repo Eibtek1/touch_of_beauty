@@ -41,7 +41,7 @@ class ForgetPasswordScreen extends StatelessWidget {
           ),
           SizedBox(height: 140.h,),
 
-          const AuthTextFormField(hintText: 'ادخل رقم الهاتف'),
+          const AuthTextFormField(hintText: 'ادخل رقم الهاتف', controller: null,),
           SizedBox(height: 30.h,),
 
           AuthButton(

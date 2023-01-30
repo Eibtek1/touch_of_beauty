@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../../../core/app_router/screens_name.dart';
 import '../../../../core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/font_path.dart';
+import '../../../../core/assets_path/svg_path.dart';
 import '../../../../core/enums/vendor_signing_type_enum.dart';
 import '../widgets/auht_text_form_field.dart';
 import '../widgets/auth_button.dart';
-import '../widgets/phone_form_field.dart';
-import '../widgets/show_datepicker_widget.dart';
+import '../widgets/citeis_dropdown_button.dart';
+
 
 class VendorRegisterScreen extends StatefulWidget {
   const VendorRegisterScreen({Key? key}) : super(key: key);
@@ -17,7 +19,12 @@ class VendorRegisterScreen extends StatefulWidget {
 }
 
 class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
-  TextEditingController dateController = TextEditingController();
+  final TextEditingController name = TextEditingController();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController description = TextEditingController();
+  final TextEditingController phone = TextEditingController();
+  final TextEditingController password = TextEditingController();
+  final TextEditingController confirmPassword = TextEditingController();
   VendorSigningType vendorSigningType = VendorSigningType.center;
 
   @override
@@ -27,7 +34,7 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
-          toolbarHeight: 70.h,
+          toolbarHeight: 60.h,
           elevation: 0,
         ),
         body: ListView(
@@ -54,61 +61,48 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                   fontSize: 16.sp),
             ),
             SizedBox(
-              height: 35.h,
+              height: 14.h,
             ),
-            const AuthTextFormField(hintText: 'اسم المستخدم'),
+            AuthTextFormField(
+              hintText: 'اسم المستخدم',
+              controller: name,
+            ),
             SizedBox(
               height: 14.h,
             ),
-            const AuthTextFormField(hintText: 'البريد الالكتروني'),
+            AuthTextFormField(
+              hintText: 'البريد الالكتروني',
+              controller: email,
+            ),
             SizedBox(
               height: 14.h,
             ),
-            const AuthTextFormField(hintText: 'المدينة'),
+            const CityDropDownButton(),
             SizedBox(
               height: 14.h,
             ),
-            const PhoneFormField(),
-            SizedBox(
-              height: 14.h,
-            ),
-            ShowSatePickerWidget(
-              height: 46.h,
-              title: dateController,
-              onTap: () {
-                showDatePicker(
-                  context: context,
-                  initialDate: DateTime(2001),
-                  firstDate: DateTime(1990),
-                  lastDate: DateTime.now(),
-                  builder: (context, child) {
-                    return Theme(
-                      data: ThemeData().copyWith(
-                        colorScheme: const ColorScheme.light(
-                            primary: AppColorsLightTheme.secondaryColor,
-                            secondary: Colors.white),
-                        dialogBackgroundColor: Colors.white,
-                      ),
-                      child: child!,
-                    );
-                  },
-                ).then((value) {
-                  setState(() {
-                    dateController.text = value!.toString().split(' ').first;
-                  });
-                });
-              },
-            ),
-            if (vendorSigningType == VendorSigningType.center)
-              SizedBox(
-                height: 14.h,
+            AuthTextFormField(
+              hintText: 'رقم الهاتف',
+              keyboardType: TextInputType.phone,
+              suffix: Padding(
+                padding: EdgeInsets.only(left: 10.w),
+                child: SvgPicture.asset(
+                  SvgPath.saudiPhoneFieldIcon,
+                  width: 52.w,
+                  height: 15.h,
+                ),
               ),
-            if (vendorSigningType == VendorSigningType.center)
-              const AuthTextFormField(hintText: 'اسم الصالون'),
+              controller: phone,
+            ),
+
+            vendorSigningType == VendorSigningType.center?SizedBox(
+              height: 14.h,
+            ):const SizedBox.shrink(),
+            vendorSigningType == VendorSigningType.center?AuthTextFormField(hintText: 'اسم الصالون', controller: null, ):const SizedBox.shrink(),
             SizedBox(
               height: 14.h,
             ),
-            const AuthTextFormField(hintText: 'الخدمات التي تقدمها'),
+            AuthTextFormField(hintText: 'الخدمات التي تقدمها', controller: description,),
             SizedBox(
               height: 14.h,
             ),
@@ -136,6 +130,7 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                       setState(() {
                         vendorSigningType = value!;
                       });
+                      print(vendorSigningType);
                     },
                   ),
                 ),
@@ -153,24 +148,32 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                       setState(() {
                         vendorSigningType = value!;
                       });
+                      print(vendorSigningType);
                     },
                   ),
                 ),
               ],
             ),
             SizedBox(
-              height: 15.h,
+              height: 14.h,
             ),
-            const AuthTextFormField(hintText: 'كلمة المرور'),
+            AuthTextFormField(
+              hintText: 'كلمة المرور',
+              controller: password,
+            ),
             SizedBox(
               height: 14.h,
             ),
-            const AuthTextFormField(hintText: 'اعد كتابة كلمة المرور'),
+            AuthTextFormField(
+              hintText: 'اعد كتابة كلمة المرور',
+              controller: confirmPassword,
+            ),
+            SizedBox(
+              height: 14.h,
+            ),
             AuthButton(
                 buttonTitle: 'تسجيل',
-                isTapped: () {
-                  Navigator.pushNamed(context, ScreenName.otpScreen,arguments: vendorSigningType);
-                },
+                isTapped: () {},
                 width: double.infinity),
             SizedBox(
               height: 25.h,

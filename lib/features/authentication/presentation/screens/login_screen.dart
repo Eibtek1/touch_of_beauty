@@ -9,9 +9,16 @@ import 'package:touch_of_beauty/features/authentication/presentation/widgets/auh
 import '../../../../core/assets_path/font_path.dart';
 import '../widgets/auth_button.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController phone = TextEditingController();
+  final TextEditingController password = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,11 +51,25 @@ class LoginScreen extends StatelessWidget {
             SizedBox(
               height: 24.h,
             ),
-            const AuthTextFormField(hintText: 'اسم المستخدم'),
+            AuthTextFormField(
+              hintText: 'رقم الهاتف',
+              suffix: Padding(
+                padding: EdgeInsets.only(left: 10.w),
+                child: SvgPicture.asset(
+                  SvgPath.saudiPhoneFieldIcon,
+                  width: 52.w,
+                  height: 15.h,
+                ),
+              ),
+              controller: phone,
+            ),
             SizedBox(
               height: 10.h,
             ),
-            const AuthTextFormField(hintText: 'كلمة المرور'),
+            AuthTextFormField(
+              hintText: 'كلمة المرور',
+              controller: password,
+            ),
             SizedBox(
               height: 8.h,
             ),

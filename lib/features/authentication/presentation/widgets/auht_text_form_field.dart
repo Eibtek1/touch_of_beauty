@@ -7,11 +7,15 @@ import '../../../../core/assets_path/font_path.dart';
 class AuthTextFormField extends StatelessWidget {
   final String hintText;
   final String Function(String?)? validate;
-  const AuthTextFormField({Key? key, required this.hintText, this.validate,}) : super(key: key);
+  final Widget? suffix;
+  final TextEditingController? controller;
+  final TextInputType keyboardType;
+  const AuthTextFormField({Key? key, required this.hintText, this.validate, this.suffix, required this.controller, this.keyboardType = TextInputType.text,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: keyboardType,
       validator: validate,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -33,6 +37,7 @@ class AuthTextFormField extends StatelessWidget {
             color: Colors.grey,
             fontSize: 14.sp,
             fontFamily: FontPath.poppinsBold),
+        suffixIcon: suffix,
         contentPadding: EdgeInsets.all(10.r),
       ),
     );
