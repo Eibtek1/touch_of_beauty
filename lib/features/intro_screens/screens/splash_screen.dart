@@ -6,6 +6,9 @@ import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 
+import '../../../core/cache_manager/cache_keys.dart';
+import '../../../core/cache_manager/shared_preferences.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -19,15 +22,31 @@ class _SplashScreenState extends State<SplashScreen> {
     _loading();
     super.initState();
   }
-   _loading(){
-    Timer(const Duration(seconds: 2), () { Navigator.pushReplacementNamed(context, ScreenName.onboardingScreen);});
+
+  _loading() {
+    bool? onboarding = CacheHelper.getData(key: CacheKeys.onboarding);
+    Timer(
+      const Duration(seconds: 2),
+      () {
+        if(onboarding==null){
+          Navigator.pushReplacementNamed(context, ScreenName.onboardingScreen);
+        }else{
+          Navigator.pushReplacementNamed(context, ScreenName.loginScreen);
+        }
+      },
+    );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColorsLightTheme.primaryColor,
       body: Center(
-        child: Image.asset(ImagePath.splashLogoImage,height: 227.h,width: 320.w,),
+        child: Image.asset(
+          ImagePath.splashLogoImage,
+          height: 227.h,
+          width: 320.w,
+        ),
       ),
     );
   }

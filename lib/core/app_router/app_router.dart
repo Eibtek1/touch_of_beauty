@@ -102,7 +102,7 @@ class AppRouter {
           return _animateRouteBuilder(const VendorRegisterScreen());
         case ScreenName.otpScreen:
           final args = settings.arguments;
-          return _animateRouteBuilder( OtpScreen(registerType: args,));
+          return _animateRouteBuilder( OtpScreen(phoneNumber: args,));
         case ScreenName.chooseAddressScreen:
           return _animateRouteBuilder(const ChooseAddressScreen());
         case ScreenName.paymentScreen:

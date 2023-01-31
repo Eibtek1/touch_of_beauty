@@ -3,34 +3,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/core/network/dio_helper.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/reservation_cubit/reservation_cubit.dart';
-import 'package:touch_of_beauty/try_screen.dart';
 import 'core/app_router/app_router.dart';
 import 'core/app_router/screens_name.dart';
+import 'core/cache_manager/shared_preferences.dart';
 import 'features/authentication/buisness_logic/auth_cubit.dart';
-import 'features/authentication/presentation/screens/user_register.dart';
-import 'features/authentication/presentation/screens/vendor_register.dart';
-import 'features/vendor/presentation/screens/vendor_center_screens/add_services_screen.dart';
-import 'features/vendor/presentation/screens/vendor_center_screens/center_details_screen.dart';
-import 'features/vendor/presentation/screens/vendor_center_screens/center_working_time_screen.dart';
-import 'features/vendor/presentation/screens/vendor_center_screens/edit_center_details.dart';
-import 'features/vendor/presentation/screens/vendor_center_screens/vendor_reservations_screen.dart';
-import 'features/vendor/presentation/screens/vendor_center_screens/vendor_services_screen.dart';
-import 'features/vendor/presentation/screens/vendor_notification_screen.dart';
+import 'features/authentication/presentation/screens/otp_screen.dart';
+
 
 void main() async{
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
   await DioHelper.init();
-   getCitiesList();
-
-   
+  await CacheHelper.init();
+  runApp(const MyApp());
 }
 
-void getCitiesList()async {
-
-}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -43,7 +31,7 @@ class MyApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => ReservationCubit()),
-            BlocProvider(create: (context) => AuthCubit()..getCities()..login(phone: '01022542758', password: 'String@123')),
+            BlocProvider(create: (context) => AuthCubit()..getCities()),
           ],
           child: MaterialApp(
             title: 'لمسة جمال',
@@ -59,9 +47,9 @@ class MyApp extends StatelessWidget {
               primarySwatch:
                   createMaterialColor(AppColorsLightTheme.primaryColor),
             ),
-            // onGenerateRoute: AppRouter.generateRoute,
-            // initialRoute: ScreenName.splashscreen,
-            home:  VendorRegisterScreen(),
+            onGenerateRoute: AppRouter.generateRoute,
+            initialRoute: ScreenName.splashscreen,
+            // home:  OtpScreen(phoneNumber: "5454545454"),
           ),
         );
       },
