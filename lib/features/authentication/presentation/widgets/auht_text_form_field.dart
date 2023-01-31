@@ -6,14 +6,22 @@ import '../../../../core/assets_path/font_path.dart';
 
 class AuthTextFormField extends StatelessWidget {
   final String hintText;
-  final String Function(String?)? validate;
-  const AuthTextFormField({Key? key, required this.hintText, this.validate,}) : super(key: key);
+  final String? Function(String?)? validate;
+  final Widget? suffix;
+  final TextEditingController? controller;
+  final TextInputType keyboardType;
+  final int maxLength;
+  const AuthTextFormField({Key? key, required this.hintText, this.validate, this.suffix, required this.controller, this.keyboardType = TextInputType.text, this.maxLength = 100,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLength: maxLength,
+      keyboardType: keyboardType,
+      controller: controller,
       validator: validate,
       decoration: InputDecoration(
+        counter: const SizedBox.shrink(),
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.r),
             borderSide: const BorderSide(
@@ -33,6 +41,7 @@ class AuthTextFormField extends StatelessWidget {
             color: Colors.grey,
             fontSize: 14.sp,
             fontFamily: FontPath.poppinsBold),
+        suffixIcon: suffix,
         contentPadding: EdgeInsets.all(10.r),
       ),
     );

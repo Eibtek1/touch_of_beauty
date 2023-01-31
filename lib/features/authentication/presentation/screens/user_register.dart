@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
+import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import '../../../../core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../widgets/auht_text_form_field.dart';
 import '../widgets/auth_button.dart';
-import '../widgets/phone_form_field.dart';
+import '../widgets/citeis_dropdown_button.dart';
 
 class UserRegisterScreen extends StatefulWidget {
   const UserRegisterScreen({Key? key}) : super(key: key);
@@ -15,6 +17,11 @@ class UserRegisterScreen extends StatefulWidget {
 }
 
 class _UserRegisterScreenState extends State<UserRegisterScreen> {
+  final TextEditingController name = TextEditingController();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController phone = TextEditingController();
+  final TextEditingController password = TextEditingController();
+  final TextEditingController confirmPassword = TextEditingController();
   bool chosen = true;
 
   @override
@@ -53,27 +60,51 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
             SizedBox(
               height: 35.h,
             ),
-            const AuthTextFormField(hintText: 'اسم المستخدم'),
+            AuthTextFormField(
+              hintText: 'اسم المستخدم',
+              controller: name,
+            ),
             SizedBox(
               height: 14.h,
             ),
-            const AuthTextFormField(hintText: 'البريد الالكتروني'),
+            AuthTextFormField(
+              hintText: 'البريد الالكتروني',
+              controller: email,
+            ),
             SizedBox(
               height: 14.h,
             ),
-            const AuthTextFormField(hintText: 'المدينة'),
+            const CityDropDownButton(),
             SizedBox(
               height: 14.h,
             ),
-            const PhoneFormField(),
+            AuthTextFormField(
+              hintText: 'رقم الهاتف',
+              keyboardType: TextInputType.phone,
+              suffix: Padding(
+                padding: EdgeInsets.only(left: 10.w),
+                child: SvgPicture.asset(
+                  SvgPath.saudiPhoneFieldIcon,
+                  width: 52.w,
+                  height: 15.h,
+                ),
+              ),
+              controller: phone,
+            ),
             SizedBox(
               height: 14.h,
             ),
-            const AuthTextFormField(hintText: 'كلمة المرور'),
+            AuthTextFormField(
+              hintText: 'كلمة المرور',
+              controller: password,
+            ),
             SizedBox(
               height: 14.h,
             ),
-            const AuthTextFormField(hintText: 'اعد كتابة كلمة المرور'),
+            AuthTextFormField(
+              hintText: 'اعد كتابة كلمة المرور',
+              controller: confirmPassword,
+            ),
             SizedBox(
               height: 25.h,
             ),
@@ -115,15 +146,18 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
               height: 15.h,
             ),
             AuthButton(
-                buttonTitle: 'تسجيل', isTapped: () {
+                buttonTitle: 'تسجيل',
+                isTapped: () {
                   Navigator.pushNamed(context, ScreenName.otpScreen);
-            }, width: double.infinity),
+                },
+                width: double.infinity),
             SizedBox(
               height: 25.h,
             ),
             InkWell(
-              onTap: (){
-                Navigator.pushNamedAndRemoveUntil(context, ScreenName.loginScreen,(route) => false);
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, ScreenName.loginScreen, (route) => false);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

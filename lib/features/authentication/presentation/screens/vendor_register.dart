@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
+import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
 import '../../../../core/app_router/screens_name.dart';
 import '../../../../core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/font_path.dart';
+import '../../../../core/assets_path/svg_path.dart';
 import '../../../../core/enums/vendor_signing_type_enum.dart';
 import '../widgets/auht_text_form_field.dart';
 import '../widgets/auth_button.dart';
-import '../widgets/phone_form_field.dart';
-import '../widgets/show_datepicker_widget.dart';
+import '../widgets/citeis_dropdown_button.dart';
 
 class VendorRegisterScreen extends StatefulWidget {
   const VendorRegisterScreen({Key? key}) : super(key: key);
@@ -17,7 +22,13 @@ class VendorRegisterScreen extends StatefulWidget {
 }
 
 class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
-  TextEditingController dateController = TextEditingController();
+  final TextEditingController name = TextEditingController();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController description = TextEditingController();
+  final TextEditingController phone = TextEditingController();
+  final TextEditingController password = TextEditingController();
+  final TextEditingController confirmPassword = TextEditingController();
+  var formKey = GlobalKey<FormState>();
   VendorSigningType vendorSigningType = VendorSigningType.center;
 
   @override
@@ -27,187 +38,366 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
-          toolbarHeight: 70.h,
+          toolbarHeight: 60.h,
           elevation: 0,
         ),
-        body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          children: [
-            SizedBox(
-              height: 10.h,
-            ),
-            Text(
-              'مستخدم جديد',
-              style: TextStyle(
-                  color: const Color(0xff262626),
-                  fontFamily: FontPath.almaraiBold,
-                  fontSize: 18.sp),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Text(
-              'قم بالتسجيل كمستخدم جديد',
-              style: TextStyle(
-                  color: const Color(0xffABABAB),
-                  fontFamily: FontPath.almaraiRegular,
-                  fontSize: 16.sp),
-            ),
-            SizedBox(
-              height: 35.h,
-            ),
-            const AuthTextFormField(hintText: 'اسم المستخدم'),
-            SizedBox(
-              height: 14.h,
-            ),
-            const AuthTextFormField(hintText: 'البريد الالكتروني'),
-            SizedBox(
-              height: 14.h,
-            ),
-            const AuthTextFormField(hintText: 'المدينة'),
-            SizedBox(
-              height: 14.h,
-            ),
-            const PhoneFormField(),
-            SizedBox(
-              height: 14.h,
-            ),
-            ShowSatePickerWidget(
-              height: 46.h,
-              title: dateController,
-              onTap: () {
-                showDatePicker(
-                  context: context,
-                  initialDate: DateTime(2001),
-                  firstDate: DateTime(1990),
-                  lastDate: DateTime.now(),
-                  builder: (context, child) {
-                    return Theme(
-                      data: ThemeData().copyWith(
-                        colorScheme: const ColorScheme.light(
-                            primary: AppColorsLightTheme.secondaryColor,
-                            secondary: Colors.white),
-                        dialogBackgroundColor: Colors.white,
-                      ),
-                      child: child!,
-                    );
-                  },
-                ).then((value) {
-                  setState(() {
-                    dateController.text = value!.toString().split(' ').first;
-                  });
-                });
-              },
-            ),
-            if (vendorSigningType == VendorSigningType.center)
-              SizedBox(
-                height: 14.h,
-              ),
-            if (vendorSigningType == VendorSigningType.center)
-              const AuthTextFormField(hintText: 'اسم الصالون'),
-            SizedBox(
-              height: 14.h,
-            ),
-            const AuthTextFormField(hintText: 'الخدمات التي تقدمها'),
-            SizedBox(
-              height: 14.h,
-            ),
-            Text(
-              'ما هو نوع مقدم الخدمة؟',
-              style: TextStyle(
-                  color: const Color(0xffABABAB),
-                  fontFamily: FontPath.almaraiRegular,
-                  fontSize: 14.sp),
-            ),
-            Row(
-              children: <Widget>[
-                SizedBox(
-                  width: 125.w,
-                  child: RadioListTile<VendorSigningType>(
-                    activeColor: AppColorsLightTheme.secondaryColor,
-                    title: Text(
-                      'مركز',
-                      style: TextStyle(
-                          fontFamily: FontPath.almaraiLight, fontSize: 12.sp),
-                    ),
-                    value: VendorSigningType.center,
-                    groupValue: vendorSigningType,
-                    onChanged: (VendorSigningType? value) {
-                      setState(() {
-                        vendorSigningType = value!;
-                      });
-                    },
-                  ),
-                ),
-                SizedBox(
-                  width: 125.w,
-                  child: RadioListTile<VendorSigningType>(
-                    activeColor: AppColorsLightTheme.secondaryColor,
-                    title: Text('عمل حر',
-                        style: TextStyle(
-                            fontFamily: FontPath.almaraiLight,
-                            fontSize: 12.sp)),
-                    value: VendorSigningType.freelancer,
-                    groupValue: vendorSigningType,
-                    onChanged: (VendorSigningType? value) {
-                      setState(() {
-                        vendorSigningType = value!;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-            const AuthTextFormField(hintText: 'كلمة المرور'),
-            SizedBox(
-              height: 14.h,
-            ),
-            const AuthTextFormField(hintText: 'اعد كتابة كلمة المرور'),
-            AuthButton(
-                buttonTitle: 'تسجيل',
-                isTapped: () {
-                  Navigator.pushNamed(context, ScreenName.otpScreen,arguments: vendorSigningType);
-                },
-                width: double.infinity),
-            SizedBox(
-              height: 25.h,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, ScreenName.loginScreen, (route) => false);
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+        body: BlocConsumer<AuthCubit, AuthState>(
+          listener: (context, state) {
+            // TODO: implement listener
+          },
+          builder: (context, state) {
+            var cubit = AuthCubit.get(context);
+            return Form(
+              key: formKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: ListView(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
                 children: [
+                  SizedBox(
+                    height: 10.h,
+                  ),
                   Text(
-                    'هل لديك حساب ؟  ',
+                    'مستخدم جديد',
                     style: TextStyle(
                         color: const Color(0xff262626),
-                        fontFamily: FontPath.almaraiRegular,
-                        fontSize: 10.sp),
+                        fontFamily: FontPath.almaraiBold,
+                        fontSize: 18.sp),
+                  ),
+                  SizedBox(
+                    height: 10.h,
                   ),
                   Text(
-                    'تسجيل الدخول',
+                    'قم بالتسجيل كمستخدم جديد',
                     style: TextStyle(
-                        color: AppColorsLightTheme.secondaryColor,
-                        fontFamily: FontPath.almaraiBold,
+                        color: const Color(0xffABABAB),
+                        fontFamily: FontPath.almaraiRegular,
+                        fontSize: 16.sp),
+                  ),
+                  SizedBox(
+                    height: 14.h,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          cubit.getImagePick();
+                        },
+                        child: Container(
+                          height: 100.h,
+                          width: 100.w,
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          decoration: const BoxDecoration(
+                              color: AppColorsLightTheme.primaryColor,
+                              shape: BoxShape.circle),
+                          child: cubit.profileImage == null
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'صورة شخصيه',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: FontPath.almaraiRegular,
+                                          fontSize: 10.sp),
+                                    ),
+                                    SizedBox(
+                                      width: 5.w,
+                                    ),
+                                    Icon(
+                                      Icons.camera,
+                                      color: Colors.white,
+                                      size: 15.r,
+                                    ),
+                                  ],
+                                )
+                              : Image.file(
+                                  cubit.profileImage!,
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
+                      ),
+                      vendorSigningType == VendorSigningType.freelancer
+                          ? SizedBox(
+                              width: 10.w,
+                            )
+                          : const SizedBox.shrink(),
+                      vendorSigningType == VendorSigningType.freelancer
+                          ? InkWell(
+                              onTap: () {
+                                cubit.getFreelanceImagePick();
+                              },
+                              child: Container(
+                                height: 100.h,
+                                width: 100.w,
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                decoration: const BoxDecoration(
+                                    color: AppColorsLightTheme.primaryColor,
+                                    shape: BoxShape.circle),
+                                child: cubit.freelancerImage == null
+                                    ? Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'صورة العمل الحر',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontFamily:
+                                                    FontPath.almaraiRegular,
+                                                fontSize: 10.sp),
+                                          ),
+                                        ],
+                                      )
+                                    : Image.file(
+                                        cubit.freelancerImage!,
+                                        fit: BoxFit.cover,
+                                      ),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 14.h,
+                  ),
+                  AuthTextFormField(
+                    hintText: 'اسم المستخدم',
+                    controller: name,
+                    validate: (value) {
+                      if (value!.isEmpty) {
+                        return 'ادخل اسم المستحدم';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 14.h,
+                  ),
+                  AuthTextFormField(
+                    hintText: 'البريد الالكتروني',
+                    controller: email,
+                    validate: (value) {
+                      if (value!.isEmpty) {
+                        return 'ادخل البريد الالكتروني';
+                      } else if (!RegExp(
+                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          .hasMatch(value)) {
+                        return 'صيعة البريد غير صحيحة';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 14.h,
+                  ),
+                  const CityDropDownButton(),
+                  SizedBox(
+                    height: 14.h,
+                  ),
+                  AuthTextFormField(
+                    hintText: 'رقم الهاتف',
+                    maxLength: 10,
+                    keyboardType: TextInputType.phone,
+                    suffix: Padding(
+                      padding: EdgeInsets.only(left: 10.w),
+                      child: SvgPicture.asset(
+                        SvgPath.saudiPhoneFieldIcon,
+                        width: 52.w,
+                        height: 15.h,
+                      ),
+                    ),
+                    validate: (value) {
+                      if (value!.isEmpty) {
+                        return 'ادخل رقم الهاتف';
+                      }
+                      return null;
+                    },
+                    controller: phone,
+                  ),
+                  vendorSigningType == VendorSigningType.center
+                      ? SizedBox(
+                          height: 14.h,
+                        )
+                      : const SizedBox.shrink(),
+                  vendorSigningType == VendorSigningType.center
+                      ? const AuthTextFormField(
+                          hintText: 'اسم الصالون',
+                          controller: null,
+                        )
+                      : const SizedBox.shrink(),
+                  SizedBox(
+                    height: 14.h,
+                  ),
+                  AuthTextFormField(
+                    hintText: 'الخدمات التي تقدمها',
+                    controller: description,
+                    validate: (value) {
+                      if (value!.isEmpty) {
+                        return 'ادخل الخدمات التي تقدمها';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 14.h,
+                  ),
+                  Text(
+                    'ما هو نوع مقدم الخدمة؟',
+                    style: TextStyle(
+                        color: const Color(0xffABABAB),
+                        fontFamily: FontPath.almaraiRegular,
                         fontSize: 14.sp),
-                  )
+                  ),
+                  Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 125.w,
+                        child: RadioListTile<VendorSigningType>(
+                          activeColor: AppColorsLightTheme.secondaryColor,
+                          title: Text(
+                            'مركز',
+                            style: TextStyle(
+                                fontFamily: FontPath.almaraiLight,
+                                fontSize: 12.sp),
+                          ),
+                          value: VendorSigningType.center,
+                          groupValue: vendorSigningType,
+                          onChanged: (VendorSigningType? value) {
+                            setState(() {
+                              vendorSigningType = value!;
+                            });
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 125.w,
+                        child: RadioListTile<VendorSigningType>(
+                          activeColor: AppColorsLightTheme.secondaryColor,
+                          title: Text('عمل حر',
+                              style: TextStyle(
+                                  fontFamily: FontPath.almaraiLight,
+                                  fontSize: 12.sp)),
+                          value: VendorSigningType.freelancer,
+                          groupValue: vendorSigningType,
+                          onChanged: (VendorSigningType? value) {
+                            setState(() {
+                              vendorSigningType = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 14.h,
+                  ),
+                  AuthTextFormField(
+                    hintText: 'كلمة المرور',
+                    controller: password,
+                    validate: (value) {
+                      if (value!.isEmpty) {
+                        return 'ادخل كلمة المرور';
+                      } else if (value.length < 8) {
+                        return 'كلمة المرور ضعيفة';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 14.h,
+                  ),
+                  AuthTextFormField(
+                    hintText: 'اعد كتابة كلمة المرور',
+                    controller: confirmPassword,
+                    validate: (value) {
+                      if (confirmPassword.text != password.text) {
+                        return 'كلمة المرور غير متشابهة';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 14.h,
+                  ),
+                  AuthButton(
+                      buttonTitle: 'تسجيل',
+                      isTapped: () {
+                         if (cubit.profileImage == null &&
+                            vendorSigningType == VendorSigningType.center) {
+                          Fluttertoast.showToast(
+                              msg: 'برجال اختيار صورة شخصية',
+                              gravity: ToastGravity.CENTER,
+                              backgroundColor:
+                                  AppColorsLightTheme.primaryColor,textColor: Colors.white);
+                        } else if (cubit.profileImage == null &&
+                            cubit.freelancerImage == null &&
+                            vendorSigningType == VendorSigningType.freelancer) {
+                          Fluttertoast.showToast(
+                              msg: 'برجال اختيار صورة شخصية و صورة العمل الحر',
+                              gravity: ToastGravity.CENTER,
+                              backgroundColor:
+                                  AppColorsLightTheme.primaryColor,textColor: Colors.white);
+                        }else  if (formKey.currentState!.validate()) {
+                           if (vendorSigningType ==
+                               VendorSigningType.freelancer) {
+                             cubit.freelancerRegister(
+                               userName: name.text,
+                               password: password.text,
+                               email: email.text,
+                               description: description.text,
+                               phone: phone.text,
+                             );
+                           } else if (vendorSigningType ==
+                               VendorSigningType.center) {
+                             cubit.vendorRegister(
+                               userName: name.text,
+                               password: password.text,
+                               email: email.text,
+                               description: description.text,
+                               phone: phone.text,
+                             );
+                           }
+                         }
+                      },
+                      width: double.infinity),
+                  SizedBox(
+                    height: 25.h,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, ScreenName.loginScreen, (route) => false);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'هل لديك حساب ؟  ',
+                          style: TextStyle(
+                              color: const Color(0xff262626),
+                              fontFamily: FontPath.almaraiRegular,
+                              fontSize: 10.sp),
+                        ),
+                        Text(
+                          'تسجيل الدخول',
+                          style: TextStyle(
+                              color: AppColorsLightTheme.secondaryColor,
+                              fontFamily: FontPath.almaraiBold,
+                              fontSize: 14.sp),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
                 ],
               ),
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
   }
-
-
 }

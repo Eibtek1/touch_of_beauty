@@ -27,4 +27,5 @@ class SvgPath{
   static const clock = 'assets/svg/clock.svg';
   static const edit = 'assets/svg/edit.svg';
   static const paperPin = 'assets/svg/paper pin.svg';
+  static const saudiPhoneFieldIcon = 'assets/svg/saudiPhoneFieldIcon.svg';
 }

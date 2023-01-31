@@ -3,9 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
+import 'package:touch_of_beauty/core/network/dio_helper.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/reservation_cubit/reservation_cubit.dart';
+import 'package:touch_of_beauty/try_screen.dart';
 import 'core/app_router/app_router.dart';
 import 'core/app_router/screens_name.dart';
+import 'features/authentication/buisness_logic/auth_cubit.dart';
+import 'features/authentication/presentation/screens/user_register.dart';
+import 'features/authentication/presentation/screens/vendor_register.dart';
 import 'features/vendor/presentation/screens/vendor_center_screens/add_services_screen.dart';
 import 'features/vendor/presentation/screens/vendor_center_screens/center_details_screen.dart';
 import 'features/vendor/presentation/screens/vendor_center_screens/center_working_time_screen.dart';
@@ -14,8 +20,16 @@ import 'features/vendor/presentation/screens/vendor_center_screens/vendor_reserv
 import 'features/vendor/presentation/screens/vendor_center_screens/vendor_services_screen.dart';
 import 'features/vendor/presentation/screens/vendor_notification_screen.dart';
 
-void main() {
+void main() async{
   runApp(const MyApp());
+  await DioHelper.init();
+   getCitiesList();
+
+   
+}
+
+void getCitiesList()async {
+
 }
 
 class MyApp extends StatelessWidget {
@@ -29,6 +43,7 @@ class MyApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => ReservationCubit()),
+            BlocProvider(create: (context) => AuthCubit()..getCities()..login(phone: '01022542758', password: 'String@123')),
           ],
           child: MaterialApp(
             title: 'لمسة جمال',
@@ -44,9 +59,9 @@ class MyApp extends StatelessWidget {
               primarySwatch:
                   createMaterialColor(AppColorsLightTheme.primaryColor),
             ),
-            onGenerateRoute: AppRouter.generateRoute,
-            initialRoute: ScreenName.splashscreen,
-            // home:  VendorReservationsScreen(),
+            // onGenerateRoute: AppRouter.generateRoute,
+            // initialRoute: ScreenName.splashscreen,
+            home:  VendorRegisterScreen(),
           ),
         );
       },
