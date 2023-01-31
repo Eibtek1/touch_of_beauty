@@ -9,6 +9,7 @@ import '../../../../core/app_router/screens_name.dart';
 import '../../../../core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/svg_path.dart';
+import '../../../../core/constants/constants.dart';
 import '../../../../core/enums/vendor_signing_type_enum.dart';
 import '../widgets/auht_text_form_field.dart';
 import '../widgets/auth_button.dart';
@@ -43,7 +44,37 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
         ),
         body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
-            // TODO: implement listener
+            var cubit = AuthCubit.get(context);
+            if (state is RegisterLoading) {
+              showProgressIndicator(context);
+            }
+            if (state is RegisterSuccess) {
+              Navigator.pop(context);
+              if (state.registerModel != null && cubit.mainResponse.errorCode == 0) {
+                Fluttertoast.showToast(
+                  msg: cubit.mainResponse.errorMessage,
+                  gravity: ToastGravity.CENTER,
+                  backgroundColor: AppColorsLightTheme.primaryColor,
+                );
+                Navigator.pushReplacementNamed(context, ScreenName.loginScreen);
+              }
+              else if (state.registerModel == null &&
+                  cubit.mainResponse.errorCode != 0) {
+                Fluttertoast.showToast(
+                  msg: cubit.mainResponse.errorMessage,
+                  gravity: ToastGravity.CENTER,
+                  backgroundColor: AppColorsLightTheme.primaryColor,
+                );
+              }
+            }
+            if(state is RegisterError){
+              Navigator.pop(context);
+              Fluttertoast.showToast(
+                msg: "${state.error.substring(0,5)}...",
+                gravity: ToastGravity.CENTER,
+                backgroundColor: AppColorsLightTheme.primaryColor,
+              );
+            }
           },
           builder: (context, state) {
             var cubit = AuthCubit.get(context);
@@ -167,6 +198,8 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                     validate: (value) {
                       if (value!.isEmpty) {
                         return 'ادخل اسم المستحدم';
+                      }else if(value.length<5){
+                        return 'لا يحب ان يكون الاسم اقل من خمسة احرف';
                       }
                       return null;
                     },
@@ -210,6 +243,8 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                     validate: (value) {
                       if (value!.isEmpty) {
                         return 'ادخل رقم الهاتف';
+                      }else if(value.length<10){
+                        return 'لا يحب ان يقل الرقم عن 10 ارقام';
                       }
                       return null;
                     },
@@ -323,42 +358,42 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                   AuthButton(
                       buttonTitle: 'تسجيل',
                       isTapped: () {
-                         if (cubit.profileImage == null &&
+                        if (cubit.profileImage == null &&
                             vendorSigningType == VendorSigningType.center) {
                           Fluttertoast.showToast(
                               msg: 'برجال اختيار صورة شخصية',
                               gravity: ToastGravity.CENTER,
-                              backgroundColor:
-                                  AppColorsLightTheme.primaryColor,textColor: Colors.white);
+                              backgroundColor: AppColorsLightTheme.primaryColor,
+                              textColor: Colors.white);
                         } else if (cubit.profileImage == null &&
                             cubit.freelancerImage == null &&
                             vendorSigningType == VendorSigningType.freelancer) {
                           Fluttertoast.showToast(
                               msg: 'برجال اختيار صورة شخصية و صورة العمل الحر',
                               gravity: ToastGravity.CENTER,
-                              backgroundColor:
-                                  AppColorsLightTheme.primaryColor,textColor: Colors.white);
-                        }else  if (formKey.currentState!.validate()) {
-                           if (vendorSigningType ==
-                               VendorSigningType.freelancer) {
-                             cubit.freelancerRegister(
-                               userName: name.text,
-                               password: password.text,
-                               email: email.text,
-                               description: description.text,
-                               phone: phone.text,
-                             );
-                           } else if (vendorSigningType ==
-                               VendorSigningType.center) {
-                             cubit.vendorRegister(
-                               userName: name.text,
-                               password: password.text,
-                               email: email.text,
-                               description: description.text,
-                               phone: phone.text,
-                             );
-                           }
-                         }
+                              backgroundColor: AppColorsLightTheme.primaryColor,
+                              textColor: Colors.white);
+                        } else if (formKey.currentState!.validate()) {
+                          if (vendorSigningType ==
+                              VendorSigningType.freelancer) {
+                            cubit.freelancerRegister(
+                              userName: name.text,
+                              password: password.text,
+                              email: email.text,
+                              description: description.text,
+                              phone: phone.text,
+                            );
+                          } else if (vendorSigningType ==
+                              VendorSigningType.center) {
+                            cubit.vendorRegister(
+                              userName: name.text,
+                              password: password.text,
+                              email: email.text,
+                              description: description.text,
+                              phone: phone.text,
+                            );
+                          }
+                        }
                       },
                       width: double.infinity),
                   SizedBox(

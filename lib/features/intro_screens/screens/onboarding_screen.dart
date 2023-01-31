@@ -5,6 +5,8 @@ import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/features/intro_screens/widgets/boarding_button.dart';
 import '../../../core/assets_path/images_path.dart';
+import '../../../core/cache_manager/cache_keys.dart';
+import '../../../core/cache_manager/shared_preferences.dart';
 import '../widgets/images_widget.dart';
 import '../widgets/onboarding_class.dart';
 
@@ -86,7 +88,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: CustomButton(
               isLast: isLast,
               isLastTap: () {
+                CacheHelper.saveData(key: CacheKeys.onboarding, value: true).whenComplete((){
                   Navigator.pushReplacementNamed(context, ScreenName.chooseRegisterType);
+                });
               },
               isTapped: () {
                 pageViewController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.fastOutSlowIn);
