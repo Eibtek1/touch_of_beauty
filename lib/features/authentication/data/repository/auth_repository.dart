@@ -11,7 +11,7 @@ class AuthRepository{
     required String password,
     required String email,
     required String phone,
-    required int cityId,
+    required int? cityId,
     required File? image,
   }) async {
     final response = await DioHelper.postData(
@@ -24,9 +24,9 @@ class AuthRepository{
         "confirmPassword": password,
         "lat": 0,
         "lng": 0,
-        "cityId": cityId,
+        "cityId": cityId??1,
         "img": image != null
-            ? imageToBase64(image.path)
+            ? "data:image/${image.path.split('.').last};base64,${imageToBase64(image)}"
             : null
       },
     );
@@ -40,24 +40,24 @@ class AuthRepository{
     required String email,
     required String description,
     required String phone,
-    required int cityId,
+    required int? cityId,
     required File? image,
   }) async {
+
     final response = await DioHelper.postData(
-      url: EndPoints.userRegister,
+      url: EndPoints.centerRegister,
       data: {
-        "fullName": userName,
-        "email": email,
-        "phoneNumber": phone,
-        "password": password,
         "confirmPassword": password,
         "description": description,
-        "lat": 0,
-        "lng": 0,
-        "cityId": cityId,
-        "img": image != null
-            ? imageToBase64(image.path)
-            : null,
+        "email": email,
+        "fullName": userName,
+        "img": image != null?"data:image/${image.path.split('.').last};base64,${imageToBase64(image)}":null,
+        "password": password,
+        "phoneNumber": phone,
+        "taxNumber": "<tel>",
+        "lat": "21.3666",
+        "lng": "21.6588",
+        "cityId": cityId
       },
     );
     return response;
@@ -70,14 +70,12 @@ class AuthRepository{
     required String email,
     required String description,
     required String phone,
-    required int lat,
-    required int lng,
-    required int cityId,
+    required int? cityId,
     required File? freelancerImage,
     required File? image,
   }) async {
     final response = await DioHelper.postData(
-      url: EndPoints.userRegister,
+      url: EndPoints.freelancerRegister,
       data: {
         "fullName": userName,
         "email": email,
@@ -85,14 +83,14 @@ class AuthRepository{
         "description": description,
         "password": password,
         "confirmPassword": password,
-        "lat": lat,
-        "lng": lng,
-        "cityId": cityId,
+        "lat": 0,
+        "lng": 0,
+        "cityId": cityId??1,
         "freelanceFormImg": freelancerImage != null
-            ?  imageToBase64(freelancerImage.path)
+            ?  "data:image/${freelancerImage.path.split('.').last};base64,${imageToBase64(freelancerImage)}"
             : null,
         "img": image != null
-            ? imageToBase64(image.path)
+            ? "data:image/${image.path.split('.').last};base64,${imageToBase64(image)}"
             : null,
       },
     );
@@ -154,6 +152,21 @@ class AuthRepository{
       data: {
         "phoneNumber": phone,
         "randomCode": code
+      },
+    );
+    return response;
+  }
+
+
+  static Future<Response> confirmRegister({
+    required String phone,
+    required String randomCode,
+  }) async {
+    final response = await DioHelper.postData(
+      url: EndPoints.confirmRegister,
+      data: {
+        "phoneNumber": phone,
+        "randomCode": randomCode
       },
     );
     return response;

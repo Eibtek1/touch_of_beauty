@@ -25,6 +25,7 @@ void main() async{
   await DioHelper.init();
    getCitiesList();
 
+   
 }
 
 void getCitiesList()async {
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => ReservationCubit()),
-            BlocProvider(create: (context) => AuthCubit()..getCities()),
+            BlocProvider(create: (context) => AuthCubit()..getCities()..login(phone: '01022542758', password: 'String@123')),
           ],
           child: MaterialApp(
             title: 'لمسة جمال',

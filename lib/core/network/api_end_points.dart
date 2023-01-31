@@ -9,5 +9,6 @@ class EndPoints{
   static const forgetPassword = '/Users/ForgetPassword';
   static const changeForgetPassword = '/Users/ChangePasswordConfirm';
   static const citiesList = '/Cities';
+  static const confirmRegister = '/Users/confirmRegister';
 
 }
