@@ -7,7 +7,8 @@ class CustomUserTextField extends StatelessWidget {
   final String hintText;
   final double height;
   final TextInputType keyboardType;
-  const CustomUserTextField({Key? key, required this.hintText, required this.height, this.keyboardType = TextInputType.text}) : super(key: key);
+  final TextEditingController? controller;
+  const CustomUserTextField({Key? key, required this.hintText, required this.height, this.keyboardType = TextInputType.text, this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class CustomUserTextField extends StatelessWidget {
         expands: true,
         maxLines: null,
         minLines: null,
+        controller: controller!,
         keyboardType: keyboardType,
         cursorColor: Colors.blue,
         decoration: InputDecoration(

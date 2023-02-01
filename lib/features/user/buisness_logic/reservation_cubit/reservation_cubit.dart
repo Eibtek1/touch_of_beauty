@@ -8,4 +8,5 @@ class ReservationCubit extends Cubit<ReservationState> {
     tabBarCIndex = index;
     emit(ChangedTabBarCurrentIndex());
   }
+
 }
