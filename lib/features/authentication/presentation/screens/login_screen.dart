@@ -7,6 +7,8 @@ import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
+import 'package:touch_of_beauty/core/cache_manager/cache_keys.dart';
+import 'package:touch_of_beauty/core/cache_manager/shared_preferences.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
@@ -24,6 +26,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController phone = TextEditingController();
   final TextEditingController password = TextEditingController();
+  var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +43,11 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.pop(context);
               Fluttertoast.showToast(msg: cubit.mainResponse.errorMessage);
               if(cubit.mainResponse.errorCode ==0&&state.loginModel.userType==1){
-                Navigator.pushNamedAndRemoveUntil(context, ScreenName.userMainLayout, (route) => false);
+                CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
+                  CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
+                    Navigator.pushNamedAndRemoveUntil(context, ScreenName.userMainLayout, (route) => false);
+                  });
+                });
               }else if(cubit.mainResponse.errorCode ==0&&state.loginModel.userType==2){
                 Navigator.pushNamedAndRemoveUntil(context, ScreenName.freelancerMainLayout, (route) => false);
               }else if(cubit.mainResponse.errorCode ==0&&state.loginModel.userType==3){
@@ -50,154 +57,160 @@ class _LoginScreenState extends State<LoginScreen> {
           },
           builder: (context, state) {
             var cubit = AuthCubit.get(context);
-            return ListView(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              children: [
-                SizedBox(
-                  height: 100.h,
-                ),
-                Center(
-                  child: Image.asset(
-                    ImagePath.authLogo,
-                    width: 154.w,
-                    height: 154.h,
+            return Form(
+              key: formKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: ListView(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                children: [
+                  SizedBox(
+                    height: 100.h,
                   ),
-                ),
-                SizedBox(
-                  height: 67.h,
-                ),
-                Text(
-                  'تسجيل الدخول',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: const Color(0xff262626),
-                      fontFamily: FontPath.almaraiBold,
-                      fontSize: 18.sp),
-                ),
-                SizedBox(
-                  height: 24.h,
-                ),
-                AuthTextFormField(
-                  hintText: 'رقم الهاتف',
-                  maxLength: 10,
-                  validate: (value) {
-                    if (value!.isEmpty) {
-                      return 'ادخل رقم الهاتف';
-                    } else if (value.length < 10) {
-                      return 'لا يحب ان يقل الرقم عن 10 ارقام';
-                    }
-                    return null;
-                  },
-                  suffix: Padding(
-                    padding: EdgeInsets.only(left: 10.w),
-                    child: SvgPicture.asset(
-                      SvgPath.saudiPhoneFieldIcon,
-                      width: 52.w,
-                      height: 15.h,
+                  Center(
+                    child: Image.asset(
+                      ImagePath.authLogo,
+                      width: 154.w,
+                      height: 154.h,
                     ),
                   ),
-                  controller: phone,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                AuthTextFormField(
-                  hintText: 'كلمة المرور',
-                  controller: password,
-                  validate: (value) {
-                    if (value!.isEmpty) {
-                      return 'ادخل كلمة المرور';
-                    } else if (value.length < 8) {
-                      return 'كلمة المرور ضعيفة';
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(
-                  height: 8.h,
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(
-                        context, ScreenName.forgetPasswordScreen);
-                  },
-                  child: Text(
-                    'هل نسيت كلمة المرور؟',
-                    textAlign: TextAlign.end,
+                  SizedBox(
+                    height: 67.h,
+                  ),
+                  Text(
+                    'تسجيل الدخول',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: const Color(0xffAAADB5),
-                        fontFamily: FontPath.almaraiLight,
-                        fontSize: 13.sp),
+                        color: const Color(0xff262626),
+                        fontFamily: FontPath.almaraiBold,
+                        fontSize: 18.sp),
                   ),
-                ),
-                SizedBox(
-                  height: 8.h,
-                ),
-                AuthButton(
-                    buttonTitle: 'دخول',
-                    isTapped: () {
-                      cubit.login(phone: phone.text, password: password.text);
+                  SizedBox(
+                    height: 24.h,
+                  ),
+                  AuthTextFormField(
+                    hintText: 'رقم الهاتف',
+                    maxLength: 10,
+                    validate: (value) {
+                      if (value!.isEmpty) {
+                        return 'ادخل رقم الهاتف';
+                      } else if (value.length < 10) {
+                        return 'لا يحب ان يقل الرقم عن 10 ارقام';
+                      }
+                      return null;
                     },
-                    width: double.infinity),
-                SizedBox(
-                  height: 15.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                        padding: EdgeInsets.all(5.r),
-                        height: 30.h,
-                        width: 30.w,
-                        decoration: const BoxDecoration(
-                            color: AppColorsLightTheme.primaryColor,
-                            shape: BoxShape.circle),
-                        child: SvgPicture.asset(
-                          SvgPath.bulb,
-                          width: 15.w,
-                          height: 15.h,
-                          color: Colors.white,
-                        )),
-                    SizedBox(
-                      width: 10.w,
+                    suffix: Padding(
+                      padding: EdgeInsets.only(left: 10.w),
+                      child: SvgPicture.asset(
+                        SvgPath.saudiPhoneFieldIcon,
+                        width: 52.w,
+                        height: 15.h,
+                      ),
                     ),
-                    Text(
-                      'استكشاف التطبيق',
+                    controller: phone,
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  AuthTextFormField(
+                    hintText: 'كلمة المرور',
+                    controller: password,
+                    validate: (value) {
+                      if (value!.isEmpty) {
+                        return 'ادخل كلمة المرور';
+                      } else if (value.length < 8) {
+                        return 'كلمة المرور ضعيفة';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 8.h,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(
+                          context, ScreenName.forgetPasswordScreen);
+                    },
+                    child: Text(
+                      'هل نسيت كلمة المرور؟',
+                      textAlign: TextAlign.end,
                       style: TextStyle(
-                          color: AppColorsLightTheme.secondaryColor,
-                          fontFamily: FontPath.almaraiRegular,
-                          fontSize: 10.sp),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 57.h,
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, ScreenName.chooseRegisterType);
-                  },
-                  child: Row(
+                          color: const Color(0xffAAADB5),
+                          fontFamily: FontPath.almaraiLight,
+                          fontSize: 13.sp),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 8.h,
+                  ),
+                  AuthButton(
+                      buttonTitle: 'دخول',
+                      isTapped: () {
+                        if(formKey.currentState!.validate()){
+                          cubit.login(phone: phone.text, password: password.text);
+                        }
+                      },
+                      width: double.infinity),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'ليس لديك حساب ؟  ',
-                        style: TextStyle(
-                            color: const Color(0xff262626),
-                            fontFamily: FontPath.almaraiRegular,
-                            fontSize: 10.sp),
+                      Container(
+                          padding: EdgeInsets.all(5.r),
+                          height: 30.h,
+                          width: 30.w,
+                          decoration: const BoxDecoration(
+                              color: AppColorsLightTheme.primaryColor,
+                              shape: BoxShape.circle),
+                          child: SvgPicture.asset(
+                            SvgPath.bulb,
+                            width: 15.w,
+                            height: 15.h,
+                            color: Colors.white,
+                          )),
+                      SizedBox(
+                        width: 10.w,
                       ),
                       Text(
-                        'انشاء حساب',
+                        'استكشاف التطبيق',
                         style: TextStyle(
                             color: AppColorsLightTheme.secondaryColor,
                             fontFamily: FontPath.almaraiRegular,
-                            fontSize: 14.sp),
+                            fontSize: 10.sp),
                       )
                     ],
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: 57.h,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, ScreenName.chooseRegisterType);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'ليس لديك حساب ؟  ',
+                          style: TextStyle(
+                              color: const Color(0xff262626),
+                              fontFamily: FontPath.almaraiRegular,
+                              fontSize: 10.sp),
+                        ),
+                        Text(
+                          'انشاء حساب',
+                          style: TextStyle(
+                              color: AppColorsLightTheme.secondaryColor,
+                              fontFamily: FontPath.almaraiRegular,
+                              fontSize: 14.sp),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             );
           },
         ),

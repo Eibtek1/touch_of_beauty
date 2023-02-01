@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 
 import '../../../core/cache_manager/cache_keys.dart';
 import '../../../core/cache_manager/shared_preferences.dart';
@@ -30,6 +31,16 @@ class _SplashScreenState extends State<SplashScreen> {
       () {
         if(onboarding==null){
           Navigator.pushReplacementNamed(context, ScreenName.onboardingScreen);
+        }else if(token!=null){
+          if(userType ==1.toString()){
+            Navigator.pushReplacementNamed(context, ScreenName.userMainLayout);
+          }
+          else if(userType ==2.toString()){
+            Navigator.pushReplacementNamed(context, ScreenName.vendorMainLayout);
+          }
+          else if(userType ==3.toString()){
+            Navigator.pushReplacementNamed(context, ScreenName.freelancerMainLayout);
+          }
         }else{
           Navigator.pushReplacementNamed(context, ScreenName.loginScreen);
         }

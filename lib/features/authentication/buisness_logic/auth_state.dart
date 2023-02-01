@@ -37,6 +37,14 @@ class RegisterError extends AuthState {
   RegisterError(this.error);
 }
 
+
+class GetUserDataLoading extends AuthState {}
+class GetUserDataSuccess extends AuthState {}
+class GetUserDataError extends AuthState {
+  final String error;
+  GetUserDataError(this.error);
+}
+
 class ConfirmRegisterLoading extends AuthState {}
 class ConfirmRegisterSuccess extends AuthState {
   final ConfirmRegisterModel confirmRegisterModel;

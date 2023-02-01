@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import '../constants/constants.dart';
 import 'api_end_points.dart';
 
 class DioHelper {
@@ -12,50 +13,46 @@ class DioHelper {
   }
 
   static Future<Response> getData(
-      {
-        required String url, Map<String, dynamic>? query, String lang = 'en' , String? token
-      }) async {
-    dio.options.headers={
+      {required String url,
+      Map<String, dynamic>? query,
+      String lang = 'en'}) async {
+    dio.options.headers = {
       'Content-Type': 'application/json',
-      'lang' : '',
-      'Accept' : 'text/plain'
+      'lang': '',
+      "Authorization": "Bearer $token",
+      'Accept': 'text/plain'
     };
     return await dio.get(url, queryParameters: query);
   }
 
-  static Future<Response> postData(
-      {
-        required String url ,
-        dynamic query ,
-        dynamic data ,
-        String lang = 'en' , String? token ,
-      }
-      )
-  async{
-    dio.options.headers={
+  static Future<Response> postData({
+    required String url,
+    dynamic query,
+    dynamic data,
+    String lang = 'en',
+    String? token,
+  }) async {
+    dio.options.headers = {
       'Content-Type': 'application/json',
-      'lang' : '',
-      'Accept' : 'text/plain'
+      'lang': '',
+      "Authorization": token != null?"Bearer $token":'',
+      'Accept': 'text/plain'
     };
-    return await dio.post(
-        url, queryParameters: query,
-        data:data);
+    return await dio.post(url, queryParameters: query, data: data);
   }
 
-
-  static Future<Response> putData(
-      {
-        required String url , Map<String, dynamic>? query , required Map<String, dynamic>? data , String lang = 'en' , String? token ,
-      }
-      )
-  async{
-    dio.options.headers={
+  static Future<Response> putData({
+    required String url,
+    Map<String, dynamic>? query,
+    required Map<String, dynamic>? data,
+    String lang = 'en',
+    String? token,
+  }) async {
+    dio.options.headers = {
       'Content-Type': 'application/json',
-      'lang' : '',
-      'Accept' : 'text/plain'
+      'lang': '',
+      'Accept': 'text/plain'
     };
-    return await dio.put(
-        url, queryParameters: query,
-        data:{});
+    return await dio.put(url, queryParameters: query, data: {});
   }
 }

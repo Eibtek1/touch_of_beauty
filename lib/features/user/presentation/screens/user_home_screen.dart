@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
+import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
 import 'package:touch_of_beauty/features/user/presentation/widgets/home_screen_widgets/custom_appbar.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../widgets/home_screen_widgets/build_custom_drawer.dart';
@@ -41,6 +43,11 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -48,6 +55,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
       drawer: AppDrawer(
         closeDrawer: () {
           _scaffoldKey.currentState!.closeDrawer();
+          print(token);
         },
       ),
       appBar: PreferredSize(

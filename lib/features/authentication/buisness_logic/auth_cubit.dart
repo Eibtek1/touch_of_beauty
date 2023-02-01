@@ -5,6 +5,7 @@ import 'package:touch_of_beauty/features/authentication/data/repository/auth_rep
 import '../../../core/network/dio_helper.dart';
 import '../data/models/cities_model.dart';
 import '../data/models/confirm_register_model.dart';
+import '../data/models/get_user_data_model.dart';
 import '../data/models/login_model.dart';
 import '../data/models/main_response.dart';
 import '../data/models/register_model.dart';
@@ -23,6 +24,7 @@ class AuthCubit extends Cubit<AuthState> {
   File? profileImage;
   File? freelancerImage;
   String? message;
+  GetUserModel? getUserModel;
 
   void getCities() async {
     emit(GetCitiesLoading());
@@ -176,6 +178,22 @@ class AuthCubit extends Cubit<AuthState> {
       emit(ConfirmRegisterSuccess(ConfirmRegisterModel.fromJson(mainResponse.data)));
     }catch(error){
       emit(ConfirmRegisterError(error.toString()));
+    }
+  }
+
+
+  void getUserData() async {
+    emit(GetUserDataLoading());
+    try{
+      final response = await AuthRepository.getUserData();
+      mainResponse = MainResponse.fromJson(response.data);
+      message = mainResponse.errorMessage.toString();
+      getUserModel = GetUserModel.fromJson(mainResponse.data);
+      print(mainResponse.data);
+      emit(GetUserDataSuccess());
+    }catch(error){
+      print(error.toString());
+      emit(GetUserDataError(error.toString()));
     }
   }
 

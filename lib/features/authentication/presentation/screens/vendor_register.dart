@@ -57,6 +57,7 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                   backgroundColor: AppColorsLightTheme.primaryColor,
                 );
                 Navigator.pushReplacementNamed(context, ScreenName.loginScreen);
+                cubit.profileImage =null;
               }
               else if (state.registerModel == null &&
                   cubit.mainResponse.errorCode != 0) {
