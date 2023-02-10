@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/authentication/data/repository/auth_repository.dart';
 import '../../../core/network/dio_helper.dart';
 import '../data/models/cities_model.dart';
@@ -29,7 +30,7 @@ class AuthCubit extends Cubit<AuthState> {
   void getCities() async {
     emit(GetCitiesLoading());
     final response = await DioHelper.getData(
-        url: 'http://lightbulbtech-001-site13.etempurl.com/api/Cities');
+        url: 'http://lightbulbtech-001-site13.etempurl.com/api/Cities', bearerToken: token);
     for (var element in response.data['data']) {
       citiesList.add(CitiesModel.fromJson(element));
     }

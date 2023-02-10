@@ -10,6 +10,7 @@ import 'core/app_router/app_router.dart';
 import 'core/app_router/screens_name.dart';
 import 'core/cache_manager/shared_preferences.dart';
 import 'features/authentication/buisness_logic/auth_cubit.dart';
+import 'features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
 
 
 void main() async{
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => ReservationCubit()),
+            BlocProvider(create: (context) => ServicesProvidersCubit()..getFeaturedMainSections()..getFeaturedServicesProviders()),
             BlocProvider(create: (context) => AuthCubit()..getCities()),
           ],
           child: MaterialApp(

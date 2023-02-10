@@ -14,12 +14,12 @@ class DioHelper {
 
   static Future<Response> getData(
       {required String url,
-      Map<String, dynamic>? query,
+      Map<String, dynamic>? query,String? bearerToken,
       String lang = 'en'}) async {
     dio.options.headers = {
       'Content-Type': 'application/json',
       'lang': '',
-      "Authorization": "Bearer $token",
+      if(bearerToken!=null)"Authorization": "Bearer $bearerToken",
       'Accept': 'text/plain'
     };
     return await dio.get(url, queryParameters: query);

@@ -5,7 +5,6 @@ import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import 'package:touch_of_beauty/features/user/presentation/screens/user_profile_screen.dart';
 import 'package:touch_of_beauty/features/user/presentation/screens/user_reservations_screen.dart';
-
 import 'user_home_screen.dart';
 import 'user_notification_screen.dart';
 
