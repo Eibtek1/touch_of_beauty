@@ -175,7 +175,7 @@ class AuthRepository{
 
   static Future<Response> getUserData() async {
     final response = await DioHelper.getData(
-      url: EndPoints.getUserData,
+      url: EndPoints.getUserData, bearerToken: token,
     );
     return response;
   }

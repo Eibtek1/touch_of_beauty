@@ -12,6 +12,7 @@ class EndPoints{
   static const citiesList = '/Cities';
   static const confirmRegister = '/Users/confirmRegister';
   static const sendComplain = '/Complaints/AddComplaint';
+  static const getFeaturedMainSections = '/MainSections/FeaturedMainSections';
   static const getAllServicesProviders = '/ServiceProvider/GetAll';
   static const getServicesProviderById = '/ServiceProvider/GetById/';
   static const getAllFeaturedServicesProviders = '/ServiceProvider/GetAllFeatured';
