@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
-import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import 'package:touch_of_beauty/core/network/api_end_points.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
@@ -23,8 +22,9 @@ class UserProfileScreen extends StatefulWidget {
 class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   void didChangeDependencies() {
-    if (AuthCubit.get(context).getUserModel == null)
+    if (AuthCubit.get(context).getUserModel == null) {
       AuthCubit.get(context).getUserData();
+    }
     super.didChangeDependencies();
   }
 
@@ -87,7 +87,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         height: 130.h,
                         width: 130.w,
                         clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.white,
                           shape: BoxShape.circle,
                         ),
@@ -96,7 +96,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             height: 120.h,
                             width: 120.w,
                             clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.circle,
                             ),
@@ -124,18 +124,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                         const Icon(Icons.error),
                                   )
                                 : Shimmer.fromColors(
-                              baseColor: Colors.grey[400]!,
-                              highlightColor: Colors.grey[300]!,
-                              child: Container(
-                                height: double.infinity,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius:
-                                  BorderRadius.circular(8.0),
-                                ),
-                              ),
-                            ),
+                                    baseColor: Colors.grey[400]!,
+                                    highlightColor: Colors.grey[300]!,
+                                    child: Container(
+                                      height: double.infinity,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Colors.black,
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                    ),
+                                  ),
                           ),
                         ),
                       ),
@@ -153,17 +153,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   image: SvgPath.profileFilledColorIcon,
                                   itemTitle: 'اسم المستخدم',
                                   title: cubit.getUserModel!.fullName!),
-                              Divider(),
-                              FormItemBuilder(
+                              const Divider(),
+                              const FormItemBuilder(
                                   image: SvgPath.location,
                                   itemTitle: 'العنوان',
                                   title: 'الرياض'),
-                              Divider(),
+                              const Divider(),
                               FormItemBuilder(
                                   image: SvgPath.email,
                                   itemTitle: 'البريد الالكتروني',
                                   title: cubit.getUserModel!.email!),
-                              Divider(),
+                              const Divider(),
                               FormItemBuilder(
                                   image: SvgPath.profileFilledColorIcon,
                                   itemTitle: 'رقم الهاتف',

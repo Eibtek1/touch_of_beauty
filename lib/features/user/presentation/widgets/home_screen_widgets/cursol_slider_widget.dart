@@ -1,9 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:touch_of_beauty/core/network/api_end_points.dart';
+
+import '../../../data/models/slider_model.dart';
 
 class CarouselSliderWidget extends StatelessWidget {
-  final List<String> carouselItemsList;
+  final List<SliderModel> carouselItemsList;
   const CarouselSliderWidget({Key? key, required this.carouselItemsList}) : super(key: key);
 
   @override
@@ -34,7 +39,25 @@ class CarouselSliderWidget extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15.r),
                     ),
-                    child: Image.asset(i,fit: BoxFit.cover,),
+                    child: CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      imageUrl:
+                      "${EndPoints.imageBaseUrl}${i.imgUrl}",
+                      placeholder: (context, url) => Shimmer.fromColors(
+                        baseColor: Colors.grey[400]!,
+                        highlightColor: Colors.grey[300]!,
+                        child: Container(
+                          height: double.infinity,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) =>
+                      const Icon(Icons.error),
+                    ),
                   ),
                 ],
               );

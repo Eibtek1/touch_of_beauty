@@ -10,6 +10,7 @@ class EndPoints{
   static const forgetPassword = '/Users/ForgetPassword';
   static const changeForgetPassword = '/Users/ChangePasswordConfirm';
   static const citiesList = '/Cities';
+  static const slidePhotos = '/SlidePhotos';
   static const confirmRegister = '/Users/confirmRegister';
   static const sendComplain = '/Complaints/AddComplaint';
   static const getFeaturedMainSections = '/MainSections/FeaturedMainSections';

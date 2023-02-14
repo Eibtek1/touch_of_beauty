@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
+import '../../../../../core/network/api_end_points.dart';
+import '../../../data/models/services_providers_model.dart';
 import 'center_services_item.dart';
 
 class CenterDetailsBottomSheet extends StatelessWidget {
-   CenterDetailsBottomSheet({Key? key}) : super(key: key);
+  final ServicesProviderModel servicesProvidersModel;
+   CenterDetailsBottomSheet({Key? key, required this.servicesProvidersModel}) : super(key: key);
 
   final List<String> galleryList =[
     ImagePath.gallery1,
@@ -43,8 +47,8 @@ class CenterDetailsBottomSheet extends StatelessWidget {
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(25.r),
                   topRight: Radius.circular(25.r))),
-          child: Image.asset(
-            ImagePath.onboarding2,
+          child: Image.network(
+            "${EndPoints.imageBaseUrl}${servicesProvidersModel.userImgUrl}",
             fit: BoxFit.cover,
           ),
         ),
@@ -56,7 +60,7 @@ class CenterDetailsBottomSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'العناية بالبشرة',
+                    "${servicesProvidersModel.title}",
                     style: TextStyle(
                         color: const Color(0xff263238),
                         fontFamily: FontPath.almaraiBold,
@@ -71,7 +75,7 @@ class CenterDetailsBottomSheet extends StatelessWidget {
               ),
               SizedBox(height: 8.h,),
               Text(
-                'الطريق العام الخرج - الرياض (365)',
+                "${servicesProvidersModel.addresses![0].city}${servicesProvidersModel.addresses![0].addressDetails}",
                 style: TextStyle(
                   fontSize: 11.sp,
                   fontFamily: FontPath.almaraiRegular,
@@ -161,27 +165,16 @@ class CenterDetailsBottomSheet extends StatelessWidget {
               SizedBox(
                 height: 8.h,
               ),
-              Text(
-                'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،لقد تم توليد هذا النص هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،لقد تم توليد هذا النص',
-                style: TextStyle(
-                  height: 1.5.h,
-                  fontSize: 10.sp,
-                  fontFamily: FontPath.almaraiBold,
-                  color: const Color(0xff666666),
-                ),
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Text(
-                'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،لقد تم توليد هذا النص هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،لقد تم توليد هذا النص',
-                style: TextStyle(
-                  height: 1.5.h,
-                  fontSize: 10.sp,
-                  fontFamily: FontPath.almaraiBold,
-                  color: const Color(0xff666666),
-                ),
-              ),
+              HtmlWidget(servicesProvidersModel.description!),
+              // Text(
+              //
+              //   style: TextStyle(
+              //     height: 1.5.h,
+              //     fontSize: 10.sp,
+              //     fontFamily: FontPath.almaraiBold,
+              //     color: const Color(0xff666666),
+              //   ),
+              // ),
               SizedBox(
                 height: 20.h,
               ),

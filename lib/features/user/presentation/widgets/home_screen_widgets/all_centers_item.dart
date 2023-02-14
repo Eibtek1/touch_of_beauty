@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../core/network/api_end_points.dart';
+import '../../../data/models/services_providers_model.dart';
 
 class AllCentersItemBuilder extends StatelessWidget {
-  const AllCentersItemBuilder({Key? key}) : super(key: key);
+  final ServicesProviderModel servicesProviderModel;
+  const AllCentersItemBuilder({Key? key, required this.servicesProviderModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,8 @@ class AllCentersItemBuilder extends StatelessWidget {
                 SizedBox(
                   height: 118.h,
                   width: double.infinity,
-                  child: Image.asset(ImagePath.rectangle,fit: BoxFit.cover,),
+                  child: Image.network(
+                    "${EndPoints.imageBaseUrl}${servicesProviderModel.userImgUrl}",fit: BoxFit.cover,),
                 ),
                 Positioned(
                     top: 14.h,
@@ -63,7 +66,7 @@ class AllCentersItemBuilder extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'صالون خانة الجمال',
+                        '${servicesProviderModel.title}',
                         style: TextStyle(
                             fontSize: 12.sp,
                             fontFamily: FontPath.almaraiBold,
@@ -91,7 +94,7 @@ class AllCentersItemBuilder extends StatelessWidget {
                     height: 10.h,
                   ),
                   Text(
-                    'الطريق العام الخرج - الرياض (365)',
+                    '${servicesProviderModel.addresses![0].city}-${servicesProviderModel.addresses![0].addressDetails}',
                     style: TextStyle(
                       fontSize: 11.sp,
                       fontFamily: FontPath.almaraiRegular,

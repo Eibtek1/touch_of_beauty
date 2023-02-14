@@ -10,6 +10,7 @@ import 'core/app_router/app_router.dart';
 import 'core/app_router/screens_name.dart';
 import 'core/cache_manager/shared_preferences.dart';
 import 'features/authentication/buisness_logic/auth_cubit.dart';
+import 'features/user/buisness_logic/main_features_cubit/main_features_cubit.dart';
 import 'features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
 
 
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => ReservationCubit()),
-            BlocProvider(create: (context) => ServicesProvidersCubit()..getFeaturedMainSections()..getFeaturedServicesProviders()),
+            BlocProvider(create: (context) => ServicesProvidersCubit()..getSliderPhotos()),
+            BlocProvider(create: (context) => MainFeaturesCubit()),
             BlocProvider(create: (context) => AuthCubit()..getCities()),
           ],
           child: MaterialApp(
@@ -52,7 +54,7 @@ class MyApp extends StatelessWidget {
             ),
             onGenerateRoute: AppRouter.generateRoute,
             initialRoute: ScreenName.splashscreen,
-            // home:  OtpScreen(phoneNumber: "5454545454"),
+            // home:  TryAWidget(),
           ),
         );
       },
