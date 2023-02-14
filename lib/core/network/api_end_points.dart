@@ -10,11 +10,17 @@ class EndPoints{
   static const forgetPassword = '/Users/ForgetPassword';
   static const changeForgetPassword = '/Users/ChangePasswordConfirm';
   static const citiesList = '/Cities';
+  static const slidePhotos = '/SlidePhotos';
   static const confirmRegister = '/Users/confirmRegister';
   static const sendComplain = '/Complaints/AddComplaint';
   static const getFeaturedMainSections = '/MainSections/FeaturedMainSections';
   static const getAllServicesProviders = '/ServiceProvider/GetAll';
   static const getServicesProviderById = '/ServiceProvider/GetById/';
   static const getAllFeaturedServicesProviders = '/ServiceProvider/GetAllFeatured';
-
+  static const getServicesByMainFeatureId = '/Services/ServicesByMainSection/';
+  static String getServicesInHomeOrInCenter({
+  required bool inHome,
+}){
+    return '/Services/ServicesForUser/$inHome/${!inHome}';
+  }
 }

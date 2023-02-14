@@ -1,12 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:touch_of_beauty/core/network/api_end_points.dart';
+import 'package:touch_of_beauty/features/user/data/models/services_providers_model.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
-import '../../../../../core/assets_path/images_path.dart';
 
 class SalonItemBuilder extends StatelessWidget {
-  const SalonItemBuilder({Key? key}) : super(key: key);
+  final ServicesProviderModel servicesProviderModel;
+
+  const SalonItemBuilder({Key? key, required this.servicesProviderModel})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,26 +22,41 @@ class SalonItemBuilder extends StatelessWidget {
         height: 190.h,
         width: 265.w,
         decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8.r),
-            boxShadow: [
-              BoxShadow(
-                  color: const Color(0xff000000).withOpacity(0.29),
-                  offset: Offset(0, 3.h),
-                  blurRadius: 6.r)
-            ]),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8.r),
+          boxShadow: [
+            BoxShadow(
+                color: const Color(0xff000000).withOpacity(0.29),
+                offset: Offset(0, 3.h),
+                blurRadius: 6.r)
+          ],
+        ),
         child: Column(
           children: [
             Stack(
               children: [
                 SizedBox(
-                  height: 118.h,
-                  width: double.infinity,
-                  child: Image.asset(
-                    ImagePath.carouselImage1,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                    height: 118.h,
+                    width: double.infinity,
+                    child: CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      imageUrl:
+                          "${EndPoints.imageBaseUrl}${servicesProviderModel.userImgUrl}",
+                      placeholder: (context, url) => Shimmer.fromColors(
+                        baseColor: Colors.grey[400]!,
+                        highlightColor: Colors.grey[300]!,
+                        child: Container(
+                          height: double.infinity,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),),
                 Positioned(
                     top: 14.h,
                     left: 14.w,
@@ -61,7 +82,7 @@ class SalonItemBuilder extends StatelessWidget {
                     height: 5.h,
                   ),
                   Text(
-                    'شعر. الأظافر. الوجه',
+                    '{شعر. الأظافر. الوجه}',
                     style: TextStyle(
                       fontSize: 8.sp,
                       fontFamily: FontPath.almaraiRegular,
@@ -75,7 +96,7 @@ class SalonItemBuilder extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'صالون خانة الجمال',
+                        '${servicesProviderModel.title}',
                         style: TextStyle(
                             fontSize: 12.sp,
                             fontFamily: FontPath.almaraiBold,
@@ -103,7 +124,7 @@ class SalonItemBuilder extends StatelessWidget {
                     height: 5.h,
                   ),
                   Text(
-                    'الطريق العام الخرج - الرياض (365)',
+                    '${servicesProviderModel.addresses![0].city}',
                     style: TextStyle(
                       fontSize: 11.sp,
                       fontFamily: FontPath.almaraiRegular,

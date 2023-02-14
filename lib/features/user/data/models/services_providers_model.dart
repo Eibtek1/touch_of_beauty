@@ -2,7 +2,7 @@ class GetServicesProviderModel {
   int? currentPage;
   int? totalItems;
   int? totalPages;
-  List<Items>? items;
+  List<ServicesProviderModel>? items;
 
   GetServicesProviderModel(
       {this.currentPage, this.totalItems, this.totalPages, this.items});
@@ -12,16 +12,16 @@ class GetServicesProviderModel {
     totalItems = json['totalItems'];
     totalPages = json['totalPages'];
     if (json['items'] != null) {
-      items = <Items>[];
+      items = <ServicesProviderModel>[];
       json['items'].forEach((v) {
-        items!.add(Items.fromJson(v));
+        items!.add(ServicesProviderModel.fromJson(v));
       });
     }
   }
 
 }
 
-class Items {
+class ServicesProviderModel {
   String? id;
   String? title;
   String? description;
@@ -32,7 +32,7 @@ class Items {
   int? userType;
   List<Addresses>? addresses;
 
-  Items(
+  ServicesProviderModel(
       {this.id,
         this.title,
         this.description,
@@ -43,7 +43,7 @@ class Items {
         this.userType,
         this.addresses});
 
-  Items.fromJson(Map<String, dynamic> json) {
+  ServicesProviderModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     description = json['description'];
