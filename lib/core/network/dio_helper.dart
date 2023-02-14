@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import '../constants/constants.dart';
 import 'api_end_points.dart';
 
 class DioHelper {
@@ -15,7 +14,7 @@ class DioHelper {
   static Future<Response> getData(
       {required String url,
       Map<String, dynamic>? query,String? bearerToken,
-      String lang = 'en'}) async {
+      String lang = 'en',}) async {
     dio.options.headers = {
       'Content-Type': 'application/json',
       'lang': '',
@@ -36,7 +35,7 @@ class DioHelper {
       'Content-Type': 'application/json',
       'lang': '',
       "Authorization": token != null?"Bearer $token":'',
-      'Accept': 'text/plain'
+      'Accept': 'text/plain',
     };
     return await dio.post(url, queryParameters: query, data: data);
   }

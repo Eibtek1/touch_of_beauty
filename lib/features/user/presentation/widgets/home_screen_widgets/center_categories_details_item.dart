@@ -1,26 +1,35 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:touch_of_beauty/features/user/data/models/services_model.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
-import '../../../../../core/assets_path/images_path.dart';
+import '../../../../../core/network/api_end_points.dart';
 
 class CenterCategoryItem extends StatelessWidget {
-  const CenterCategoryItem({Key? key}) : super(key: key);
+  final ServicesModel servicesModel;
+
+  const CenterCategoryItem({Key? key, required this.servicesModel})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 133.h,
       width: 377.w,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8.r),
-          boxShadow: [
-            BoxShadow(
-                color: const Color(0xff000000).withOpacity(0.29),
-                offset: Offset(0, 3.h),
-                blurRadius: 6.r)
-          ]),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.r),
+        boxShadow: [
+          BoxShadow(
+              color: const Color(0xff000000).withOpacity(0.29),
+              offset: Offset(0, 3.h),
+              blurRadius: 6.r)
+        ],
+      ),
       child: Row(
         children: [
           Stack(
@@ -28,9 +37,22 @@ class CenterCategoryItem extends StatelessWidget {
               SizedBox(
                 height: double.infinity,
                 width: 122.w,
-                child: Image.asset(
-                  ImagePath.carouselImage1,
+                child: CachedNetworkImage(
                   fit: BoxFit.cover,
+                  imageUrl: "${EndPoints.imageBaseUrl}${servicesModel.imgUrl}",
+                  placeholder: (context, url) => Shimmer.fromColors(
+                    baseColor: Colors.grey[400]!,
+                    highlightColor: Colors.grey[300]!,
+                    child: Container(
+                      height: double.infinity,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
               Positioned(
@@ -60,16 +82,22 @@ class CenterCategoryItem extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      'صالون خانة الجمال',
+                      servicesModel.title!,
                       style: TextStyle(
                           fontSize: 12.sp,
                           fontFamily: FontPath.almaraiBold,
                           color: const Color(0xff1E2432)),
                     ),
-                    SizedBox(width: 54.w,),
+                    SizedBox(
+                      width: 54.w,
+                    ),
                     Row(
                       children: [
-                        Icon(Icons.star,size: 15.r,color: AppColorsLightTheme.secondaryColor,),
+                        Icon(
+                          Icons.star,
+                          size: 15.r,
+                          color: AppColorsLightTheme.secondaryColor,
+                        ),
                         Text(
                           '(4.5)',
                           style: TextStyle(
@@ -84,22 +112,17 @@ class CenterCategoryItem extends StatelessWidget {
                 SizedBox(
                   height: 15.h,
                 ),
-                Text(
-                  'الطريق العام الخرج - الرياض (365)',
-                  style: TextStyle(
-                    fontSize: 11.sp,
-                    fontFamily: FontPath.almaraiRegular,
-                    color: const Color(0xff666666),
-                  ),
-                ),
+                HtmlWidget(servicesModel.description!),
                 SizedBox(
                   height: 20.h,
                 ),
                 Row(
                   children: [
                     Text(
-                      'المدة 1ساعة',
+                      '${servicesModel.price!}  رس',
                       style: TextStyle(
+                        decoration: TextDecoration.lineThrough,
+                        decorationThickness: 2.h,
                         fontSize: 8.sp,
                         fontFamily: FontPath.almaraiBold,
                         color: const Color(0xff666666),
@@ -109,7 +132,7 @@ class CenterCategoryItem extends StatelessWidget {
                       width: 76.w,
                     ),
                     Text(
-                      '200  رس',
+                      '${servicesModel.finalPrice!}  رس',
                       style: TextStyle(
                         fontSize: 12.sp,
                         fontFamily: FontPath.almaraiRegular,

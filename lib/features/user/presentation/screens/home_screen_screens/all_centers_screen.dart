@@ -92,12 +92,12 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
                               child: AllCentersItemBuilder(
                                 servicesProviderModel: cubit
                                     .getServicesProviderModel!.items![index],
-                              ));
+                              ),);
                         },
                         itemCount:
                             cubit.getServicesProviderModel!.items!.length,
                       )
-                    : Center(
+                    : const Center(
                         child: CircularProgressIndicator.adaptive(),
                       ),
               )

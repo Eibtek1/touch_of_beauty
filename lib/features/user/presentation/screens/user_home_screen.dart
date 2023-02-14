@@ -123,6 +123,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                       ),
                                       itemBuilder: (context, index) => InkWell(
                                         onTap: () {
+                                          cubit.getServicesByMainFeatureId(id: cubit
+                                              .mainSectionsFeaturedList[index].id!);
                                           Navigator.pushNamed(
                                               context,
                                               ScreenName

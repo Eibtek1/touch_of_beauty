@@ -17,5 +17,10 @@ class EndPoints{
   static const getAllServicesProviders = '/ServiceProvider/GetAll';
   static const getServicesProviderById = '/ServiceProvider/GetById/';
   static const getAllFeaturedServicesProviders = '/ServiceProvider/GetAllFeatured';
-
+  static const getServicesByMainFeatureId = '/Services/ServicesByMainSection/';
+  static String getServicesInHomeOrInCenter({
+  required bool inHome,
+}){
+    return '/Services/ServicesForUser/$inHome/${!inHome}';
+  }
 }

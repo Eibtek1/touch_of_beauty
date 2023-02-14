@@ -22,6 +22,16 @@ class ServicesProvidersRepository {
     return response;
   }
 
+  static Future<Response> getServicesInHomeOrInCenter({
+    required bool inHome,
+  }) async {
+    final response = await DioHelper.getData(
+        url: EndPoints.getServicesInHomeOrInCenter(inHome: inHome),
+        query: {'PageNumber': 1, 'PageSize': 10},
+        bearerToken: token);
+    return response;
+  }
+
   static Future<Response> getSliderPhotos() async {
     final response = await DioHelper.getData(
         url: EndPoints.slidePhotos,
@@ -40,6 +50,12 @@ class ServicesProvidersRepository {
   static Future<Response> getFeaturedMainSections() async {
     final response = await DioHelper.getData(
         url: EndPoints.getFeaturedMainSections, bearerToken: token);
+    return response;
+  }
+
+  static Future<Response> getServicesByMainFeatureId({required int id}) async {
+    final response = await DioHelper.getData(
+        url: "${EndPoints.getServicesByMainFeatureId}$id", bearerToken: token);
     return response;
   }
 }

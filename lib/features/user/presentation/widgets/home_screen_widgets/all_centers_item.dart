@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/network/api_end_points.dart';
@@ -35,8 +37,25 @@ class AllCentersItemBuilder extends StatelessWidget {
                 SizedBox(
                   height: 118.h,
                   width: double.infinity,
-                  child: Image.network(
-                    "${EndPoints.imageBaseUrl}${servicesProviderModel.userImgUrl}",fit: BoxFit.cover,),
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    imageUrl: "${EndPoints.imageBaseUrl}${servicesProviderModel.userImgUrl}",
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor: Colors.grey[400]!,
+                      highlightColor: Colors.grey[300]!,
+                      child: Container(
+                        height: double.infinity,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                  ),
+                  // Image.network(
+                  //   "${EndPoints.imageBaseUrl}${servicesProviderModel.userImgUrl}",fit: BoxFit.cover,),
                 ),
                 Positioned(
                     top: 14.h,

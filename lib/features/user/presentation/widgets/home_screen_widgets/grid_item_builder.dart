@@ -19,7 +19,7 @@ class GridItemBuilder extends StatelessWidget {
         Container(
           height: 67.h,
           width: 67.w,
-          clipBehavior: Clip.antiAlias,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
             color: Colors.white,

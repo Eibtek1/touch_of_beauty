@@ -24,6 +24,8 @@ class ReserveOrderScreen extends StatelessWidget {
     {'image': ImagePath.skinCare, 'title': "سعاد"},
   ];
 
+  final TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -274,6 +276,7 @@ class ReserveOrderScreen extends StatelessWidget {
             height: 14.h,
           ),
           CustomUserTextField(
+            controller: controller,
             hintText: 'اكتب ملاحضاتك',
             height: 150.h,
           ),

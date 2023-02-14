@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 
@@ -47,9 +49,22 @@ class CenterDetailsBottomSheet extends StatelessWidget {
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(25.r),
                   topRight: Radius.circular(25.r))),
-          child: Image.network(
-            "${EndPoints.imageBaseUrl}${servicesProvidersModel.userImgUrl}",
+          child: CachedNetworkImage(
             fit: BoxFit.cover,
+            imageUrl: "${EndPoints.imageBaseUrl}${servicesProvidersModel.userImgUrl}",
+            placeholder: (context, url) => Shimmer.fromColors(
+              baseColor: Colors.grey[400]!,
+              highlightColor: Colors.grey[300]!,
+              child: Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+            ),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
         ),
         Expanded(
