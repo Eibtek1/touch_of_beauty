@@ -83,6 +83,8 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
                               onTap: () {
+                                print(cubit
+                                    .getServicesProviderModel!.items![index].id);
                                 showBottomSheet(
                                     context: context,
                                     builder: (context) =>

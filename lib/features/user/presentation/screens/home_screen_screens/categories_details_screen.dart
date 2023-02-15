@@ -153,6 +153,8 @@ class CategoryDetailsScreen extends StatelessWidget {
                                   vertical: 10.h, horizontal: 20.w),
                               child: InkWell(
                                 onTap: () {
+                                  print(cubit.mainSectionsFeaturedServicesListInHome[index].id);
+                                  print(cubit.mainSectionsFeaturedServicesListInCenter[index].id);
                                   showBottomSheet(
                                     context: context,
                                     shape: RoundedRectangleBorder(
@@ -160,7 +162,7 @@ class CategoryDetailsScreen extends StatelessWidget {
                                         top: Radius.circular(25.0.r),
                                       ),
                                     ),
-                                    builder: (context) => ServicesBottomSheet(),
+                                    builder: (context) => ServicesBottomSheet(servicesModel: cubit.inHome?cubit.mainSectionsFeaturedServicesListInHome[index]:cubit.mainSectionsFeaturedServicesListInCenter[index],),
                                   );
                                 },
                                 child: CenterCategoryItem(

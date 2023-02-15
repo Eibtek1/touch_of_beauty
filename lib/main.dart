@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
             ],
             supportedLocales: const [
-              Locale("ar", "AE") // OR Locale('ar', 'AE') OR Other RTL locales
+              Locale("ar", "AE")
             ],
             theme: ThemeData(
               primarySwatch:

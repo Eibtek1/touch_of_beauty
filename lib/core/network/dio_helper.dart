@@ -5,21 +5,25 @@ class DioHelper {
   static late Dio dio;
 
   static init() {
-    dio = Dio(BaseOptions(
-      baseUrl: EndPoints.baseUrl,
-      receiveDataWhenStatusError: true,
-    ));
+    dio = Dio(
+      BaseOptions(
+        baseUrl: EndPoints.baseUrl,
+        receiveDataWhenStatusError: true,
+      ),
+    );
   }
 
-  static Future<Response> getData(
-      {required String url,
-      Map<String, dynamic>? query,String? bearerToken,
-      String lang = 'en',}) async {
+  static Future<Response> getData({
+    required String url,
+    Map<String, dynamic>? query,
+    String? bearerToken,
+    String lang = 'en',
+  }) async {
     dio.options.headers = {
       'Content-Type': 'application/json',
       'lang': '',
-      if(bearerToken!=null)"Authorization": "Bearer $bearerToken",
-      'Accept': 'text/plain'
+      if (bearerToken != null) "Authorization": "Bearer $bearerToken",
+      'Accept': 'text/plain',
     };
     return await dio.get(url, queryParameters: query);
   }
@@ -34,7 +38,7 @@ class DioHelper {
     dio.options.headers = {
       'Content-Type': 'application/json',
       'lang': '',
-      "Authorization": token != null?"Bearer $token":'',
+      "Authorization": token != null ? "Bearer $token" : '',
       'Accept': 'text/plain',
     };
     return await dio.post(url, queryParameters: query, data: data);
@@ -50,8 +54,12 @@ class DioHelper {
     dio.options.headers = {
       'Content-Type': 'application/json',
       'lang': '',
-      'Accept': 'text/plain'
+      'Accept': 'text/plain',
     };
-    return await dio.put(url, queryParameters: query, data: {});
+    return await dio.put(
+      url,
+      queryParameters: query,
+      data: {},
+    );
   }
 }

@@ -1,74 +1,63 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
-import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import 'package:touch_of_beauty/features/user/presentation/widgets/custom_button.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../core/network/api_end_points.dart';
+import '../../../data/models/services_model.dart';
 
 class ServicesBottomSheet extends StatelessWidget {
-  ServicesBottomSheet({Key? key}) : super(key: key);
-  final List<String> boarding = [
-    ImagePath.onboarding2,
-    ImagePath.onboarding3,
-    ImagePath.gallery10,
-
-  ];
-  final pageViewController = PageController();
+  final ServicesModel servicesModel;
+  const ServicesBottomSheet({Key? key, required this.servicesModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Stack(
-          children: [
-            Container(
-              height: 280.h,
-              width: double.infinity,
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25.r),
-                      topRight: Radius.circular(25.r))),
-              child: PageView.builder(
-                itemCount: boarding.length,
-                controller: pageViewController,
-                itemBuilder: (BuildContext context, int index) {
-                  return Image.asset(
-                    boarding[index],
-                    fit: BoxFit.cover,
-                  );
-                },
+        Container(
+          height: 280.h,
+          width: double.infinity,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25.r),
+              topRight: Radius.circular(25.r),
+            ),
+          ),
+          child: CachedNetworkImage(
+            fit: BoxFit.cover,
+            imageUrl: "${EndPoints.imageBaseUrl}${servicesModel.imgUrl}",
+            placeholder: (context, url) => Shimmer.fromColors(
+              baseColor: Colors.grey[400]!,
+              highlightColor: Colors.grey[300]!,
+              child: Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
               ),
             ),
-            Positioned(
-              bottom: 20.h,
-              left: 156.w,
-              right: 158.w,
-              child: SmoothPageIndicator(
-                controller: pageViewController,
-                count: boarding.length,
-                effect: ExpandingDotsEffect(
-                    dotHeight: 8.h,
-                    dotWidth: 8.w,
-                    expansionFactor: 3,
-                    spacing: 5.w,
-                    activeDotColor: AppColorsLightTheme.secondaryColor,
-                    dotColor: AppColorsLightTheme.smoothPageIndicatorGreyColor),
-              ),
-            ),
-          ],
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+          ),
+          // Image.asset(
+          //   ImagePath.onboarding2,
+          //   fit: BoxFit.cover,
+          // ),
         ),
         Expanded(
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.h),
             children: [
               Text(
-                'العناية بالبشرة',
+                servicesModel.title!,
                 style: TextStyle(
                     color: const Color(0xff263238),
                     fontFamily: FontPath.almaraiBold,
@@ -103,7 +92,7 @@ class ServicesBottomSheet extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    '200  رس',
+                    '${servicesModel.finalPrice}  رس',
                     style: TextStyle(
                       fontSize: 12.sp,
                       fontFamily: FontPath.almaraiRegular,
@@ -111,9 +100,9 @@ class ServicesBottomSheet extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: 170.w,
+                    width: servicesModel.finalPrice!=servicesModel.price?170.w:220.w,
                   ),
-                  Container(
+                  if(servicesModel.finalPrice!=servicesModel.price)Container(
                     width: 50.w,
                     height: 20.h,
                     decoration: BoxDecoration(
@@ -124,7 +113,7 @@ class ServicesBottomSheet extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '25% -',
+                          '${(100-(num.parse('${servicesModel.finalPrice}')/num.parse('${servicesModel.price}'))*100)}% -',
                           style: TextStyle(
                             fontSize: 11.sp,
                             fontFamily: FontPath.almaraiRegular,
@@ -158,15 +147,16 @@ class ServicesBottomSheet extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              Text(
-                'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،لقد تم توليد هذا النص هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،لقد تم توليد هذا النص',
-                style: TextStyle(
-                  height: 1.2.h,
-                  fontSize: 10.sp,
-                  fontFamily: FontPath.almaraiBold,
-                  color: const Color(0xff666666),
-                ),
-              ),
+              // Text(
+              //   'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،لقد تم توليد هذا النص هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،لقد تم توليد هذا النص',
+              //   style: TextStyle(
+              //     height: 1.2.h,
+              //     fontSize: 10.sp,
+              //     fontFamily: FontPath.almaraiBold,
+              //     color: const Color(0xff666666),
+              //   ),
+              // ),
+              HtmlWidget(servicesModel.description!),
               SizedBox(
                 height: 20.h,
               ),
@@ -185,7 +175,7 @@ class ServicesBottomSheet extends StatelessWidget {
                         color: const Color(0xff1E2432)),
                   ),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       Navigator.pushNamed(context, ScreenName.allCentersScreen);
                     },
                     child: Text(
@@ -204,6 +194,7 @@ class ServicesBottomSheet extends StatelessWidget {
               Container(
                 height: 87.h,
                 width: double.infinity,
+                clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8.r),
@@ -220,10 +211,27 @@ class ServicesBottomSheet extends StatelessWidget {
                         SizedBox(
                           height: double.infinity,
                           width: 122.w,
-                          child: Image.asset(
-                            ImagePath.carouselImage1,
+                          child: CachedNetworkImage(
                             fit: BoxFit.cover,
+                            imageUrl: "${EndPoints.imageBaseUrl}${servicesModel.serviceProvider!.userImgUrl}",
+                            placeholder: (context, url) => Shimmer.fromColors(
+                              baseColor: Colors.grey[400]!,
+                              highlightColor: Colors.grey[300]!,
+                              child: Container(
+                                height: double.infinity,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                            ),
+                            errorWidget: (context, url, error) => const Icon(Icons.error),
                           ),
+                          // Image.asset(
+                          //   ImagePath.carouselImage1,
+                          //   fit: BoxFit.cover,
+                          // ),
                         ),
                         Positioned(
                           top: 14.h,
@@ -251,23 +259,23 @@ class ServicesBottomSheet extends StatelessWidget {
                             height: 10.h,
                           ),
                           Text(
-                            'صالون خانة الجمال',
+                            servicesModel.serviceProvider!.fullName!,
                             style: TextStyle(
                                 fontSize: 12.sp,
                                 fontFamily: FontPath.almaraiBold,
                                 color: const Color(0xff1E2432)),
                           ),
-                          SizedBox(
-                            height: 8.h,
-                          ),
-                          Text(
-                            'الطريق العام الخرج - الرياض (365)',
-                            style: TextStyle(
-                              fontSize: 11.sp,
-                              fontFamily: FontPath.almaraiRegular,
-                              color: const Color(0xff666666),
-                            ),
-                          ),
+                          // SizedBox(
+                          //   height: 8.h,
+                          // ),
+                          // Text(
+                          //   'الطريق العام الخرج - الرياض (365)',
+                          //   style: TextStyle(
+                          //     fontSize: 11.sp,
+                          //     fontFamily: FontPath.almaraiRegular,
+                          //     color: const Color(0xff666666),
+                          //   ),
+                          // ),
                           SizedBox(
                             height: 12.h,
                           ),
@@ -299,7 +307,9 @@ class ServicesBottomSheet extends StatelessWidget {
               CustomUserButton(
                   buttonTitle: 'اطلب الخدمة',
                   isTapped: () {},
-                  width: double.infinity,paddingVertical: 16.h, paddingHorizontal: 45.w),
+                  width: double.infinity,
+                  paddingVertical: 16.h,
+                  paddingHorizontal: 45.w),
               SizedBox(
                 height: 10.h,
               ),
