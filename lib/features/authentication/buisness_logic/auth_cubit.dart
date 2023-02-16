@@ -80,8 +80,14 @@ class AuthCubit extends Cubit<AuthState> {
       final response = await AuthRepository.login(phone: phone, password: password);
       mainResponse = MainResponse.fromJson(response.data);
       message = mainResponse.errorMessage.toString();
-      emit(LoginSuccess(loginModel: LoginModel.fromJson(mainResponse.data)));
+      print(mainResponse.data);
+          if(mainResponse.errorCode == 0){
+        emit(LoginSuccess(loginModel: LoginModel.fromJson(mainResponse.data)));
+      }else{
+            emit(LoginSuccessButErrorInData(errorMessage: message!));
+          }
     } catch (error) {
+      print(error.toString());
       emit(LoginError(error: error.toString()));
     }
   }

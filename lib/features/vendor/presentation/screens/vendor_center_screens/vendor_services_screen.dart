@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_state.dart';
 
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/app_theme/light_theme.dart';
@@ -9,31 +12,12 @@ import '../../../../../core/assets_path/images_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
 import '../../../../freelancer/presentation/widgets/custom_vendor_button.dart';
 import '../../../../user/presentation/widgets/home_screen_widgets/grid_item_builder.dart';
+import '../../../buisness_logic/services_cubit/vendor_services_cubit.dart';
+import '../../../buisness_logic/services_cubit/vendor_services_state.dart';
 import '../../widgets/screen_layout_widget_with_logo.dart';
 
 class VendorServicesScreen extends StatelessWidget {
-  VendorServicesScreen({Key? key}) : super(key: key);
-  final List<Map<String, dynamic>> itemsList = [
-    {'image': ImagePath.babyCare, 'title': "العناية بالطفل"},
-    {'image': ImagePath.beautyCenter, 'title': "قسم التجميل"},
-    {'image': ImagePath.hairCare, 'title': "العناية بالشعر"},
-    {'image': ImagePath.makeup, 'title': "قسم المكياج"},
-    {'image': ImagePath.naturalTherapy, 'title': "العلاج الطبيعي"},
-    {
-      'image': ImagePath.photography,
-      'title': "التصــــــــــــوير الفوتوغرافي"
-    },
-    {'image': ImagePath.selfCare, 'title': "العناية الشخصية"},
-    {'image': ImagePath.skinCare, 'title': "العناية بالبشرة"},
-
-    {'image': ImagePath.hairCare, 'title': "العناية بالشعر"},
-    {'image': ImagePath.makeup, 'title': "قسم المكياج"},
-    {'image': ImagePath.naturalTherapy, 'title': "العلاج الطبيعي"},
-    {
-      'image': ImagePath.photography,
-      'title': "التصــــــــــــوير الفوتوغرافي"
-    },
-  ];
+  const VendorServicesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,41 +57,55 @@ class VendorServicesScreen extends StatelessWidget {
         firstContainerBackgroundHeight: 60.h,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 130.h,
-              ),
-              SizedBox(
-                height: 400.h,
-                child: GridView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: itemsList.length,
-                    gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      childAspectRatio: 1,
-                    ),
-                    itemBuilder: (context, index) => InkWell(
-                      onTap: () {
+          child: BlocConsumer<VendorServicesCubit, VendorServicesState>(
+            listener: (context, state) {
+              // TODO: implement listener
+            },
+            builder: (context, state) {
+              var cubit = VendorServicesCubit.get(context);
+              return Column(
+                children: [
+                  SizedBox(
+                    height: 130.h,
+                  ),
+                  SizedBox(
+                    height: 400.h,
+                    child: GridView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: cubit.servicesList.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4,
+                          childAspectRatio: 1,
+                        ),
+                        itemBuilder: (context, index) => InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context,
+                                    ScreenName.userCategoryDetailsScreen,
+                                    arguments: cubit.servicesList[index].title);
+                              },
+                              child: GridItemBuilder(
+                                model: cubit.servicesList[index],
+                              ),
+                            )),
+                  ),
+                  const Spacer(),
+                  CustomVendorButton(
+                      buttonTitle: 'اضافة خدمة جديدة',
+                      isTapped: () {
                         Navigator.pushNamed(
-                            context, ScreenName.userCategoryDetailsScreen,
-                            arguments: itemsList[index]['title']);
+                            context, ScreenName.vendorAddToServicesScreen);
                       },
-                      child: GridItemBuilder(
-                        model: itemsList[index],
-                      ),
-                    )),
-              ),
-              const Spacer(),
-              CustomVendorButton(buttonTitle: 'اضافة خدمة جديدة', isTapped: (){
-                Navigator.pushNamed(context, ScreenName.vendorAddToServicesScreen);
-              }, width: double.infinity, paddingVertical: 14.h, paddingHorizontal: 45.w),
-              SizedBox(
-                height: 40.h,
-              ),
-            ],
+                      width: double.infinity,
+                      paddingVertical: 14.h,
+                      paddingHorizontal: 45.w),
+                  SizedBox(
+                    height: 40.h,
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

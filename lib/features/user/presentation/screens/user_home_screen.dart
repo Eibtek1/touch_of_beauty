@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_state.dart';
+import 'package:touch_of_beauty/features/user/presentation/widgets/home_screen_widgets/center_details_bottom_sheet.dart';
 import 'package:touch_of_beauty/features/user/presentation/widgets/home_screen_widgets/custom_appbar.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../buisness_logic/main_features_cubit/main_features_cubit.dart';
@@ -206,10 +208,19 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                 itemCount: cubit
                                     .getServicesProviderModel!.items!.length,
                                 itemBuilder: (BuildContext context, int index) {
-                                  return SalonItemBuilder(
-                                    servicesProviderModel: cubit
-                                        .getServicesProviderModel!
-                                        .items![index],
+                                  return InkWell(
+                                    onTap: (){
+                                      print(token);
+                                      showBottomSheet(context: context, builder: (context){
+                                        return CenterDetailsBottomSheet(servicesProvidersModel: cubit
+                                            .getServicesProviderModel!.items![index]);
+                                      });
+                                    },
+                                    child: SalonItemBuilder(
+                                      servicesProviderModel: cubit
+                                          .getServicesProviderModel!
+                                          .items![index],
+                                    ),
                                   );
                                 },
                               )

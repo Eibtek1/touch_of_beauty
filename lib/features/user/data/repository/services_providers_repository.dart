@@ -32,6 +32,16 @@ class ServicesProvidersRepository {
     return response;
   }
 
+  static Future<Response> getServicesByServiceProviderId({
+    required String id,
+  }) async {
+    final response = await DioHelper.getData(
+        url: "${EndPoints.getServicesByServiceProviderId}$id",
+        query: {'PageNumber': 1, 'PageSize': 15},
+        bearerToken: token);
+    return response;
+  }
+
   static Future<Response> getSliderPhotos() async {
     final response = await DioHelper.getData(
         url: EndPoints.slidePhotos,

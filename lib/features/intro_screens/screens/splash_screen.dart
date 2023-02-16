@@ -25,6 +25,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _loading() {
     bool? onboarding = CacheHelper.getData(key: CacheKeys.onboarding);
+    token = CacheHelper.getData(key: CacheKeys.token);
+    print(token);
     Timer(
       const Duration(seconds: 2),
       () {

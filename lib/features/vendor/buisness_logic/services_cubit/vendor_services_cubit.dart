@@ -1,13 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:touch_of_beauty/features/authentication/data/models/main_response.dart';
-import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_state.dart';
 import 'package:touch_of_beauty/features/user/data/models/paginate_model.dart';
 import 'package:touch_of_beauty/features/user/data/models/services_model.dart';
 import 'package:touch_of_beauty/features/user/data/repository/services_providers_repository.dart';
+import 'package:touch_of_beauty/features/vendor/buisness_logic/services_cubit/vendor_services_state.dart';
 
-class UserServicesCubit extends Cubit<UserServicesState> {
-  UserServicesCubit() : super(UserServicesInitial());
-  static UserServicesCubit get(context) {
+class VendorServicesCubit extends Cubit<VendorServicesState> {
+  VendorServicesCubit() : super(VendorServicesInitial());
+  static VendorServicesCubit get(context) {
     return BlocProvider.of(context);
   }
 
@@ -36,6 +36,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       final response = await ServicesProvidersRepository.getServicesByServiceProviderId(id: id);
       mainResponse = MainResponse.fromJson(response.data);
       paginateModel = PaginateModel.fromJson(mainResponse.data);
+      print(mainResponse.data);
       if(mainResponse.errorCode == 0){
         if(servicesPageNumber == 1){
           for(var element in paginateModel.items){
