@@ -16,6 +16,10 @@ class LoginSuccess extends AuthState {
   final LoginModel loginModel;
   LoginSuccess({required this.loginModel});
 }
+class LoginSuccessButErrorInData extends AuthState {
+  final String errorMessage;
+  LoginSuccessButErrorInData({required this.errorMessage});
+}
 class LoginError extends AuthState {
   final String error;
   LoginError({required this.error});

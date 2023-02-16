@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_state.dart';
-
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
@@ -82,17 +81,21 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
                     ? ListView.builder(
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
-                              onTap: () {
-                                showBottomSheet(
-                                    context: context,
-                                    builder: (context) =>
-                                        CenterDetailsBottomSheet(servicesProvidersModel: cubit
-                                            .getServicesProviderModel!.items![index],));
-                              },
-                              child: AllCentersItemBuilder(
-                                servicesProviderModel: cubit
-                                    .getServicesProviderModel!.items![index],
-                              ),);
+                            onTap: () {
+                              print(cubit
+                                  .getServicesProviderModel!.items![index].id);
+                              showBottomSheet(
+                                context: context,
+                                builder: (context) => CenterDetailsBottomSheet(
+                                  servicesProvidersModel: cubit.getServicesProviderModel!.items![index],
+                                ),
+                              );
+                            },
+                            child: AllCentersItemBuilder(
+                              servicesProviderModel:
+                                  cubit.getServicesProviderModel!.items![index],
+                            ),
+                          );
                         },
                         itemCount:
                             cubit.getServicesProviderModel!.items!.length,

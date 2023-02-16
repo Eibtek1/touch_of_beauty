@@ -45,14 +45,29 @@ class _LoginScreenState extends State<LoginScreen> {
               if(cubit.mainResponse.errorCode ==0&&state.loginModel.userType==1){
                 CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
                   CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
+                    token = CacheHelper.getData(key: CacheKeys.token);
                     Navigator.pushNamedAndRemoveUntil(context, ScreenName.userMainLayout, (route) => false);
                   });
                 });
               }else if(cubit.mainResponse.errorCode ==0&&state.loginModel.userType==2){
-                Navigator.pushNamedAndRemoveUntil(context, ScreenName.freelancerMainLayout, (route) => false);
+                CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
+                  CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
+                    token = CacheHelper.getData(key: CacheKeys.token);
+                    Navigator.pushNamedAndRemoveUntil(context, ScreenName.vendorMainLayout, (route) => false);
+                  });
+                });
               }else if(cubit.mainResponse.errorCode ==0&&state.loginModel.userType==3){
-                Navigator.pushNamedAndRemoveUntil(context, ScreenName.vendorMainLayout, (route) => false);
+                CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
+                  CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
+                    token = CacheHelper.getData(key: CacheKeys.token);
+                    Navigator.pushNamedAndRemoveUntil(context, ScreenName.freelancerMainLayout, (route) => false);
+                  });
+                });
               }
+            }
+            if(state is LoginSuccessButErrorInData){
+              Navigator.pop(context);
+              Fluttertoast.showToast(msg: state.errorMessage);
             }
           },
           builder: (context, state) {
@@ -89,11 +104,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   AuthTextFormField(
                     hintText: 'رقم الهاتف',
-                    maxLength: 10,
+                    maxLength: 20,
                     validate: (value) {
                       if (value!.isEmpty) {
                         return 'ادخل رقم الهاتف';
-                      } else if (value.length < 10) {
+                      } else if (value.length < 9) {
                         return 'لا يحب ان يقل الرقم عن 10 ارقام';
                       }
                       return null;
@@ -117,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     validate: (value) {
                       if (value!.isEmpty) {
                         return 'ادخل كلمة المرور';
-                      } else if (value.length < 8) {
+                      } else if (value.length < 6) {
                         return 'كلمة المرور ضعيفة';
                       }
                       return null;

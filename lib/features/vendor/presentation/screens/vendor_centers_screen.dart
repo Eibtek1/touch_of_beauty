@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
+import 'package:touch_of_beauty/features/vendor/buisness_logic/services_cubit/vendor_services_cubit.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/svg_path.dart';
 import '../widgets/screen_layout_widget_with_logo.dart';
@@ -65,6 +67,7 @@ class VendorCentersScreen extends StatelessWidget {
               ),
               const Divider(),
               buildItem(svgImage: SvgPath.bag, title: 'خدماتي', onTap: (){
+                VendorServicesCubit.get(context).getServicesByServiceProviderId(id: 'd1fd1edf-4b1e-4092-b8be-1b1a4b1e8210');
                 Navigator.pushNamed(context, ScreenName.vendorServicesScreen);
               }),
               SizedBox(

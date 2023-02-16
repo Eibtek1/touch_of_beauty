@@ -1,13 +1,23 @@
 
-abstract class ServicesState {}
+abstract class UserServicesState {}
 
-class ServicesInitial extends ServicesState {}
-
-
-class ChangeServicesInHomeOrInCenter extends ServicesState {}
+class UserServicesInitial extends UserServicesState {}
 
 
+class ChangeServicesInHomeOrInCenter extends UserServicesState {}
 
-class GetServicesInHomeOrCenterLoading extends ServicesState {}
-class GetServicesInHomeOrCenterSuccess extends ServicesState {}
-class GetServicesInHomeOrCenterError extends ServicesState {}
+
+
+class GetServicesInHomeOrCenterLoading extends UserServicesState {}
+class GetServicesInHomeOrCenterSuccess extends UserServicesState {}
+class GetServicesInHomeOrCenterError extends UserServicesState {}
+
+
+class GetServicesByServiceProviderIdLoading extends UserServicesState {}
+class GetServicesByServiceProviderIdSuccess extends UserServicesState {}
+class GetServicesByServiceProviderIdError extends UserServicesState {
+  final String error;
+
+  GetServicesByServiceProviderIdError({required this.error});
+
+}

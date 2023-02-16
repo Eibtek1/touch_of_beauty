@@ -6,7 +6,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
-
+import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
@@ -14,10 +14,15 @@ import '../../../../../core/network/api_end_points.dart';
 import '../../../data/models/services_providers_model.dart';
 import 'center_services_item.dart';
 
-class CenterDetailsBottomSheet extends StatelessWidget {
+class CenterDetailsBottomSheet extends StatefulWidget {
   final ServicesProviderModel servicesProvidersModel;
-   CenterDetailsBottomSheet({Key? key, required this.servicesProvidersModel}) : super(key: key);
+   const CenterDetailsBottomSheet({Key? key, required this.servicesProvidersModel}) : super(key: key);
 
+  @override
+  State<CenterDetailsBottomSheet> createState() => _CenterDetailsBottomSheetState();
+}
+
+class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
   final List<String> galleryList =[
     ImagePath.gallery1,
     ImagePath.gallery2,
@@ -36,6 +41,7 @@ class CenterDetailsBottomSheet extends StatelessWidget {
     ImagePath.gallery15,
   ];
 
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,7 +57,7 @@ class CenterDetailsBottomSheet extends StatelessWidget {
                   topRight: Radius.circular(25.r))),
           child: CachedNetworkImage(
             fit: BoxFit.cover,
-            imageUrl: "${EndPoints.imageBaseUrl}${servicesProvidersModel.userImgUrl}",
+            imageUrl: "${EndPoints.imageBaseUrl}${widget.servicesProvidersModel.userImgUrl}",
             placeholder: (context, url) => Shimmer.fromColors(
               baseColor: Colors.grey[400]!,
               highlightColor: Colors.grey[300]!,
@@ -75,7 +81,7 @@ class CenterDetailsBottomSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "${servicesProvidersModel.title}",
+                    "${widget.servicesProvidersModel.title}",
                     style: TextStyle(
                         color: const Color(0xff263238),
                         fontFamily: FontPath.almaraiBold,
@@ -90,7 +96,7 @@ class CenterDetailsBottomSheet extends StatelessWidget {
               ),
               SizedBox(height: 8.h,),
               Text(
-                "${servicesProvidersModel.addresses![0].city}${servicesProvidersModel.addresses![0].addressDetails}",
+                "${widget.servicesProvidersModel.addresses![0].city}${widget.servicesProvidersModel.addresses![0].addressDetails}",
                 style: TextStyle(
                   fontSize: 11.sp,
                   fontFamily: FontPath.almaraiRegular,
@@ -180,7 +186,7 @@ class CenterDetailsBottomSheet extends StatelessWidget {
               SizedBox(
                 height: 8.h,
               ),
-              HtmlWidget(servicesProvidersModel.description!),
+              HtmlWidget(widget.servicesProvidersModel.description!),
               // Text(
               //
               //   style: TextStyle(
@@ -258,67 +264,70 @@ class CenterDetailsBottomSheet extends StatelessWidget {
               SizedBox(
                 height: 22.h,
               ),
-              Text(
-                'خدماتنا',
-                style: TextStyle(
-                    color: const Color(0xff263238),
-                    fontFamily: FontPath.almaraiBold,
-                    fontSize: 18.sp),
-              ),
-              SizedBox(
-                height: 16.h,
-              ),
-              SizedBox(
-                height: 30.h,
-                width: double.infinity,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 7.w),
-                      child: Container(
-                        height: 28.h,
-                        width: 87.w,
-                        decoration: BoxDecoration(
-                          color: const Color(0xffF0F3F6),
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'عناية شخصية',
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              fontFamily: FontPath.almaraiRegular,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  itemCount: 5,
-                ),
-              ),
-              SizedBox(
-                height: 22.h,
-              ),
-              SizedBox(
-                height: 320.h,
-
-                width: double.infinity,
-                child: ListView.builder(
-                  physics:const NeverScrollableScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    return const CenterServicesCategoryItem();
-                  },
-                  itemCount: 2,
-                ),
-              ),
-              SizedBox(
-                height: 22.h,
-              ),
+              // Text(
+              //   'خدماتنا',
+              //   style: TextStyle(
+              //       color: const Color(0xff263238),
+              //       fontFamily: FontPath.almaraiBold,
+              //       fontSize: 18.sp),
+              // ),
+              // SizedBox(
+              //   height: 16.h,
+              // ),
+              // SizedBox(
+              //   height: 30.h,
+              //   width: double.infinity,
+              //   child: ListView.builder(
+              //     scrollDirection: Axis.horizontal,
+              //     itemBuilder: (BuildContext context, int index) {
+              //       return Padding(
+              //         padding: EdgeInsets.symmetric(horizontal: 7.w),
+              //         child: Container(
+              //           height: 28.h,
+              //           width: 87.w,
+              //           decoration: BoxDecoration(
+              //             color: const Color(0xffF0F3F6),
+              //             borderRadius: BorderRadius.circular(12.r),
+              //           ),
+              //           child: Center(
+              //             child: Text(
+              //               'عناية شخصية',
+              //               style: TextStyle(
+              //                 fontSize: 12.sp,
+              //                 fontFamily: FontPath.almaraiRegular,
+              //                 color: Colors.grey,
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       );
+              //     },
+              //     itemCount: 5,
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 22.h,
+              // ),
+              // SizedBox(
+              //   height: 320.h,
+              //
+              //   width: double.infinity,
+              //   child: ListView.builder(
+              //     physics:const NeverScrollableScrollPhysics(),
+              //     itemBuilder: (BuildContext context, int index) {
+              //       return const CenterServicesCategoryItem(servicesModel: null,);
+              //     },
+              //     itemCount: 2,
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 22.h,
+              // ),
               OutlinedButton(
                 onPressed: () {
+                  UserServicesCubit.get(context).servicesPageNumber =1;
+                  print(UserServicesCubit.get(context).servicesPageNumber);
+                  UserServicesCubit.get(context).getServicesByServiceProviderId(id: widget.servicesProvidersModel.id!);
                   Navigator.pushNamed(context, ScreenName.ourServicesScreen);
                 },
                 style: OutlinedButton.styleFrom(
@@ -330,7 +339,7 @@ class CenterDetailsBottomSheet extends StatelessWidget {
                   )
                 ),
                 child: Text(
-                  'شاهد جميع الخدمات',
+                  'شاهد خدماتنا',
                   style: TextStyle(
                       color: AppColorsLightTheme.primaryColor,
                       fontFamily: FontPath.almaraiBold,
@@ -352,6 +361,7 @@ class CenterDetailsBottomSheet extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: (){
+
                       Navigator.pushNamed(context, ScreenName.galleryScreen);
                     },
                     child: Text(
