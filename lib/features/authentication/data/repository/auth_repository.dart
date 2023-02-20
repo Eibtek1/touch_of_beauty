@@ -40,6 +40,7 @@ class AuthRepository{
     required String email,
     required String description,
     required String phone,
+    required String taxNumber,
     required int? cityId,
     required File? image,
   }) async {
@@ -51,13 +52,66 @@ class AuthRepository{
         "description": description,
         "email": email,
         "fullName": userName,
-        "img": image != null?"data:image/${image.path.split('.').last};base64,${imageToBase64(image)}":null,
+        "img": image != null?"data:image/${image.path.split('.').last};base64,${imageToBase64(image)}":"",
         "password": password,
         "phoneNumber": phone,
-        "taxNumber": "<tel>",
+        "taxNumber": taxNumber,
         "lat": "21.3666",
         "lng": "21.6588",
         "cityId": cityId
+      },
+    );
+    return response;
+  }
+
+
+  static Future<Response> vendorUpdateProfile({
+    required String? userName,
+    required String? email,
+    required String? description,
+    required String? phone,
+    required String? taxNumber,
+    required File? image,
+  }) async {
+
+    final response = await DioHelper.putData(
+      url: EndPoints.updateCenterProfile,
+      token: token,
+      data: {
+        "description":description==""? "null null null":description,
+        "email": email??"",
+        "fullName": userName??"",
+        "phoneNumber": phone??"",
+        "taxNumber": taxNumber??"",
+        "lat": "0.0",
+        "lng":"0.0",
+        "img": image != null?"data:image/${image.path.split('.').last};base64,${imageToBase64(image)}":"",
+        // "imgFile": image != null?"data:image/${image.path.split('.').last};base64,${imageToBase64(image)}":""
+      },
+    );
+    return response;
+  }
+
+
+  static Future<Response> userUpdateProfile({
+    required int cityId,
+    required String email,
+    required String name,
+    required String phoneNumber,
+    required File? image,
+  }) async {
+
+    final response = await DioHelper.putData(
+      url: EndPoints.updateUserProfile,
+      token: token,
+      data:{
+        "cityId": cityId,
+        "email": email,
+        "fullName": name,
+        "phoneNumber": phoneNumber,
+        "lat": 0.0,
+        "lng": 0.0,
+        "img": image != null?"data:image/${image.path.split('.').last};base64,${imageToBase64(image)}":"",
       },
     );
     return response;
@@ -88,10 +142,10 @@ class AuthRepository{
         "cityId": cityId??1,
         "freelanceFormImg": freelancerImage != null
             ?  "data:image/${freelancerImage.path.split('.').last};base64,${imageToBase64(freelancerImage)}"
-            : null,
+            : "",
         "img": image != null
             ? "data:image/${image.path.split('.').last};base64,${imageToBase64(image)}"
-            : null,
+            : "",
       },
     );
     return response;
@@ -110,6 +164,15 @@ class AuthRepository{
         "deviceToken": "string",
         "isPersist": true
       },
+    );
+    return response;
+  }
+
+
+  static Future<Response> logout() async {
+    final response = await DioHelper.postData(
+      url: EndPoints.logout,
+      token: token,
     );
     return response;
   }
@@ -143,15 +206,15 @@ class AuthRepository{
   }
 
 
-  static Future<Response> changeForgetPassword({
+  static Future<Response> confirmForgetPassword({
     required String phone,
-    required String code,
+    required String randomCode,
   }) async {
     final response = await DioHelper.postData(
       url: EndPoints.changeForgetPassword,
       data: {
         "phoneNumber": phone,
-        "randomCode": code
+        "randomCode": randomCode
       },
     );
     return response;

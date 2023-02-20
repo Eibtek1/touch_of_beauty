@@ -1,11 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
-import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
+import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
+import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../core/network/api_end_points.dart';
 import '../../widgets/center_details/custom_container.dart';
 import '../../widgets/screen_layout_widget_with_logo.dart';
 
@@ -14,6 +19,9 @@ class CenterDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        var cubit = AuthCubit.get(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -32,7 +40,7 @@ class CenterDetailsScreen extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, ScreenName.editCenterScreen);
+                if(cubit.getUserModel!=null)Navigator.pushNamed(context, ScreenName.editCenterScreen);
               },
               icon: SvgPicture.asset(
                 SvgPath.edit,
@@ -48,34 +56,10 @@ class CenterDetailsScreen extends StatelessWidget {
         firstContainerBackgroundHeight: 58.h,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 19.w),
-          child: Column(
+          child: state is! GetUserDataLoading
+              ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Row(
-              //   children: [
-              //     Icon(Icons.arrow_back_rounded,color: Colors.white,),
-              //     Expanded(child: Text(
-              //       'بيانات المركز',
-              //       style: TextStyle(
-              //         fontSize: 17.sp,
-              //         fontFamily: FontPath.almaraiBold,
-              //         color: Colors.white,
-              //       ),
-              //     )),
-              //     IconButton(
-              //         onPressed: () {
-              //           Navigator.pushNamed(context, ScreenName.editCenterScreen);
-              //         },
-              //         icon: SvgPicture.asset(
-              //           SvgPath.edit,
-              //           width: 31.w,
-              //           height: 31.h,
-              //         )),
-              //     SizedBox(
-              //       width: 12.w,
-              //     ),
-              //   ],
-              // ),
               SizedBox(
                 height: 130.h,
               ),
@@ -98,70 +82,117 @@ class CenterDetailsScreen extends StatelessWidget {
                       width: double.infinity,
                       clipBehavior: Clip.antiAlias,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.r),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(0, 0),
-                              color: Colors.black.withOpacity(0.14),
-                              blurRadius: 10.r,
-                            )
-                          ]),
-                      child: Image.asset(
-                        ImagePath.onboarding3,
+                        borderRadius: BorderRadius.circular(5.r),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: const Offset(0, 0),
+                            color: Colors.black.withOpacity(0.14),
+                            blurRadius: 10.r,
+                          ),
+                        ],),
+                      child: CachedNetworkImage(
                         fit: BoxFit.cover,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    SizedBox(
-                      height: 55.h,
-                      width: double.infinity,
-                      child: ListView.builder(
-                        padding: EdgeInsets.symmetric(vertical: 4.5.h),
-                        itemCount: 10,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5.w),
-                            child: Container(
-                              height: 46.h,
-                              width: 46.w,
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: AppColorsLightTheme.primaryColor),
-                                borderRadius: BorderRadius.circular(2.r),
-                                boxShadow: [
-                                  BoxShadow(
-                                      offset: const Offset(0, 0),
-                                      color: Colors.black.withOpacity(0.28),
-                                      blurRadius: 8.r)
-                                ],
-                              ),
-                              child: Image.asset(
-                                ImagePath.gallery13,
-                                fit: BoxFit.cover,
+                        imageUrl:
+                        '${EndPoints.imageBaseUrl}${cubit.getUserModel!.userImgUrl}',
+                        placeholder: (context, url) =>
+                            Shimmer.fromColors(
+                              baseColor: Colors.grey[400]!,
+                              highlightColor: Colors.grey[300]!,
+                              child: Container(
+                                height: double.infinity,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius:
+                                  BorderRadius.circular(8.0),
+                                ),
                               ),
                             ),
-                          );
-                        },
+                        errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                       ),
+                      // Image.asset(
+                      //   ImagePath.onboarding3,
+                      //   fit: BoxFit.cover,
+                      // ),
                     ),
                     SizedBox(
                       height: 10.h,
                     ),
+                    // SizedBox(
+                    //   height: 55.h,
+                    //   width: double.infinity,
+                    //   child: ListView.builder(
+                    //     padding:
+                    //         EdgeInsets.symmetric(vertical: 4.5.h),
+                    //     itemCount: 10,
+                    //     scrollDirection: Axis.horizontal,
+                    //     itemBuilder:
+                    //         (BuildContext context, int index) {
+                    //       return Padding(
+                    //         padding:
+                    //             EdgeInsets.symmetric(horizontal: 5.w),
+                    //         child: Container(
+                    //           height: 46.h,
+                    //           width: 46.w,
+                    //           clipBehavior:
+                    //               Clip.antiAliasWithSaveLayer,
+                    //           decoration: BoxDecoration(
+                    //             border: Border.all(
+                    //                 color: AppColorsLightTheme
+                    //                     .primaryColor),
+                    //             borderRadius:
+                    //                 BorderRadius.circular(2.r),
+                    //             boxShadow: [
+                    //               BoxShadow(
+                    //                   offset: const Offset(0, 0),
+                    //                   color: Colors.black
+                    //                       .withOpacity(0.28),
+                    //                   blurRadius: 8.r)
+                    //             ],
+                    //           ),
+                    //           child: Image.asset(
+                    //             ImagePath.gallery13,
+                    //             fit: BoxFit.cover,
+                    //           ),
+                    //         ),
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 10.h,
+                    // ),
                     CustomDetailsContainer(
-                      height: 44.h,
+                      height: 64.h,
                       width: double.infinity,
-                      child: Text(
-                        'مركز خانة الجمال',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontFamily: FontPath.almaraiBold,
-                          color: const Color(0xff8B8989),
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'اسم المركز',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              fontFamily: FontPath.almaraiBold,
+                              color: const Color(0xff8B8989),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                          Expanded(
+                            child: Text(
+                              cubit.getUserModel!.fullName!,
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontFamily: FontPath.almaraiBold,
+                                color: const Color(0xff8B8989),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(
@@ -187,7 +218,7 @@ class CenterDetailsScreen extends StatelessWidget {
                           ),
                           Expanded(
                             child: Text(
-                              'لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا',
+                              cubit.getUserModel!.description??'قم بإضافة وصف للمركز',
                               textAlign: TextAlign.start,
                               maxLines: 5,
                               style: TextStyle(
@@ -206,16 +237,105 @@ class CenterDetailsScreen extends StatelessWidget {
                       height: 14.h,
                     ),
                     CustomDetailsContainer(
-                      height: 44.h,
+                      height: 64.h,
                       width: double.infinity,
-                      child: Text(
-                        'رقم الهاتف',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontFamily: FontPath.almaraiBold,
-                          color: const Color(0xff8B8989),
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'الرقم الضريبي',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              fontFamily: FontPath.almaraiBold,
+                              color: const Color(0xff8B8989),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                          Expanded(
+                            child: Text(
+                              cubit.getUserModel!.taxNumber!,
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontFamily: FontPath.almaraiBold,
+                                color: const Color(0xff8B8989),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 14.h,
+                    ),
+                    CustomDetailsContainer(
+                      height: 64.h,
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'رقم الهاتف',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              fontFamily: FontPath.almaraiBold,
+                              color: const Color(0xff8B8989),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                          Expanded(
+                            child: Text(
+                              cubit.getUserModel!.phoneNumber??'قم بإضافة رقم هاتف للمركز',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontFamily: FontPath.almaraiBold,
+                                color: const Color(0xff8B8989),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 14.h,
+                    ),
+                    CustomDetailsContainer(
+                      height: 64.h,
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'البريد الاليكتروني',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              fontFamily: FontPath.almaraiBold,
+                              color: const Color(0xff8B8989),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                          Expanded(
+                            child: Text(
+                              cubit.getUserModel!.email??'قم بإضافة رقم هاتف للمركز',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontFamily: FontPath.almaraiBold,
+                                color: const Color(0xff8B8989),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(
@@ -244,7 +364,8 @@ class CenterDetailsScreen extends StatelessWidget {
                               horizontal: 12.w, vertical: 12.h),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8.r),
-                            color: AppColorsLightTheme.authTextFieldFillColor,
+                            color: AppColorsLightTheme
+                                .authTextFieldFillColor,
                           ),
                           child: const Center(
                             child: Icon(
@@ -262,7 +383,8 @@ class CenterDetailsScreen extends StatelessWidget {
                       height: 44.h,
                       width: double.infinity,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             'شهادة سجل المركز',
@@ -273,7 +395,11 @@ class CenterDetailsScreen extends StatelessWidget {
                               color: const Color(0xff8B8989),
                             ),
                           ),
-                          SvgPicture.asset(SvgPath.paperPin,height: 22.h,width: 21.w,),
+                          SvgPicture.asset(
+                            SvgPath.paperPin,
+                            height: 22.h,
+                            width: 21.w,
+                          ),
                         ],
                       ),
                     ),
@@ -284,9 +410,14 @@ class CenterDetailsScreen extends StatelessWidget {
                 ),
               )
             ],
+          )
+              : const Center(
+            child: CircularProgressIndicator.adaptive(),
           ),
         ),
       ),
     );
+  },
+);
   }
 }

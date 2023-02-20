@@ -7,6 +7,7 @@ import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
+import 'package:touch_of_beauty/features/authentication/presentation/screens/otp_screen.dart';
 import '../../../../core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/constants/constants.dart';
@@ -29,6 +30,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
   final TextEditingController confirmPassword = TextEditingController();
   var formKey = GlobalKey<FormState>();
   bool chosen = true;
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +58,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                   backgroundColor: AppColorsLightTheme.primaryColor,
                 );
                 Navigator.pushReplacementNamed(context, ScreenName.otpScreen,
-                    arguments: state.registerModel!.phoneNumber);
+                    arguments: OtpArgs(phoneNumber: state.registerModel!.phoneNumber,isConfirmPassword: false));
                 cubit.profileImage =null;
               } else if (state.registerModel == null &&
                   cubit.mainResponse.errorCode != 0) {
@@ -80,7 +82,6 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
             var cubit = AuthCubit.get(context);
             return Form(
               key: formKey,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
               child: ListView(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 children: [

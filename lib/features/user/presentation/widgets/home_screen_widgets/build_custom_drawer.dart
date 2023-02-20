@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
+import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
 
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/images_path.dart';
+import '../../../../../core/constants/constants.dart';
+import '../../../../authentication/buisness_logic/auth_cubit.dart';
 
 class AppDrawer extends StatelessWidget {
   final Function closeDrawer;
+
   const AppDrawer({Key? key, required this.closeDrawer}) : super(key: key);
 
   @override
@@ -24,7 +29,7 @@ class AppDrawer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     closeDrawer();
                   },
                   child: Container(
@@ -36,7 +41,9 @@ class AppDrawer extends StatelessWidget {
                       shape: BoxShape.circle,
                     ),
                     child: Center(
-                      child: Icon(Icons.cancel_outlined,color: const Color(0xffB83561),size: 24.r,),
+                      child: Icon(
+                        Icons.cancel_outlined, color: const Color(0xffB83561),
+                        size: 24.r,),
                     ),
                   ),
                 ),
@@ -95,7 +102,7 @@ class AppDrawer extends StatelessWidget {
             ),
             SizedBox(height: 27.h,),
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pushNamed(context, ScreenName.complainsScreen);
               },
               child: Text(
@@ -113,19 +120,40 @@ class AppDrawer extends StatelessWidget {
               color: Colors.white,
             ),
             SizedBox(height: 200.h,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(Icons.exit_to_app,size: 24.r,color: Colors.white,),
-                SizedBox(width: 5.w,),
-                Text(
-                  'تسجيل خروج',
-                  style: TextStyle(
-                      fontSize: 14.sp,
-                      fontFamily: FontPath.almaraiLight,
-                      color: Colors.white),
-                ),
-              ],
+            BlocConsumer<AuthCubit, AuthState>(
+              listener: (context, state) {
+                if(state is LogoutLoading){
+                  showProgressIndicator(context);
+                }
+                if(state is LogoutError){
+                  Navigator.pop(context);
+                }
+                if(state is LogoutSuccess){
+                  Navigator.pushNamedAndRemoveUntil(context, ScreenName.loginScreen, (route) => false);
+                }
+              },
+              builder: (context, state) {
+                var cubit = AuthCubit.get(context);
+                return InkWell(
+                  onTap: (){
+                    cubit.logout();
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.exit_to_app, size: 24.r, color: Colors.white,),
+                      SizedBox(width: 5.w,),
+                      Text(
+                        'تسجيل خروج',
+                        style: TextStyle(
+                            fontSize: 14.sp,
+                            fontFamily: FontPath.almaraiLight,
+                            color: Colors.white),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           ],
         ),

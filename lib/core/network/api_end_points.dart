@@ -3,8 +3,11 @@ class EndPoints{
   static const imageBaseUrl = 'http://lightbulbtech-001-site13.etempurl.com';
   static const userRegister = '/Users/UserRegister';
   static const centerRegister = '/Users/CenterRegister';
+  static const updateCenterProfile = '/Users/UpdateCenterProfile';
+  static const updateUserProfile = '/Users/UpdateUserProfile';
   static const freelancerRegister = '/Users/FreeAgentRegister';
   static const login = '/Users/login';
+  static const logout = '/Users/logout';
   static const changePassword = '/Users/changeoldPassword';
   static const getUserData = '/Users/GetUserInfo';
   static const forgetPassword = '/Users/ForgetPassword';

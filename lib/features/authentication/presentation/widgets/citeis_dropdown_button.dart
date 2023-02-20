@@ -16,6 +16,11 @@ class CityDropDownButton extends StatefulWidget {
 
 class _CityDropDownButtonState extends State<CityDropDownButton> {
   @override
+  void initState() {
+    AuthCubit.get(context).getCities();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
@@ -30,7 +35,7 @@ class _CityDropDownButtonState extends State<CityDropDownButton> {
           ),
           child: state is! GetCitiesLoading
               ? DropdownButton(
-            hint: Text('المدينة'),
+                  hint: const Text('المدينة'),
                   elevation: 0,
                   underline: const SizedBox.shrink(),
                   value: cubit.cityValue,

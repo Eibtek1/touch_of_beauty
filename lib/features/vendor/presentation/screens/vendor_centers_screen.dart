@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
+import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
+import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
 import 'package:touch_of_beauty/features/vendor/buisness_logic/services_cubit/vendor_services_cubit.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/svg_path.dart';
 import '../widgets/screen_layout_widget_with_logo.dart';
 
-class VendorCentersScreen extends StatelessWidget {
+class VendorCentersScreen extends StatefulWidget {
   const VendorCentersScreen({Key? key}) : super(key: key);
+
+  @override
+  State<VendorCentersScreen> createState() => _VendorCentersScreenState();
+}
+
+class _VendorCentersScreenState extends State<VendorCentersScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +50,16 @@ class VendorCentersScreen extends StatelessWidget {
                     ),
                   ),
                   InkWell(
-                    onTap: (){
-                      Navigator.pushNamed(context, ScreenName.vendorNotificationScreen);
+                    onTap: () {
+                      Navigator.pushNamed(
+                          context, ScreenName.vendorNotificationScreen);
                     },
                     child: SvgPicture.asset(
                       SvgPath.notificationBill,
-                      color: Colors.white,
+                      colorFilter: const ColorFilter.mode(
+                        Colors.white,
+                        BlendMode.srcIn,
+                      ),
                       height: 28.h,
                       width: 23.w,
                     ),
@@ -52,31 +69,89 @@ class VendorCentersScreen extends StatelessWidget {
               SizedBox(
                 height: 186.h,
               ),
-              buildItem(svgImage: SvgPath.centersIcon, title: 'بيانات المركز', onTap: (){
-                Navigator.pushNamed(context, ScreenName.detailsCenterScreen);
-              }),
+              buildItem(
+                svgImage: SvgPath.centersIcon,
+                title: 'بيانات المركز',
+                onTap: () {
+                  if (AuthCubit
+                      .get(context)
+                      .getUserModel == null) {
+                    AuthCubit.get(context).getUserData();
+                  }
+                  Navigator.pushNamed(context, ScreenName.detailsCenterScreen);
+                },
+              ),
               SizedBox(
                 height: 10.h,
               ),
               const Divider(),
-              buildItem(svgImage: SvgPath.clock, title: 'مواعيد العمل', onTap: (){
-                Navigator.pushNamed(context, ScreenName.centerWorkingTimeScreen);
-              }),
+              buildItem(
+                svgImage: SvgPath.clock,
+                title: 'مواعيد العمل',
+                onTap: () {
+                  Navigator.pushNamed(
+                      context, ScreenName.centerWorkingTimeScreen);
+                },
+              ),
               SizedBox(
                 height: 10.h,
               ),
               const Divider(),
-              buildItem(svgImage: SvgPath.bag, title: 'خدماتي', onTap: (){
-                VendorServicesCubit.get(context).getServicesByServiceProviderId(id: 'd1fd1edf-4b1e-4092-b8be-1b1a4b1e8210');
-                Navigator.pushNamed(context, ScreenName.vendorServicesScreen);
-              }),
+              buildItem(
+                svgImage: SvgPath.bag,
+                title: 'خدماتي',
+                onTap: () {
+                  VendorServicesCubit.get(context)
+                      .getServicesByServiceProviderId(
+                      id: 'd1fd1edf-4b1e-4092-b8be-1b1a4b1e8210');
+                  Navigator.pushNamed(context, ScreenName.vendorServicesScreen);
+                },
+              ),
               SizedBox(
                 height: 10.h,
               ),
               const Divider(),
-              buildItem(svgImage: SvgPath.calender2, title: 'حجوزاتي', onTap: (){
-                Navigator.pushNamed(context, ScreenName.vendorReservationsScreen);
-              }),
+              buildItem(
+                svgImage: SvgPath.calender2,
+                title: 'حجوزاتي',
+                onTap: () {
+                  Navigator.pushNamed(
+                      context, ScreenName.vendorReservationsScreen);
+                },
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              const Divider(),
+              BlocConsumer<AuthCubit, AuthState>(
+                listener: (context, state) {
+                  if(state is LogoutLoading){
+                    showProgressIndicator(context);
+                  }
+                  if(state is LogoutError){
+                    Navigator.pop(context);
+                  }
+                  if(state is LogoutSuccess){
+                    Navigator.pushNamedAndRemoveUntil(context, ScreenName.loginScreen, (route) => false);
+                  }
+                },
+                builder: (context, state) {
+                  var cubit = AuthCubit.get(context);
+                  return buildItem(
+                    svgImage: SvgPath.calender2,
+                    child: Icon(
+                      Icons.exit_to_app,
+                      size: 24.r,
+                      color: AppColorsLightTheme.primaryColor,
+                    ),
+                    title: 'تسجيل الخروج',
+                    onTap: () {
+                      // print(token);
+                      cubit.logout();
+                    },
+                  );
+                },
+              ),
               SizedBox(
                 height: 10.h,
               ),
@@ -88,18 +163,20 @@ class VendorCentersScreen extends StatelessWidget {
     );
   }
 
-  Widget buildItem({
-    required String svgImage,
+  Widget buildItem({required String svgImage,
     required String title,
-    required Function onTap
-  }) {
+    Widget? child,
+    required Function onTap}) {
     return ListTile(
-      onTap: (){
+      onTap: () {
         onTap();
       },
-      leading: SvgPicture.asset(
+      leading: child ?? SvgPicture.asset(
         svgImage,
-        color: AppColorsLightTheme.primaryColor,
+        colorFilter: const ColorFilter.mode(
+          AppColorsLightTheme.primaryColor,
+          BlendMode.srcIn,
+        ),
       ),
       title: Text(
         title,
