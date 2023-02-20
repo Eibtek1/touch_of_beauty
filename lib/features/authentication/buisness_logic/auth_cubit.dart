@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:touch_of_beauty/core/cache_manager/cache_keys.dart';
+import 'package:touch_of_beauty/core/cache_manager/shared_preferences.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/authentication/data/repository/auth_repository.dart';
 import '../../../core/network/dio_helper.dart';
@@ -28,9 +30,13 @@ class AuthCubit extends Cubit<AuthState> {
   GetUserModel? getUserModel;
 
   void getCities() async {
+    cityValue = null;
     emit(GetCitiesLoading());
     final response = await DioHelper.getData(
-        url: 'http://lightbulbtech-001-site13.etempurl.com/api/Cities', bearerToken: token);
+        url: 'http://lightbulbtech-001-site13.etempurl.com/api/Cities',
+        bearerToken: token);
+    citiesList.clear();
+    citiesNamesList.clear();
     for (var element in response.data['data']) {
       citiesList.add(CitiesModel.fromJson(element));
     }
@@ -77,18 +83,31 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     emit(LoginLoading());
     try {
-      final response = await AuthRepository.login(phone: phone, password: password);
+      final response =
+          await AuthRepository.login(phone: phone, password: password);
       mainResponse = MainResponse.fromJson(response.data);
       message = mainResponse.errorMessage.toString();
-      print(mainResponse.data);
-          if(mainResponse.errorCode == 0){
+      if (mainResponse.errorCode == 0) {
         emit(LoginSuccess(loginModel: LoginModel.fromJson(mainResponse.data)));
-      }else{
-            emit(LoginSuccessButErrorInData(errorMessage: message!));
-          }
+      } else {
+        emit(LoginSuccessButErrorInData(errorMessage: message!));
+      }
     } catch (error) {
-      print(error.toString());
       emit(LoginError(error: error.toString()));
+    }
+  }
+
+  void logout() async {
+    emit(LogoutLoading());
+    try {
+      await AuthRepository.logout();
+      token =null;
+      userType = null;
+      await CacheHelper.removeData(key: CacheKeys.token);
+      await CacheHelper.removeData(key: CacheKeys.userType);
+      emit(LogoutSuccess());
+    } catch (error) {
+      emit(LogoutError(error.toString()));
     }
   }
 
@@ -99,7 +118,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String phone,
   }) async {
     emit(RegisterLoading());
-    try{
+    try {
       final response = await AuthRepository.userRegister(
         userName: userName,
         password: password,
@@ -110,8 +129,9 @@ class AuthCubit extends Cubit<AuthState> {
       );
       mainResponse = MainResponse.fromJson(response.data);
       message = mainResponse.errorMessage.toString();
+      profileImage = null;
       emit(RegisterSuccess(RegisterModel.fromJson(mainResponse.data)));
-    }catch(error){
+    } catch (error) {
       emit(RegisterError(error.toString()));
     }
   }
@@ -122,9 +142,10 @@ class AuthCubit extends Cubit<AuthState> {
     required String email,
     required String description,
     required String phone,
+    required String taxNumber,
   }) async {
     emit(RegisterLoading());
-    try{
+    try {
       final response = await AuthRepository.vendorRegister(
         userName: userName,
         password: password,
@@ -133,14 +154,15 @@ class AuthCubit extends Cubit<AuthState> {
         phone: phone,
         cityId: cityId,
         image: profileImage,
+        taxNumber: taxNumber,
       );
       mainResponse = MainResponse.fromJson(response.data);
       message = mainResponse.errorMessage.toString();
+      profileImage = null;
       emit(RegisterSuccess(RegisterModel.fromJson(mainResponse.data)));
-    }catch(error){
+    } catch (error) {
       emit(RegisterError(error.toString()));
     }
-
   }
 
   void freelancerRegister({
@@ -151,7 +173,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String phone,
   }) async {
     emit(RegisterLoading());
-    try{
+    try {
       final response = await AuthRepository.freelancerRegister(
         userName: userName,
         password: password,
@@ -164,8 +186,9 @@ class AuthCubit extends Cubit<AuthState> {
       );
       mainResponse = MainResponse.fromJson(response.data);
       message = mainResponse.errorMessage.toString();
+      profileImage = null;
       emit(RegisterSuccess(RegisterModel.fromJson(mainResponse.data)));
-    }catch(error){
+    } catch (error) {
       emit(RegisterError(error.toString()));
     }
   }
@@ -175,34 +198,108 @@ class AuthCubit extends Cubit<AuthState> {
     required String randomCode,
   }) async {
     emit(ConfirmRegisterLoading());
-    try{
+    try {
       final response = await AuthRepository.confirmRegister(
         phone: phone,
         randomCode: randomCode,
       );
       mainResponse = MainResponse.fromJson(response.data);
       message = mainResponse.errorMessage.toString();
-      emit(ConfirmRegisterSuccess(ConfirmRegisterModel.fromJson(mainResponse.data)));
-    }catch(error){
+      emit(ConfirmRegisterSuccess(
+          ConfirmRegisterModel.fromJson(mainResponse.data)));
+    } catch (error) {
       emit(ConfirmRegisterError(error.toString()));
     }
   }
 
+  void confirmPassword({
+    required String phone,
+    required String randomCode,
+  }) async {
+    emit(ConfirmForgetPasswordLoading());
+    try {
+      final response = await AuthRepository.confirmForgetPassword(
+        phone: phone,
+        randomCode: randomCode,
+      );
+      mainResponse = MainResponse.fromJson(response.data);
+      message = mainResponse.errorMessage.toString();
+      emit(ConfirmForgetPasswordSuccess(LoginModel.fromJson(mainResponse.data)));
+    } catch (error) {
+      emit(ConfirmForgetPasswordError(error.toString()));
+    }
+  }
 
   void getUserData() async {
     emit(GetUserDataLoading());
-    try{
+    try {
       final response = await AuthRepository.getUserData();
       mainResponse = MainResponse.fromJson(response.data);
       message = mainResponse.errorMessage.toString();
       getUserModel = GetUserModel.fromJson(mainResponse.data);
-      print(mainResponse.data);
       emit(GetUserDataSuccess());
-    }catch(error){
-      print(error.toString());
+    } catch (error) {
       emit(GetUserDataError(error.toString()));
     }
   }
 
+  void vendorUpdateProfile({
+    required String userName,
+    required String email,
+    required String description,
+    required String phone,
+    required String taxNumber,
+  }) async {
+    emit(UpdateProfileLoading());
+    try {
+     await AuthRepository.vendorUpdateProfile(
+          userName: userName,
+          email: email,
+          description: description,
+          phone: phone,
+          taxNumber: taxNumber,
+          image: profileImage);
+      profileImage = null;
+      emit(UpdateProfileSuccess());
+    } catch (error) {
+      emit(UpdateProfileError(error.toString()));
+    }
+  }
 
+  void userUpdateProfile({
+    required int cityId,
+    required String email,
+    required String name,
+    required String phoneNumber,
+    required File? image,
+  }) async {
+    emit(UpdateProfileLoading());
+    try {
+      await AuthRepository.userUpdateProfile(
+          cityId: cityId,
+          email: email,
+          name: name,
+          phoneNumber: phoneNumber,
+          image: profileImage);
+      profileImage = null;
+      emit(UpdateProfileSuccess());
+    } catch (error) {
+      emit(UpdateProfileError(error.toString()));
+    }
+  }
+
+  void forgetPassword({
+    required String phoneNumber,
+  }) async {
+    emit(ForgetPasswordLoading());
+    try {
+      final response = await AuthRepository.forgetPassword(
+          phone: phoneNumber,);
+      mainResponse = MainResponse.fromJson(response.data);
+      print(response.data);
+      emit(ForgetPasswordSuccess(mainResponse: mainResponse));
+    } catch (error) {
+      emit(ForgetPasswordError(error.toString()));
+    }
+  }
 }

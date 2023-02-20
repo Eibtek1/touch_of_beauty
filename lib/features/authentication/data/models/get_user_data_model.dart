@@ -6,8 +6,8 @@ class GetUserModel {
   int? userType;
   bool? isApproved;
   bool? phoneVerify;
-  String? lat;
-  String? lng;
+  double? lat;
+  double? lng;
   String? taxNumber;
   String? freelanceFormUrl;
   bool? status;

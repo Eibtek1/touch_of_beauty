@@ -74,7 +74,6 @@ class _LoginScreenState extends State<LoginScreen> {
             var cubit = AuthCubit.get(context);
             return Form(
               key: formKey,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
               child: ListView(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 children: [
@@ -183,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             SvgPath.bulb,
                             width: 15.w,
                             height: 15.h,
-                            color: Colors.white,
+                            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                           )),
                       SizedBox(
                         width: 10.w,

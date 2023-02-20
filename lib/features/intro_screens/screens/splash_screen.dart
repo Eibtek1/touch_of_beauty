@@ -5,7 +5,6 @@ import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
-
 import '../../../core/cache_manager/cache_keys.dart';
 import '../../../core/cache_manager/shared_preferences.dart';
 
@@ -26,7 +25,6 @@ class _SplashScreenState extends State<SplashScreen> {
   _loading() {
     bool? onboarding = CacheHelper.getData(key: CacheKeys.onboarding);
     token = CacheHelper.getData(key: CacheKeys.token);
-    print(token);
     Timer(
       const Duration(seconds: 2),
       () {

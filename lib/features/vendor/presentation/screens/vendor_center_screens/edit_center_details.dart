@@ -1,12 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/vendor/presentation/widgets/custom_vendor_button.dart';
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
-import '../../../../../core/assets_path/images_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
+import '../../../../../core/network/api_end_points.dart';
+import '../../../../authentication/buisness_logic/auth_cubit.dart';
+import '../../../../authentication/buisness_logic/auth_state.dart';
 import '../../widgets/center_details/custo_text_form_field.dart';
 import '../../widgets/center_details/custom_container.dart';
 import '../../widgets/screen_layout_widget_with_logo.dart';
@@ -15,28 +21,40 @@ class EditCenterDetailsScreen extends StatefulWidget {
   const EditCenterDetailsScreen({Key? key}) : super(key: key);
 
   @override
-  State<EditCenterDetailsScreen> createState() => _EditCenterDetailsScreenState();
+  State<EditCenterDetailsScreen> createState() =>
+      _EditCenterDetailsScreenState();
 }
 
 class _EditCenterDetailsScreenState extends State<EditCenterDetailsScreen> {
   final TextEditingController centerNameController = TextEditingController();
   final TextEditingController centerDetailsController = TextEditingController();
   final TextEditingController centerPhoneController = TextEditingController();
+  final TextEditingController centerTaxNumberController =
+      TextEditingController();
+  final TextEditingController centerEmailController = TextEditingController();
+
   @override
   void initState() {
-    centerNameController.text = 'مركز خانة الجمال';
-    centerDetailsController.text = 'لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا';
-    centerPhoneController.text ='051515151';
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
+    centerNameController.text =
+        AuthCubit.get(context).getUserModel!.fullName ?? '';
+    centerDetailsController.text =
+        AuthCubit.get(context).getUserModel!.description ?? "";
+    centerPhoneController.text =
+        AuthCubit.get(context).getUserModel!.phoneNumber ?? '';
+    centerTaxNumberController.text =
+        AuthCubit.get(context).getUserModel!.taxNumber ?? '';
+    centerEmailController.text =
+        AuthCubit.get(context).getUserModel!.email ?? '';
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColorsLightTheme.primaryColor,
         foregroundColor: Colors.white,
-
         toolbarHeight: 60.h,
         centerTitle: true,
         title: Text(
@@ -49,15 +67,17 @@ class _EditCenterDetailsScreenState extends State<EditCenterDetailsScreen> {
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, ScreenName.vendorNotificationScreen);
-              },
-              icon: SvgPicture.asset(
-                SvgPath.notificationBill,
-                width: 23.w,
-                height: 28.h,
-                color: Colors.white,
-              )),
+            onPressed: () {
+              Navigator.pushNamed(context, ScreenName.vendorNotificationScreen);
+            },
+            icon: SvgPicture.asset(
+              SvgPath.notificationBill,
+              width: 23.w,
+              height: 28.h,
+              colorFilter:
+                  const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+            ),
+          ),
           SizedBox(
             width: 12.w,
           ),
@@ -67,245 +87,295 @@ class _EditCenterDetailsScreenState extends State<EditCenterDetailsScreen> {
         firstContainerBackgroundHeight: 58.h,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 19.w),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 130.h,
-              ),
-              Expanded(
-                child: ListView(
-                  children: [
-                    Text(
-                      'صور للصالون أو الخدمات المقدمة',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontFamily: FontPath.almaraiBold,
-                        color: const Color(0xff3C475C),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 11.h,
-                    ),
-                    Stack(
+          child: BlocConsumer<AuthCubit, AuthState>(
+            listener: (context,state){
+              var cubit = AuthCubit.get(context);
+              if(state is UpdateProfileLoading){
+                showProgressIndicator(context);
+              }
+              if(state is UpdateProfileSuccess){
+                Navigator.pop(context);
+                cubit.getUserData();
+                Navigator.pop(context);
+              }
+            },
+            builder: (context, state) {
+              var cubit = AuthCubit.get(context);
+              return Column(
+                children: [
+                  SizedBox(
+                    height: 130.h,
+                  ),
+                  Expanded(
+                    child: ListView(
                       children: [
-                        Container(
-                          height: 147.h,
-                          width: double.infinity,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.r),
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: const Offset(0, 0),
-                                  color: Colors.black.withOpacity(0.14),
-                                  blurRadius: 10.r,
-                                )
-                              ]),
-                          child: Image.asset(
-                            ImagePath.onboarding3,
-                            fit: BoxFit.cover,
+                        Text(
+                          'صور للصالون أو الخدمات المقدمة',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontFamily: FontPath.almaraiBold,
+                            color: const Color(0xff3C475C),
                           ),
                         ),
-                        Positioned(
-                          top: 10.h,
-                          left: 12.w,
-                          child: Row(
-                            children: [
-                               Icon(
-                                Icons.delete_outline_rounded,
-                                color: Colors.white,
-                                size: 27.r,
-                              ),
-                              SizedBox(width: 5.w,),
-                              SvgPicture.asset(
-                                SvgPath.edit,
-                                width: 22.w,
-                                height: 22.h,
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    SizedBox(
-                      height: 55.h,
-                      width: double.infinity,
-                      child: ListView.builder(
-                        padding: EdgeInsets.symmetric(vertical: 4.5.h),
-                        itemCount: 10,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5.w),
-                            child: Container(
-                              height: 46.h,
-                              width: 46.w,
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                        SizedBox(
+                          height: 11.h,
+                        ),
+                        Stack(
+                          children: [
+                            Container(
+                              height: 147.h,
+                              width: double.infinity,
+                              clipBehavior: Clip.antiAlias,
                               decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: AppColorsLightTheme.primaryColor),
-                                borderRadius: BorderRadius.circular(2.r),
+                                borderRadius: BorderRadius.circular(5.r),
                                 boxShadow: [
                                   BoxShadow(
-                                      offset: const Offset(0, 0),
-                                      color: Colors.black.withOpacity(0.28),
-                                      blurRadius: 8.r)
+                                    offset: const Offset(0, 0),
+                                    color: Colors.black.withOpacity(0.14),
+                                    blurRadius: 10.r,
+                                  )
                                 ],
                               ),
-                              child: Image.asset(
-                                ImagePath.gallery13,
-                                fit: BoxFit.cover,
+                              child: cubit.profileImage == null
+                                  ? CachedNetworkImage(
+                                      fit: BoxFit.cover,
+                                      imageUrl:
+                                          '${EndPoints.imageBaseUrl}${cubit.getUserModel!.userImgUrl}',
+                                      placeholder: (context, url) =>
+                                          Shimmer.fromColors(
+                                        baseColor: Colors.grey[400]!,
+                                        highlightColor: Colors.grey[300]!,
+                                        child: Container(
+                                          height: double.infinity,
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                        ),
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                    )
+                                  : Image.file(
+                                      cubit.profileImage!,
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
+                            Positioned(
+                              top: 10.h,
+                              left: 12.w,
+                              child: IconButton(
+                                onPressed: () {
+                                  cubit.getImagePick();
+                                },
+                                icon: SvgPicture.asset(
+                                  SvgPath.edit,
+                                  width: 22.w,
+                                  height: 22.h,
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Text(
-                      'اسم المركز',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontFamily: FontPath.almaraiBold,
-                        color: const Color(0xff3C475C),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    CustomTextFormField(
-                      height: 44.h,
-                      width: double.infinity,
-                      controller: centerNameController,
-                    ),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                    Text(
-                      'وصف المركز',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontFamily: FontPath.almaraiBold,
-                        color: const Color(0xff3C475C),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    CustomTextFormField(
-                      height: 190.h,
-                      width: double.infinity,
-                      controller: centerDetailsController,
-                    ),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                    Text(
-                      'رقم الهاتف',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontFamily: FontPath.almaraiBold,
-                        color: const Color(0xff3C475C),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    CustomTextFormField(
-                      height: 44.h,
-                      width: double.infinity,
-                      controller: centerPhoneController,
-                    ),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                    Row(
-                      children: [
-                        CustomDetailsContainer(
-                          height: 44.h,
-                          width: 280.w,
-                          child: Text(
-                            'عنوان المركز',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontFamily: FontPath.almaraiBold,
-                              color: const Color(0xff8B8989),
-                            ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Text(
+                          'اسم المركز',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontFamily: FontPath.almaraiBold,
+                            color: const Color(0xff3C475C),
                           ),
                         ),
-                        const Spacer(),
-                        Container(
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        CustomTextFormField(
                           height: 44.h,
-                          width: 45.w,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 12.w, vertical: 12.h),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.r),
-                            color: AppColorsLightTheme.authTextFieldFillColor,
+                          width: double.infinity,
+                          controller: centerNameController,
+                        ),
+                        SizedBox(
+                          height: 14.h,
+                        ),
+                        Text(
+                          'وصف المركز',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontFamily: FontPath.almaraiBold,
+                            color: const Color(0xff3C475C),
                           ),
-                          child: const Center(
-                            child: Icon(
-                              Icons.location_on,
-                              color: Colors.grey,
+                        ),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        CustomTextFormField(
+                          height: 190.h,
+                          width: double.infinity,
+                          controller: centerDetailsController,
+                        ),
+                        SizedBox(
+                          height: 14.h,
+                        ),
+                        Text(
+                          'رقم الهاتف',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontFamily: FontPath.almaraiBold,
+                            color: const Color(0xff3C475C),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        CustomTextFormField(
+                          height: 44.h,
+                          width: double.infinity,
+                          controller: centerPhoneController,
+                        ),
+                        SizedBox(
+                          height: 14.h,
+                        ),
+                        Text(
+                          'البريد الاليكتروني',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontFamily: FontPath.almaraiBold,
+                            color: const Color(0xff3C475C),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        CustomTextFormField(
+                          height: 44.h,
+                          width: double.infinity,
+                          controller: centerEmailController,
+                        ),
+                        SizedBox(
+                          height: 14.h,
+                        ),
+                        Text(
+                          'الرقم الضريبي',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontFamily: FontPath.almaraiBold,
+                            color: const Color(0xff3C475C),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        CustomTextFormField(
+                          height: 44.h,
+                          width: double.infinity,
+                          controller: centerTaxNumberController,
+                        ),
+                        SizedBox(
+                          height: 14.h,
+                        ),
+                        Row(
+                          children: [
+                            CustomDetailsContainer(
+                              height: 44.h,
+                              width: 280.w,
+                              child: Text(
+                                'عنوان المركز',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontFamily: FontPath.almaraiBold,
+                                  color: const Color(0xff8B8989),
+                                ),
+                              ),
                             ),
+                            const Spacer(),
+                            Container(
+                              height: 44.h,
+                              width: 45.w,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12.w, vertical: 12.h),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.r),
+                                color:
+                                    AppColorsLightTheme.authTextFieldFillColor,
+                              ),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.location_on,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 14.h,
+                        ),
+                        Text(
+                          'رقم الهاتف',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontFamily: FontPath.almaraiBold,
+                            color: const Color(0xff3C475C),
                           ),
+                        ),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        CustomDetailsContainer(
+                          height: 44.h,
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'شهادة سجل المركز',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontFamily: FontPath.almaraiBold,
+                                  color: const Color(0xff8B8989),
+                                ),
+                              ),
+                              SvgPicture.asset(
+                                SvgPath.paperPin,
+                                height: 22.h,
+                                width: 21.w,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        CustomVendorButton(
+                            buttonTitle: 'تعديل',
+                            isTapped: () {
+                              // if(centerDetailsController.text.length>=5&&centerNameController.text.isNotEmpty&&centerEmailController.text.isNotEmpty&&centerPhoneController.text.isNotEmpty){
+                                cubit.vendorUpdateProfile(
+                                    userName: centerNameController.text,
+                                    email: centerEmailController.text,
+                                    description: centerDetailsController.text,
+                                    phone: centerPhoneController.text,
+                                    taxNumber: centerTaxNumberController.text);
+                              // }
+                            },
+                            width: double.infinity,
+                            paddingVertical: 12.h,
+                            paddingHorizontal: 45.w),
+                        SizedBox(
+                          height: 20.h,
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                    Text(
-                      'رقم الهاتف',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontFamily: FontPath.almaraiBold,
-                        color: const Color(0xff3C475C),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    CustomDetailsContainer(
-                      height: 44.h,
-                      width: double.infinity,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'شهادة سجل المركز',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontFamily: FontPath.almaraiBold,
-                              color: const Color(0xff8B8989),
-                            ),
-                          ),
-                          SvgPicture.asset(
-                            SvgPath.paperPin,
-                            height: 22.h,
-                            width: 21.w,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    CustomVendorButton(buttonTitle: 'تعديل', isTapped: (){}, width: double.infinity, paddingVertical: 12.h, paddingHorizontal: 45.w),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                  ],
-                ),
-              ),
-            ],
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

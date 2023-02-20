@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => VendorServicesCubit()),
             BlocProvider(create: (context) => ServicesProvidersCubit()..getSliderPhotos()),
             BlocProvider(create: (context) => MainFeaturesCubit()),
-            BlocProvider(create: (context) => AuthCubit()..getCities()),
+            BlocProvider(create: (context) => AuthCubit()),
           ],
           child: MaterialApp(
             title: 'لمسة جمال',

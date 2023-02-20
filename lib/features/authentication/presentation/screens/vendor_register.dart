@@ -27,6 +27,7 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
   final TextEditingController email = TextEditingController();
   final TextEditingController description = TextEditingController();
   final TextEditingController phone = TextEditingController();
+  final TextEditingController taxNumber = TextEditingController();
   final TextEditingController password = TextEditingController();
   final TextEditingController confirmPassword = TextEditingController();
   var formKey = GlobalKey<FormState>();
@@ -81,7 +82,6 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
             var cubit = AuthCubit.get(context);
             return Form(
               key: formKey,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
               child: ListView(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 children: [
@@ -251,6 +251,31 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                     },
                     controller: phone,
                   ),
+                  SizedBox(
+                    height: 14.h,
+                  ),
+                  AuthTextFormField(
+                    hintText: 'الرقم الضريبي',
+                    maxLength: 10,
+                    keyboardType: TextInputType.phone,
+                    suffix: Padding(
+                      padding: EdgeInsets.only(left: 10.w),
+                      child: SvgPicture.asset(
+                        SvgPath.saudiPhoneFieldIcon,
+                        width: 52.w,
+                        height: 15.h,
+                      ),
+                    ),
+                    validate: (value) {
+                      if (value!.isEmpty) {
+                        return 'ادخل الرقم الضريبي';
+                      }else if(value.length<10){
+                        return 'لا يحب ان يقل الرقم عن 10 ارقام';
+                      }
+                      return null;
+                    },
+                    controller: taxNumber,
+                  ),
                   vendorSigningType == VendorSigningType.center
                       ? SizedBox(
                           height: 14.h,
@@ -391,7 +416,7 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                               password: password.text,
                               email: email.text,
                               description: description.text,
-                              phone: phone.text,
+                              phone: phone.text, taxNumber: taxNumber.text,
                             );
                           }
                         }
