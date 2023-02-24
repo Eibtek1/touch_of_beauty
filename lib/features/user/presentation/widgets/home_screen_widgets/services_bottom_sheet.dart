@@ -47,10 +47,6 @@ class ServicesBottomSheet extends StatelessWidget {
             ),
             errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
-          // Image.asset(
-          //   ImagePath.onboarding2,
-          //   fit: BoxFit.cover,
-          // ),
         ),
         Expanded(
           child: ListView(

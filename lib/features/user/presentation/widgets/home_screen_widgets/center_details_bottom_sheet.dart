@@ -12,7 +12,6 @@ import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
 import '../../../../../core/network/api_end_points.dart';
 import '../../../data/models/services_providers_model.dart';
-import 'center_services_item.dart';
 
 class CenterDetailsBottomSheet extends StatefulWidget {
   final ServicesProviderModel servicesProvidersModel;
