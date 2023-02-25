@@ -5,8 +5,13 @@ import 'package:touch_of_beauty/features/user/data/models/paginate_model.dart';
 import 'package:touch_of_beauty/features/user/data/models/services_model.dart';
 import 'package:touch_of_beauty/features/user/data/repository/services_providers_repository.dart';
 
+import '../../../../core/constants/constants.dart';
+import '../../../../core/network/dio_helper.dart';
+import '../../../authentication/data/models/cities_model.dart';
+
 class UserServicesCubit extends Cubit<UserServicesState> {
   UserServicesCubit() : super(UserServicesInitial());
+
   static UserServicesCubit get(context) {
     return BlocProvider.of(context);
   }
@@ -14,59 +19,78 @@ class UserServicesCubit extends Cubit<UserServicesState> {
   late MainResponse mainResponse;
   late PaginateModel paginateModel;
   int servicesPageNumber = 1;
-  List<ServicesModel> servicesList =[];
+  List<ServicesModel> servicesList = [];
+  List<CitiesModel> citiesList = [];
   bool inHome = true;
-  void changeServicesInHomeOrInCenter({required int inHomeZero}){
-    if(inHomeZero == 0){
-      inHome = true;
-      emit(ChangeServicesInHomeOrInCenter());
-      getServicesInHomeOrInCenter();
-    }else{
-      inHome = false;
-      emit(ChangeServicesInHomeOrInCenter());
-      getServicesInHomeOrInCenter();
-    }
+  bool inCenter = true;
+  int servicesCI = 0;
+
+  int cityCI = 0;
+
+  int arrangementCI = 0;
+
+  int rattingCI = 0;
+
+  void changeButtonState({required void Function() onPressed}){
+    onPressed();
+    emit(ChangeButtonState());
   }
-  void getServicesByServiceProviderId({required String id}) async{
-    try{
-      if(servicesPageNumber == 1){
+  void getCities() async {
+    emit(GetCitiesLoading());
+    final response = await DioHelper.getData(
+        url: 'http://lightbulbtech-001-site13.etempurl.com/api/Cities',
+        bearerToken: token);
+    citiesList.clear();
+    for (var element in response.data['data']) {
+      citiesList.add(CitiesModel.fromJson(element));
+    }
+    emit(GetCitiesSuccess());
+  }
+
+  void changeServicesInHomeOrInCenter({required bool value}) {
+    value = !value;
+    emit(ChangeServicesInHomeOrInCenter());
+  }
+
+  void getServicesByServiceProviderId({required String id}) async {
+    try {
+      if (servicesPageNumber == 1) {
         servicesList = [];
         emit(GetServicesByServiceProviderIdLoading());
       }
-      final response = await ServicesProvidersRepository.getServicesByServiceProviderId(id: id);
+      final response =
+          await ServicesProvidersRepository.getServicesByServiceProviderId(
+              id: id);
       mainResponse = MainResponse.fromJson(response.data);
       paginateModel = PaginateModel.fromJson(mainResponse.data);
-      if(mainResponse.errorCode == 0){
-        if(servicesPageNumber == 1){
-          for(var element in paginateModel.items){
+      if (mainResponse.errorCode == 0) {
+        if (servicesPageNumber == 1) {
+          for (var element in paginateModel.items) {
             servicesList.add(ServicesModel.fromJson(element));
           }
           servicesPageNumber++;
-        }else if(servicesPageNumber<=paginateModel.totalPages!){
-          for(var element in paginateModel.items){
+        } else if (servicesPageNumber <= paginateModel.totalPages!) {
+          for (var element in paginateModel.items) {
             servicesList.add(ServicesModel.fromJson(element));
           }
           servicesPageNumber++;
         }
-
       }
       emit(GetServicesByServiceProviderIdSuccess());
-    }catch(error){
+    } catch (error) {
       emit(GetServicesByServiceProviderIdError(error: error.toString()));
     }
-
   }
-  void getServicesInHomeOrInCenter() async{
+
+  void getServicesInHomeOrInCenter() async {
     emit(GetServicesInHomeOrCenterLoading());
-    try{
-      final response = await ServicesProvidersRepository.getServicesInHomeOrInCenter(inHome: inHome);
+    try {
+      final response =
+          await ServicesProvidersRepository.getServicesInHomeOrInCenter(
+              inHome: inHome);
       print(response.data);
-    }catch(error){
+    } catch (error) {
       print(error.toString());
     }
-
   }
-
-
-
 }

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,8 +12,21 @@ import '../../../../../core/assets_path/font_path.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/home_screen_widgets/center_services_item.dart';
 
-class OurServicesScreen extends StatelessWidget {
+class OurServicesScreen extends StatefulWidget {
   const OurServicesScreen({Key? key}) : super(key: key);
+
+  @override
+  State<OurServicesScreen> createState() => _OurServicesScreenState();
+}
+
+class _OurServicesScreenState extends State<OurServicesScreen> {
+  @override
+  void initState() {
+    if (UserServicesCubit.get(context).citiesList.isEmpty) {
+      UserServicesCubit.get(context).getCities();
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +47,7 @@ class OurServicesScreen extends StatelessWidget {
           elevation: 0,
         ),
         body: BlocConsumer<UserServicesCubit, UserServicesState>(
-          listener: (context, state) {
-            // TODO: implement listener
-          },
+          listener: (context, state) {},
           builder: (context, state) {
             var cubit = UserServicesCubit.get(context);
             return Column(
@@ -48,7 +57,10 @@ class OurServicesScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       const Expanded(
-                          child: CustomTextField(hintText: 'ابحث عن خدمة')),
+                        child: CustomTextField(
+                          hintText: 'ابحث عن خدمة',
+                        ),
+                      ),
                       SizedBox(
                         width: 10.w,
                       ),
@@ -94,41 +106,6 @@ class OurServicesScreen extends StatelessWidget {
                             color: const Color(0xff263238),
                             fontFamily: FontPath.almaraiBold,
                             fontSize: 12.sp),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 18.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            shape: const StadiumBorder()),
-                        child: Text(
-                          'الخدمات المنزلية',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: FontPath.almaraiRegular,
-                              fontSize: 12.sp),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                AppColorsLightTheme.authTextFieldFillColor,
-                            shape: const StadiumBorder()),
-                        child: Text('الخدمات بالمركز',
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontFamily: FontPath.almaraiRegular,
-                                fontSize: 12.sp)),
                       )
                     ],
                   ),
