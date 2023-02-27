@@ -12,6 +12,7 @@ import '../../data/repository/services_repo.dart';
 
 class VendorServicesCubit extends Cubit<VendorServicesState> {
   VendorServicesCubit() : super(VendorServicesInitial());
+
   static VendorServicesCubit get(context) {
     return BlocProvider.of(context);
   }
@@ -19,19 +20,22 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
   late MainResponse mainResponse;
   late PaginateModel paginateModel;
   int servicesPageNumber = 1;
-  List<ServicesModel> servicesList =[];
+  String errorMessage = '';
+  List<ServicesModel> servicesList = [];
   File? servicesImage;
   ImagePicker picker = ImagePicker();
   List<MainSectionsModel> mainSectionsFeaturedList = [];
-
   bool inCenter = false;
   bool inHome = false;
   bool isAvailable = false;
+  String? mainSectionValue;
+  int mainSectionId = 1;
 
   void changeButtonState({required void Function() onPressed}) {
     onPressed();
     emit(ChangeButtonState());
   }
+
   Future<void> getImagePick() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
@@ -41,52 +45,96 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
       emit(GetPickedImageErrorState());
     }
   }
-  void getServicesByServiceProviderId() async{
-    try{
-      if(servicesPageNumber == 1){
+
+  void getServicesByServiceProviderId() async {
+    try {
+      if (servicesPageNumber == 1) {
         servicesList = [];
         emit(GetServicesByServiceProviderIdLoading());
       }
-      final response = await VendorServicesRepository.getServicesByServiceProviderId( pageNumber: servicesPageNumber);
+      final response =
+          await VendorServicesRepository.getServicesByServiceProviderId(
+              pageNumber: servicesPageNumber);
       mainResponse = MainResponse.fromJson(response.data);
-      paginateModel = PaginateModel.fromJson(mainResponse.data);
-      print(mainResponse.data);
-      if(mainResponse.errorCode == 0){
-        if(servicesPageNumber == 1){
-          for(var element in paginateModel.items){
+      if (mainResponse.errorCode == 0) {
+        paginateModel = PaginateModel.fromJson(mainResponse.data);
+        if (servicesPageNumber == 1) {
+          for (var element in paginateModel.items) {
             servicesList.add(ServicesModel.fromJson(element));
           }
           servicesPageNumber++;
-        }else if(servicesPageNumber<=paginateModel.totalPages!){
-          for(var element in paginateModel.items){
+        } else if (servicesPageNumber <= paginateModel.totalPages!) {
+          for (var element in paginateModel.items) {
             servicesList.add(ServicesModel.fromJson(element));
           }
           servicesPageNumber++;
         }
-
+      } else if (mainResponse.errorCode != 0) {
+        errorMessage = mainResponse.errorMessage;
       }
       emit(GetServicesByServiceProviderIdSuccess());
-    }catch(error){
+    } catch (error) {
       emit(GetServicesByServiceProviderIdError(error: error.toString()));
     }
-
   }
 
-  void getFeaturedMainSections() async{
+  void getMainSections() async {
+    mainSectionValue = null;
     emit(GetMainSectionsLoadingState());
-    try{
-      final response = await VendorServicesRepository.getFeaturedMainSections();
+    try {
+      final response = await VendorServicesRepository.getMainSections();
       mainResponse = MainResponse.fromJson(response.data);
-      mainSectionsFeaturedList = [];
-      for(var element in mainResponse.data){
+      mainSectionsFeaturedList.clear();
+      for (var element in mainResponse.data) {
         mainSectionsFeaturedList.add(MainSectionsModel.fromJson(element));
       }
+      mainSectionValue = mainSectionsFeaturedList.first.title!;
       emit(GetMainSectionsSuccess());
-    }catch(error){
+    } catch (error) {
       emit(GetMainSectionsError(error: error.toString()));
     }
-
   }
 
+  void onMainSectionChanged(dynamic value) {
+    mainSectionValue = value;
+    for (var element in mainSectionsFeaturedList) {
+      if (element.title == mainSectionValue) {
+        mainSectionId = element.id!;
+      }
+    }
+    emit(GetChangedMainSectionId());
+  }
 
+  void addServices({
+    required String titleAr,
+    required String titleEn,
+    required String description,
+    required double price,
+    required double finalPrice,
+    required int empNumber,
+    required String duration,
+  }) async {
+    emit(AddServicesLoading());
+    try {
+      final response = await VendorServicesRepository.addServices(
+        titleAr: titleAr,
+        titleEn: titleEn,
+        description: description,
+        image: servicesImage,
+        price: price,
+        finalPrice: finalPrice,
+        empNumber: empNumber,
+        duration: duration,
+        mainSectionId: mainSectionId,
+        inHome: inHome,
+        inCenter: inCenter,
+        isAvailable: isAvailable,
+      );
+      print(response);
+      emit(AddServicesSuccess());
+    } catch (error) {
+      print(error.toString());
+      emit(AddServicesError(error: error.toString()));
+    }
+  }
 }
