@@ -10,13 +10,14 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final double height;
   final double width;
+  final bool isDetails;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
-  const CustomTextFormField({Key? key, required this.controller, required this.height, required this.width, this.validator, this.keyboardType = TextInputType.text}) : super(key: key);
+  const CustomTextFormField({Key? key, required this.controller, required this.height, required this.width, this.validator, this.keyboardType = TextInputType.text, this.isDetails = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return isDetails?Container(
       height: height,
       width: width,
       padding: EdgeInsets.symmetric(horizontal: 10.w,),
@@ -47,6 +48,42 @@ class CustomTextFormField extends StatelessWidget {
             colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
           )
         ),
+      ),
+    ):TextFormField(
+      controller: controller,
+      keyboardType: keyboardType,
+      validator: validator,
+      textAlign: TextAlign.start,
+      style: TextStyle(
+        fontSize: 12.sp,
+        fontFamily: FontPath.almaraiRegular,
+        color: const Color(0xff8B8989),
+      ),
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(horizontal: 10.w),
+        filled: true,
+          fillColor: AppColorsLightTheme.authTextFieldFillColor,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.r),
+            borderSide: const BorderSide(color: AppColorsLightTheme.authTextFieldFillColor,)
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.r),
+            borderSide: const BorderSide(color: AppColorsLightTheme.authTextFieldFillColor,)
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.r),
+            borderSide: const BorderSide(color: AppColorsLightTheme.authTextFieldFillColor,)
+          ),
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+          ),
+          suffix: SvgPicture.asset(
+            SvgPath.edit,
+            width: 22.w,
+            height: 22.h,
+            colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
+          )
       ),
     );
   }

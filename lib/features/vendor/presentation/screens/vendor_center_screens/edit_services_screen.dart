@@ -54,7 +54,6 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
         var cubit = VendorServicesCubit.get(context);
         if(state is AddServicesSuccess){
           Navigator.pop(context);
-          cubit.servicesPageNumber =1;
           cubit.getServicesByServiceProviderId();
           Navigator.pop(context);
         }else if(state is AddServicesLoading){
@@ -92,7 +91,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                   width: 23.w,
                   height: 28.h,
                   colorFilter:
-                      const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                  const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                 ),
               ),
               SizedBox(
@@ -145,9 +144,9 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                 ),
                                 child: cubit.servicesImage != null
                                     ? Image.file(
-                                        cubit.servicesImage!,
-                                        fit: BoxFit.cover,
-                                      )
+                                  cubit.servicesImage!,
+                                  fit: BoxFit.cover,
+                                )
                                     : null,
                               ),
                               IconButton(
@@ -388,7 +387,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                       backgroundColor: cubit.inHome
                                           ? AppColorsLightTheme.primaryColor
                                           : AppColorsLightTheme
-                                              .authTextFieldFillColor,
+                                          .authTextFieldFillColor,
                                       shape: const StadiumBorder()),
                                   child: Text(
                                     'الخدمة المنزلية',
@@ -413,7 +412,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                       backgroundColor: cubit.inCenter
                                           ? AppColorsLightTheme.primaryColor
                                           : AppColorsLightTheme
-                                              .authTextFieldFillColor,
+                                          .authTextFieldFillColor,
                                       shape: const StadiumBorder()),
                                   child: Text(
                                     'الخدمة بالمركز',
@@ -470,7 +469,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                 backgroundColor: cubit.isAvailable
                                     ? AppColorsLightTheme.primaryColor
                                     : AppColorsLightTheme
-                                        .authTextFieldFillColor,
+                                    .authTextFieldFillColor,
                                 shape: const StadiumBorder()),
                             child: Text(
                               cubit.isAvailable

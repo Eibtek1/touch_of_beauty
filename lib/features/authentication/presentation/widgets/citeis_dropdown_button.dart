@@ -23,6 +23,9 @@ class _CityDropDownButtonState extends State<CityDropDownButton> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthCubit, AuthState>(
+      buildWhen: (p,a){
+        return p!=a;
+      },
       builder: (context, state) {
         var cubit = AuthCubit.get(context);
         return Container(

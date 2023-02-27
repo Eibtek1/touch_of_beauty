@@ -38,7 +38,7 @@ class DioHelper {
     dio.options.headers = {
       'Content-Type': 'application/json',
       'lang': '',
-      "Authorization": token != null ? "Bearer $token" : '',
+      if (token != null) "Authorization": "Bearer $token",
       'Accept': 'text/plain',
     };
     return await dio.post(url, queryParameters: query, data: data);
