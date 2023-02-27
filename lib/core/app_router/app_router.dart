@@ -19,7 +19,7 @@ import '../../features/freelancer/presentation/screens/freelancer_center_screens
 import '../../features/freelancer/presentation/screens/freelancer_center_screens/freelancer_working_time_screen.dart';
 import '../../features/freelancer/presentation/screens/freelancer_notification_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/all_centers_screen.dart';
-import '../../features/user/presentation/screens/home_screen_screens/categories_details_screen.dart';
+import '../../features/user/presentation/screens/home_screen_screens/main_featuers_services.dart';
 import '../../features/user/presentation/screens/home_screen_screens/complains_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/gallery_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/offers_screen.dart';
@@ -69,9 +69,11 @@ class AppRouter {
           return _animateRouteBuilder(const OrderDetailsScreen());
         case ScreenName.userCategoryDetailsScreen:
           final arg = settings.arguments;
-          return _animateRouteBuilder(CategoryDetailsScreen(title: arg,));
+          MainFeatureServicesArgs arguments = arg as MainFeatureServicesArgs;
+          return _animateRouteBuilder(CategoryDetailsScreen(title: arguments.title,mainFeatureId:arguments.mainFeatureId));
         case ScreenName.userSearchScreen:
-          return _animateRouteBuilder( SearchScreen());
+          final arg = settings.arguments;
+          return _animateRouteBuilder( SearchScreen(servicesProviderId: arg,));
         case ScreenName.editCenterScreen:
           return _animateRouteBuilder( const EditCenterDetailsScreen());
         case ScreenName.freelancerDetailsScreen:
@@ -81,7 +83,7 @@ class AppRouter {
         case ScreenName.freelancerTimeScreen:
           return _animateRouteBuilder( const FreelancerWorkingTimeScreen());
         case ScreenName.vendorServicesScreen:
-          return _animateRouteBuilder( VendorServicesScreen());
+          return _animateRouteBuilder( const VendorServicesScreen());
         case ScreenName.freelancerServicesScreen:
           return _animateRouteBuilder( FreelancerServicesScreen());
         case ScreenName.vendorReservationsScreen:
@@ -113,7 +115,8 @@ class AppRouter {
         case ScreenName.allCentersScreen:
           return _animateRouteBuilder(const AllCentersScreen());
         case ScreenName.ourServicesScreen:
-          return _animateRouteBuilder(const OurServicesScreen());
+          final args = settings.arguments;
+          return _animateRouteBuilder(OurServicesScreen(id:args));
         case ScreenName.offersScreen:
           return _animateRouteBuilder(const OffersScreen());
         case ScreenName.complainsScreen:

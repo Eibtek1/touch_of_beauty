@@ -88,6 +88,7 @@ class AuthCubit extends Cubit<AuthState> {
       mainResponse = MainResponse.fromJson(response.data);
       message = mainResponse.errorMessage.toString();
       if (mainResponse.errorCode == 0) {
+        print(response);
         emit(LoginSuccess(loginModel: LoginModel.fromJson(mainResponse.data)));
       } else {
         emit(LoginSuccessButErrorInData(errorMessage: message!));

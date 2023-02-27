@@ -23,3 +23,10 @@ class GetAllServicesProvidersError extends ServicesProvidersState {
   final String error;
   GetAllServicesProvidersError({required this.error});
 }
+
+class GetServicesProviderDetailsByItsIdLoadingState extends ServicesProvidersState {}
+class GetServicesProviderDetailsByItsIdSuccess extends ServicesProvidersState {}
+class GetServicesProviderDetailsByItsIdError extends ServicesProvidersState {
+  final String error;
+  GetServicesProviderDetailsByItsIdError({required this.error});
+}

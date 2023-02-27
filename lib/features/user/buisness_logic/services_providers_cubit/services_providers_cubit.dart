@@ -15,6 +15,7 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
 
   late MainResponse mainResponse;
   GetServicesProviderModel? getServicesProviderModel;
+  ServicesProviderModel? servicesProviderModel;
 
   List<SliderModel> sliderPhotosList =[];
   bool getSliderPhotosLoading = false;
@@ -57,8 +58,26 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
        getServicesProviderModel = GetServicesProviderModel.fromJson(mainResponse.data);
        emit(GetAllServicesProvidersSuccess());
      }catch(error){
+       print(error.toString());
        emit(GetAllServicesProvidersError(error: error.toString()));
      }
 
    }
+
+   void getServicesProviderDataByItsId({required String id}) async{
+     servicesProviderModel = null;
+     emit(GetServicesProviderDetailsByItsIdLoadingState());
+     try{
+       final response = await ServicesProvidersRepository.getServicesProviderById(id: id);
+       mainResponse = MainResponse.fromJson(response.data);
+       servicesProviderModel = ServicesProviderModel.fromJson(mainResponse.data);
+       emit(GetServicesProviderDetailsByItsIdSuccess());
+     }catch(error){
+       print(error.toString());
+       emit(GetServicesProviderDetailsByItsIdError(error: error.toString()));
+     }
+
+   }
+
+
 }

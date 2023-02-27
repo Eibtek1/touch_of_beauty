@@ -15,6 +15,7 @@ import '../widgets/home_screen_widgets/build_custom_drawer.dart';
 import '../widgets/home_screen_widgets/cursol_slider_widget.dart';
 import '../widgets/home_screen_widgets/grid_item_builder.dart';
 import '../widgets/home_screen_widgets/salon_item.dart';
+import 'home_screen_screens/main_featuers_services.dart';
 
 class UserHomeScreen extends StatefulWidget {
   const UserHomeScreen({Key? key}) : super(key: key);
@@ -28,14 +29,17 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
 
   @override
   void initState() {
-    if(ServicesProvidersCubit.get(context).getServicesProviderModel!=null){
-      if(ServicesProvidersCubit.get(context).getServicesProviderModel!.items!.isEmpty){
+    if (ServicesProvidersCubit.get(context).getServicesProviderModel != null) {
+      if (ServicesProvidersCubit.get(context)
+          .getServicesProviderModel!
+          .items!
+          .isEmpty) {
         ServicesProvidersCubit.get(context).getAllServicesProviders();
       }
-    }else{
+    } else {
       ServicesProvidersCubit.get(context).getAllServicesProviders();
     }
-    if(MainFeaturesCubit.get(context).mainSectionsFeaturedList.isEmpty){
+    if (MainFeaturesCubit.get(context).mainSectionsFeaturedList.isEmpty) {
       MainFeaturesCubit.get(context).getFeaturedMainSections();
     }
     super.initState();
@@ -73,11 +77,11 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     ? CarouselSliderWidget(
                         carouselItemsList: cubit.sliderPhotosList)
                     : SizedBox(
-                  height: 168.h,
-                      child: const Center(
+                        height: 168.h,
+                        child: const Center(
                           child: CircularProgressIndicator.adaptive(),
                         ),
-                    );
+                      );
               },
             ),
             Padding(
@@ -125,16 +129,19 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                       ),
                                       itemBuilder: (context, index) => InkWell(
                                         onTap: () {
-                                          cubit.getServicesByMainFeatureId(id: cubit
-                                              .mainSectionsFeaturedList[index].id!);
+                                          cubit.servicesPageNumber = 1;
+                                          cubit.getServicesByMainFeaturesId(
+                                              mainSectionId: cubit
+                                                  .mainSectionsFeaturedList[
+                                                      index]
+                                                  .id!);
                                           Navigator.pushNamed(
                                               context,
                                               ScreenName
                                                   .userCategoryDetailsScreen,
-                                              arguments: cubit
-                                                  .mainSectionsFeaturedList[
-                                                      index]
-                                                  .title);
+                                              arguments: MainFeatureServicesArgs(
+                                                  title:cubit.mainSectionsFeaturedList[index].title!,
+                                                  mainFeatureId:cubit.mainSectionsFeaturedList[index].id!));
                                         },
                                         child: GridItemBuilder(
                                           model: cubit
@@ -191,15 +198,26 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   ),
                   BlocConsumer<ServicesProvidersCubit, ServicesProvidersState>(
                     listener: (context, state) {
-                      // TODO: implement listener
+                      var cubit = ServicesProvidersCubit.get(context);
+                      if(state is GetServicesProviderDetailsByItsIdSuccess&&cubit.servicesProviderModel!=null){
+                        Navigator.pop(context);
+                        showBottomSheet(
+                          context: context,
+                          builder: (context) => CenterDetailsBottomSheet(
+                            servicesProvidersModel: cubit.servicesProviderModel!,
+                          ),
+                        );
+                      }
+                      if(state is GetServicesProviderDetailsByItsIdLoadingState){
+                        showProgressIndicator(context);
+                      }
                     },
                     builder: (context, state) {
                       var cubit = ServicesProvidersCubit.get(context);
                       return SizedBox(
                         height: 195.h,
                         child: state is! GetAllServicesProvidersLoadingState &&
-                                state
-                                    is! GetFeaturedServicesProvidersLoadingState &&
+                                state is! GetFeaturedServicesProvidersLoadingState &&
                                 cubit.getServicesProviderModel != null
                             ? ListView.builder(
                                 padding: EdgeInsets.symmetric(vertical: 3.h),
@@ -209,12 +227,17 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                     .getServicesProviderModel!.items!.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return InkWell(
-                                    onTap: (){
+                                    onTap: () {
                                       print(token);
-                                      showBottomSheet(context: context, builder: (context){
-                                        return CenterDetailsBottomSheet(servicesProvidersModel: cubit
-                                            .getServicesProviderModel!.items![index]);
-                                      });
+                                      cubit.getServicesProviderDataByItsId(id: cubit.getServicesProviderModel!.items![index].id!);
+                                      // showBottomSheet(
+                                      //     context: context,
+                                      //     builder: (context) {
+                                      //       return CenterDetailsBottomSheet(
+                                      //           servicesProvidersModel: cubit
+                                      //               .getServicesProviderModel!
+                                      //               .items![index]);
+                                      //     });
                                     },
                                     child: SalonItemBuilder(
                                       servicesProviderModel: cubit

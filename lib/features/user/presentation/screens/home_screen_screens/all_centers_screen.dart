@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_state.dart';
 import '../../../../../core/app_theme/light_theme.dart';
@@ -19,6 +20,8 @@ class AllCentersScreen extends StatefulWidget {
 }
 
 class _AllCentersScreenState extends State<AllCentersScreen> {
+  final TextEditingController searchController = TextEditingController();
+
   @override
   void initState() {
     ServicesProvidersCubit.get(context).getAllServicesProviders();
@@ -43,7 +46,22 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: BlocBuilder<ServicesProvidersCubit, ServicesProvidersState>(
+      body: BlocConsumer<ServicesProvidersCubit, ServicesProvidersState>(
+        listener: (context, state){
+          var cubit = ServicesProvidersCubit.get(context);
+          if(state is GetServicesProviderDetailsByItsIdSuccess&&cubit.servicesProviderModel!=null){
+            Navigator.pop(context);
+            showBottomSheet(
+              context: context,
+              builder: (context) => CenterDetailsBottomSheet(
+                servicesProvidersModel: cubit.servicesProviderModel!,
+              ),
+            );
+          }
+          if(state is GetServicesProviderDetailsByItsIdLoadingState){
+            showProgressIndicator(context);
+          }
+        },
         builder: (context, state) {
           var cubit = ServicesProvidersCubit.get(context);
           return Column(
@@ -52,8 +70,8 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Row(
                   children: [
-                    const Expanded(
-                        child: CustomTextField(hintText: 'ابحث عن خدمة')),
+                    Expanded(
+                        child: SearchBarWidget(width: double.infinity, color: AppColorsLightTheme.authTextFieldFillColor, controller: searchController)),
                     SizedBox(
                       width: 10.w,
                     ),
@@ -82,14 +100,7 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
                             onTap: () {
-                              print(cubit
-                                  .getServicesProviderModel!.items![index].id);
-                              showBottomSheet(
-                                context: context,
-                                builder: (context) => CenterDetailsBottomSheet(
-                                  servicesProvidersModel: cubit.getServicesProviderModel!.items![index],
-                                ),
-                              );
+                              cubit.getServicesProviderDataByItsId(id: cubit.getServicesProviderModel!.items![index].id!);
                             },
                             child: AllCentersItemBuilder(
                               servicesProviderModel:

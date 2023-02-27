@@ -65,6 +65,10 @@ class _OtpScreenState extends State<OtpScreen> {
               Fluttertoast.showToast(msg: cubit.mainResponse.errorMessage);
             }
           }
+          if(state is ConfirmRegisterError){
+            Navigator.pop(context);
+            Fluttertoast.showToast(msg: cubit.mainResponse.errorMessage);
+          }
           if(state is ConfirmForgetPasswordLoading){
             showProgressIndicator(context);
           }

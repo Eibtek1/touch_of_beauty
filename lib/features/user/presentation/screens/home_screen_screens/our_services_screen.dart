@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
@@ -13,18 +14,35 @@ import '../../widgets/custom_text_field.dart';
 import '../../widgets/home_screen_widgets/center_services_item.dart';
 
 class OurServicesScreen extends StatefulWidget {
-  const OurServicesScreen({Key? key}) : super(key: key);
+  final dynamic id;
+
+  const OurServicesScreen({Key? key, this.id}) : super(key: key);
 
   @override
   State<OurServicesScreen> createState() => _OurServicesScreenState();
 }
 
 class _OurServicesScreenState extends State<OurServicesScreen> {
+  final TextEditingController searchController = TextEditingController();
+  ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
     if (UserServicesCubit.get(context).citiesList.isEmpty) {
       UserServicesCubit.get(context).getCities();
     }
+    scrollController.addListener(() {
+      if (scrollController.position.maxScrollExtent ==
+          scrollController.offset) {
+        if(BlocProvider.of<UserServicesCubit>(context).searchList.isEmpty){
+          BlocProvider.of<UserServicesCubit>(context)
+              .getServicesByServiceProviderId(servicesProviderId: widget.id);
+        }else{
+          BlocProvider.of<UserServicesCubit>(context)
+              .searchForServicesOfServicesProviderByItsId(servicesProviderId: widget.id,searchName: searchController.text);
+        }
+      }
+    });
     super.initState();
   }
 
@@ -47,7 +65,13 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
           elevation: 0,
         ),
         body: BlocConsumer<UserServicesCubit, UserServicesState>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            var cubit = UserServicesCubit.get(context);
+            if(state is GetServicesByServiceProviderIdSuccess && cubit.searchList.isEmpty&& cubit.servicesList.isNotEmpty&&searchController.text.isNotEmpty){
+              searchController.clear();
+              Fluttertoast.showToast(msg: 'لا تتوفر عناصر البحث',gravity: ToastGravity.CENTER);
+            }
+          },
           builder: (context, state) {
             var cubit = UserServicesCubit.get(context);
             return Column(
@@ -56,9 +80,24 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: Row(
                     children: [
-                      const Expanded(
-                        child: CustomTextField(
-                          hintText: 'ابحث عن خدمة',
+                      Expanded(
+                        child: SearchBarWidget(
+                          onCancelSubmitted: () {
+                            setState(() {
+                              searchController.clear();
+                              cubit.searchList.clear();
+                              cubit.searchServicesPageNumber = 1;
+                            });
+                          },
+                          onSearchIconSubmitted: () {
+                            cubit.searchServicesPageNumber = 1;
+                            cubit.searchForServicesOfServicesProviderByItsId(
+                                servicesProviderId: widget.id,
+                                searchName: searchController.text);
+                          },
+                          width: double.infinity,
+                          color: AppColorsLightTheme.authTextFieldFillColor,
+                          controller: searchController,
                         ),
                       ),
                       SizedBox(
@@ -67,7 +106,9 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
                       InkWell(
                         onTap: () {
                           Navigator.pushNamed(
-                              context, ScreenName.userSearchScreen);
+                              context, ScreenName.userSearchScreen,
+                              arguments:
+                                  cubit.servicesList[0].serviceProvider!.id);
                         },
                         child: Container(
                           height: 45.h,
@@ -116,7 +157,8 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
                 Expanded(
                   child: state is! GetServicesByServiceProviderIdLoading
                       ? ListView.builder(
-                          itemCount: cubit.servicesList.length,
+                          controller: scrollController,
+                          itemCount: cubit.searchList.isNotEmpty?cubit.searchList.length:cubit.servicesList.length,
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, int index) {
                             return Padding(
@@ -129,13 +171,13 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
                                       builder: (context) {
                                         return ServicesBottomSheet(
                                             servicesModel:
-                                                cubit.servicesList[index]);
+                                            cubit.searchList.isNotEmpty?cubit.searchList[index]:cubit.servicesList[index]);
                                       },
                                     );
                                   },
                                   child: CenterServicesCategoryItem(
-                                    servicesModel: cubit.servicesList[index],
-                                  )),
+                                    servicesModel: cubit.searchList.isNotEmpty?cubit.searchList[index]:cubit.servicesList[index],
+                                  ),),
                             );
                           },
                         )

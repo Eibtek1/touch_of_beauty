@@ -57,9 +57,9 @@ class MyApp extends StatelessWidget {
               primarySwatch:
                   createMaterialColor(AppColorsLightTheme.primaryColor),
             ),
-            // onGenerateRoute: AppRouter.generateRoute,
-            // initialRoute: ScreenName.splashscreen,
-            home:  SearchScreen(),
+            onGenerateRoute: AppRouter.generateRoute,
+            initialRoute: ScreenName.splashscreen,
+            // home:  SearchScreen(),
           ),
         );
       },

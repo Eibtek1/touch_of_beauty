@@ -7,6 +7,12 @@ class VendorServicesInitial extends VendorServicesState {}
 class ChangeServicesInHomeOrInCenter extends VendorServicesState {}
 
 
+class ChangeButtonState extends VendorServicesState {}
+
+
+class GetPickedImageSuccessState extends VendorServicesState {}
+class GetPickedImageErrorState extends VendorServicesState {}
+
 
 class GetServicesInHomeOrCenterLoading extends VendorServicesState {}
 class GetServicesInHomeOrCenterSuccess extends VendorServicesState {}
@@ -19,5 +25,15 @@ class GetServicesByServiceProviderIdError extends VendorServicesState {
   final String error;
 
   GetServicesByServiceProviderIdError({required this.error});
+
+}
+
+
+class GetMainSectionsLoadingState extends VendorServicesState {}
+class GetMainSectionsSuccess extends VendorServicesState {}
+class GetMainSectionsError extends VendorServicesState {
+  final String error;
+
+  GetMainSectionsError({required this.error});
 
 }
