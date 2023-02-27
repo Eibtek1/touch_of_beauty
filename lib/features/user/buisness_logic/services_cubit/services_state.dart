@@ -5,7 +5,11 @@ class UserServicesInitial extends UserServicesState {}
 
 
 class ChangeServicesInHomeOrInCenter extends UserServicesState {}
+class ChangeRangeValuesState extends UserServicesState {}
 
+class GetCitiesLoading extends UserServicesState {}
+class GetCitiesSuccess extends UserServicesState {}
+class ChangeButtonState extends UserServicesState {}
 
 
 class GetServicesInHomeOrCenterLoading extends UserServicesState {}

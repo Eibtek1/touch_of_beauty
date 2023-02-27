@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
@@ -41,7 +42,7 @@ class VendorServicesScreen extends StatelessWidget {
               SvgPath.notificationBill,
               width: 23.w,
               height: 28.h,
-              color: Colors.white,
+              colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
             ),
           ),
           SizedBox(
@@ -77,9 +78,7 @@ class VendorServicesScreen extends StatelessWidget {
                         ),
                         itemBuilder: (context, index) => InkWell(
                               onTap: () {
-                                Navigator.pushNamed(context,
-                                    ScreenName.userCategoryDetailsScreen,
-                                    arguments: cubit.servicesList[index].title);
+                                print(token);
                               },
                               child: GridItemBuilder(
                                 model: cubit.servicesList[index],

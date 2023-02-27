@@ -2,22 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/main_features_cubit/main_features_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/main_features_cubit/main_features_state.dart';
-
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/home_screen_widgets/center_categories_details_item.dart';
 import '../../widgets/home_screen_widgets/services_bottom_sheet.dart';
 
-class CategoryDetailsScreen extends StatelessWidget {
-  final dynamic title;
+class MainFeatureServicesArgs {
+  final String title;
+  final int mainFeatureId;
 
-  const CategoryDetailsScreen({Key? key, required this.title})
+  MainFeatureServicesArgs({required this.title, required this.mainFeatureId});
+}
+
+class CategoryDetailsScreen extends StatefulWidget {
+  final String title;
+  final int mainFeatureId;
+
+  const CategoryDetailsScreen(
+      {Key? key, required this.title, required this.mainFeatureId})
       : super(key: key);
+
+  @override
+  State<CategoryDetailsScreen> createState() => _CategoryDetailsScreenState();
+}
+
+class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
+  final TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +42,7 @@ class CategoryDetailsScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(
-            title,
+            widget.title,
             style: TextStyle(
                 color: const Color(0xff263238),
                 fontFamily: FontPath.almaraiBold,
@@ -37,7 +53,20 @@ class CategoryDetailsScreen extends StatelessWidget {
           backgroundColor: Colors.white,
           elevation: 0,
         ),
-        body: BlocBuilder<MainFeaturesCubit, MainFeaturesState>(
+        body: BlocConsumer<MainFeaturesCubit, MainFeaturesState>(
+          listener: (context, state) {
+            var cubit = MainFeaturesCubit.get(context);
+            if (cubit.getMainSectionServicesListLoading == false &&
+                cubit.searchList.isEmpty &&
+                cubit.servicesList.isNotEmpty &&
+                searchController.text.isNotEmpty) {
+              searchController.clear();
+              Fluttertoast.showToast(
+                msg: 'لا تتوفر عناصر البحث',
+                gravity: ToastGravity.CENTER,
+              );
+            }
+          },
           builder: (context, state) {
             var cubit = MainFeaturesCubit.get(context);
             return Column(
@@ -46,8 +75,27 @@ class CategoryDetailsScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: Row(
                     children: [
-                      const Expanded(
-                          child: CustomTextField(hintText: 'ابحث عن خدمة')),
+                      Expanded(
+                        child: SearchBarWidget(
+                          onCancelSubmitted: () {
+                            setState(() {
+                              searchController.clear();
+                              cubit.searchList.clear();
+                              cubit.searchServicesPageNumber = 1;
+                            });
+                          },
+                          onSearchIconSubmitted: () {
+                            cubit.searchServicesPageNumber = 1;
+                            cubit.searchForServicesOfServicesProviderByItsId(
+                              searchName: searchController.text,
+                              mainSectionId: widget.mainFeatureId,
+                            );
+                          },
+                          width: double.infinity,
+                          color: AppColorsLightTheme.authTextFieldFillColor,
+                          controller: searchController,
+                        ),
+                      ),
                       SizedBox(
                         width: 10.w,
                       ),
@@ -100,42 +148,42 @@ class CategoryDetailsScreen extends StatelessWidget {
                 SizedBox(
                   height: 18.h,
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          cubit.changeServicesInHomeOrInCenter(inHomeZero: 0);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: cubit.inHome?AppColorsLightTheme.primaryColor:AppColorsLightTheme.authTextFieldFillColor,
-                            shape: const StadiumBorder(),),
-                        child: Text(
-                          'الخدمات المنزلية',
-                          style: TextStyle(
-                              color: cubit.inHome?Colors.white:Colors.grey,
-                              fontFamily: FontPath.almaraiRegular,
-                              fontSize: 12.sp),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          cubit.changeServicesInHomeOrInCenter(inHomeZero: 1);
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: cubit.inHome?AppColorsLightTheme.authTextFieldFillColor:AppColorsLightTheme.primaryColor,
-                            shape: const StadiumBorder()),
-                        child: Text('الخدمات بالمركز',
-                            style: TextStyle(
-                                color: cubit.inHome?Colors.grey:Colors.white,
-                                fontFamily: FontPath.almaraiRegular,
-                                fontSize: 12.sp)),
-                      )
-                    ],
-                  ),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 20.w),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       ElevatedButton(
+                //         onPressed: () {
+                //           cubit.changeServicesInHomeOrInCenter(inHomeZero: 0);
+                //         },
+                //         style: ElevatedButton.styleFrom(
+                //           backgroundColor: cubit.inHome?AppColorsLightTheme.primaryColor:AppColorsLightTheme.authTextFieldFillColor,
+                //             shape: const StadiumBorder(),),
+                //         child: Text(
+                //           'الخدمات المنزلية',
+                //           style: TextStyle(
+                //               color: cubit.inHome?Colors.white:Colors.grey,
+                //               fontFamily: FontPath.almaraiRegular,
+                //               fontSize: 12.sp),
+                //         ),
+                //       ),
+                //       ElevatedButton(
+                //         onPressed: () {
+                //           cubit.changeServicesInHomeOrInCenter(inHomeZero: 1);
+                //         },
+                //         style: ElevatedButton.styleFrom(
+                //             backgroundColor: cubit.inHome?AppColorsLightTheme.authTextFieldFillColor:AppColorsLightTheme.primaryColor,
+                //             shape: const StadiumBorder()),
+                //         child: Text('الخدمات بالمركز',
+                //             style: TextStyle(
+                //                 color: cubit.inHome?Colors.grey:Colors.white,
+                //                 fontFamily: FontPath.almaraiRegular,
+                //                 fontSize: 12.sp)),
+                //       )
+                //     ],
+                //   ),
+                // ),
                 SizedBox(
                   height: 20.h,
                 ),
@@ -145,7 +193,9 @@ class CategoryDetailsScreen extends StatelessWidget {
                           child: CircularProgressIndicator.adaptive(),
                         )
                       : ListView.builder(
-                          itemCount: cubit.inHome?cubit.mainSectionsFeaturedServicesListInHome.length:cubit.mainSectionsFeaturedServicesListInCenter.length,
+                          itemCount: cubit.searchList.isNotEmpty
+                              ? cubit.searchList.length
+                              : cubit.servicesList.length,
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, int index) {
                             return Padding(
@@ -153,8 +203,6 @@ class CategoryDetailsScreen extends StatelessWidget {
                                   vertical: 10.h, horizontal: 20.w),
                               child: InkWell(
                                 onTap: () {
-                                  print(cubit.mainSectionsFeaturedServicesListInHome[index].id);
-                                  print(cubit.mainSectionsFeaturedServicesListInCenter[index].id);
                                   showBottomSheet(
                                     context: context,
                                     shape: RoundedRectangleBorder(
@@ -162,11 +210,17 @@ class CategoryDetailsScreen extends StatelessWidget {
                                         top: Radius.circular(25.0.r),
                                       ),
                                     ),
-                                    builder: (context) => ServicesBottomSheet(servicesModel: cubit.inHome?cubit.mainSectionsFeaturedServicesListInHome[index]:cubit.mainSectionsFeaturedServicesListInCenter[index],),
+                                    builder: (context) => ServicesBottomSheet(
+                                        servicesModel:
+                                            cubit.searchList.isNotEmpty
+                                                ? cubit.searchList[index]
+                                                : cubit.servicesList[index]),
                                   );
                                 },
                                 child: CenterCategoryItem(
-                                  servicesModel: cubit.inHome?cubit.mainSectionsFeaturedServicesListInHome[index]:cubit.mainSectionsFeaturedServicesListInCenter[index],
+                                  servicesModel: cubit.searchList.isNotEmpty
+                                      ? cubit.searchList[index]
+                                      : cubit.servicesList[index],
                                 ),
                               ),
                             );

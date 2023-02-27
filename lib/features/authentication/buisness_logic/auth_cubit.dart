@@ -88,6 +88,7 @@ class AuthCubit extends Cubit<AuthState> {
       mainResponse = MainResponse.fromJson(response.data);
       message = mainResponse.errorMessage.toString();
       if (mainResponse.errorCode == 0) {
+        print(response);
         emit(LoginSuccess(loginModel: LoginModel.fromJson(mainResponse.data)));
       } else {
         emit(LoginSuccessButErrorInData(errorMessage: message!));
@@ -101,8 +102,12 @@ class AuthCubit extends Cubit<AuthState> {
     emit(LogoutLoading());
     try {
       await AuthRepository.logout();
-      token =null;
+      token = null;
       userType = null;
+      profileImage = null;
+      freelancerImage = null;
+      message = null;
+      getUserModel = null;
       await CacheHelper.removeData(key: CacheKeys.token);
       await CacheHelper.removeData(key: CacheKeys.userType);
       emit(LogoutSuccess());
@@ -224,7 +229,8 @@ class AuthCubit extends Cubit<AuthState> {
       );
       mainResponse = MainResponse.fromJson(response.data);
       message = mainResponse.errorMessage.toString();
-      emit(ConfirmForgetPasswordSuccess(LoginModel.fromJson(mainResponse.data)));
+      emit(
+          ConfirmForgetPasswordSuccess(LoginModel.fromJson(mainResponse.data)));
     } catch (error) {
       emit(ConfirmForgetPasswordError(error.toString()));
     }
@@ -252,7 +258,7 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     emit(UpdateProfileLoading());
     try {
-     await AuthRepository.vendorUpdateProfile(
+      await AuthRepository.vendorUpdateProfile(
           userName: userName,
           email: email,
           description: description,
@@ -262,6 +268,7 @@ class AuthCubit extends Cubit<AuthState> {
       profileImage = null;
       emit(UpdateProfileSuccess());
     } catch (error) {
+      print(error.toString());
       emit(UpdateProfileError(error.toString()));
     }
   }
@@ -294,9 +301,9 @@ class AuthCubit extends Cubit<AuthState> {
     emit(ForgetPasswordLoading());
     try {
       final response = await AuthRepository.forgetPassword(
-          phone: phoneNumber,);
+        phone: phoneNumber,
+      );
       mainResponse = MainResponse.fromJson(response.data);
-      print(response.data);
       emit(ForgetPasswordSuccess(mainResponse: mainResponse));
     } catch (error) {
       emit(ForgetPasswordError(error.toString()));

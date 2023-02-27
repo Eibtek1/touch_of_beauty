@@ -10,7 +10,9 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final double height;
   final double width;
-  const CustomTextFormField({Key? key, required this.controller, required this.height, required this.width}) : super(key: key);
+  final TextInputType keyboardType;
+  final String? Function(String?)? validator;
+  const CustomTextFormField({Key? key, required this.controller, required this.height, required this.width, this.validator, this.keyboardType = TextInputType.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +26,11 @@ class CustomTextFormField extends StatelessWidget {
       ),
       child: TextFormField(
         controller: controller,
+        keyboardType: keyboardType,
         expands: true,
         maxLines: null,
         minLines: null,
+        validator: validator,
         textAlign: TextAlign.start,
         style: TextStyle(
           height: 1.3.h,
@@ -40,7 +44,7 @@ class CustomTextFormField extends StatelessWidget {
             SvgPath.edit,
             width: 22.w,
             height: 22.h,
-            color: Colors.grey,
+            colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
           )
         ),
       ),

@@ -11,8 +11,10 @@ class ServicesModel {
   double? finalPrice;
   bool? inCenter;
   bool? inHome;
-  int? employeesNumber;
   bool? isAvailable;
+  int? employeesNumber;
+  double? numberOfStar;
+  bool? isFavourite;
   ServiceProvider? serviceProvider;
   MainSection? mainSection;
 
@@ -29,32 +31,38 @@ class ServicesModel {
         this.finalPrice,
         this.inCenter,
         this.inHome,
-        this.employeesNumber,
         this.isAvailable,
+        this.employeesNumber,
+        this.numberOfStar,
+        this.isFavourite,
         this.serviceProvider,
         this.mainSection});
 
-  ServicesModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    title = json['title'];
-    forCenter = json['forCenter'];
-    description = json['description'];
-    imgUrl = json['imgUrl'];
-    isFeatured = json['isFeatured'];
-    priceUnit = json['priceUnit'];
-    price = json['price'];
-    discount = json['discount'];
-    finalPrice = json['finalPrice'];
-    inCenter = json['inCenter'];
-    inHome = json['inHome'];
-    employeesNumber = json['employeesNumber'];
-    isAvailable = json['isAvailable'];
-    serviceProvider = json['serviceProvider'] != null
-        ? ServiceProvider.fromJson(json['serviceProvider'])
-        : null;
-    mainSection = json['mainSection'] != null
-        ? MainSection.fromJson(json['mainSection'])
-        : null;
+  factory ServicesModel.fromJson(Map<String, dynamic> json) {
+    return ServicesModel(
+        id : json['id'],
+        title : json['title'],
+        forCenter : json['forCenter'],
+        description : json['description'],
+        imgUrl : json['imgUrl'],
+        isFeatured : json['isFeatured'],
+        priceUnit : json['priceUnit'],
+        price : json['price'],
+        discount : json['discount'],
+        finalPrice : json['finalPrice'],
+        inCenter : json['inCenter'],
+        inHome : json['inHome'],
+        isAvailable : json['isAvailable'],
+    employeesNumber : json['employeesNumber'],
+    numberOfStar : json['numberOfStar'],
+    isFavourite : json['isFavourite'],
+    serviceProvider : json['serviceProvider'] != null
+    ? ServiceProvider.fromJson(json['serviceProvider'])
+        : null,
+    mainSection : json['mainSection'] != null
+    ? MainSection.fromJson(json['mainSection'])
+        : null,
+    );
   }
 
 }
@@ -66,10 +74,12 @@ class ServiceProvider {
 
   ServiceProvider({this.id, this.fullName, this.userImgUrl});
 
-  ServiceProvider.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    fullName = json['fullName'];
-    userImgUrl = json['userImgUrl'];
+  factory ServiceProvider.fromJson(Map<String, dynamic> json) {
+    return ServiceProvider(
+        id : json['id'],
+        fullName : json['fullName'],
+        userImgUrl : json['userImgUrl'],
+    );
   }
 
 }
@@ -81,9 +91,12 @@ class MainSection {
 
   MainSection({this.id, this.title, this.imgUrl});
 
-  MainSection.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    title = json['title'];
-    imgUrl = json['imgUrl'];
+  factory MainSection.fromJson(Map<String, dynamic> json) {
+    return MainSection(
+        id : json['id'],
+        title : json['title'],
+        imgUrl : json['imgUrl'],
+    );
   }
+
 }

@@ -12,6 +12,7 @@ import 'package:touch_of_beauty/core/cache_manager/shared_preferences.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
+import 'package:touch_of_beauty/features/authentication/presentation/screens/otp_screen.dart';
 import 'package:touch_of_beauty/features/authentication/presentation/widgets/auht_text_form_field.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../widgets/auth_button.dart';
@@ -42,21 +43,23 @@ class _LoginScreenState extends State<LoginScreen> {
             if(state is LoginSuccess){
               Navigator.pop(context);
               Fluttertoast.showToast(msg: cubit.mainResponse.errorMessage);
-              if(cubit.mainResponse.errorCode ==0&&state.loginModel.userType==1){
+              if(cubit.mainResponse.errorCode ==0 && state.loginModel.userType==1){
                 CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
                   CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
                     token = CacheHelper.getData(key: CacheKeys.token);
                     Navigator.pushNamedAndRemoveUntil(context, ScreenName.userMainLayout, (route) => false);
                   });
                 });
-              }else if(cubit.mainResponse.errorCode ==0&&state.loginModel.userType==2){
+              }
+              else if(cubit.mainResponse.errorCode ==0 && state.loginModel.userType==2){
                 CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
                   CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
                     token = CacheHelper.getData(key: CacheKeys.token);
                     Navigator.pushNamedAndRemoveUntil(context, ScreenName.vendorMainLayout, (route) => false);
                   });
                 });
-              }else if(cubit.mainResponse.errorCode ==0&&state.loginModel.userType==3){
+              }
+              else if(cubit.mainResponse.errorCode ==0 && state.loginModel.userType==3){
                 CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
                   CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
                     token = CacheHelper.getData(key: CacheKeys.token);
@@ -140,20 +143,43 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 8.h,
                   ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(
-                          context, ScreenName.forgetPasswordScreen);
-                    },
-                    child: Text(
-                      'هل نسيت كلمة المرور؟',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          color: const Color(0xffAAADB5),
-                          fontFamily: FontPath.almaraiLight,
-                          fontSize: 13.sp),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, ScreenName.forgetPasswordScreen);
+                        },
+                        child: Text(
+                          'هل نسيت كلمة المرور؟',
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                              color: const Color(0xffAAADB5),
+                              fontFamily: FontPath.almaraiLight,
+                              fontSize: 13.sp),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, ScreenName.otpScreen,arguments: OtpArgs(phoneNumber: null,isConfirmPassword: false));
+                        },
+                        child: Text(
+                          'اذهب لتأكيد حسابك',
+                          textAlign: TextAlign.end,
+                          style: TextStyle(
+                              color: AppColorsLightTheme.primaryColor,
+                              fontFamily: FontPath.almaraiLight,
+                              fontSize: 13.sp),
+                        ),
+                      ),
+                    ],
                   ),
+                  SizedBox(
+                    height: 8.h,
+                  ),
+
                   SizedBox(
                     height: 8.h,
                   ),

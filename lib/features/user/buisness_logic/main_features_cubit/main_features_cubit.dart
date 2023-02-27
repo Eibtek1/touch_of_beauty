@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:touch_of_beauty/features/user/data/models/services_model.dart';
 import '../../../authentication/data/models/main_response.dart';
 import '../../data/models/main_sections_model.dart';
+import '../../data/models/paginate_model.dart';
 import '../../data/repository/services_providers_repository.dart';
 import 'main_features_state.dart';
 
@@ -16,8 +18,15 @@ class MainFeaturesCubit extends Cubit<MainFeaturesState> {
   List<MainSectionsModel> mainSectionsFeaturedList = [];
   List<ServicesModel> mainSectionsFeaturedServicesListInHome = [];
   List<ServicesModel> mainSectionsFeaturedServicesListInCenter = [];
+  List<ServicesModel> servicesList = [];
+  List<ServicesModel> searchList = [];
+  String servicesSearchMessage ='';
   bool getMainSectionServicesListLoading = false;
   bool inHome = true;
+  int? mainFeaturesId;
+  int servicesPageNumber = 1;
+  int searchServicesPageNumber = 1;
+  PaginateModel? searchPaginateModel;
 
   void getFeaturedMainSections() async{
     emit(GetFeaturedMainSectionsLoadingState());
@@ -35,29 +44,81 @@ class MainFeaturesCubit extends Cubit<MainFeaturesState> {
 
   }
 
-  void getServicesByMainFeatureId({required int id}) async{
-    getMainSectionServicesListLoading = true;
-    emit(GetFeaturedMainSectionsServicesLoadingState());
-    try{
-      final response = await ServicesProvidersRepository.getServicesByMainFeatureId(id: id);
+  // void getServicesByMainFeatureId({required int id}) async{
+  //   getMainSectionServicesListLoading = true;
+  //   emit(GetFeaturedMainSectionsServicesLoadingState());
+  //   try{
+  //     final response = await ServicesProvidersRepository.getServicesByMainFeatureId(id: id);
+  //     mainResponse = MainResponse.fromJson(response.data);
+  //     mainSectionsFeaturedServicesListInHome= [];
+  //     mainSectionsFeaturedServicesListInCenter= [];
+  //     for(var element in mainResponse.data){
+  //       if(element['inCenter'] == true){
+  //         mainSectionsFeaturedServicesListInCenter.add(ServicesModel.fromJson(element));
+  //       }
+  //       if(element['inHome'] == true){
+  //         mainSectionsFeaturedServicesListInHome.add(ServicesModel.fromJson(element));
+  //       }
+  //     }
+  //     getMainSectionServicesListLoading = false;
+  //     emit(GetFeaturedMainSectionsServicesSuccess());
+  //   }catch(error){
+  //     if (kDebugMode) {
+  //       print(error.toString());
+  //     }
+  //     emit(GetFeaturedMainSectionsServicesError(error: error.toString()));
+  //   }
+  //
+  // }
+
+  void getServicesByMainFeaturesId({
+    int? mainSectionId,
+  }) async {
+    try {
+      mainFeaturesId = mainSectionId;
+      if (servicesPageNumber == 1) {
+        searchPaginateModel =null;
+        servicesList = [];
+        getMainSectionServicesListLoading = true;
+        emit(GetFeaturedMainSectionsServicesLoadingState());
+      }
+      final response = await ServicesProvidersRepository.getServices(
+        pageNumber: servicesPageNumber,
+        pageSize: 15,
+        mainSectionId: mainSectionId,
+      );
       mainResponse = MainResponse.fromJson(response.data);
-      mainSectionsFeaturedServicesListInHome= [];
-      mainSectionsFeaturedServicesListInCenter= [];
-      for(var element in mainResponse.data){
-        if(element['inCenter'] == true){
-          mainSectionsFeaturedServicesListInCenter.add(ServicesModel.fromJson(element));
+      if (mainResponse.errorCode == 0) {
+        searchPaginateModel = PaginateModel.fromJson(mainResponse.data);
+        if(searchPaginateModel!.items !=null){
+          if (servicesPageNumber == 1) {
+            for (var element in searchPaginateModel!.items) {
+              servicesList.add(ServicesModel.fromJson(element));
+            }
+            servicesPageNumber++;
+          } else if (servicesPageNumber <= searchPaginateModel!.totalPages!) {
+            for (var element in searchPaginateModel!.items) {
+              servicesList.add(ServicesModel.fromJson(element));
+            }
+            servicesPageNumber++;
+          }
         }
-        if(element['inHome'] == true){
-          mainSectionsFeaturedServicesListInHome.add(ServicesModel.fromJson(element));
-        }
+      }else{
+        servicesSearchMessage = mainResponse.errorMessage;
+      }
+      // print(searchPaginateModel!.totalPages);
+      if (kDebugMode) {
+        print(servicesSearchMessage);
+        print(response);
       }
       getMainSectionServicesListLoading = false;
       emit(GetFeaturedMainSectionsServicesSuccess());
-    }catch(error){
-      print(error.toString());
+    } catch (error) {
+      if (kDebugMode) {
+        print(error.toString());
+      }
       emit(GetFeaturedMainSectionsServicesError(error: error.toString()));
     }
-
   }
 
   void changeServicesInHomeOrInCenter({required int inHomeZero}){
@@ -69,4 +130,56 @@ class MainFeaturesCubit extends Cubit<MainFeaturesState> {
       emit(ChangeServicesInHomeOrInCenter());
     }
   }
+
+
+  void searchForServicesOfServicesProviderByItsId({
+    String? searchName,
+    int? mainSectionId,
+  }) async {
+    try {
+      if (searchServicesPageNumber == 1) {
+        searchPaginateModel =null;
+        searchList = [];
+        getMainSectionServicesListLoading = true;
+        emit(GetFeaturedMainSectionsServicesLoadingState());
+      }
+      final response = await ServicesProvidersRepository.getServices(
+        pageNumber: searchServicesPageNumber,
+        pageSize: 15,
+        searchName: searchName,
+        mainSectionId: mainSectionId,
+      );
+      mainResponse = MainResponse.fromJson(response.data);
+      if (mainResponse.errorCode == 0) {
+        searchPaginateModel = PaginateModel.fromJson(mainResponse.data);
+        if(searchPaginateModel!.items !=null){
+          if (searchServicesPageNumber == 1) {
+            for (var element in searchPaginateModel!.items) {
+              searchList.add(ServicesModel.fromJson(element));
+            }
+            searchServicesPageNumber++;
+          } else if (searchServicesPageNumber <= searchPaginateModel!.totalPages!) {
+            for (var element in searchPaginateModel!.items) {
+              searchList.add(ServicesModel.fromJson(element));
+            }
+            searchServicesPageNumber++;
+          }
+        }
+      }else{
+        servicesSearchMessage = mainResponse.errorMessage;
+      }
+      // print(searchPaginateModel!.totalPages);
+      if (kDebugMode) {
+        print(servicesSearchMessage);
+      }
+      getMainSectionServicesListLoading = false;
+      emit(GetFeaturedMainSectionsServicesSuccess());
+    } catch (error) {
+      if (kDebugMode) {
+        print(error.toString());
+      }
+      emit(GetFeaturedMainSectionsServicesError(error: error.toString()));
+    }
+  }
+
 }

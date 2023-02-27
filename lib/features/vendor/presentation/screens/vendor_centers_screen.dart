@@ -73,6 +73,7 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                 svgImage: SvgPath.centersIcon,
                 title: 'بيانات المركز',
                 onTap: () {
+                  print(token);
                   if (AuthCubit
                       .get(context)
                       .getUserModel == null) {
@@ -102,8 +103,7 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                 title: 'خدماتي',
                 onTap: () {
                   VendorServicesCubit.get(context)
-                      .getServicesByServiceProviderId(
-                      id: 'd1fd1edf-4b1e-4092-b8be-1b1a4b1e8210');
+                      .getServicesByServiceProviderId();
                   Navigator.pushNamed(context, ScreenName.vendorServicesScreen);
                 },
               ),

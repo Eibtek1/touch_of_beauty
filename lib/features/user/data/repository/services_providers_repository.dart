@@ -33,27 +33,26 @@ class ServicesProvidersRepository {
   }
 
   static Future<Response> getServicesByServiceProviderId({
-    required String id,
+    required int pageNumber,
   }) async {
     final response = await DioHelper.getData(
-        url: "${EndPoints.getServicesByServiceProviderId}$id",
-        query: {'PageNumber': 1, 'PageSize': 15},
+        url: EndPoints.getServicesForServicesProvider,
+        query: {'PageNumber': pageNumber, 'PageSize': 30},
         bearerToken: token);
     return response;
   }
 
   static Future<Response> getSliderPhotos() async {
-    final response = await DioHelper.getData(
-        url: EndPoints.slidePhotos,
-        bearerToken: token);
+    final response =
+        await DioHelper.getData(url: EndPoints.slidePhotos, bearerToken: token);
     return response;
   }
 
   static Future<Response> getServicesProviderById({
-    required int id,
+    required String id,
   }) async {
     final response = await DioHelper.getData(
-        url: "${EndPoints.getServicesProviderById}$id", bearerToken: null);
+        url: "${EndPoints.getServicesProviderById}$id", bearerToken: token,);
     return response;
   }
 
@@ -66,6 +65,42 @@ class ServicesProvidersRepository {
   static Future<Response> getServicesByMainFeatureId({required int id}) async {
     final response = await DioHelper.getData(
         url: "${EndPoints.getServicesByMainFeatureId}$id", bearerToken: token);
+    return response;
+  }
+
+  static Future<Response> getServices({
+     int? pageNumber,
+     int? pageSize,
+     int? cityId,
+     int? mainSectionId,
+     int? serviceTypeDto,
+     int? maxPrice,
+     int? minPrice,
+     String? servicesProviderName,
+     String? servicesProviderId,
+     String? searchName,
+     bool? inHome,
+     bool? inCenter,
+     bool? orderFromNew,
+  }) async {
+    final response = await DioHelper.getData(
+        url: EndPoints.getServicesForUser,
+        bearerToken: token,
+        query: {
+          'PageNumber': pageNumber,
+          'PageSize': pageSize,
+          'ServiceProviderName': servicesProviderName,
+          'ServiceProviderId': servicesProviderId,
+          'SearchName': searchName,
+          'CityId': cityId,
+          'MainSectionId': mainSectionId,
+          'InHome': inHome,
+          'InCenter': inCenter,
+          'ServiceTypeDto': serviceTypeDto,
+          'OrderFromNew': orderFromNew,
+          'StartPrice': minPrice,
+          'EndPrice': maxPrice,
+        });
     return response;
   }
 }

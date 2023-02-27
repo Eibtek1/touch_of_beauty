@@ -5,42 +5,26 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
-import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
 import '../../../../../core/network/api_end_points.dart';
 import '../../../data/models/services_providers_model.dart';
-import 'center_services_item.dart';
 
 class CenterDetailsBottomSheet extends StatefulWidget {
   final ServicesProviderModel servicesProvidersModel;
-   const CenterDetailsBottomSheet({Key? key, required this.servicesProvidersModel}) : super(key: key);
+
+  const CenterDetailsBottomSheet(
+      {Key? key, required this.servicesProvidersModel})
+      : super(key: key);
 
   @override
-  State<CenterDetailsBottomSheet> createState() => _CenterDetailsBottomSheetState();
+  State<CenterDetailsBottomSheet> createState() =>
+      _CenterDetailsBottomSheetState();
 }
 
 class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
-  final List<String> galleryList =[
-    ImagePath.gallery1,
-    ImagePath.gallery2,
-    ImagePath.gallery3,
-    ImagePath.gallery4,
-    ImagePath.gallery5,
-    ImagePath.gallery6,
-    ImagePath.gallery7,
-    ImagePath.gallery8,
-    ImagePath.gallery9,
-    ImagePath.gallery10,
-    ImagePath.gallery11,
-    ImagePath.gallery12,
-    ImagePath.gallery13,
-    ImagePath.gallery14,
-    ImagePath.gallery15,
-  ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +41,8 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                   topRight: Radius.circular(25.r))),
           child: CachedNetworkImage(
             fit: BoxFit.cover,
-            imageUrl: "${EndPoints.imageBaseUrl}${widget.servicesProvidersModel.userImgUrl}",
+            imageUrl:
+                "${EndPoints.imageBaseUrl}${widget.servicesProvidersModel.userImgUrl}",
             placeholder: (context, url) => Shimmer.fromColors(
               baseColor: Colors.grey[400]!,
               highlightColor: Colors.grey[300]!,
@@ -75,7 +60,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
         ),
         Expanded(
           child: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 24.h),
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,7 +79,9 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                   ),
                 ],
               ),
-              SizedBox(height: 8.h,),
+              SizedBox(
+                height: 8.h,
+              ),
               Text(
                 "${widget.servicesProvidersModel.addresses![0].city}${widget.servicesProvidersModel.addresses![0].addressDetails}",
                 style: TextStyle(
@@ -103,7 +90,9 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                   color: const Color(0xff666666),
                 ),
               ),
-              SizedBox(height: 17.h,),
+              SizedBox(
+                height: 17.h,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -158,7 +147,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                         width: 5.w,
                       ),
                       Text(
-                        '(4.5)',
+                        '${widget.servicesProvidersModel.numberOfStar}',
                         style: TextStyle(
                           fontSize: 12.sp,
                           fontFamily: FontPath.almaraiBold,
@@ -203,60 +192,82 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
               SizedBox(
                 height: 20.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'اوقات العمل',
-                    style: TextStyle(
-                        color: const Color(0xff263238),
-                        fontFamily: FontPath.almaraiBold,
-                        fontSize: 18.sp),
-                  ),
-                  Container(
-                    height: 21.h,
-                    width: 52.w,
-                    decoration: BoxDecoration(
-                      color:
-                          AppColorsLightTheme.secondaryColor.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(11.r),
-                    ),
-                    child: Text(
-                      'متاح',
-                      textAlign: TextAlign.center,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'اوقات العمل',
                       style: TextStyle(
-                        fontSize: 12.sp,
-                        fontFamily: FontPath.almaraiRegular,
-                        color: AppColorsLightTheme.secondaryColor,
+                          color: const Color(0xff263238),
+                          fontFamily: FontPath.almaraiBold,
+                          fontSize: 18.sp),
+                    ),
+                    SizedBox(
+                      height: 21.h,
+                      width: 52.w,
+                      // decoration: BoxDecoration(
+                      //   color:
+                      //       AppColorsLightTheme.secondaryColor.withOpacity(0.3),
+                      //   borderRadius: BorderRadius.circular(11.r),
+                      // ),
+                      // child: Text(
+                      //   'متاح',
+                      //   textAlign: TextAlign.center,
+                      //   style: TextStyle(
+                      //     fontSize: 12.sp,
+                      //     fontFamily: FontPath.almaraiRegular,
+                      //     color: AppColorsLightTheme.secondaryColor,
+                      //   ),
+                      // ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 26.h,
+                ),
+              widget.servicesProvidersModel.workDays!.isNotEmpty
+                  ? ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: widget.servicesProvidersModel.workDays!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        int day =
+                            widget.servicesProvidersModel.workDays![index].day!;
+                        return Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10.h),
+                          child: availableTimeWidget(
+                            title: day == 0
+                                ? 'السبت'
+                                : day == 1
+                                    ? 'الاحد'
+                                    : day == 2
+                                        ? 'الاثنبن'
+                                        : day == 3
+                                            ? 'الثلثاء'
+                                            : day == 4
+                                                ? 'الاربعاء'
+                                                : day == 5
+                                                    ? 'الخميس'
+                                                    : 'الجمعه',
+                            from: widget
+                                .servicesProvidersModel.workDays![index].from!
+                                .substring(0, 4),
+                            to: widget
+                                .servicesProvidersModel.workDays![index].to!
+                                .substring(0, 4),
+                          ),
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Text(
+                        'لم تحدد مواعيد العمل',
+                        style: TextStyle(
+                            color: AppColorsLightTheme.primaryColor,
+                            fontFamily: FontPath.almaraiBold,
+                            fontSize: 16.sp),
                       ),
                     ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 26.h,
-              ),
-              availableTimeWidget(title: 'السبت'),
-              SizedBox(
-                height: 10.h,
-              ),
-              availableTimeWidget(title: 'الاحد'),
-              SizedBox(
-                height: 10.h,
-              ),
-              availableTimeWidget(title: 'الاثنين'),
-              SizedBox(
-                height: 10.h,
-              ),
-              availableTimeWidget(title: 'الثلثاء'),
-              SizedBox(
-                height: 10.h,
-              ),
-              availableTimeWidget(title: 'الاربعاء'),
-              SizedBox(
-                height: 10.h,
-              ),
-              availableTimeWidget(title: 'الخميس'),
               SizedBox(
                 height: 22.h,
               ),
@@ -264,80 +275,19 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
               SizedBox(
                 height: 22.h,
               ),
-              // Text(
-              //   'خدماتنا',
-              //   style: TextStyle(
-              //       color: const Color(0xff263238),
-              //       fontFamily: FontPath.almaraiBold,
-              //       fontSize: 18.sp),
-              // ),
-              // SizedBox(
-              //   height: 16.h,
-              // ),
-              // SizedBox(
-              //   height: 30.h,
-              //   width: double.infinity,
-              //   child: ListView.builder(
-              //     scrollDirection: Axis.horizontal,
-              //     itemBuilder: (BuildContext context, int index) {
-              //       return Padding(
-              //         padding: EdgeInsets.symmetric(horizontal: 7.w),
-              //         child: Container(
-              //           height: 28.h,
-              //           width: 87.w,
-              //           decoration: BoxDecoration(
-              //             color: const Color(0xffF0F3F6),
-              //             borderRadius: BorderRadius.circular(12.r),
-              //           ),
-              //           child: Center(
-              //             child: Text(
-              //               'عناية شخصية',
-              //               style: TextStyle(
-              //                 fontSize: 12.sp,
-              //                 fontFamily: FontPath.almaraiRegular,
-              //                 color: Colors.grey,
-              //               ),
-              //             ),
-              //           ),
-              //         ),
-              //       );
-              //     },
-              //     itemCount: 5,
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: 22.h,
-              // ),
-              // SizedBox(
-              //   height: 320.h,
-              //
-              //   width: double.infinity,
-              //   child: ListView.builder(
-              //     physics:const NeverScrollableScrollPhysics(),
-              //     itemBuilder: (BuildContext context, int index) {
-              //       return const CenterServicesCategoryItem(servicesModel: null,);
-              //     },
-              //     itemCount: 2,
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: 22.h,
-              // ),
               OutlinedButton(
                 onPressed: () {
-                  UserServicesCubit.get(context).servicesPageNumber =1;
-                  print(UserServicesCubit.get(context).servicesPageNumber);
-                  UserServicesCubit.get(context).getServicesByServiceProviderId(id: widget.servicesProvidersModel.id!);
-                  Navigator.pushNamed(context, ScreenName.ourServicesScreen);
+                  UserServicesCubit.get(context).servicesPageNumber = 1;
+                  UserServicesCubit.get(context).getServicesByServiceProviderId(
+                      servicesProviderId: widget.servicesProvidersModel.id);
+                  Navigator.pushNamed(context, ScreenName.ourServicesScreen,
+                      arguments: widget.servicesProvidersModel.id);
                 },
                 style: OutlinedButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  padding: EdgeInsets.symmetric(vertical: 15.h),
-                  side: BorderSide(
-                    width: 1.5.w,
-                    color: AppColorsLightTheme.primaryColor
-                  )
-                ),
+                    shape: const StadiumBorder(),
+                    padding: EdgeInsets.symmetric(vertical: 15.h),
+                    side: BorderSide(
+                        width: 1.5.w, color: AppColorsLightTheme.primaryColor)),
                 child: Text(
                   'شاهد خدماتنا',
                   style: TextStyle(
@@ -360,8 +310,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                         color: const Color(0xff1E2432)),
                   ),
                   InkWell(
-                    onTap: (){
-
+                    onTap: () {
                       Navigator.pushNamed(context, ScreenName.galleryScreen);
                     },
                     child: Text(
@@ -392,11 +341,28 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.r),
                         ),
-                        child: Image.asset(galleryList[index],fit: BoxFit.cover,),
+                        child: CachedNetworkImage(
+                          fit: BoxFit.cover,
+                          imageUrl:
+                          "${EndPoints.imageBaseUrl}${widget.servicesProvidersModel.picturesLibrary![index].imgUrl!}",
+                          placeholder: (context, url) => Shimmer.fromColors(
+                            baseColor: Colors.grey[400]!,
+                            highlightColor: Colors.grey[300]!,
+                            child: Container(
+                              height: double.infinity,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ),
+                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                        ),
                       ),
                     );
                   },
-                  itemCount: galleryList.length,
+                  itemCount: widget.servicesProvidersModel.picturesLibrary!.length,
                 ),
               ),
             ],
@@ -406,7 +372,8 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
     );
   }
 
-  Widget availableTimeWidget({required String title}) {
+  Widget availableTimeWidget(
+      {required String title, required String from, required String to}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -417,50 +384,24 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
               fontFamily: FontPath.almaraiBold,
               fontSize: 16.sp),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: 24.h,
-              width: 81.w,
-              decoration: BoxDecoration(
-                color: const Color(0xffF0F3F6),
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-              child: Center(
-                child: Text(
-                  '20.00 - 16.00',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontFamily: FontPath.almaraiRegular,
-                    color: Colors.grey,
-                  ),
-                ),
+        Container(
+          height: 24.h,
+          width: 81.w,
+          decoration: BoxDecoration(
+            color: const Color(0xffF0F3F6),
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          child: Center(
+            child: Text(
+              '$to - $from',
+              style: TextStyle(
+                fontSize: 12.sp,
+                fontFamily: FontPath.almaraiRegular,
+                color: Colors.grey,
               ),
             ),
-            SizedBox(
-              width: 10.w,
-            ),
-            Container(
-              height: 24.h,
-              width: 81.w,
-              decoration: BoxDecoration(
-                color: const Color(0xffF0F3F6),
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-              child: Center(
-                child: Text(
-                  '20.00 - 16.00',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontFamily: FontPath.almaraiRegular,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        )
+          ),
+        ),
       ],
     );
   }

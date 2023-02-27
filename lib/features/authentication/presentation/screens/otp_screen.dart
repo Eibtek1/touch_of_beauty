@@ -15,12 +15,15 @@ import '../../../../core/cache_manager/shared_preferences.dart';
 import '../widgets/auht_text_form_field.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/pin_field_builder.dart';
+
+
 class OtpArgs{
   final dynamic phoneNumber;
   final bool isConfirmPassword;
 
   OtpArgs({required this.phoneNumber, this.isConfirmPassword = false});
 }
+
 class OtpScreen extends StatefulWidget {
   final dynamic phoneNumber;
   final bool isConfirmPassword;
@@ -61,6 +64,10 @@ class _OtpScreenState extends State<OtpScreen> {
             }else{
               Fluttertoast.showToast(msg: cubit.mainResponse.errorMessage);
             }
+          }
+          if(state is ConfirmRegisterError){
+            Navigator.pop(context);
+            Fluttertoast.showToast(msg: cubit.mainResponse.errorMessage);
           }
           if(state is ConfirmForgetPasswordLoading){
             showProgressIndicator(context);

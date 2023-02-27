@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
-
 import '../../../../../core/assets_path/font_path.dart';
-import '../../../data/models/search_button_model.dart';
 
-class SearchCheckButtonItem extends StatefulWidget {
-  final SearchCheckButtonModel model;
+class SearchCheckButtonItem extends StatelessWidget {
 
-  const SearchCheckButtonItem({Key? key, required this.model})
+  final int index;
+  final int currentIndex;
+  final String title;
+  final void Function()? onPressed;
+  final void Function(bool?)? onChanged;
+   const SearchCheckButtonItem({Key? key, required this.index, required this.currentIndex, required this.title, required this.onPressed, this.onChanged})
       : super(key: key);
 
-  @override
-  State<SearchCheckButtonItem> createState() => _SearchCheckButtonItemState();
-}
-
-class _SearchCheckButtonItemState extends State<SearchCheckButtonItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,32 +21,23 @@ class _SearchCheckButtonItemState extends State<SearchCheckButtonItem> {
         height: 48.h,
         width: double.infinity,
         child: OutlinedButton(
-          onPressed: () {
-            setState(() {
-              widget.model.isChecked = !widget.model.isChecked!;
-            });
-          },
+          onPressed: onPressed,
           style: OutlinedButton.styleFrom(
             backgroundColor: AppColorsLightTheme.authTextFieldFillColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.r),
             ),
-            side: BorderSide(width: widget.model.isChecked!?1.w:0,color: widget.model.isChecked!?AppColorsLightTheme.primaryColor:AppColorsLightTheme.smoothPageIndicatorGreyColor,style: BorderStyle.solid,)
+            side: BorderSide(width: index == currentIndex?1.w:0,color: index == currentIndex?AppColorsLightTheme.primaryColor:AppColorsLightTheme.smoothPageIndicatorGreyColor,style: BorderStyle.solid,)
           ),
           child: Row(
             children: [
               Checkbox(
-                value: widget.model.isChecked,
-                onChanged: (newValue) {
-                  setState(() {
-                    widget.model.isChecked = newValue;
-                  });
-                },
-                shape: const CircleBorder(),
+                value: index == currentIndex?true:false,
+                shape: const CircleBorder(), onChanged: onChanged,
               ),
               SizedBox(width: 24.w,),
               Text(
-                widget.model.title,
+                title,
                 style: TextStyle(
                     color: AppColorsLightTheme.searchScreenTextColor,
                     fontFamily: FontPath.almaraiRegular,

@@ -17,10 +17,13 @@ class EndPoints{
   static const confirmRegister = '/Users/confirmRegister';
   static const sendComplain = '/Complaints/AddComplaint';
   static const getFeaturedMainSections = '/MainSections/FeaturedMainSections';
+  static const getMainSections = '/MainSections/MainSections';
   static const getAllServicesProviders = '/ServiceProvider/GetAll';
   static const getServicesProviderById = '/ServiceProvider/GetById/';
   static const getAllFeaturedServicesProviders = '/ServiceProvider/GetAllFeatured';
   static const getServicesByMainFeatureId = '/Services/ServicesByMainSection/';
+  static const getServicesForUser = '/Services/ServicesForUser';
+  static const getServicesForServicesProvider = '/Services/ServicesForProvider';
   static const getServicesByServiceProviderId = '/Services/ServicesByProvider/';
   static String getServicesInHomeOrInCenter({
   required bool inHome,

@@ -23,6 +23,8 @@ class UserRegisterScreen extends StatefulWidget {
 }
 
 class _UserRegisterScreenState extends State<UserRegisterScreen> {
+
+
   final TextEditingController name = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController phone = TextEditingController();
@@ -30,6 +32,17 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
   final TextEditingController confirmPassword = TextEditingController();
   var formKey = GlobalKey<FormState>();
   bool chosen = true;
+
+
+  @override
+  void dispose() {
+    name.dispose();
+    email.dispose();
+    phone.dispose();
+    password.dispose();
+    confirmPassword.dispose();
+    super.dispose();
+  }
 
 
   @override
@@ -93,7 +106,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                     style: TextStyle(
                         color: const Color(0xff262626),
                         fontFamily: FontPath.almaraiBold,
-                        fontSize: 18.sp),
+                        fontSize: 18.sp,),
                   ),
                   SizedBox(
                     height: 10.h,
@@ -103,7 +116,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                     style: TextStyle(
                         color: const Color(0xffABABAB),
                         fontFamily: FontPath.almaraiRegular,
-                        fontSize: 16.sp),
+                        fontSize: 16.sp,),
                   ),
                   SizedBox(
                     height: 35.h,
@@ -120,7 +133,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         decoration: const BoxDecoration(
                             color: AppColorsLightTheme.primaryColor,
-                            shape: BoxShape.circle),
+                            shape: BoxShape.circle,),
                         child: cubit.profileImage == null
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -130,7 +143,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: FontPath.almaraiRegular,
-                                        fontSize: 10.sp),
+                                        fontSize: 10.sp,),
                                   ),
                                   SizedBox(
                                     width: 5.w,
