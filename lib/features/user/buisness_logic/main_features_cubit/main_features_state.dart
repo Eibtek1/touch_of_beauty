@@ -21,3 +21,18 @@ class GetFeaturedMainSectionsServicesError extends MainFeaturesState {
   GetFeaturedMainSectionsServicesError({required this.error});
 }
 
+class DeleteServiceFromFavSuccess extends MainFeaturesState {}
+class DeleteServiceFromFavError extends MainFeaturesState {
+  final String error;
+  DeleteServiceFromFavError({required this.error});
+}
+
+
+
+class AddServiceToFavSuccess extends MainFeaturesState {}
+class AddServiceToFavError extends MainFeaturesState {
+  final String error;
+  AddServiceToFavError({required this.error});
+}
+
+

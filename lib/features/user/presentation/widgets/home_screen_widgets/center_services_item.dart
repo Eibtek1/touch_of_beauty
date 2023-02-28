@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_state.dart';
 import 'package:touch_of_beauty/features/user/data/models/services_model.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
@@ -67,16 +70,31 @@ class CenterServicesCategoryItem extends StatelessWidget {
                 Positioned(
                   top: 14.h,
                   left: 14.w,
-                  child: CircleAvatar(
-                    radius: 10.r,
-                    backgroundColor: Colors.white,
-                    child: Center(
-                      child: Icon(
-                        Icons.favorite,
-                        color: AppColorsLightTheme.secondaryColor,
-                        size: 12.r,
-                      ),
-                    ),
+                  child:BlocBuilder<UserServicesCubit, UserServicesState>(
+                    builder: (context, state) {
+                      var cubit = UserServicesCubit.get(context);
+                      return InkWell(
+                        onTap: (){
+                          if(!cubit.favorites[servicesModel!.id!]!){
+                            cubit.addServicesProviderToFavorite(id: servicesModel!.id!);
+                          }
+                          else if(cubit.favorites[servicesModel!.id!]!){
+                            cubit.deleteServicesProviderToFavorite(id: servicesModel!.id!);
+                          }
+                        },
+                        child: CircleAvatar(
+                          radius: 15.r,
+                          backgroundColor: Colors.white,
+                          child: Center(
+                            child: Icon(
+                              cubit.favorites[servicesModel!.id!]!?Icons.favorite:Icons.favorite_border,
+                              color: AppColorsLightTheme.secondaryColor,
+                              size: 23.r,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 )
               ],
@@ -132,7 +150,7 @@ class CenterServicesCategoryItem extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        '${(100 - (num.parse('${servicesModel!.finalPrice}') / num.parse('${servicesModel!.price}')) * 100)}% -',
+                                        '${(100 - (num.parse('${servicesModel!.finalPrice}') / num.parse('${servicesModel!.price}')) * 100).round()}% -',
                                         style: TextStyle(
                                           fontSize: 11.sp,
                                           fontFamily: FontPath.almaraiRegular,

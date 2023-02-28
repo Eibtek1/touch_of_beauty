@@ -5,20 +5,20 @@ import '../../../../core/constants/constants.dart';
 import '../../../../core/network/dio_helper.dart';
 
 class ServicesProvidersRepository {
-  static Future<Response> getAllServicesProviders() async {
+  static Future<Response> getAllServicesProviders({required int pageNumber}) async {
     final response = await DioHelper.getData(
       url: EndPoints.getAllServicesProviders,
-      bearerToken: null,
-      query: {'PageNumber': 1, 'PageSize': 10},
+      bearerToken: token,
+      query: {'PageNumber': pageNumber, 'PageSize': 15},
     );
     return response;
   }
 
-  static Future<Response> getAllFeaturedServicesProviders() async {
+  static Future<Response> getAllFeaturedServicesProviders({required int pageNumber}) async {
     final response = await DioHelper.getData(
         url: EndPoints.getAllFeaturedServicesProviders,
-        query: {'PageNumber': 1, 'PageSize': 10},
-        bearerToken: null);
+        query: {'PageNumber': pageNumber, 'PageSize': 10},
+        bearerToken: token);
     return response;
   }
 
@@ -101,6 +101,37 @@ class ServicesProvidersRepository {
           'StartPrice': minPrice,
           'EndPrice': maxPrice,
         });
+    return response;
+  }
+
+  static Future<Response> addServicesProviderToFavorite({required String id}) async {
+    final response = await DioHelper.postData(
+        url: "${EndPoints.addProviderToFavorite}$id",
+        token: token,);
+    return response;
+  }
+
+
+  static Future<Response> deleteServicesProviderFromFavorite({required String id}) async {
+    final response = await DioHelper.deleteData(
+        url: "${EndPoints.deleteProviderFromFavorite}$id",
+        token: token,);
+    return response;
+  }
+
+
+  static Future<Response> addServiceToFavorite({required int id}) async {
+    final response = await DioHelper.postData(
+        url: "${EndPoints.addServiceToFavorite}$id",
+        token: token,);
+    return response;
+  }
+
+
+  static Future<Response> deleteServiceFromFavorite({required int id}) async {
+    final response = await DioHelper.deleteData(
+        url: "${EndPoints.deleteServiceFromFavorite}$id",
+        token: token,);
     return response;
   }
 }

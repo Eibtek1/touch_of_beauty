@@ -29,15 +29,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
 
   @override
   void initState() {
-    if (ServicesProvidersCubit.get(context).getServicesProviderModel != null) {
-      if (ServicesProvidersCubit.get(context)
-          .getServicesProviderModel!
-          .items!
-          .isEmpty) {
-        ServicesProvidersCubit.get(context).getAllServicesProviders();
-      }
-    } else {
-      ServicesProvidersCubit.get(context).getAllServicesProviders();
+    if (ServicesProvidersCubit.get(context)
+        .featuredServicesProvidersList
+        .isEmpty) {
+      ServicesProvidersCubit.get(context).getFeaturedServicesProviders();
     }
     if (MainFeaturesCubit.get(context).mainSectionsFeaturedList.isEmpty) {
       MainFeaturesCubit.get(context).getFeaturedMainSections();
@@ -103,9 +98,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     height: 15.h,
                   ),
                   BlocConsumer<MainFeaturesCubit, MainFeaturesState>(
-                    listener: (context, state) {
-                      // TODO: implement listener
-                    },
+                    listener: (context, state) {},
                     builder: (context, state) {
                       var cubit = MainFeaturesCubit.get(context);
                       return Column(
@@ -140,8 +133,14 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                               ScreenName
                                                   .userCategoryDetailsScreen,
                                               arguments: MainFeatureServicesArgs(
-                                                  title:cubit.mainSectionsFeaturedList[index].title!,
-                                                  mainFeatureId:cubit.mainSectionsFeaturedList[index].id!));
+                                                  title: cubit
+                                                      .mainSectionsFeaturedList[
+                                                          index]
+                                                      .title!,
+                                                  mainFeatureId: cubit
+                                                      .mainSectionsFeaturedList[
+                                                          index]
+                                                      .id!));
                                         },
                                         child: GridItemBuilder(
                                           model: cubit
@@ -184,7 +183,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                               context, ScreenName.allCentersScreen);
                         },
                         child: Text(
-                          'شاهد الكل',
+                          'شاهد كل الصالونات',
                           style: TextStyle(
                               fontSize: 16.sp,
                               fontFamily: FontPath.almaraiBold,
@@ -199,54 +198,63 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   BlocConsumer<ServicesProvidersCubit, ServicesProvidersState>(
                     listener: (context, state) {
                       var cubit = ServicesProvidersCubit.get(context);
-                      if(state is GetServicesProviderDetailsByItsIdSuccess&&cubit.servicesProviderModel!=null){
+                      if (state is GetServicesProviderDetailsByItsIdSuccess &&
+                          cubit.servicesProviderModel != null) {
                         Navigator.pop(context);
                         showBottomSheet(
                           context: context,
                           builder: (context) => CenterDetailsBottomSheet(
-                            servicesProvidersModel: cubit.servicesProviderModel!,
+                            servicesProvidersModel:
+                                cubit.servicesProviderModel!,
                           ),
                         );
                       }
-                      if(state is GetServicesProviderDetailsByItsIdLoadingState){
+                      if (state
+                          is GetServicesProviderDetailsByItsIdLoadingState) {
                         showProgressIndicator(context);
                       }
                     },
                     builder: (context, state) {
                       var cubit = ServicesProvidersCubit.get(context);
                       return SizedBox(
-                        height: 195.h,
-                        child: state is! GetAllServicesProvidersLoadingState &&
-                                state is! GetFeaturedServicesProvidersLoadingState &&
-                                cubit.getServicesProviderModel != null
-                            ? ListView.builder(
-                                padding: EdgeInsets.symmetric(vertical: 3.h),
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: cubit
-                                    .getServicesProviderModel!.items!.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return InkWell(
-                                    onTap: () {
-                                      print(token);
-                                      cubit.getServicesProviderDataByItsId(id: cubit.getServicesProviderModel!.items![index].id!);
-                                      // showBottomSheet(
-                                      //     context: context,
-                                      //     builder: (context) {
-                                      //       return CenterDetailsBottomSheet(
-                                      //           servicesProvidersModel: cubit
-                                      //               .getServicesProviderModel!
-                                      //               .items![index]);
-                                      //     });
+                        height: cubit.featuredServicesProvidersList.isEmpty?40.h:195.h,
+                        child: state is! GetFeaturedServicesProvidersLoadingState
+                            // && state is! GetFeaturedServicesProvidersLoadingState
+                            ? cubit.featuredServicesProvidersList.isNotEmpty
+                                ? ListView.builder(
+                                    padding: EdgeInsets.symmetric(vertical: 3.h),
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: cubit
+                                        .featuredServicesProvidersList.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          cubit.getServicesProviderDataByItsId(
+                                              id: cubit
+                                                  .featuredServicesProvidersList[
+                                                      index]
+                                                  .id!);
+                                        },
+                                        child: SalonItemBuilder(
+                                          servicesProviderModel: cubit
+                                                  .featuredServicesProvidersList[
+                                              index],
+                                        ),
+                                      );
                                     },
-                                    child: SalonItemBuilder(
-                                      servicesProviderModel: cubit
-                                          .getServicesProviderModel!
-                                          .items![index],
+                                  )
+                                : Center(
+                                    child: Text(
+                                      'لا يوجد صالونات مميزة',
+                                      style: TextStyle(
+                                          color:
+                                              AppColorsLightTheme.primaryColor,
+                                          fontFamily: FontPath.almaraiBold,
+                                          fontSize: 16.sp),
                                     ),
-                                  );
-                                },
-                              )
+                                  )
                             : const Center(
                                 child: CircularProgressIndicator.adaptive(),
                               ),

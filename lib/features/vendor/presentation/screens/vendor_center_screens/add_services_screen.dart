@@ -55,6 +55,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
         if(state is AddServicesSuccess){
           Navigator.pop(context);
           cubit.servicesPageNumber =1;
+          cubit.servicesImage = null;
           cubit.getServicesByServiceProviderId();
           Navigator.pop(context);
         }else if(state is AddServicesLoading){
@@ -488,7 +489,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                             height: 20.h,
                           ),
                           CustomVendorButton(
-                              buttonTitle: 'تعديل',
+                              buttonTitle: 'اضافة',
                               isTapped: () {
                                 if(formKey.currentState!.validate()){
                                   cubit.addServices(

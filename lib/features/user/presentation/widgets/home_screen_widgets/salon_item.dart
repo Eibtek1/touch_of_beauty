@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/network/api_end_points.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_state.dart';
 import 'package:touch_of_beauty/features/user/data/models/services_providers_model.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
@@ -36,41 +39,58 @@ class SalonItemBuilder extends StatelessWidget {
             Stack(
               children: [
                 SizedBox(
-                    height: 118.h,
-                    width: double.infinity,
-                    child: CachedNetworkImage(
-                      fit: BoxFit.cover,
-                      imageUrl:
-                          "${EndPoints.imageBaseUrl}${servicesProviderModel.userImgUrl}",
-                      placeholder: (context, url) => Shimmer.fromColors(
-                        baseColor: Colors.grey[400]!,
-                        highlightColor: Colors.grey[300]!,
-                        child: Container(
-                          height: double.infinity,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(8.0),
+                  height: 118.h,
+                  width: double.infinity,
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    imageUrl:
+                    "${EndPoints.imageBaseUrl}${servicesProviderModel
+                        .userImgUrl}",
+                    placeholder: (context, url) =>
+                        Shimmer.fromColors(
+                          baseColor: Colors.grey[400]!,
+                          highlightColor: Colors.grey[300]!,
+                          child: Container(
+                            height: double.infinity,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                           ),
                         ),
-                      ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),),
+                    errorWidget: (context, url, error) =>
+                    const Icon(Icons.error),
+                  ),),
                 Positioned(
-                    top: 14.h,
-                    left: 14.w,
-                    child: CircleAvatar(
-                      radius: 10.r,
-                      backgroundColor: Colors.white,
-                      child: Center(
-                        child: Icon(
-                          Icons.favorite_border,
-                          color: AppColorsLightTheme.secondaryColor,
-                          size: 12.r,
+                  top: 14.h,
+                  left: 14.w,
+                  child: BlocBuilder<ServicesProvidersCubit, ServicesProvidersState>(
+                    builder: (context, state) {
+                      var cubit = ServicesProvidersCubit.get(context);
+                      return InkWell(
+                        onTap: (){
+                          if(!cubit.favorites[servicesProviderModel.id!]!){
+                            cubit.addServicesProviderToFavorite(id: servicesProviderModel.id!);
+                          }
+                          else if(cubit.favorites[servicesProviderModel.id!]!){
+                            cubit.deleteServicesProviderToFavorite(id: servicesProviderModel.id!);
+                          }
+                        },
+                        child: CircleAvatar(
+                          radius: 15.r,
+                          backgroundColor: Colors.white,
+                          child: Center(
+                            child: Icon(
+                              cubit.favorites[servicesProviderModel.id!]!?Icons.favorite:Icons.favorite_border,
+                              color: AppColorsLightTheme.secondaryColor,
+                              size: 23.r,
+                            ),
+                          ),
                         ),
-                      ),
-                    ))
+                      );
+                    },
+                  ),)
               ],
             ),
             Padding(
@@ -103,16 +123,17 @@ class SalonItemBuilder extends StatelessWidget {
                             color: const Color(0xff1E2432)),
                       ),
                       RatingBar.builder(
-                        itemSize: 14.r,
+                        itemSize: 16.r,
                         ignoreGestures: true,
-                        initialRating: 4,
+                        initialRating: servicesProviderModel.numberOfStar!,
                         minRating: 1,
-                        unratedColor: Colors.white,
+                        unratedColor: Colors.grey.shade400,
                         direction: Axis.horizontal,
                         allowHalfRating: true,
                         itemCount: 5,
                         // itemPadding: EdgeInsets.symmetric(horizontal: 4.0.w),
-                        itemBuilder: (context, _) => const Icon(
+                        itemBuilder: (context, _) =>
+                        const Icon(
                           Icons.star,
                           color: AppColorsLightTheme.secondaryColor,
                         ),

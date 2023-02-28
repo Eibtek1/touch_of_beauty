@@ -30,3 +30,19 @@ class GetServicesProviderDetailsByItsIdError extends ServicesProvidersState {
   final String error;
   GetServicesProviderDetailsByItsIdError({required this.error});
 }
+
+class DeleteServicesProviderToFavLoading extends ServicesProvidersState {}
+class DeleteServicesProviderToFavSuccess extends ServicesProvidersState {}
+class DeleteServicesProviderToFavError extends ServicesProvidersState {
+  final String error;
+  DeleteServicesProviderToFavError({required this.error});
+}
+
+
+
+class AddServicesProviderToFavLoading extends ServicesProvidersState {}
+class AddServicesProviderToFavSuccess extends ServicesProvidersState {}
+class AddServicesProviderToFavError extends ServicesProvidersState {
+  final String error;
+  AddServicesProviderToFavError({required this.error});
+}
