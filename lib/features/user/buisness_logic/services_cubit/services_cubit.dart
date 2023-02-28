@@ -24,6 +24,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
   String servicesSearchMessage ='';
   List<ServicesModel> servicesList = [];
   List<ServicesModel> searchList = [];
+  Map<dynamic , bool> favorites = {} ;
   List<CitiesModel> citiesList = [];
   final List<String> titleType = [
     'صالونات',
@@ -85,7 +86,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       }
       final response = await ServicesProvidersRepository.getServices(
           pageNumber: servicesPageNumber,
-          pageSize: 15,
+          pageSize: 3,
           cityId: cityId,
           mainSectionId: mainSectionId,
           serviceTypeDto: serviceTypeDto,
@@ -104,11 +105,17 @@ class UserServicesCubit extends Cubit<UserServicesState> {
           if (servicesPageNumber == 1) {
             for (var element in paginateModel!.items) {
               servicesList.add(ServicesModel.fromJson(element));
+              if(!favorites.containsKey(element['id'])){
+                favorites.addAll({element['id']: element['isFavourite']});
+              }
             }
             servicesPageNumber++;
           } else if (servicesPageNumber <= paginateModel!.totalPages!) {
             for (var element in paginateModel!.items) {
               servicesList.add(ServicesModel.fromJson(element));
+              if(!favorites.containsKey(element['id'])){
+                favorites.addAll({element['id']: element['isFavourite']});
+              }
             }
             servicesPageNumber++;
           }
@@ -116,7 +123,6 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       }else{
         servicesSearchMessage = mainResponse.errorMessage;
       }
-      print(paginateModel!.totalPages);
       if (kDebugMode) {
         print(servicesSearchMessage);
       }
@@ -152,11 +158,17 @@ class UserServicesCubit extends Cubit<UserServicesState> {
           if (searchServicesPageNumber == 1) {
             for (var element in searchPaginateModel!.items) {
               searchList.add(ServicesModel.fromJson(element));
+              if(!favorites.containsKey(element['id'])){
+                favorites.addAll({element['id']: element['isFavourite']});
+              }
             }
             searchServicesPageNumber++;
           } else if (searchServicesPageNumber <= searchPaginateModel!.totalPages!) {
             for (var element in searchPaginateModel!.items) {
               searchList.add(ServicesModel.fromJson(element));
+              if(!favorites.containsKey(element['id'])){
+                favorites.addAll({element['id']: element['isFavourite']});
+              }
             }
             searchServicesPageNumber++;
           }
@@ -164,7 +176,6 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       }else{
         servicesSearchMessage = mainResponse.errorMessage;
       }
-      // print(searchPaginateModel!.totalPages);
       if (kDebugMode) {
         print(servicesSearchMessage);
       }
@@ -174,6 +185,31 @@ class UserServicesCubit extends Cubit<UserServicesState> {
         print(error.toString());
       }
       emit(GetServicesByServiceProviderIdError(error: error.toString()));
+    }
+  }
+
+
+  void addServicesProviderToFavorite({required int id})async{
+    favorites[id] = !favorites[id]!;
+    emit(AddServiceToFavLoading());
+    final response = await ServicesProvidersRepository.addServiceToFavorite(id: id);
+    mainResponse = MainResponse.fromJson(response.data);
+    if(mainResponse.errorCode == 0){
+      emit(AddServiceToFavSuccess());
+    }else{
+      emit(AddServiceToFavError(error: mainResponse.errorMessage.toString()));
+    }
+  }
+
+  void deleteServicesProviderToFavorite({required int id})async{
+    favorites[id] = !favorites[id]!;
+    emit(DeleteServiceFromFavLoading());
+    final response = await ServicesProvidersRepository.deleteServiceFromFavorite(id: id);
+    mainResponse = MainResponse.fromJson(response.data);
+    if(mainResponse.errorCode == 0){
+      emit(DeleteServiceFromFavSuccess());
+    }else{
+      emit(DeleteServiceFromFavError(error: mainResponse.errorMessage.toString()));
     }
   }
 }

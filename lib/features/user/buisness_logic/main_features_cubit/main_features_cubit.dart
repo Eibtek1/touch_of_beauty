@@ -20,6 +20,7 @@ class MainFeaturesCubit extends Cubit<MainFeaturesState> {
   List<ServicesModel> mainSectionsFeaturedServicesListInCenter = [];
   List<ServicesModel> servicesList = [];
   List<ServicesModel> searchList = [];
+  Map<dynamic , bool> favorites = {} ;
   String servicesSearchMessage ='';
   bool getMainSectionServicesListLoading = false;
   bool inHome = true;
@@ -94,22 +95,23 @@ class MainFeaturesCubit extends Cubit<MainFeaturesState> {
           if (servicesPageNumber == 1) {
             for (var element in searchPaginateModel!.items) {
               servicesList.add(ServicesModel.fromJson(element));
+              if(!favorites.containsKey(element['id'])){
+                favorites.addAll({element['id']: element['isFavourite']});
+              }
             }
             servicesPageNumber++;
           } else if (servicesPageNumber <= searchPaginateModel!.totalPages!) {
             for (var element in searchPaginateModel!.items) {
               servicesList.add(ServicesModel.fromJson(element));
+              if(!favorites.containsKey(element['id'])){
+                favorites.addAll({element['id']: element['isFavourite']});
+              }
             }
             servicesPageNumber++;
           }
         }
       }else{
         servicesSearchMessage = mainResponse.errorMessage;
-      }
-      // print(searchPaginateModel!.totalPages);
-      if (kDebugMode) {
-        print(servicesSearchMessage);
-        print(response);
       }
       getMainSectionServicesListLoading = false;
       emit(GetFeaturedMainSectionsServicesSuccess());
@@ -156,11 +158,17 @@ class MainFeaturesCubit extends Cubit<MainFeaturesState> {
           if (searchServicesPageNumber == 1) {
             for (var element in searchPaginateModel!.items) {
               searchList.add(ServicesModel.fromJson(element));
+              if(!favorites.containsKey(element['id'])){
+                favorites.addAll({element['id']: element['isFavourite']});
+              }
             }
             searchServicesPageNumber++;
           } else if (searchServicesPageNumber <= searchPaginateModel!.totalPages!) {
             for (var element in searchPaginateModel!.items) {
               searchList.add(ServicesModel.fromJson(element));
+              if(!favorites.containsKey(element['id'])){
+                favorites.addAll({element['id']: element['isFavourite']});
+              }
             }
             searchServicesPageNumber++;
           }
@@ -182,4 +190,27 @@ class MainFeaturesCubit extends Cubit<MainFeaturesState> {
     }
   }
 
+
+
+  void addServicesProviderToFavorite({required int id})async{
+    favorites[id] = !favorites[id]!;
+    final response = await ServicesProvidersRepository.addServiceToFavorite(id: id);
+    mainResponse = MainResponse.fromJson(response.data);
+    if(mainResponse.errorCode == 0){
+      emit(AddServiceToFavSuccess());
+    }else{
+      emit(AddServiceToFavError(error: mainResponse.errorMessage.toString()));
+    }
+  }
+
+  void deleteServicesProviderToFavorite({required int id})async{
+    favorites[id] = !favorites[id]!;
+    final response = await ServicesProvidersRepository.deleteServiceFromFavorite(id: id);
+    mainResponse = MainResponse.fromJson(response.data);
+    if(mainResponse.errorCode == 0){
+      emit(DeleteServiceFromFavSuccess());
+    }else{
+      emit(DeleteServiceFromFavError(error: mainResponse.errorMessage.toString()));
+    }
+  }
 }

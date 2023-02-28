@@ -25,3 +25,22 @@ class GetServicesByServiceProviderIdError extends UserServicesState {
   GetServicesByServiceProviderIdError({required this.error});
 
 }
+
+
+
+
+class DeleteServiceFromFavLoading extends UserServicesState {}
+class DeleteServiceFromFavSuccess extends UserServicesState {}
+class DeleteServiceFromFavError extends UserServicesState {
+  final String error;
+  DeleteServiceFromFavError({required this.error});
+}
+
+
+
+class AddServiceToFavLoading extends UserServicesState {}
+class AddServiceToFavSuccess extends UserServicesState {}
+class AddServiceToFavError extends UserServicesState {
+  final String error;
+  AddServiceToFavError({required this.error});
+}

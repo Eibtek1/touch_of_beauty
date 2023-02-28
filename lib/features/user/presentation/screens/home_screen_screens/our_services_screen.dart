@@ -37,6 +37,7 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
         if(BlocProvider.of<UserServicesCubit>(context).searchList.isEmpty){
           BlocProvider.of<UserServicesCubit>(context)
               .getServicesByServiceProviderId(servicesProviderId: widget.id);
+          print(widget.id);
         }else{
           BlocProvider.of<UserServicesCubit>(context)
               .searchForServicesOfServicesProviderByItsId(servicesProviderId: widget.id,searchName: searchController.text);

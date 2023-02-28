@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/network/api_end_points.dart';
+import '../../../buisness_logic/services_providers_cubit/services_providers_cubit.dart';
+import '../../../buisness_logic/services_providers_cubit/services_providers_state.dart';
 import '../../../data/models/services_providers_model.dart';
 
 class AllCentersItemBuilder extends StatelessWidget {
@@ -60,17 +63,32 @@ class AllCentersItemBuilder extends StatelessWidget {
                 Positioned(
                     top: 14.h,
                     left: 14.w,
-                    child: CircleAvatar(
-                      radius: 10.r,
-                      backgroundColor: Colors.white,
-                      child: Center(
-                        child: Icon(
-                          Icons.favorite_border,
-                          color: AppColorsLightTheme.secondaryColor,
-                          size: 12.r,
-                        ),
-                      ),
-                    ))
+                    child: BlocBuilder<ServicesProvidersCubit, ServicesProvidersState>(
+                      builder: (context, state) {
+                        var cubit = ServicesProvidersCubit.get(context);
+                        return InkWell(
+                          onTap: (){
+                            if(!cubit.favorites[servicesProviderModel.id!]!){
+                              cubit.addServicesProviderToFavorite(id: servicesProviderModel.id!);
+                            }
+                            else if(cubit.favorites[servicesProviderModel.id!]!){
+                              cubit.deleteServicesProviderToFavorite(id: servicesProviderModel.id!);
+                            }
+                          },
+                          child: CircleAvatar(
+                            radius: 15.r,
+                            backgroundColor: Colors.white,
+                            child: Center(
+                              child: Icon(
+                                cubit.favorites[servicesProviderModel.id!]!?Icons.favorite:Icons.favorite_border,
+                                color: AppColorsLightTheme.secondaryColor,
+                                size: 23.r,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),)
               ],
             ),
             Padding(

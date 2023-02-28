@@ -25,7 +25,6 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
   @override
   void initState() {
     ServicesProvidersCubit.get(context).getAllServicesProviders();
-
     super.initState();
   }
 
@@ -94,22 +93,21 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
               ),
               const Divider(),
               Expanded(
-                child: state is! GetAllServicesProvidersLoadingState &&
-                        cubit.getServicesProviderModel != null
+                child: state is! GetAllServicesProvidersLoadingState
                     ? ListView.builder(
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
                             onTap: () {
-                              cubit.getServicesProviderDataByItsId(id: cubit.getServicesProviderModel!.items![index].id!);
+                              cubit.getServicesProviderDataByItsId(id: cubit.servicesProvidersList[index].id!);
                             },
                             child: AllCentersItemBuilder(
                               servicesProviderModel:
-                                  cubit.getServicesProviderModel!.items![index],
+                                  cubit.servicesProvidersList[index],
                             ),
                           );
                         },
                         itemCount:
-                            cubit.getServicesProviderModel!.items!.length,
+                        cubit.servicesProvidersList.length,
                       )
                     : const Center(
                         child: CircularProgressIndicator.adaptive(),
