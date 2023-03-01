@@ -389,15 +389,15 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                           Fluttertoast.showToast(
                               msg: 'برجال اختيار صورة شخصية',
                               gravity: ToastGravity.CENTER,
-                              backgroundColor: AppColorsLightTheme.primaryColor,
-                              textColor: Colors.white);
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,);
                         } else if (cubit.profileImage == null &&
                             cubit.freelancerImage == null &&
                             vendorSigningType == VendorSigningType.freelancer) {
                           Fluttertoast.showToast(
                               msg: 'برجال اختيار صورة شخصية و صورة العمل الحر',
                               gravity: ToastGravity.CENTER,
-                              backgroundColor: AppColorsLightTheme.primaryColor,
+                              backgroundColor: Colors.red,
                               textColor: Colors.white);
                         } else if (formKey.currentState!.validate()) {
                           if (vendorSigningType ==

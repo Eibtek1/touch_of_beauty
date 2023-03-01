@@ -6,6 +6,7 @@ import 'package:touch_of_beauty/core/cache_manager/shared_preferences.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/authentication/data/repository/auth_repository.dart';
 import '../../../core/network/dio_helper.dart';
+import '../../vendor/data/models/pictures_model.dart';
 import '../data/models/cities_model.dart';
 import '../data/models/confirm_register_model.dart';
 import '../data/models/get_user_data_model.dart';
@@ -22,7 +23,10 @@ class AuthCubit extends Cubit<AuthState> {
   int cityId = 1;
   List<CitiesModel> citiesList = [];
   List<String> citiesNamesList = [];
+  List<PicturesModel> picturesList = [];
+  Map<String, dynamic> picturesMap = {};
   late MainResponse mainResponse;
+  int data = 0;
   ImagePicker picker = ImagePicker();
   File? profileImage;
   File? freelancerImage;
@@ -243,9 +247,52 @@ class AuthCubit extends Cubit<AuthState> {
       mainResponse = MainResponse.fromJson(response.data);
       message = mainResponse.errorMessage.toString();
       getUserModel = GetUserModel.fromJson(mainResponse.data);
+      if (picturesList.isEmpty && data == 0) {
+        getAllPicturesForProvider();
+        getAllPicturesForProvider();
+      }
       emit(GetUserDataSuccess());
     } catch (error) {
       emit(GetUserDataError(error.toString()));
+    }
+  }
+
+  void getAllPicturesForProvider() async {
+    emit(GetPicturesForProviderLoading());
+    try {
+      final response = await AuthRepository.getAllPicturesForProvider();
+      mainResponse = MainResponse.fromJson(response.data);
+      if (mainResponse.errorCode == 0) {
+        for (var element in mainResponse.data) {
+          print(picturesList.contains(PicturesModel.fromJson(element)));
+          if(!picturesList.contains(PicturesModel.fromJson(element))){
+            picturesList.add(PicturesModel.fromJson(element));
+          }
+        }
+      } else {
+        data = mainResponse.errorCode;
+      }
+      picturesList.length;
+      emit(GetPicturesForProviderSuccess());
+    } catch (error) {
+      emit(GetPicturesForProviderError(error.toString()));
+    }
+  }
+
+  void addPictureToLibrary() async {
+    emit(AddPictureLoading());
+    try {
+      final response =
+          await AuthRepository.addPictureToLibrary(image: profileImage);
+      mainResponse = MainResponse.fromJson(response.data);
+      print(response);
+      if (mainResponse.errorCode == 0) {
+        profileImage = null;
+        getAllPicturesForProvider();
+      }
+      emit(AddPictureSuccess());
+    } catch (error) {
+      emit(AddPictureError(error.toString()));
     }
   }
 

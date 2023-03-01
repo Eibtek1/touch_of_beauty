@@ -28,6 +28,7 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +51,7 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
           var cubit = ServicesProvidersCubit.get(context);
           if(state is GetServicesProviderDetailsByItsIdSuccess&&cubit.servicesProviderModel!=null){
             Navigator.pop(context);
+            // Navigator.pop(context);
             showBottomSheet(
               context: context,
               builder: (context) => CenterDetailsBottomSheet(

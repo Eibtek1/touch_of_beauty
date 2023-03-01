@@ -10,6 +10,8 @@ class EndPoints{
   static const logout = '/Users/logout';
   static const changePassword = '/Users/changeoldPassword';
   static const getUserData = '/Users/GetUserInfo';
+  static const getAllPicturesForProvider = '/PicturesLibrary/GetAllForProvider';
+  static const addPictureToLibrary = '/PicturesLibrary';
   static const forgetPassword = '/Users/ForgetPassword';
   static const changeForgetPassword = '/Users/ChangePasswordConfirm';
   static const citiesList = '/Cities';

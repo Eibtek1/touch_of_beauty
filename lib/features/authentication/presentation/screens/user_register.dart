@@ -298,7 +298,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                           Fluttertoast.showToast(
                               msg: 'برجال اختيار صورة شخصية',
                               gravity: ToastGravity.CENTER,
-                              backgroundColor: AppColorsLightTheme.primaryColor,
+                              backgroundColor: Colors.red,
                               textColor: Colors.white);
                         }else if(formKey.currentState!.validate()){
                           cubit.userRegister(userName: name.text, password: password.text, email: email.text, phone: phone.text);

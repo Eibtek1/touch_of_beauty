@@ -9,6 +9,7 @@ class SvgPath{
   static const searchAppBar = 'assets/svg/search_appbar.svg';
   static const chatIcon = 'assets/svg/chatIcon.svg';
   static const editIcon = 'assets/svg/editIcon.svg';
+  static const cameraPicture = 'assets/svg/cameraPicture.svg';
   static const calender = 'assets/svg/calender.svg';
   static const email = 'assets/svg/email.svg';
   static const gender = 'assets/svg/gender.svg';

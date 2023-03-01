@@ -196,10 +196,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     height: 15.h,
                   ),
                   BlocConsumer<ServicesProvidersCubit, ServicesProvidersState>(
+                    buildWhen: (p,a)=>p!=a,
                     listener: (context, state) {
                       var cubit = ServicesProvidersCubit.get(context);
-                      if (state is GetServicesProviderDetailsByItsIdSuccess &&
-                          cubit.servicesProviderModel != null) {
+                      if (state is GetFeaturedServicesProviderDetailsByItsIdSuccess && cubit.servicesProviderModel != null) {
                         Navigator.pop(context);
                         showBottomSheet(
                           context: context,
@@ -209,8 +209,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                           ),
                         );
                       }
-                      if (state
-                          is GetServicesProviderDetailsByItsIdLoadingState) {
+                      if (state is GetFeaturedServicesProviderDetailsByItsIdLoadingState) {
                         showProgressIndicator(context);
                       }
                     },

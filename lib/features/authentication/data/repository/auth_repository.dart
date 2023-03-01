@@ -242,4 +242,24 @@ class AuthRepository{
     );
     return response;
   }
+
+
+  static Future<Response> getAllPicturesForProvider() async {
+    final response = await DioHelper.getData(
+      url: EndPoints.getAllPicturesForProvider, bearerToken: token,
+    );
+    return response;
+  }
+
+
+  static Future<Response> addPictureToLibrary({required File? image}) async {
+    final response = await DioHelper.postData(
+      url: EndPoints.addPictureToLibrary, token: token,data: {
+      "photo": image != null
+          ? "data:image/${image.path.split('.').last};base64,${imageToBase64(image)}"
+          : "",
+    }
+    );
+    return response;
+  }
 }
