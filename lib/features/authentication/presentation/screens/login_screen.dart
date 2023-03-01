@@ -25,9 +25,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController phone = TextEditingController();
-  final TextEditingController password = TextEditingController();
-  var formKey = GlobalKey<FormState>();
+  TextEditingController phone = TextEditingController();
+  TextEditingController password = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    phone.dispose();
+    password.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

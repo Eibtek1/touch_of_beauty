@@ -31,6 +31,14 @@ class GetServicesProviderDetailsByItsIdError extends ServicesProvidersState {
   GetServicesProviderDetailsByItsIdError({required this.error});
 }
 
+
+class GetFeaturedServicesProviderDetailsByItsIdLoadingState extends ServicesProvidersState {}
+class GetFeaturedServicesProviderDetailsByItsIdSuccess extends ServicesProvidersState {}
+class GetFeaturedServicesProviderDetailsByItsIdError extends ServicesProvidersState {
+  final String error;
+  GetFeaturedServicesProviderDetailsByItsIdError({required this.error});
+}
+
 class DeleteServicesProviderToFavLoading extends ServicesProvidersState {}
 class DeleteServicesProviderToFavSuccess extends ServicesProvidersState {}
 class DeleteServicesProviderToFavError extends ServicesProvidersState {

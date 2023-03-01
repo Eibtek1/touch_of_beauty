@@ -53,6 +53,20 @@ class GetUserDataError extends AuthState {
   GetUserDataError(this.error);
 }
 
+class GetPicturesForProviderLoading extends AuthState {}
+class GetPicturesForProviderSuccess extends AuthState {}
+class GetPicturesForProviderError extends AuthState {
+  final String error;
+  GetPicturesForProviderError(this.error);
+}
+
+class AddPictureLoading extends AuthState {}
+class AddPictureSuccess extends AuthState {}
+class AddPictureError extends AuthState {
+  final String error;
+  AddPictureError(this.error);
+}
+
 
 
 class LogoutLoading extends AuthState {}

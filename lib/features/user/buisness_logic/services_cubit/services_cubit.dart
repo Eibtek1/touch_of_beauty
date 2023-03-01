@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:touch_of_beauty/features/authentication/data/models/main_response.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_state.dart';
@@ -12,20 +11,28 @@ import '../../../authentication/data/models/cities_model.dart';
 class UserServicesCubit extends Cubit<UserServicesState> {
   UserServicesCubit() : super(UserServicesInitial());
 
-  static UserServicesCubit get(context) {
-    return BlocProvider.of(context);
-  }
+  static UserServicesCubit get(context) => BlocProvider.of(context);
 
   late MainResponse mainResponse;
+
   PaginateModel? paginateModel;
+
   PaginateModel? searchPaginateModel;
+
   int servicesPageNumber = 1;
+
   int searchServicesPageNumber = 1;
+
   String servicesSearchMessage ='';
+
   List<ServicesModel> servicesList = [];
+
   List<ServicesModel> searchList = [];
+
   Map<dynamic , bool> favorites = {} ;
+
   List<CitiesModel> citiesList = [];
+
   final List<String> titleType = [
     'صالونات',
     'أفراد',
@@ -59,9 +66,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     for (var element in response.data['data']) {
       citiesList.add(CitiesModel.fromJson(element));
     }
-    if (kDebugMode) {
-      print(response);
-    }
+
     emit(GetCitiesSuccess());
   }
 
@@ -123,14 +128,9 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       }else{
         servicesSearchMessage = mainResponse.errorMessage;
       }
-      if (kDebugMode) {
-        print(servicesSearchMessage);
-      }
       emit(GetServicesByServiceProviderIdSuccess());
     } catch (error) {
-      if (kDebugMode) {
-        print(error.toString());
-      }
+
       emit(GetServicesByServiceProviderIdError(error: error.toString()));
     }
   }
@@ -176,14 +176,8 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       }else{
         servicesSearchMessage = mainResponse.errorMessage;
       }
-      if (kDebugMode) {
-        print(servicesSearchMessage);
-      }
       emit(GetServicesByServiceProviderIdSuccess());
     } catch (error) {
-      if (kDebugMode) {
-        print(error.toString());
-      }
       emit(GetServicesByServiceProviderIdError(error: error.toString()));
     }
   }

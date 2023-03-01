@@ -114,6 +114,20 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
 
    }
 
+   void getFeaturedServicesProviderDataByItsId({required String id}) async{
+     servicesProviderModel = null;
+     emit(GetFeaturedServicesProviderDetailsByItsIdLoadingState());
+     try{
+       final response = await ServicesProvidersRepository.getServicesProviderById(id: id);
+       mainResponse = MainResponse.fromJson(response.data);
+       servicesProviderModel = ServicesProviderModel.fromJson(mainResponse.data);
+       emit(GetFeaturedServicesProviderDetailsByItsIdSuccess());
+     }catch(error){
+       emit(GetFeaturedServicesProviderDetailsByItsIdError(error: error.toString()));
+     }
+
+   }
+
    void addServicesProviderToFavorite({required String id})async{
      favorites[id] = !favorites[id]!;
      emit(AddServicesProviderToFavLoading());
