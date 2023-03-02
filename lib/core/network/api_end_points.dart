@@ -11,7 +11,7 @@ class EndPoints{
   static const changePassword = '/Users/changeoldPassword';
   static const getUserData = '/Users/GetUserInfo';
   static const getAllPicturesForProvider = '/PicturesLibrary/GetAllForProvider';
-  static const addPictureToLibrary = '/PicturesLibrary';
+  static const addPictureToLibrary = '/PicturesLibrary/';
   static const forgetPassword = '/Users/ForgetPassword';
   static const changeForgetPassword = '/Users/ChangePasswordConfirm';
   static const citiesList = '/Cities';
@@ -28,6 +28,8 @@ class EndPoints{
   static const addProviderToFavorite = '/Favorites/AddProviderInFavorite/';
   static const deleteProviderFromFavorite = '/Favorites/DeleteProviderFromFavorite/';
   static const addServiceToFavorite = '/Favorites/AddServiceInFavorite/';
+  static const addresses = '/Addresses';
+  static const employees = '/Employees';
   static const deleteServiceFromFavorite = '/Favorites/DeleteServiceFromFavorite/';
   static const getServicesForServicesProvider = '/Services/ServicesForProvider';
   static const addService = '/Services/AddService';

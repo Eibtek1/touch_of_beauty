@@ -48,3 +48,26 @@ class GetMainSectionsError extends VendorServicesState {
   GetMainSectionsError({required this.error});
 
 }
+
+
+
+class AddEmployeeLoading extends VendorServicesState {}
+class AddEmployeeSuccess extends VendorServicesState {}
+class AddEmployeeError extends VendorServicesState {
+  final String error;
+  AddEmployeeError({required this.error});
+}
+
+class DeleteEmployeeLoading extends VendorServicesState {}
+class DeleteEmployeeSuccess extends VendorServicesState {}
+class DeleteEmployeeError extends VendorServicesState {
+  final String error;
+  DeleteEmployeeError({required this.error});
+}
+
+class GetEmployeeLoading extends VendorServicesState {}
+class GetEmployeeSuccess extends VendorServicesState {}
+class GetEmployeeError extends VendorServicesState {
+  final String error;
+  GetEmployeeError({required this.error});
+}

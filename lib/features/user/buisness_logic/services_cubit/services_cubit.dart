@@ -29,6 +29,8 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
   List<ServicesModel> searchList = [];
 
+  List<ServicesModel> servicesByMainSectionAndServicesProviderList =[];
+
   Map<dynamic , bool> favorites = {} ;
 
   List<CitiesModel> citiesList = [];
@@ -49,8 +51,10 @@ class UserServicesCubit extends Cubit<UserServicesState> {
   int servicesCI = 0;
   int cityCI = 0;
   int cityId = 1;
+  int addressCityId = 1;
   int arrangementCI = 0;
   int rattingCI = 0;
+  PaginateModel? servicesByMainSectionAndServicesProviderPaginateModel;
 
   void changeButtonState({required void Function() onPressed}) {
     onPressed();
@@ -183,6 +187,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
   }
 
 
+
   void addServicesProviderToFavorite({required int id})async{
     favorites[id] = !favorites[id]!;
     emit(AddServiceToFavLoading());
@@ -206,4 +211,101 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       emit(DeleteServiceFromFavError(error: mainResponse.errorMessage.toString()));
     }
   }
+
+
+
+  void getServicesByMainSectionAndServicesProvidersId({
+    required String servicesProviderId,
+    required int mainSectionId,
+  }) async {
+    try {
+      emit(GetServicesByMainSectionIdLoadingState());
+      final response = await ServicesProvidersRepository.getServices(
+        pageNumber: 1,
+        pageSize: 3,
+        servicesProviderId: servicesProviderId,
+        mainSectionId: mainSectionId,
+      );
+      mainResponse = MainResponse.fromJson(response.data);
+      if (mainResponse.errorCode == 0) {
+        servicesByMainSectionAndServicesProviderPaginateModel = PaginateModel.fromJson(mainResponse.data);
+        if(servicesByMainSectionAndServicesProviderPaginateModel!.items !=null){
+          servicesByMainSectionAndServicesProviderList.clear();
+          for (var element in servicesByMainSectionAndServicesProviderPaginateModel!.items) {
+            servicesByMainSectionAndServicesProviderList.add(ServicesModel.fromJson(element));
+            if(!favorites.containsKey(element['id'])){
+              favorites.addAll({element['id']: element['isFavourite']});
+            }
+          }
+        }
+      }
+      print(response);
+      print(servicesByMainSectionAndServicesProviderList.length);
+
+      emit(GetServicesByMainSectionIdSuccess());
+    } catch (error) {
+      emit(GetServicesByMainSectionIdError(error: error.toString()));
+    }
+  }
+
+  int tabBarCIndex = 0;
+  void changeTabBarCurrentIndex(int index,{ required String servicesProviderId,
+    required int mainSectionId,}){
+    tabBarCIndex = index;
+    getServicesByMainSectionAndServicesProvidersId(servicesProviderId: servicesProviderId, mainSectionId: mainSectionId);
+    emit(ChangedTabBarCurrentIndex());
+  }
+
+
+
+  void addAddress({
+    required String region,
+    required String street,
+    required String buildingNumber,
+    required String flatNumber,
+    required String addressDetails,
+  })async{
+    try{
+      emit(AddAddressLoading());
+      final response = await ServicesProvidersRepository.addAddress(cityId: addressCityId, region: region, street: street, buildingNumber: buildingNumber, flatNumber: flatNumber, addressDetails: addressDetails);
+      mainResponse = MainResponse.fromJson(response.data);
+      if(mainResponse.errorCode == 0){
+        emit(AddAddressSuccess());
+      }
+    }catch(error){
+      emit(AddAddressError(error: error.toString()));
+    }
+  }
+
+  void deleteAddress({
+  required int id,
+  })async{
+    try{
+      emit(DeleteAddressLoading());
+      final response = await ServicesProvidersRepository.deleteAddress(id: id);
+      mainResponse = MainResponse.fromJson(response.data);
+      if(mainResponse.errorCode == 0){
+        emit(DeleteAddressSuccess());
+      }
+    }catch(error){
+      emit(DeleteAddressError(error: error.toString()));
+    }
+  }
+
+  void getAddress({
+  required int id,
+  })async{
+    try{
+      emit(GetAddressLoading());
+      final response = await ServicesProvidersRepository.getAddress();
+      mainResponse = MainResponse.fromJson(response.data);
+      if(mainResponse.errorCode == 0){
+        emit(GetAddressSuccess());
+      }
+    }catch(error){
+      emit(GetAddressError(error: error.toString()));
+    }
+  }
+
+
 }

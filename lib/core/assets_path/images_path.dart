@@ -35,6 +35,7 @@ class ImagePath {
   static const masterCard = 'assets/images/mater card.png'; //dummy data
   static const mada = 'assets/images/mada.png'; //dummy data
   static const visa = 'assets/images/visa.png'; //dummy data
+  static const deleteIcon = 'assets/images/deleteIcon.png'; //dummy data
 
 
   ImagePath._();

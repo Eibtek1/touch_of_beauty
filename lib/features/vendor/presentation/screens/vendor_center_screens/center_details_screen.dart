@@ -14,6 +14,7 @@ import '../../../../../core/assets_path/images_path.dart';
 import '../../../../../core/network/api_end_points.dart';
 import '../../widgets/add_pictures_alert_dialog.dart';
 import '../../widgets/center_details/custom_container.dart';
+import '../../widgets/delete_picture_alert_dialog.dart';
 import '../../widgets/screen_layout_widget_with_logo.dart';
 
 class CenterDetailsScreen extends StatelessWidget {
@@ -198,10 +199,13 @@ class CenterDetailsScreen extends StatelessWidget {
                                                 //   fit: BoxFit.cover,
                                                 // ),
                                               ),
-                                              Align(
-                                                alignment: Alignment.topLeft,
+                                              Positioned(
+                                                top: 0,
+                                                left:0,
                                                 child: IconButton(
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      showDialog(context: context, builder: (context) => DeleteImageAlertDialog(id: cubit.picturesList[index].id!,));
+                                                    },
                                                     icon: Icon(
                                                       Icons
                                                           .delete,

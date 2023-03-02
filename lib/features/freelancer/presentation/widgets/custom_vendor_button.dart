@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/font_path.dart';
 
 class CustomVendorButton extends StatelessWidget {
@@ -9,12 +10,13 @@ class CustomVendorButton extends StatelessWidget {
   final double width;
   final double paddingVertical;
   final double paddingHorizontal;
+  final bool isDeleteAlertDialog;
 
   const CustomVendorButton(
       {Key? key,
         required this.buttonTitle,
         required this.isTapped,
-        required this.width, this.height, required this.paddingVertical, required this.paddingHorizontal, })
+        required this.width, this.height, required this.paddingVertical, required this.paddingHorizontal, this.isDeleteAlertDialog = false, })
       : super(key: key);
 
   @override
@@ -24,6 +26,7 @@ class CustomVendorButton extends StatelessWidget {
       width: width,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          backgroundColor: isDeleteAlertDialog?Colors.red:AppColorsLightTheme.primaryColor,
           shape: const StadiumBorder(),
           padding: EdgeInsets.symmetric(horizontal: paddingHorizontal, vertical: paddingVertical),
         ),

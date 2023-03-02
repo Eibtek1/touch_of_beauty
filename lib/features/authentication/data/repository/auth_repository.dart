@@ -262,4 +262,12 @@ class AuthRepository{
     );
     return response;
   }
+
+
+  static Future<Response> deleteImage({required int id}) async {
+    final response = await DioHelper.deleteData(
+      url: "${EndPoints.addPictureToLibrary}$id", token: token,
+    );
+    return response;
+  }
 }

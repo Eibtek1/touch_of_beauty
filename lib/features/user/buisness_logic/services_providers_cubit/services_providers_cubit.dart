@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:touch_of_beauty/features/authentication/data/models/main_response.dart';
 import 'package:touch_of_beauty/features/user/data/models/paginate_model.dart';
+import 'package:touch_of_beauty/features/user/data/models/services_model.dart';
 import 'package:touch_of_beauty/features/user/data/repository/services_providers_repository.dart';
 import '../../data/models/services_providers_model.dart';
 import '../../data/models/slider_model.dart';
@@ -18,9 +19,11 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
   ServicesProviderModel? servicesProviderModel;
   PaginateModel? servicesProviderPaginateModel;
   PaginateModel? featuredServicesProviderPaginateModel;
+  PaginateModel? servicesByMainSectionAndServicesProviderPaginateModel;
   Map<dynamic , bool> favorites = {} ;
   int servicesProviderPageNumber = 1;
   int featuredServicesProviderPageNumber = 1;
+  int servicesByMainSectionAndServicesProviderPageNumber = 1;
   List<SliderModel> sliderPhotosList =[];
   List<ServicesProviderModel> servicesProvidersList =[];
   List<ServicesProviderModel> featuredServicesProvidersList =[];
@@ -128,7 +131,8 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
 
    }
 
-   void addServicesProviderToFavorite({required String id})async{
+
+  void addServicesProviderToFavorite({required String id})async{
      favorites[id] = !favorites[id]!;
      emit(AddServicesProviderToFavLoading());
      final response = await ServicesProvidersRepository.addServicesProviderToFavorite(id: id);

@@ -122,7 +122,8 @@ class AppRouter {
         case ScreenName.complainsScreen:
           return _animateRouteBuilder(const ComplainsScreen());
         case ScreenName.galleryScreen:
-          return _animateRouteBuilder(GalleryScreen());
+          final arg = settings.arguments;
+          return _animateRouteBuilder(GalleryScreen(galleryList: arg,));
         case ScreenName.chatScreen:
           final args = settings.arguments;
           return _animateRouteBuilder(ChatScreen(title: args,));

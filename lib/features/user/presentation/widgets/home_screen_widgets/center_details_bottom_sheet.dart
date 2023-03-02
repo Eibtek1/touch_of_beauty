@@ -1,16 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_state.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_state.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
 import '../../../../../core/network/api_end_points.dart';
 import '../../../data/models/services_providers_model.dart';
+import 'center_services_item.dart';
 
 class CenterDetailsBottomSheet extends StatefulWidget {
   final ServicesProviderModel servicesProvidersModel;
@@ -25,7 +30,6 @@ class CenterDetailsBottomSheet extends StatefulWidget {
 }
 
 class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -192,39 +196,39 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
               SizedBox(
                 height: 20.h,
               ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'اوقات العمل',
-                      style: TextStyle(
-                          color: const Color(0xff263238),
-                          fontFamily: FontPath.almaraiBold,
-                          fontSize: 18.sp),
-                    ),
-                    SizedBox(
-                      height: 21.h,
-                      width: 52.w,
-                      // decoration: BoxDecoration(
-                      //   color:
-                      //       AppColorsLightTheme.secondaryColor.withOpacity(0.3),
-                      //   borderRadius: BorderRadius.circular(11.r),
-                      // ),
-                      // child: Text(
-                      //   'متاح',
-                      //   textAlign: TextAlign.center,
-                      //   style: TextStyle(
-                      //     fontSize: 12.sp,
-                      //     fontFamily: FontPath.almaraiRegular,
-                      //     color: AppColorsLightTheme.secondaryColor,
-                      //   ),
-                      // ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 26.h,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'اوقات العمل',
+                    style: TextStyle(
+                        color: const Color(0xff263238),
+                        fontFamily: FontPath.almaraiBold,
+                        fontSize: 18.sp),
+                  ),
+                  SizedBox(
+                    height: 21.h,
+                    width: 52.w,
+                    // decoration: BoxDecoration(
+                    //   color:
+                    //       AppColorsLightTheme.secondaryColor.withOpacity(0.3),
+                    //   borderRadius: BorderRadius.circular(11.r),
+                    // ),
+                    // child: Text(
+                    //   'متاح',
+                    //   textAlign: TextAlign.center,
+                    //   style: TextStyle(
+                    //     fontSize: 12.sp,
+                    //     fontFamily: FontPath.almaraiRegular,
+                    //     color: AppColorsLightTheme.secondaryColor,
+                    //   ),
+                    // ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 26.h,
+              ),
               widget.servicesProvidersModel.workDays!.isNotEmpty
                   ? ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
@@ -275,6 +279,102 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
               SizedBox(
                 height: 22.h,
               ),
+              Text(
+                'بعض الخدمات',
+                style: TextStyle(
+                    color: const Color(0xff263238),
+                    fontFamily: FontPath.almaraiBold,
+                    fontSize: 18.sp),
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              BlocConsumer<UserServicesCubit, UserServicesState>(
+                listener: (context, state) {
+                  // TODO: implement listener
+                },
+                builder: (context, state) {
+                  var cubit = UserServicesCubit.get(context);
+                  return SizedBox(
+                    height: 30.h,
+                    width: double.infinity,
+                    child: ListView.builder(
+                      itemCount:
+                          widget.servicesProvidersModel.mainSection!.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor: cubit.tabBarCIndex == index
+                                ? AppColorsLightTheme.secondaryColor
+                                    .withOpacity(0.2)
+                                : AppColorsLightTheme.authTextFieldFillColor,
+                            shape: const StadiumBorder(),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 19.w, vertical: 1.h),
+                          ),
+                          onPressed: () {
+                            if (index != cubit.tabBarCIndex) {
+                              cubit.changeTabBarCurrentIndex(index,
+                                  servicesProviderId:
+                                      widget.servicesProvidersModel.id!,
+                                  mainSectionId: widget.servicesProvidersModel
+                                      .mainSection![index].mainSectionId!);
+                            }
+                          },
+                          child: Text(
+                            widget.servicesProvidersModel.mainSection![index]
+                                .titele!,
+                            style: TextStyle(
+                                color: cubit.tabBarCIndex == index
+                                    ? Colors.pink
+                                    : Colors.grey,
+                                fontFamily: FontPath.almaraiBold,
+                                fontSize: 12.sp),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              BlocConsumer<UserServicesCubit, UserServicesState>(
+                listener: (context, state) {
+                  // TODO: implement listener
+                },
+                builder: (context, state) {
+                  var cubit = UserServicesCubit.get(context);
+                  return state is! GetServicesByMainSectionIdLoadingState
+                      ? ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            return CenterServicesCategoryItem(
+                              servicesModel: cubit
+                                      .servicesByMainSectionAndServicesProviderList[
+                                  index],
+                            );
+                          },
+                          itemCount: cubit
+                              .servicesByMainSectionAndServicesProviderList
+                              .length,
+                        )
+                      : const Center(
+                          child: CircularProgressIndicator.adaptive(),
+                        );
+                },
+              ),
+              SizedBox(
+                height: 22.h,
+              ),
+              const Divider(),
+              SizedBox(
+                height: 22.h,
+              ),
               OutlinedButton(
                 onPressed: () {
                   UserServicesCubit.get(context).servicesPageNumber = 1;
@@ -311,7 +411,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, ScreenName.galleryScreen);
+                      Navigator.pushNamed(context, ScreenName.galleryScreen,arguments: widget.servicesProvidersModel.picturesLibrary!);
                     },
                     child: Text(
                       'شاهد الكل',
@@ -344,7 +444,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                         child: CachedNetworkImage(
                           fit: BoxFit.cover,
                           imageUrl:
-                          "${EndPoints.imageBaseUrl}${widget.servicesProvidersModel.picturesLibrary![index].imgUrl!}",
+                              "${EndPoints.imageBaseUrl}${widget.servicesProvidersModel.picturesLibrary![index].imgUrl!}",
                           placeholder: (context, url) => Shimmer.fromColors(
                             baseColor: Colors.grey[400]!,
                             highlightColor: Colors.grey[300]!,
@@ -357,12 +457,14 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                               ),
                             ),
                           ),
-                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
                       ),
                     );
                   },
-                  itemCount: widget.servicesProvidersModel.picturesLibrary!.length,
+                  itemCount:
+                      widget.servicesProvidersModel.picturesLibrary!.length,
                 ),
               ),
             ],
