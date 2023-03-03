@@ -52,7 +52,8 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
           var cubit = ServicesProvidersCubit.get(context);
           if(state is GetServicesProviderDetailsByItsIdSuccess&&cubit.servicesProviderModel!=null){
             Navigator.pop(context);
-            // Navigator.pop(context);
+            UserServicesCubit.get(context).tabBarCIndex = 0;
+            UserServicesCubit.get(context).changeTabBarCurrentIndex(0, servicesProviderId: cubit.servicesProviderModel!.id!, mainSectionId: cubit.servicesProviderModel!.mainSection![0].mainSectionId!);
             showBottomSheet(
               context: context,
               builder: (context) => CenterDetailsBottomSheet(

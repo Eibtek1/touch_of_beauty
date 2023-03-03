@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_centers_screen.dart';
 import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_messages_screen.dart';
 import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_more_screen.dart';
@@ -49,6 +50,7 @@ class _UserMainLayoutState extends State<VendorMainLayout> {
               setState(() {
                 cIndex = index;
               });
+              print(token);
             },
             items: [
               BottomNavigationBarItem(

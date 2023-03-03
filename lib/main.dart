@@ -13,6 +13,7 @@ import 'core/cache_manager/shared_preferences.dart';
 import 'features/authentication/buisness_logic/auth_cubit.dart';
 import 'features/user/buisness_logic/main_features_cubit/main_features_cubit.dart';
 import 'features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
+import 'features/vendor/buisness_logic/employees_cubit/employees_cubit.dart';
 import 'features/vendor/buisness_logic/services_cubit/vendor_services_cubit.dart';
 
 
@@ -42,6 +43,8 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => ServicesProvidersCubit()..getSliderPhotos()),
             BlocProvider(create: (context) => MainFeaturesCubit()),
             BlocProvider(create: (context) => AuthCubit()),
+            BlocProvider(
+              create: (context) => EmployeesCubit()..init(),),
           ],
           child: MaterialApp(
             title: 'لمسة جمال',

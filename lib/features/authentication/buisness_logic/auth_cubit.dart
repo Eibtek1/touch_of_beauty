@@ -65,7 +65,7 @@ class AuthCubit extends Cubit<AuthState> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       profileImage = File(pickedFile.path);
-      emit(GetPickedImageSuccessState());
+      emit(GetProfilePickedImageSuccessState());
     } else {
       emit(GetPickedImageErrorState());
     }
@@ -75,7 +75,7 @@ class AuthCubit extends Cubit<AuthState> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       freelancerImage = File(pickedFile.path);
-      emit(GetPickedImageSuccessState());
+      emit(GetProfilePickedImageSuccessState());
     } else {
       emit(GetPickedImageErrorState());
     }

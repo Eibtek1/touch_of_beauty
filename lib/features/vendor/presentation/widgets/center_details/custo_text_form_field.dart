@@ -13,7 +13,8 @@ class CustomTextFormField extends StatelessWidget {
   final bool isDetails;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
-  const CustomTextFormField({Key? key, required this.controller, required this.height, required this.width, this.validator, this.keyboardType = TextInputType.text, this.isDetails = false}) : super(key: key);
+  final String? hintText;
+  const CustomTextFormField({Key? key, required this.controller, required this.height, required this.width, this.validator, this.keyboardType = TextInputType.text, this.isDetails = false, this.hintText}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +61,7 @@ class CustomTextFormField extends StatelessWidget {
         color: const Color(0xff8B8989),
       ),
       decoration: InputDecoration(
+        hintText: hintText,
         contentPadding: EdgeInsets.symmetric(horizontal: 10.w),
         filled: true,
           fillColor: AppColorsLightTheme.authTextFieldFillColor,

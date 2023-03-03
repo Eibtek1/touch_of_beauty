@@ -95,7 +95,7 @@ class AppRouter {
         case ScreenName.centerWorkingTimeScreen:
           return _animateRouteBuilder( const CenterWorkingTimeScreen());
         case ScreenName.detailsCenterScreen:
-          return _animateRouteBuilder( const CenterDetailsScreen());
+          return _animateRouteBuilder( CenterDetailsScreen());
         case ScreenName.loginScreen:
           return _animateRouteBuilder(const LoginScreen());
         case ScreenName.userRegister:
