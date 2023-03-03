@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
-import '../../../core/assets_path/font_path.dart';
+import '../../../../core/assets_path/font_path.dart';
 import '../widgets/build_another_person_message_item.dart';
 import '../widgets/build_my_message_item.dart';
 import '../widgets/chat_text_field.dart';

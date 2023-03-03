@@ -67,6 +67,13 @@ class AddPictureError extends AuthState {
   AddPictureError(this.error);
 }
 
+class DeletePictureLoading extends AuthState {}
+class DeletePictureSuccess extends AuthState {}
+class DeletePictureError extends AuthState {
+  final String error;
+  DeletePictureError(this.error);
+}
+
 
 
 class LogoutLoading extends AuthState {}

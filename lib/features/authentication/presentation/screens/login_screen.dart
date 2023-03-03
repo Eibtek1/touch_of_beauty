@@ -138,6 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   AuthTextFormField(
                     hintText: 'كلمة المرور',
                     controller: password,
+                    isPassword: true,
                     validate: (value) {
                       if (value!.isEmpty) {
                         return 'ادخل كلمة المرور';

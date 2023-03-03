@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
@@ -9,6 +11,7 @@ import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_
 import 'package:touch_of_beauty/features/user/presentation/widgets/home_screen_widgets/center_details_bottom_sheet.dart';
 import 'package:touch_of_beauty/features/user/presentation/widgets/home_screen_widgets/custom_appbar.dart';
 import '../../../../core/assets_path/font_path.dart';
+import '../../../../core/network/api_end_points.dart';
 import '../../buisness_logic/main_features_cubit/main_features_cubit.dart';
 import '../../buisness_logic/main_features_cubit/main_features_state.dart';
 import '../widgets/home_screen_widgets/build_custom_drawer.dart';
@@ -36,6 +39,9 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
     }
     if (MainFeaturesCubit.get(context).mainSectionsFeaturedList.isEmpty) {
       MainFeaturesCubit.get(context).getFeaturedMainSections();
+    }
+    if (ServicesProvidersCubit.get(context).servicesProvidersList.isEmpty) {
+      ServicesProvidersCubit.get(context).getAllServicesProviders();
     }
     super.initState();
   }
@@ -240,6 +246,100 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                           servicesProviderModel: cubit
                                                   .featuredServicesProvidersList[
                                               index],
+                                        ),
+                                      );
+                                    },
+                                  )
+                                : Center(
+                                    child: Text(
+                                      'لا يوجد صالونات مميزة',
+                                      style: TextStyle(
+                                          color:
+                                              AppColorsLightTheme.primaryColor,
+                                          fontFamily: FontPath.almaraiBold,
+                                          fontSize: 16.sp),
+                                    ),
+                                  )
+                            : const Center(
+                                child: CircularProgressIndicator.adaptive(),
+                              ),
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  Text(
+                    'الصالونات التي تتابعها',
+                    style: TextStyle(
+                        fontSize: 16.sp,
+                        fontFamily: FontPath.almaraiBold,
+                        color: const Color(0xff1E2432)),
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  BlocConsumer<ServicesProvidersCubit, ServicesProvidersState>(
+                    buildWhen: (p,a)=>p!=a,
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      var cubit = ServicesProvidersCubit.get(context);
+                      return SizedBox(
+                        height: cubit.servicesProvidersList.isEmpty?40.h:75.h,
+                        child: state is! GetFeaturedServicesProvidersLoadingState
+                            ? cubit.servicesProvidersList.isNotEmpty
+                                ? ListView.builder(
+                                    padding: EdgeInsets.symmetric(vertical: 3.h),
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: cubit
+                                        .servicesProvidersList.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 2.w),
+                                        child: Container(
+                                          height: 70.h,
+                                          width: 70.w,
+                                          padding: EdgeInsets.all(2.r),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.white,
+                                            border: Border.all(
+                                              color: AppColorsLightTheme.primaryColor,
+                                              width: 1.5.w,
+                                            )
+                                          ),
+                                          child: Container(
+                                            width: 70.w,
+                                            height: 70.h,
+                                            clipBehavior: Clip.antiAlias,
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child:  CachedNetworkImage(
+                                              fit: BoxFit.cover,
+                                              imageUrl:
+                                              "${EndPoints.imageBaseUrl}${cubit
+                                                  .servicesProvidersList[index]
+                                                  .userImgUrl}",
+                                              placeholder: (context, url) =>
+                                                  Shimmer.fromColors(
+                                                    baseColor: Colors.grey[400]!,
+                                                    highlightColor: Colors.grey[300]!,
+                                                    child: Container(
+                                                      height: double.infinity,
+                                                      width: double.infinity,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.black,
+                                                        borderRadius: BorderRadius.circular(8.0),
+                                                      ),
+                                                    ),
+                                                  ),
+                                              errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                            ),
+                                          ),
                                         ),
                                       );
                                     },

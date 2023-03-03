@@ -3,6 +3,9 @@ abstract class ServicesProvidersState {}
 class ServicesProvidersInitial extends ServicesProvidersState {}
 
 
+
+
+
 class GetFeaturedServicesProvidersLoadingState extends ServicesProvidersState {}
 class GetFeaturedServicesProvidersSuccess extends ServicesProvidersState {}
 class GetFeaturedServicesProvidersError extends ServicesProvidersState {
@@ -54,3 +57,4 @@ class AddServicesProviderToFavError extends ServicesProvidersState {
   final String error;
   AddServicesProviderToFavError({required this.error});
 }
+

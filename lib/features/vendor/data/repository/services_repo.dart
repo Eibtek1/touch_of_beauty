@@ -60,4 +60,43 @@ class VendorServicesRepository {
     );
     return response;
   }
+
+
+
+  static Future<Response> deleteEmployee({required int id}) async {
+    final response = await DioHelper.deleteData(
+      url: "${EndPoints.employees}/$id",
+      token: token,
+    );
+    return response;
+  }
+
+
+  static Future<Response> addEmployee({
+    required String name,
+    required String email,
+    required String phoneNumber,
+    required File? image,
+  }) async {
+    final response = await DioHelper.postData(
+        url: EndPoints.employees,
+        token: token,
+        data: {
+          "fullName": name,
+          "email": email,
+          "phoneNumber": phoneNumber,
+          "imgUrl":  image != null
+              ? "data:image/${image.path.split('.').last};base64,${imageToBase64(image)}"
+              : "",
+        });
+    return response;
+  }
+
+
+
+  static Future<Response> getEmployees() async {
+    final response = await DioHelper.getData(
+        url: EndPoints.employees, bearerToken: token);
+    return response;
+  }
 }

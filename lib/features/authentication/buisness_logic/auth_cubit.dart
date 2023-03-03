@@ -296,6 +296,21 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  void deletePictureToLibrary({required int id}) async {
+    emit(DeletePictureLoading());
+    try {
+      final response =
+          await AuthRepository.deleteImage(id: id);
+      mainResponse = MainResponse.fromJson(response.data);
+      if(mainResponse.errorCode == 0){
+        picturesList.removeWhere((element) => element.id! == id);
+      }
+      emit(DeletePictureSuccess());
+    } catch (error) {
+      emit(DeletePictureError(error.toString()));
+    }
+  }
+
   void vendorUpdateProfile({
     required String userName,
     required String email,
