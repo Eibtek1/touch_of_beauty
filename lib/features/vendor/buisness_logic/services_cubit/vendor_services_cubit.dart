@@ -8,6 +8,7 @@ import 'package:touch_of_beauty/features/user/data/models/services_model.dart';
 import 'package:touch_of_beauty/features/vendor/buisness_logic/services_cubit/vendor_services_state.dart';
 
 import '../../../user/data/models/main_sections_model.dart';
+import '../../data/models/employee_model.dart';
 import '../../data/repository/services_repo.dart';
 
 class VendorServicesCubit extends Cubit<VendorServicesState> {
@@ -136,51 +137,4 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
     }
   }
 
-  void addEmployee({
-    required String name,
-    required String email,
-    required String phoneNumber,
-    required File? image,
-  })async{
-    try{
-      emit(AddEmployeeLoading());
-      final response = await VendorServicesRepository.addEmployee(name: name, email: email, phoneNumber: phoneNumber, image: image);
-      mainResponse = MainResponse.fromJson(response.data);
-      if(mainResponse.errorCode == 0){
-        emit(AddEmployeeSuccess());
-      }
-    }catch(error){
-      emit(AddEmployeeError(error: error.toString()));
-    }
-  }
-
-  void deleteEmployee({
-    required int id,
-  })async{
-    try{
-      emit(DeleteEmployeeLoading());
-      final response = await VendorServicesRepository.deleteEmployee(id: id);
-      mainResponse = MainResponse.fromJson(response.data);
-      if(mainResponse.errorCode == 0){
-        emit(DeleteEmployeeSuccess());
-      }
-    }catch(error){
-      emit(DeleteEmployeeError(error: error.toString()));
-    }
-  }
-
-  void getEmployee({
-    required int id,
-  })async{
-    try{
-      emit(GetEmployeeLoading());
-      final response = await VendorServicesRepository.getEmployees();
-      mainResponse = MainResponse.fromJson(response.data);
-      if(mainResponse.errorCode == 0){
-        emit(GetEmployeeSuccess());
-      }
-    }catch(error){
-      emit(GetEmployeeError(error: error.toString()));
-    }
-  }
 }

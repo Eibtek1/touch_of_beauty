@@ -30,7 +30,7 @@ class LoginError extends AuthState {
 }
 
 
-class GetPickedImageSuccessState extends AuthState {}
+class GetProfilePickedImageSuccessState extends AuthState {}
 class GetPickedImageErrorState extends AuthState {}
 
 

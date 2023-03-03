@@ -350,8 +350,8 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                   var cubit = UserServicesCubit.get(context);
                   return state is! GetServicesByMainSectionIdLoadingState
                       ? ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
                           itemBuilder: (BuildContext context, int index) {
                             return CenterServicesCategoryItem(
                               servicesModel: cubit
@@ -411,7 +411,9 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, ScreenName.galleryScreen,arguments: widget.servicesProvidersModel.picturesLibrary!);
+                      Navigator.pushNamed(context, ScreenName.galleryScreen,
+                          arguments:
+                              widget.servicesProvidersModel.picturesLibrary!);
                     },
                     child: Text(
                       'شاهد الكل',

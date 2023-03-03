@@ -170,7 +170,7 @@ class CenterServicesCategoryItem extends StatelessWidget {
                         : Row(
                             children: [
                               Text(
-                                '200  رس',
+                                '${servicesModel!.price}  رس',
                                 style: TextStyle(
                                   fontSize: 12.sp,
                                   fontFamily: FontPath.almaraiRegular,
@@ -193,13 +193,17 @@ class CenterServicesCategoryItem extends StatelessWidget {
                     SizedBox(
                       height: 10.h,
                     ),
-                    Text(
-                      'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،لقد تم توليد ',
-                      style: TextStyle(
-                        height: 1.2.h,
-                        fontSize: 10.sp,
-                        fontFamily: FontPath.almaraiBold,
-                        color: const Color(0xff666666),
+                    Expanded(
+                      child: Text(
+                        '${servicesModel!.description}',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          height: 1.2.h,
+                          fontSize: 10.sp,
+                          fontFamily: FontPath.almaraiBold,
+                          color: const Color(0xff666666),
+                        ),
                       ),
                     ),
                     Align(
