@@ -184,6 +184,25 @@ class ServicesProvidersRepository {
   }
 
 
+  static Future<Response> addOrder({
+    required int serviceId,
+    required int addressId,
+    required DateTime dateTime,
+    required bool inHome,
+  }) async {
+    final response = await DioHelper.postData(
+        url: EndPoints.addOrder,
+        token: token,
+        data: {
+          "startingOn": "$dateTime",
+          "serviceId": serviceId,
+          "addressId": addressId,
+          "inHome": inHome
+        });
+    return response;
+  }
+
+
 
   static Future<Response> getAddress() async {
     final response = await DioHelper.getData(

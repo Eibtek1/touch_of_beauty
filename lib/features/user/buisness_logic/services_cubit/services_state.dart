@@ -75,3 +75,13 @@ class AddServiceToFavError extends UserServicesState {
 
 
 class ChangedTabBarCurrentIndex extends UserServicesState {}
+
+
+
+
+class AddOrderLoading extends UserServicesState {}
+class AddOrderSuccess extends UserServicesState {}
+class AddOrderError extends UserServicesState {
+  final String error;
+  AddOrderError({required this.error});
+}

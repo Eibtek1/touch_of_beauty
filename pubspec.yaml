@@ -58,6 +58,10 @@ dependencies:
   rename: ^2.1.1
   equatable: ^2.0.5
   flutter_widget_from_html: ^0.10.0
+  firebase_storage: ^11.0.6
+  cloud_firestore: ^4.1.0
+  firebase_core: ^2.3.0
+#  firebase_messaging: ^14.1.3
 
 
 dev_dependencies:

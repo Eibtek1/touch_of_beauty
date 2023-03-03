@@ -258,6 +258,26 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
 
 
+  void addOrder({
+    required int serviceId,
+    required int addressId,
+    required DateTime dateTime,
+    required bool inHome,
+  })async{
+    try{
+      emit(AddOrderLoading());
+      final response = await ServicesProvidersRepository.addOrder(serviceId: serviceId, addressId: addressId, dateTime: dateTime, inHome: inHome);
+      mainResponse = MainResponse.fromJson(response.data);
+      if(mainResponse.errorCode == 0){
+        emit(AddOrderSuccess());
+      }
+    }catch(error){
+      emit(AddOrderError(error: error.toString()));
+    }
+  }
+
+
+
   void addAddress({
     required String region,
     required String street,
