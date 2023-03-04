@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:touch_of_beauty/features/user/presentation/widgets/custom_button.dart';
 
 import '../../../../../../core/app_router/screens_name.dart';
 import '../../../../../../core/app_theme/light_theme.dart';
 import '../../../../../../core/assets_path/font_path.dart';
 import '../../../../../../core/assets_path/images_path.dart';
-import '../../../../../../core/assets_path/svg_path.dart';
-import '../../../widgets/home_screen_widgets/complain_text_field.dart';
 import '../../../widgets/home_screen_widgets/order_item_widget.dart';
 
 class ReserveOrderScreen extends StatelessWidget {
@@ -63,32 +60,65 @@ class ReserveOrderScreen extends StatelessWidget {
                     fontFamily: FontPath.almaraiBold,
                     color: const Color(0xff1E2432)),
               ),
-              InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, ScreenName.allCentersScreen);
+              // InkWell(
+              //   onTap: () {
+              //     Navigator.pushNamed(context, ScreenName.allCentersScreen);
+              //   },
+              //   child: Text(
+              //     'اضافة المزيد',
+              //     style: TextStyle(
+              //         fontSize: 16.sp,
+              //         fontFamily: FontPath.almaraiBold,
+              //         color: AppColorsLightTheme.secondaryColor),
+              //   ),
+              // ),
+            ],
+          ),
+          const OrderItemWidget(),
+          SizedBox(
+            height: 25.h,
+          ),
+          Text(
+            'نوع الخدمة',
+            style: TextStyle(
+                fontSize: 16.sp,
+                fontFamily: FontPath.almaraiBold,
+                color: const Color(0xff1E2432)),
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ElevatedButton(
+                onPressed: () {
                 },
+                style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: AppColorsLightTheme.primaryColor,
+                    // cubit.inCenter
+                    //     ? AppColorsLightTheme.primaryColor
+                    //     : AppColorsLightTheme
+                    //     .authTextFieldFillColor,
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    shape: const StadiumBorder()),
                 child: Text(
-                  'اضافة المزيد',
+                  'الخدمات بالمركز',
                   style: TextStyle(
-                      fontSize: 16.sp,
-                      fontFamily: FontPath.almaraiBold,
-                      color: AppColorsLightTheme.secondaryColor),
+                      color: Colors.white,
+                      // cubit.inCenter
+                      //     ? Colors.white
+                      //     : Colors.grey,
+                      fontFamily: FontPath.almaraiRegular,
+                      fontSize: 12.sp),
                 ),
               ),
+              SizedBox(width: 90.w,),
             ],
           ),
           SizedBox(
-            height: 230.h,
-            width: double.infinity,
-            child: ListView.builder(
-              itemBuilder: (BuildContext context, int index) {
-                return const OrderItemWidget();
-              },
-              itemCount: 2,
-            ),
-          ),
-          SizedBox(
-            height: 25.h,
+            height: 26.h,
           ),
           Text(
             'عاملين المركز',
@@ -141,30 +171,6 @@ class ReserveOrderScreen extends StatelessWidget {
           SizedBox(
             height: 26.h,
           ),
-          availableTimeWidget(title: 'السبت'),
-          SizedBox(
-            height: 10.h,
-          ),
-          availableTimeWidget(title: 'الاحد'),
-          SizedBox(
-            height: 10.h,
-          ),
-          availableTimeWidget(title: 'الاثنين'),
-          SizedBox(
-            height: 10.h,
-          ),
-          availableTimeWidget(title: 'الثلثاء'),
-          SizedBox(
-            height: 10.h,
-          ),
-          availableTimeWidget(title: 'الاربعاء'),
-          SizedBox(
-            height: 10.h,
-          ),
-          availableTimeWidget(title: 'الخميس'),
-          SizedBox(
-            height: 22.h,
-          ),
           SizedBox(
             height: 95.h,
             width: double.infinity,
@@ -192,94 +198,84 @@ class ReserveOrderScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, ScreenName.chatScreen,
-                          arguments: 'مقدم الخدمة');
-                    },
-                    icon: SvgPicture.asset(
-                      SvgPath.chatIcon,
-                      width: 60.w,
-                      height: 60.h,
-                    )),
                 SizedBox(
                     height: 45.h,
                     child: CustomUserButton(
                       buttonTitle: 'اطلب الان',
                       isTapped: () {
                         Navigator.pushNamed(
-                            context, ScreenName.chooseAddressScreen);
+                            context, ScreenName.addAddressScreen);
                       },
                       width: 124.w,
                       paddingVertical: 0,
                       paddingHorizontal: 0,
-                    ))
+                    ),),
               ],
             ),
           ),
           SizedBox(
             height: 25.h,
           ),
-          Text(
-            'الوقت',
-            style: TextStyle(
-                fontSize: 16.sp,
-                fontFamily: FontPath.almaraiBold,
-                color: const Color(0xff1E2432)),
-          ),
-          SizedBox(
-            height: 14.h,
-          ),
-          SizedBox(
-            height: 25.h,
-            child: ListView.builder(
-              padding: EdgeInsets.symmetric(vertical: 1.h),
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: 8,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w),
-                  child: Container(
-                    height: 24.h,
-                    width: 81.w,
-                    decoration: BoxDecoration(
-                      color: const Color(0xffF0F3F6),
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    child: Center(
-                      child: Text(
-                        '20.00 AM',
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          fontFamily: FontPath.almaraiRegular,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-          SizedBox(
-            height: 25.h,
-          ),
-          Text(
-            'ملاحظات',
-            style: TextStyle(
-                fontSize: 16.sp,
-                fontFamily: FontPath.almaraiBold,
-                color: const Color(0xff1E2432)),
-          ),
-          SizedBox(
-            height: 14.h,
-          ),
-          CustomUserTextField(
-            controller: controller,
-            hintText: 'اكتب ملاحضاتك',
-            height: 150.h,
-          ),
+          // Text(
+          //   'الوقت',
+          //   style: TextStyle(
+          //       fontSize: 16.sp,
+          //       fontFamily: FontPath.almaraiBold,
+          //       color: const Color(0xff1E2432)),
+          // ),
+          // SizedBox(
+          //   height: 14.h,
+          // ),
+          // SizedBox(
+          //   height: 25.h,
+          //   child: ListView.builder(
+          //     padding: EdgeInsets.symmetric(vertical: 1.h),
+          //     shrinkWrap: true,
+          //     scrollDirection: Axis.horizontal,
+          //     itemCount: 8,
+          //     itemBuilder: (BuildContext context, int index) {
+          //       return Padding(
+          //         padding: EdgeInsets.symmetric(horizontal: 10.w),
+          //         child: Container(
+          //           height: 24.h,
+          //           width: 81.w,
+          //           decoration: BoxDecoration(
+          //             color: const Color(0xffF0F3F6),
+          //             borderRadius: BorderRadius.circular(12.r),
+          //           ),
+          //           child: Center(
+          //             child: Text(
+          //               '20.00 AM',
+          //               style: TextStyle(
+          //                 fontSize: 12.sp,
+          //                 fontFamily: FontPath.almaraiRegular,
+          //                 color: Colors.grey,
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ),
+          // SizedBox(
+          //   height: 25.h,
+          // ),
+          // Text(
+          //   'ملاحظات',
+          //   style: TextStyle(
+          //       fontSize: 16.sp,
+          //       fontFamily: FontPath.almaraiBold,
+          //       color: const Color(0xff1E2432)),
+          // ),
+          // SizedBox(
+          //   height: 14.h,
+          // ),
+          // CustomUserTextField(
+          //   controller: controller,
+          //   hintText: 'اكتب ملاحضاتك',
+          //   height: 150.h,
+          // ),
         ],
       ),
     );

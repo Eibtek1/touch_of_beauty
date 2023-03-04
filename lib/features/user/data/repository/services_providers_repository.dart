@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:touch_of_beauty/core/network/api_end_points.dart';
 
@@ -163,21 +161,21 @@ class ServicesProvidersRepository {
 
   static Future<Response> addAddress({
     required int cityId,
-    required String region,
-    required String street,
-    required String buildingNumber,
-    required String flatNumber,
-    required String addressDetails,
+    required String?region,
+    required String? street,
+    required String? buildingNumber,
+    required String? flatNumber,
+    required String? addressDetails,
   }) async {
     final response = await DioHelper.postData(
         url: EndPoints.addresses,
         token: token,
         data: {
-          "region": region,
-          "street": street,
-          "buildingNumber": buildingNumber,
-          "flatNumber": flatNumber,
-          "addressDetails": addressDetails,
+          "region": region??"",
+          "street": street??"",
+          "buildingNumber": buildingNumber??"",
+          "flatNumber": flatNumber??"",
+          "addressDetails": addressDetails??"",
           "cityId": cityId
         });
     return response;
@@ -207,6 +205,16 @@ class ServicesProvidersRepository {
   static Future<Response> getAddress() async {
     final response = await DioHelper.getData(
         url: EndPoints.addresses, bearerToken: token);
+    return response;
+  }
+
+  static Future<Response> getServicesDetailsById({
+    required int id,
+  }) async {
+    final response = await DioHelper.getData(
+      url: "${EndPoints.getServiceDetailsById}$id",
+      bearerToken: token,
+    );
     return response;
   }
 

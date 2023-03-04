@@ -224,10 +224,6 @@ class ServicesBottomSheet extends StatelessWidget {
                             ),
                             errorWidget: (context, url, error) => const Icon(Icons.error),
                           ),
-                          // Image.asset(
-                          //   ImagePath.carouselImage1,
-                          //   fit: BoxFit.cover,
-                          // ),
                         ),
                         Positioned(
                           top: 14.h,
@@ -261,19 +257,23 @@ class ServicesBottomSheet extends StatelessWidget {
                                 fontFamily: FontPath.almaraiBold,
                                 color: const Color(0xff1E2432)),
                           ),
-                          // SizedBox(
-                          //   height: 8.h,
-                          // ),
-                          // Text(
-                          //   'الطريق العام الخرج - الرياض (365)',
-                          //   style: TextStyle(
-                          //     fontSize: 11.sp,
-                          //     fontFamily: FontPath.almaraiRegular,
-                          //     color: const Color(0xff666666),
-                          //   ),
-                          // ),
                           SizedBox(
-                            height: 12.h,
+                            height: 3.h,
+                          ),
+                          Expanded(
+                            child: Text(
+                              '${servicesModel.serviceProvider!.addresses!.addressDetails}${servicesModel.serviceProvider!.addresses!.city}',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 11.sp,
+                                fontFamily: FontPath.almaraiRegular,
+                                color: const Color(0xff666666),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 3.h,
                           ),
                           RatingBar.builder(
                             itemSize: 14.r,
@@ -291,6 +291,9 @@ class ServicesBottomSheet extends StatelessWidget {
                             ),
                             onRatingUpdate: (rating) {},
                           ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
                         ],
                       ),
                     )
@@ -302,7 +305,9 @@ class ServicesBottomSheet extends StatelessWidget {
               ),
               CustomUserButton(
                   buttonTitle: 'اطلب الخدمة',
-                  isTapped: () {},
+                  isTapped: () {
+                    Navigator.pushReplacementNamed(context, ScreenName.reserveOrderScreen);
+                  },
                   width: double.infinity,
                   paddingVertical: 16.h,
                   paddingHorizontal: 45.w),

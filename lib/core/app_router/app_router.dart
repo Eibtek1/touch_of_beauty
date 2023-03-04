@@ -23,7 +23,7 @@ import '../../features/user/presentation/screens/home_screen_screens/main_featue
 import '../../features/user/presentation/screens/home_screen_screens/complains_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/gallery_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/offers_screen.dart';
-import '../../features/user/presentation/screens/home_screen_screens/order_screens/chooss_address_screen.dart';
+import '../../features/user/presentation/screens/home_screen_screens/order_screens/add_address_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/order_details_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/payment_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/reserve_order_screen.dart';
@@ -106,8 +106,8 @@ class AppRouter {
           final args = settings.arguments;
           OtpArgs arguments = args as OtpArgs;
           return _animateRouteBuilder( OtpScreen(phoneNumber: arguments.phoneNumber, isConfirmPassword: arguments.isConfirmPassword,));
-        case ScreenName.chooseAddressScreen:
-          return _animateRouteBuilder(const ChooseAddressScreen());
+        case ScreenName.addAddressScreen:
+          return _animateRouteBuilder(const AddAddressScreen());
         case ScreenName.paymentScreen:
           return _animateRouteBuilder(const PaymentScreen());
         case ScreenName.reserveOrderScreen:

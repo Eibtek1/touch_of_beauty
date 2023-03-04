@@ -10,9 +10,11 @@ import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/serv
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_state.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_state.dart';
+import 'package:touch_of_beauty/features/user/presentation/widgets/home_screen_widgets/services_bottom_sheet.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
+import '../../../../../core/constants/constants.dart';
 import '../../../../../core/network/api_end_points.dart';
 import '../../../data/models/services_providers_model.dart';
 import 'center_services_item.dart';
@@ -344,24 +346,38 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
               ),
               BlocConsumer<UserServicesCubit, UserServicesState>(
                 listener: (context, state) {
-                  // TODO: implement listener
+                  var cubit = UserServicesCubit.get(context);
+                  if(state is GetServicesDetailsByItsIdSuccess&&cubit.servicesModel!=null){
+                    Navigator.pop(context);
+                    showBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return ServicesBottomSheet(
+                            servicesModel: cubit.servicesModel!);
+                      },
+                    );
+                  }
+                  if(state is GetServicesDetailsByItsIdLoadingState){
+                    showProgressIndicator(context);
+                  }
                 },
                 builder: (context, state) {
                   var cubit = UserServicesCubit.get(context);
-                  return state is! GetServicesByMainSectionIdLoadingState
+                  return !cubit.getServicesByMainSectionAndServicesProvidersIdLoading
                       ? ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, int index) {
-                            return CenterServicesCategoryItem(
-                              servicesModel: cubit
-                                      .servicesByMainSectionAndServicesProviderList[
-                                  index],
+                            return InkWell(
+                              onTap: (){
+                                cubit.getServicesDetailsByItsId(id: cubit.servicesByMainSectionAndServicesProviderList[index].id!);
+                              },
+                              child: CenterServicesCategoryItem(
+                                servicesModel: cubit.servicesByMainSectionAndServicesProviderList[index],
+                              ),
                             );
                           },
-                          itemCount: cubit
-                              .servicesByMainSectionAndServicesProviderList
-                              .length,
+                          itemCount: cubit.servicesByMainSectionAndServicesProviderList.length,
                         )
                       : const Center(
                           child: CircularProgressIndicator.adaptive(),

@@ -27,9 +27,11 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
   List<ServicesProviderModel> servicesProvidersList =[];
   List<ServicesProviderModel> featuredServicesProvidersList =[];
   bool getSliderPhotosLoading = false;
+  bool getFeaturedServicesProviderLoading = false;
    void getFeaturedServicesProviders() async{
      if(featuredServicesProviderPageNumber == 1){
        featuredServicesProvidersList = [];
+       getFeaturedServicesProviderLoading = true;
        emit(GetFeaturedServicesProvidersLoadingState());
      }
      try{
@@ -57,6 +59,7 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
            featuredServicesProviderPageNumber++;
          }
        }
+       getFeaturedServicesProviderLoading = false;
        emit(GetFeaturedServicesProvidersSuccess());
      }catch(error){
        emit(GetFeaturedServicesProvidersError(error: error.toString()));
@@ -168,8 +171,8 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
     }catch(error){
       emit(GetSliderPhotosError(error: error.toString()));
     }
-
   }
+
 
 
 }

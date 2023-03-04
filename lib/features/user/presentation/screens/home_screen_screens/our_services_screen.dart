@@ -10,6 +10,7 @@ import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/serv
 import 'package:touch_of_beauty/features/user/presentation/widgets/home_screen_widgets/services_bottom_sheet.dart';
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../core/constants/constants.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/home_screen_widgets/center_services_item.dart';
 
@@ -37,13 +38,13 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
         if(BlocProvider.of<UserServicesCubit>(context).searchList.isEmpty){
           BlocProvider.of<UserServicesCubit>(context)
               .getServicesByServiceProviderId(servicesProviderId: widget.id);
-          print(widget.id);
         }else{
           BlocProvider.of<UserServicesCubit>(context)
               .searchForServicesOfServicesProviderByItsId(servicesProviderId: widget.id,searchName: searchController.text);
         }
       }
     });
+
     super.initState();
   }
 
@@ -71,6 +72,19 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
             if(state is GetServicesByServiceProviderIdSuccess && cubit.searchList.isEmpty&& cubit.servicesList.isNotEmpty&&searchController.text.isNotEmpty){
               searchController.clear();
               Fluttertoast.showToast(msg: 'لا تتوفر عناصر البحث',gravity: ToastGravity.CENTER);
+            }
+            if(state is GetServicesDetailsByItsIdSuccess&&cubit.servicesModel!=null){
+              Navigator.pop(context);
+              showBottomSheet(
+                context: context,
+                builder: (context) {
+                  return ServicesBottomSheet(
+                      servicesModel: cubit.servicesModel!);
+                },
+              );
+            }
+            if(state is GetServicesDetailsByItsIdLoadingState){
+              showProgressIndicator(context);
             }
           },
           builder: (context, state) {
@@ -167,14 +181,7 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
                                   vertical: 10.h, horizontal: 20.w),
                               child: InkWell(
                                   onTap: () {
-                                    showBottomSheet(
-                                      context: context,
-                                      builder: (context) {
-                                        return ServicesBottomSheet(
-                                            servicesModel:
-                                            cubit.searchList.isNotEmpty?cubit.searchList[index]:cubit.servicesList[index]);
-                                      },
-                                    );
+                                    cubit.getServicesDetailsByItsId(id: cubit.searchList.isNotEmpty?cubit.searchList[index].id!:cubit.servicesList[index].id!);
                                   },
                                   child: CenterServicesCategoryItem(
                                     servicesModel: cubit.searchList.isNotEmpty?cubit.searchList[index]:cubit.servicesList[index],

@@ -223,8 +223,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                       var cubit = ServicesProvidersCubit.get(context);
                       return SizedBox(
                         height: cubit.featuredServicesProvidersList.isEmpty?40.h:195.h,
-                        child: state is! GetFeaturedServicesProvidersLoadingState
-                            // && state is! GetFeaturedServicesProvidersLoadingState
+                        child: !cubit.getFeaturedServicesProviderLoading
                             ? cubit.featuredServicesProvidersList.isNotEmpty
                                 ? ListView.builder(
                                     padding: EdgeInsets.symmetric(vertical: 3.h),
@@ -286,7 +285,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                       var cubit = ServicesProvidersCubit.get(context);
                       return SizedBox(
                         height: cubit.servicesProvidersList.isEmpty?40.h:75.h,
-                        child: state is! GetFeaturedServicesProvidersLoadingState
+                        child: !cubit.getFeaturedServicesProviderLoading
                             ? cubit.servicesProvidersList.isNotEmpty
                                 ? ListView.builder(
                                     padding: EdgeInsets.symmetric(vertical: 3.h),
@@ -294,8 +293,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                     scrollDirection: Axis.horizontal,
                                     itemCount: cubit
                                         .servicesProvidersList.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
+                                    itemBuilder: (BuildContext context, int index) {
                                       return Padding(
                                         padding: EdgeInsets.symmetric(horizontal: 2.w),
                                         child: Container(

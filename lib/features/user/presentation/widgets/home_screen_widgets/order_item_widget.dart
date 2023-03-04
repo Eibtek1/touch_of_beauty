@@ -60,21 +60,15 @@ class OrderItemWidget extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 5.h,
+                    height: 10.h,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'العناية بالبشرة',
-                        style: TextStyle(
-                          fontSize: 8.sp,
-                          fontFamily: FontPath.almaraiRegular,
-                          color: AppColorsLightTheme.primaryColor,
-                        ),
-                      ),
-                      Icon(Icons.remove_circle_outline,size: 20.r,color: AppColorsLightTheme.primaryColor,)
-                    ],
+                  Text(
+                    'العناية بالبشرة',
+                    style: TextStyle(
+                      fontSize: 8.sp,
+                      fontFamily: FontPath.almaraiRegular,
+                      color: AppColorsLightTheme.primaryColor,
+                    ),
                   ),
 
                 ],
