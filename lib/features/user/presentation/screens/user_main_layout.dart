@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/user/presentation/screens/user_profile_screen.dart';
 import 'package:touch_of_beauty/features/user/presentation/screens/user_reservations_screen.dart';
 import 'user_home_screen.dart';
@@ -17,12 +18,13 @@ class UserMainLayout extends StatefulWidget {
 
 class _UserMainLayoutState extends State<UserMainLayout> {
   int cIndex = 0;
-  List<Widget> screens= [
+  List<Widget> screens = [
     const UserHomeScreen(),
     const UserReservationsScreen(),
     const UserNotificationScreen(),
     const UserProfileScreen(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -31,6 +33,7 @@ class _UserMainLayoutState extends State<UserMainLayout> {
         bottomNavigationBar: SizedBox(
           height: 70.h,
           child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
             backgroundColor: Colors.white,
             selectedFontSize: 13.sp,
             unselectedFontSize: 12.sp,
@@ -46,6 +49,7 @@ class _UserMainLayoutState extends State<UserMainLayout> {
               color: Colors.grey,
             ),
             onTap: (index) {
+              print(token);
               setState(() {
                 cIndex = index;
               });
@@ -54,29 +58,47 @@ class _UserMainLayoutState extends State<UserMainLayout> {
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   SvgPath.homeIcon,
-                  color: cIndex == 0
-                      ? AppColorsLightTheme.primaryColor
-                      : Colors.grey,
+                  colorFilter: ColorFilter.mode(
+                    cIndex == 0
+                        ? AppColorsLightTheme.primaryColor
+                        : Colors.grey,
+                    BlendMode.srcIn,
+                  ),
                 ),
                 label: 'الرئيسية',
               ),
               BottomNavigationBarItem(
-                  icon: SvgPicture.asset(SvgPath.reservationIcon,
-                      color: cIndex == 1
+                  icon: SvgPicture.asset(
+                    SvgPath.reservationIcon,
+                    colorFilter: ColorFilter.mode(
+                      cIndex == 1
                           ? AppColorsLightTheme.primaryColor
-                          : Colors.grey),
+                          : Colors.grey,
+                      BlendMode.srcIn,
+                    ),
+                  ),
                   label: 'حجزاتي'),
               BottomNavigationBarItem(
-                  icon: SvgPicture.asset(SvgPath.notificationIcon,
-                      color: cIndex == 2
+                  icon: SvgPicture.asset(
+                    SvgPath.notificationIcon,
+                    colorFilter: ColorFilter.mode(
+                      cIndex == 2
                           ? AppColorsLightTheme.primaryColor
-                          : Colors.grey),
+                          : Colors.grey,
+                      BlendMode.srcIn,
+                    ),
+                  ),
                   label: 'اشعارات'),
               BottomNavigationBarItem(
-                  icon: SvgPicture.asset(SvgPath.profileIcon,
-                      color: cIndex == 3
+                  icon: SvgPicture.asset(
+                    SvgPath.profileIcon,
+                    colorFilter: ColorFilter.mode(
+                      cIndex == 3
                           ? AppColorsLightTheme.primaryColor
-                          : Colors.grey),
+                          : Colors.grey,
+                      BlendMode.srcIn,
+                    ),
+                  ),
                   label: 'الملف الشخصي'),
             ],
           ),

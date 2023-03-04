@@ -25,6 +25,10 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
   String servicesSearchMessage ='';
 
+  late CitiesModel citiesModel;
+
+  ServicesModel? servicesModel;
+
   List<ServicesModel> servicesList = [];
 
   List<ServicesModel> searchList = [];
@@ -48,6 +52,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
   bool inHome = true;
   bool inCenter = true;
+  bool getServicesByMainSectionAndServicesProvidersIdLoading = false;
   int servicesCI = 0;
   int cityCI = 0;
   int cityId = 1;
@@ -61,6 +66,12 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     emit(ChangeButtonState());
   }
 
+
+  void onCityChanged(CitiesModel value) {
+    citiesModel = value;
+    emit(GetChangedCity());
+  }
+
   void getCities() async {
     emit(GetCitiesLoading());
     final response = await DioHelper.getData(
@@ -70,7 +81,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     for (var element in response.data['data']) {
       citiesList.add(CitiesModel.fromJson(element));
     }
-
+    citiesModel = citiesList.first;
     emit(GetCitiesSuccess());
   }
 
@@ -219,6 +230,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     required int mainSectionId,
   }) async {
     try {
+      getServicesByMainSectionAndServicesProvidersIdLoading = true;
       emit(GetServicesByMainSectionIdLoadingState());
       final response = await ServicesProvidersRepository.getServices(
         pageNumber: 1,
@@ -239,9 +251,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
           }
         }
       }
-      print(response);
-      print(servicesByMainSectionAndServicesProviderList.length);
-
+      getServicesByMainSectionAndServicesProvidersIdLoading = false;
       emit(GetServicesByMainSectionIdSuccess());
     } catch (error) {
       emit(GetServicesByMainSectionIdError(error: error.toString()));
@@ -256,7 +266,19 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     emit(ChangedTabBarCurrentIndex());
   }
 
+  void getServicesDetailsByItsId({required int id}) async{
+    servicesModel = null;
+    emit(GetServicesDetailsByItsIdLoadingState());
+    try{
+      final response = await ServicesProvidersRepository.getServicesDetailsById(id: id);
+      mainResponse = MainResponse.fromJson(response.data);
+      servicesModel = ServicesModel.fromJson(mainResponse.data);
+      emit(GetServicesDetailsByItsIdSuccess());
+    }catch(error){
+      emit(GetServicesDetailsByItsIdError(error: error.toString()));
+    }
 
+  }
 
   void addOrder({
     required int serviceId,
@@ -287,12 +309,14 @@ class UserServicesCubit extends Cubit<UserServicesState> {
   })async{
     try{
       emit(AddAddressLoading());
-      final response = await ServicesProvidersRepository.addAddress(cityId: addressCityId, region: region, street: street, buildingNumber: buildingNumber, flatNumber: flatNumber, addressDetails: addressDetails);
+      final response = await ServicesProvidersRepository.addAddress(cityId: citiesModel.id!, region: region, street: street, buildingNumber: buildingNumber, flatNumber: flatNumber, addressDetails: addressDetails);
       mainResponse = MainResponse.fromJson(response.data);
       if(mainResponse.errorCode == 0){
         emit(AddAddressSuccess());
       }
+      print(response);
     }catch(error){
+      print(error.toString());
       emit(AddAddressError(error: error.toString()));
     }
   }
@@ -326,6 +350,5 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       emit(GetAddressError(error: error.toString()));
     }
   }
-
 
 }

@@ -148,42 +148,6 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                 SizedBox(
                   height: 18.h,
                 ),
-                // Padding(
-                //   padding: EdgeInsets.symmetric(horizontal: 20.w),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       ElevatedButton(
-                //         onPressed: () {
-                //           cubit.changeServicesInHomeOrInCenter(inHomeZero: 0);
-                //         },
-                //         style: ElevatedButton.styleFrom(
-                //           backgroundColor: cubit.inHome?AppColorsLightTheme.primaryColor:AppColorsLightTheme.authTextFieldFillColor,
-                //             shape: const StadiumBorder(),),
-                //         child: Text(
-                //           'الخدمات المنزلية',
-                //           style: TextStyle(
-                //               color: cubit.inHome?Colors.white:Colors.grey,
-                //               fontFamily: FontPath.almaraiRegular,
-                //               fontSize: 12.sp),
-                //         ),
-                //       ),
-                //       ElevatedButton(
-                //         onPressed: () {
-                //           cubit.changeServicesInHomeOrInCenter(inHomeZero: 1);
-                //         },
-                //         style: ElevatedButton.styleFrom(
-                //             backgroundColor: cubit.inHome?AppColorsLightTheme.authTextFieldFillColor:AppColorsLightTheme.primaryColor,
-                //             shape: const StadiumBorder()),
-                //         child: Text('الخدمات بالمركز',
-                //             style: TextStyle(
-                //                 color: cubit.inHome?Colors.grey:Colors.white,
-                //                 fontFamily: FontPath.almaraiRegular,
-                //                 fontSize: 12.sp)),
-                //       )
-                //     ],
-                //   ),
-                // ),
                 SizedBox(
                   height: 20.h,
                 ),

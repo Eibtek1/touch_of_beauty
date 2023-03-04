@@ -147,7 +147,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                   SvgPath.searchIcon,
                   width: 30.w,
                   height: 30.h,
-                  colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                  colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                 ),
               ),
             )

@@ -25,6 +25,7 @@ class EndPoints{
   static const getAllFeaturedServicesProviders = '/ServiceProvider/GetAllFeatured';
   static const getServicesByMainFeatureId = '/Services/ServicesByMainSection/';
   static const getServicesForUser = '/Services/ServicesForUser';
+  static const getServiceDetailsById = '/Services/ServiceDetails/';
   static const addProviderToFavorite = '/Favorites/AddProviderInFavorite/';
   static const deleteProviderFromFavorite = '/Favorites/DeleteProviderFromFavorite/';
   static const addServiceToFavorite = '/Favorites/AddServiceInFavorite/';

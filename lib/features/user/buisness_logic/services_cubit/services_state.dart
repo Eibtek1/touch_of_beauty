@@ -6,6 +6,7 @@ class UserServicesInitial extends UserServicesState {}
 
 class ChangeServicesInHomeOrInCenter extends UserServicesState {}
 class ChangeRangeValuesState extends UserServicesState {}
+class GetChangedCity extends UserServicesState {}
 
 class GetCitiesLoading extends UserServicesState {}
 class GetCitiesSuccess extends UserServicesState {}
@@ -84,4 +85,12 @@ class AddOrderSuccess extends UserServicesState {}
 class AddOrderError extends UserServicesState {
   final String error;
   AddOrderError({required this.error});
+}
+
+
+class GetServicesDetailsByItsIdLoadingState extends UserServicesState {}
+class GetServicesDetailsByItsIdSuccess extends UserServicesState {}
+class GetServicesDetailsByItsIdError extends UserServicesState {
+  final String error;
+  GetServicesDetailsByItsIdError({required this.error});
 }
