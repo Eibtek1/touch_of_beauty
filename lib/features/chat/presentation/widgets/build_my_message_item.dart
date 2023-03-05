@@ -13,9 +13,10 @@ class MyMessageItem extends StatelessWidget {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
+        constraints: BoxConstraints(
+          maxWidth: 200.w,
+        ),
         padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 10.h),
-        width: 209.w,
-        height: 70.h,
         decoration: BoxDecoration(
           color: AppColorsLightTheme.primaryColor,
           borderRadius: BorderRadius.only(topLeft: Radius.circular(10.r),bottomLeft: Radius.circular(10.r),bottomRight: Radius.circular(10.r))
@@ -23,14 +24,12 @@ class MyMessageItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Text(
-                  message,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12.sp,
-                  fontFamily: FontPath.almaraiRegular
-                ),
+            Text(
+                message,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12.sp,
+                fontFamily: FontPath.almaraiRegular
               ),
             ),
             SizedBox(

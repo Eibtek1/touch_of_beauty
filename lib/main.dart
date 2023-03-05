@@ -1,9 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:touch_of_beauty/core/network/dio_helper.dart';
+import 'package:touch_of_beauty/features/chat/buisness_logic/chat_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/reservation_cubit/reservation_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
 import 'bloc_observer.dart';
@@ -15,6 +17,7 @@ import 'features/user/buisness_logic/main_features_cubit/main_features_cubit.dar
 import 'features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
 import 'features/vendor/buisness_logic/employees_cubit/employees_cubit.dart';
 import 'features/vendor/buisness_logic/services_cubit/vendor_services_cubit.dart';
+import 'firebase_options.dart';
 
 
 void main() async{
@@ -22,6 +25,9 @@ void main() async{
   await DioHelper.init();
   await CacheHelper.init();
   Bloc.observer = MyBlocObserver();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -42,7 +48,8 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => VendorServicesCubit()),
             BlocProvider(create: (context) => ServicesProvidersCubit()..getSliderPhotos()),
             BlocProvider(create: (context) => MainFeaturesCubit()),
-            BlocProvider(create: (context) => AuthCubit()),
+            BlocProvider(create: (context) => AuthCubit(),),
+            BlocProvider(create: (context) => ChatCubit(),),
             BlocProvider(
               create: (context) => EmployeesCubit()..init(),),
           ],
