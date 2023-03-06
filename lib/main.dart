@@ -15,6 +15,7 @@ import 'core/cache_manager/shared_preferences.dart';
 import 'features/authentication/buisness_logic/auth_cubit.dart';
 import 'features/user/buisness_logic/main_features_cubit/main_features_cubit.dart';
 import 'features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
+import 'features/user/presentation/screens/home_screen_screens/order_screens/choose_address_screen.dart';
 import 'features/vendor/buisness_logic/employees_cubit/employees_cubit.dart';
 import 'features/vendor/buisness_logic/services_cubit/vendor_services_cubit.dart';
 import 'firebase_options.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => ReservationCubit()),
-            BlocProvider(create: (context) => UserServicesCubit()),
+            BlocProvider(create: (context) => UserServicesCubit()..getAddress()),
             BlocProvider(create: (context) => VendorServicesCubit()),
             BlocProvider(create: (context) => ServicesProvidersCubit()..getSliderPhotos()),
             BlocProvider(create: (context) => MainFeaturesCubit()),
@@ -67,9 +68,9 @@ class MyApp extends StatelessWidget {
               primarySwatch:
                   createMaterialColor(AppColorsLightTheme.primaryColor),
             ),
-            onGenerateRoute: AppRouter.generateRoute,
-            initialRoute: ScreenName.splashscreen,
-            // home:  SearchScreen(),
+            // onGenerateRoute: AppRouter.generateRoute,
+            // initialRoute: ScreenName.splashscreen,
+            home:  ChooseAddressScreen(),
           ),
         );
       },

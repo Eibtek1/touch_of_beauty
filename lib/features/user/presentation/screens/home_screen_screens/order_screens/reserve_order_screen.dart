@@ -46,7 +46,42 @@ class ReserveOrderScreen extends StatelessWidget {
           SizedBox(
             height: 10.h,
           ),
+
           const Divider(),
+          SizedBox(
+            height: 15.h,
+          ),
+          InkWell(
+            onTap: (){
+              // Navigator.pushNamed(context, routeName);
+            },
+            child: Row(
+              children: [
+                Icon(
+                  Icons.location_on,
+                  size: 20.r,
+                  color: const Color(0xffB83561),
+                ),
+                SizedBox(
+                  width: 5.w,
+                ),
+                Text(
+                  'الرجاء اختيار عنوانك',
+                  style: TextStyle(
+                      color: const Color(0xff263238),
+                      fontFamily: FontPath.almaraiBold,
+                      fontSize: 12.sp),
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 15.h,
+          ),
+          const Divider(),
+          SizedBox(
+            height: 20.h,
+          ),
           SizedBox(
             height: 10.h,
           ),

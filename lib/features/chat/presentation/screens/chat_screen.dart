@@ -90,7 +90,7 @@ class _ChatScreenState extends State<ChatScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.w),
                 child: SizedBox(
-                  height: 150.h,
+                  height: 100.h,
                   width: double.infinity,
                   child: Row(
                     children: [
@@ -135,6 +135,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                       Expanded(
                           child: ChatTextField(
+                            pickImageFunction: (){},
                         controller: chatController, isTapped: isTapped,
                       ))
                     ],

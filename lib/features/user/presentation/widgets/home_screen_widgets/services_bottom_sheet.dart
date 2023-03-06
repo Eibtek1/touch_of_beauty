@@ -109,7 +109,7 @@ class ServicesBottomSheet extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '${(100-(num.parse('${servicesModel.finalPrice}')/num.parse('${servicesModel.price}'))*100)}% -',
+                          '${(100-(num.parse('${servicesModel.finalPrice}')/num.parse('${servicesModel.price}'))*100).round()}% -',
                           style: TextStyle(
                             fontSize: 11.sp,
                             fontFamily: FontPath.almaraiRegular,

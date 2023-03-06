@@ -6,7 +6,7 @@ import '../../../../../core/assets_path/font_path.dart';
 class SearchCheckButtonItem extends StatelessWidget {
 
   final int index;
-  final int currentIndex;
+  final int? currentIndex;
   final String title;
   final void Function()? onPressed;
   final void Function(bool?)? onChanged;
@@ -27,12 +27,12 @@ class SearchCheckButtonItem extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.r),
             ),
-            side: BorderSide(width: index == currentIndex?1.w:0,color: index == currentIndex?AppColorsLightTheme.primaryColor:AppColorsLightTheme.smoothPageIndicatorGreyColor,style: BorderStyle.solid,)
+            side: BorderSide(width: index == currentIndex&&currentIndex!=null?1.w:0,color: index == currentIndex&&currentIndex!=null?AppColorsLightTheme.primaryColor:AppColorsLightTheme.smoothPageIndicatorGreyColor,style: BorderStyle.solid,)
           ),
           child: Row(
             children: [
               Checkbox(
-                value: index == currentIndex?true:false,
+                value: index == currentIndex&&currentIndex!=null?true:false,
                 shape: const CircleBorder(), onChanged: onChanged,
               ),
               SizedBox(width: 24.w,),

@@ -6,9 +6,8 @@ import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 class ChatTextField extends StatefulWidget {
   final TextEditingController controller;
    bool isTapped ;
-   final void Function()? pickFileFunction;
    final void Function()? pickImageFunction;
-   ChatTextField({Key? key, required this.controller,this.isTapped= false, this.pickFileFunction, this.pickImageFunction}) : super(key: key);
+   ChatTextField({Key? key, required this.controller,this.isTapped= false,  this.pickImageFunction}) : super(key: key);
 
   @override
   State<ChatTextField> createState() => _ChatTextFieldState();
@@ -51,33 +50,16 @@ class _ChatTextFieldState extends State<ChatTextField> {
               },
             ),
           ),
-          if(!widget.isTapped)Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              CircleAvatar(
+          if(!widget.isTapped)Align(
+            alignment: Alignment.centerLeft,
+            child: InkWell(
+              onTap: widget.pickImageFunction,
+              child: CircleAvatar(
                 radius: 16.r,
                 backgroundColor: AppColorsLightTheme.smoothPageIndicatorGreyColor,
-                child: Icon(Icons.location_on_outlined,size: 20.r,color: Colors.grey,),
+                child: Icon(Icons.add_a_photo_outlined,size: 20.r,color: Colors.grey,),
               ),
-              SizedBox(width: 5.w,),
-              InkWell(
-                onTap: widget.pickImageFunction,
-                child: CircleAvatar(
-                  radius: 16.r,
-                  backgroundColor: AppColorsLightTheme.smoothPageIndicatorGreyColor,
-                  child: Icon(Icons.add_a_photo_outlined,size: 20.r,color: Colors.grey,),
-                ),
-              ),
-              SizedBox(width: 5.w,),
-              InkWell(
-                onTap: widget.pickFileFunction,
-                child: CircleAvatar(
-                  radius: 16.r,
-                  backgroundColor: AppColorsLightTheme.smoothPageIndicatorGreyColor,
-                  child: Icon(Icons.file_copy_outlined,size: 20.r,color: Colors.grey,),
-                ),
-              )
-            ],
+            ),
           )
         ],
       ),
