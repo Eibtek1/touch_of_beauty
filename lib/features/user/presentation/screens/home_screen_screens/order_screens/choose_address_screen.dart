@@ -86,6 +86,9 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                             child: CircularProgressIndicator.adaptive(),
                           ),
                       ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
                   CustomUserButton(
                       buttonTitle: 'اختيار',
                       isTapped: () {
@@ -94,6 +97,9 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                       paddingVertical: 12.h,
                       paddingHorizontal: 45.w,
                       width: double.infinity),
+                  SizedBox(
+                    height: 50.h,
+                  ),
                 ],
               ),
             );

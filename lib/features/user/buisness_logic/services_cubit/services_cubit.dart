@@ -22,6 +22,8 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
   AddressModel? addressModel;
 
+  DateTime dateTime = DateTime.now();
+
   int servicesPageNumber = 1;
 
   int searchServicesPageNumber = 1;
@@ -55,6 +57,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
   bool inHome = true;
   bool inCenter = true;
+  bool reserveOrderStatusInHome = true;
   bool getServicesByMainSectionAndServicesProvidersIdLoading = false;
   int servicesCI = 0;
   int cityCI = 0;

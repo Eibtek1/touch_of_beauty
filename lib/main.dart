@@ -15,7 +15,6 @@ import 'core/cache_manager/shared_preferences.dart';
 import 'features/authentication/buisness_logic/auth_cubit.dart';
 import 'features/user/buisness_logic/main_features_cubit/main_features_cubit.dart';
 import 'features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
-import 'features/user/presentation/screens/home_screen_screens/order_screens/choose_address_screen.dart';
 import 'features/vendor/buisness_logic/employees_cubit/employees_cubit.dart';
 import 'features/vendor/buisness_logic/services_cubit/vendor_services_cubit.dart';
 import 'firebase_options.dart';
@@ -38,42 +37,48 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(375, 812),
-      splitScreenMode: true,
-      builder: (BuildContext context, Widget? child) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (context) => ReservationCubit()),
-            BlocProvider(create: (context) => UserServicesCubit()..getAddress()),
-            BlocProvider(create: (context) => VendorServicesCubit()),
-            BlocProvider(create: (context) => ServicesProvidersCubit()..getSliderPhotos()),
-            BlocProvider(create: (context) => MainFeaturesCubit()),
-            BlocProvider(create: (context) => AuthCubit(),),
-            BlocProvider(create: (context) => ChatCubit(),),
-            BlocProvider(
-              create: (context) => EmployeesCubit()..init(),),
-          ],
-          child: MaterialApp(
-            title: 'لمسة جمال',
-            localizationsDelegates: const [
-              GlobalCupertinoLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-            ],
-            supportedLocales: const [
-              Locale("ar", "AE")
-            ],
-            theme: ThemeData(
-              primarySwatch:
-                  createMaterialColor(AppColorsLightTheme.primaryColor),
-            ),
-            // onGenerateRoute: AppRouter.generateRoute,
-            // initialRoute: ScreenName.splashscreen,
-            home:  ChooseAddressScreen(),
-          ),
+    return LayoutBuilder(
+      builder: (context , constraints ) {
+        return ScreenUtilInit(
+          designSize: const Size(375, 812),
+          minTextAdapt: constraints.maxWidth>600?true:false,
+          splitScreenMode: true,
+          builder: (BuildContext context, Widget? child) {
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (context) => ReservationCubit()),
+                BlocProvider(create: (context) => UserServicesCubit()..getAddress()),
+                BlocProvider(create: (context) => VendorServicesCubit()),
+                BlocProvider(create: (context) => ServicesProvidersCubit()..getSliderPhotos()),
+                BlocProvider(create: (context) => MainFeaturesCubit()),
+                BlocProvider(create: (context) => AuthCubit(),),
+                BlocProvider(create: (context) => ChatCubit(),),
+                BlocProvider(create: (context) => EmployeesCubit()..init(),),
+              ],
+              child: MaterialApp(
+                title: 'لمسة جمال',
+                localizationsDelegates: const [
+                  GlobalCupertinoLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
+                supportedLocales: const [
+                  Locale("ar", "AE"), // OR Locale('ar', 'AE') OR Other RTL locales
+                ],
+                theme: ThemeData(
+                  primarySwatch:
+                      createMaterialColor(AppColorsLightTheme.primaryColor),
+
+                ),
+                onGenerateRoute: AppRouter.generateRoute,
+                initialRoute: ScreenName.splashscreen,
+                // home:  RegisterScreen(),
+              ),
+            );
+          },
         );
       },
+
     );
   }
 }

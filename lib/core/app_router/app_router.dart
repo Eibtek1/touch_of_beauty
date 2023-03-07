@@ -18,12 +18,14 @@ import '../../features/freelancer/presentation/screens/freelancer_center_screens
 import '../../features/freelancer/presentation/screens/freelancer_center_screens/freelancer_services_screen.dart';
 import '../../features/freelancer/presentation/screens/freelancer_center_screens/freelancer_working_time_screen.dart';
 import '../../features/freelancer/presentation/screens/freelancer_notification_screen.dart';
+import '../../features/user/data/models/services_model.dart';
 import '../../features/user/presentation/screens/home_screen_screens/all_centers_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/main_featuers_services.dart';
 import '../../features/user/presentation/screens/home_screen_screens/complains_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/gallery_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/offers_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/add_address_screen.dart';
+import '../../features/user/presentation/screens/home_screen_screens/order_screens/choose_address_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/order_details_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/payment_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/reserve_order_screen.dart';
@@ -110,8 +112,11 @@ class AppRouter {
           return _animateRouteBuilder(const AddAddressScreen());
         case ScreenName.paymentScreen:
           return _animateRouteBuilder(const PaymentScreen());
+        case ScreenName.chooseAddressScreen:
+          return _animateRouteBuilder(const ChooseAddressScreen());
         case ScreenName.reserveOrderScreen:
-          return _animateRouteBuilder(ReserveOrderScreen());
+          final ServicesModel args = settings.arguments as ServicesModel;
+          return _animateRouteBuilder(ReserveOrderScreen(servicesModel: args,));
         case ScreenName.allCentersScreen:
           return _animateRouteBuilder(const AllCentersScreen());
         case ScreenName.ourServicesScreen:
