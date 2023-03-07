@@ -109,7 +109,7 @@ class ServicesBottomSheet extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '${(100-(num.parse('${servicesModel.finalPrice}')/num.parse('${servicesModel.price}'))*100)}% -',
+                          '${(100-(num.parse('${servicesModel.finalPrice}')/num.parse('${servicesModel.price}'))*100).round()}% -',
                           style: TextStyle(
                             fontSize: 11.sp,
                             fontFamily: FontPath.almaraiRegular,
@@ -306,7 +306,7 @@ class ServicesBottomSheet extends StatelessWidget {
               CustomUserButton(
                   buttonTitle: 'اطلب الخدمة',
                   isTapped: () {
-                    Navigator.pushReplacementNamed(context, ScreenName.reserveOrderScreen);
+                    Navigator.pushReplacementNamed(context, ScreenName.reserveOrderScreen,arguments: servicesModel);
                   },
                   width: double.infinity,
                   paddingVertical: 16.h,

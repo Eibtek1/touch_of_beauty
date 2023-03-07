@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
+import 'package:touch_of_beauty/features/chat/buisness_logic/chat_cubit.dart';
 
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/assets_path/font_path.dart';
@@ -75,6 +76,7 @@ class OrderedOrdersWidgetBuilder extends StatelessWidget {
             ),
             const Spacer(),
             IconButton(onPressed: (){
+              ChatCubit.get(context).getMessages(receiverId: "2", senderId: "1");
               Navigator.pushNamed(context, ScreenName.chatScreen,arguments: 'مقدم الخدمة');
             }, icon: SvgPicture.asset(SvgPath.chatIcon,width: 50.w,height: 50.h,))
           ],

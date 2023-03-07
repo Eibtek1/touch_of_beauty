@@ -1,12 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/images_path.dart';
+import '../../../../../core/network/api_end_points.dart';
+import '../../../data/models/services_model.dart';
 
 class OrderItemWidget extends StatelessWidget {
-  const OrderItemWidget({Key? key}) : super(key: key);
+  final ServicesModel servicesModel;
+  const OrderItemWidget({Key? key, required this.servicesModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +35,29 @@ class OrderItemWidget extends StatelessWidget {
               ),
               height: 70.h,
               width: 70.w,
-              child: Image.asset(
-                ImagePath.carouselImage1,
+              child: CachedNetworkImage(
                 fit: BoxFit.cover,
+                imageUrl:
+                "${EndPoints.imageBaseUrl}${servicesModel.imgUrl}",
+                placeholder: (context, url) => Shimmer.fromColors(
+                  baseColor: Colors.grey[400]!,
+                  highlightColor: Colors.grey[300]!,
+                  child: Container(
+                    height: double.infinity,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+                errorWidget: (context, url, error) =>
+                const Icon(Icons.error),
               ),
+              // Image.asset(
+              //   ImagePath.carouselImage1,
+              //   fit: BoxFit.cover,
+              // ),
             ),
             SizedBox(width: 20.w,),
             Expanded(
@@ -41,18 +65,22 @@ class OrderItemWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 5.h,),
-                  Text(
-                    'خدمة تصفيف الشعر',
-                    style: TextStyle(
-                        fontSize: 12.sp,
-                        fontFamily: FontPath.almaraiBold,
-                        color: const Color(0xff1E2432)),
+                  Expanded(
+                    child: Text(
+                      '${servicesModel.description}',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 12.sp,
+                          fontFamily: FontPath.almaraiBold,
+                          color: const Color(0xff1E2432)),
+                    ),
                   ),
                   SizedBox(
                     height: 5.h,
                   ),
                   Text(
-                    '200  رس',
+                    '${servicesModel.finalPrice}  رس',
                     style: TextStyle(
                       fontSize: 12.sp,
                       fontFamily: FontPath.almaraiRegular,
@@ -63,7 +91,7 @@ class OrderItemWidget extends StatelessWidget {
                     height: 10.h,
                   ),
                   Text(
-                    'العناية بالبشرة',
+                    '${servicesModel.title}',
                     style: TextStyle(
                       fontSize: 8.sp,
                       fontFamily: FontPath.almaraiRegular,

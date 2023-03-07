@@ -7,6 +7,7 @@ import 'package:touch_of_beauty/features/user/data/repository/services_providers
 import '../../../../core/constants/constants.dart';
 import '../../../../core/network/dio_helper.dart';
 import '../../../authentication/data/models/cities_model.dart';
+import '../../data/models/address_model.dart';
 
 class UserServicesCubit extends Cubit<UserServicesState> {
   UserServicesCubit() : super(UserServicesInitial());
@@ -18,6 +19,10 @@ class UserServicesCubit extends Cubit<UserServicesState> {
   PaginateModel? paginateModel;
 
   PaginateModel? searchPaginateModel;
+
+  AddressModel? addressModel;
+
+  DateTime dateTime = DateTime.now();
 
   int servicesPageNumber = 1;
 
@@ -52,6 +57,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
   bool inHome = true;
   bool inCenter = true;
+  bool reserveOrderStatusInHome = true;
   bool getServicesByMainSectionAndServicesProvidersIdLoading = false;
   int servicesCI = 0;
   int cityCI = 0;
@@ -65,6 +71,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     onPressed();
     emit(ChangeButtonState());
   }
+
 
 
   void onCityChanged(CitiesModel value) {
@@ -314,9 +321,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       if(mainResponse.errorCode == 0){
         emit(AddAddressSuccess());
       }
-      print(response);
     }catch(error){
-      print(error.toString());
       emit(AddAddressError(error: error.toString()));
     }
   }
@@ -336,16 +341,19 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     }
   }
 
-  void getAddress({
-  required int id,
-  })async{
+  List<AddressModel> addressList = [];
+  void getAddress()async{
     try{
       emit(GetAddressLoading());
       final response = await ServicesProvidersRepository.getAddress();
       mainResponse = MainResponse.fromJson(response.data);
       if(mainResponse.errorCode == 0){
-        emit(GetAddressSuccess());
+        addressList = [];
+        for(var element in mainResponse.data){
+          addressList.add(AddressModel.fromJson(element,mainResponse.data.indexOf(element)));
+        }
       }
+      emit(GetAddressSuccess());
     }catch(error){
       emit(GetAddressError(error: error.toString()));
     }

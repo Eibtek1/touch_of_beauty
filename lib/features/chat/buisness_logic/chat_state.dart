@@ -7,3 +7,6 @@ class SendMessageError extends ChatState{
   final String error;
   SendMessageError({required this.error});
 }
+class GetMessageSuccess extends ChatState{}
+
+class FilePickedSuccess extends ChatState{}

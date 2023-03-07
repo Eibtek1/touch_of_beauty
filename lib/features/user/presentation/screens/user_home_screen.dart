@@ -6,6 +6,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_state.dart';
 import 'package:touch_of_beauty/features/user/presentation/widgets/home_screen_widgets/center_details_bottom_sheet.dart';
@@ -43,6 +44,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
     if (ServicesProvidersCubit.get(context).servicesProvidersList.isEmpty) {
       ServicesProvidersCubit.get(context).getAllServicesProviders();
     }
+    UserServicesCubit.get(context).getAddress();
     super.initState();
   }
 

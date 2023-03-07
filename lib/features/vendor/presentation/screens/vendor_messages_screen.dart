@@ -1,25 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/images_path.dart';
+import '../../../chat/buisness_logic/chat_cubit.dart';
 
 class VendorMessagesScreen extends StatelessWidget {
-  VendorMessagesScreen({Key? key}) : super(key: key);
-  final List<Map<String, dynamic>> itemsList = [
-    {'image': ImagePath.gallery1, 'title': "سارة"},
-    {'image': ImagePath.gallery2, 'title': "فاتن"},
-    {'image': ImagePath.gallery3, 'title': "هند"},
-    {'image': ImagePath.gallery4, 'title': "هدي"},
-    {'image': ImagePath.gallery5, 'title': "حنان"},
-    {'image': ImagePath.gallery6, 'title': "هاله"},
-    {'image': ImagePath.gallery7, 'title': "اميره"},
-    {'image': ImagePath.gallery8, 'title': "سعاد"},
-    {'image': ImagePath.gallery10, 'title': "هدي"},
-    {'image': ImagePath.gallery11, 'title': "فاتن"},
-    {'image': ImagePath.gallery12, 'title': "حنان"},
-    {'image': ImagePath.gallery13, 'title': "حنان"},
-  ];
+  const VendorMessagesScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,23 +27,48 @@ class VendorMessagesScreen extends StatelessWidget {
               color: const Color(0xff1E2432)),
         ),
       ),
-      body: ListView.builder(
-        itemBuilder: (BuildContext context, int index) {
-          return InkWell(
-            onTap: (){
-              Navigator.pushNamed(context, ScreenName.chatScreen,arguments: 'مستخدم');
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection("users")
+            .doc("2")
+            .collection("chats")
+            .orderBy("dateTime")
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          if (snapshot.hasError) {
+            return const Text('Something went wrong');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          List<Map<String, dynamic>> chatItemsList =
+          snapshot.data!.docs.reversed.map((e) => e.data()).toList();
+          return ListView.builder(
+            itemCount: chatItemsList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return InkWell(
+                onTap: () {
+                  ChatCubit.get(context)
+                      .getMessages(
+                      receiverId: "2", senderId: "1")
+                      .then(
+                        (value) {
+                      Navigator.pushNamed(
+                          context, ScreenName.chatScreen,
+                          arguments: 'title');
+                    },
+                  );
+                },
+                child: buildChatItem(image: chatItemsList[index]['profileImage'], name: chatItemsList[index]['name']),
+              );
             },
-            child: buildChatItem(
-                image: itemsList[index]['image'],
-                name: itemsList[index]['title']),
           );
         },
-        itemCount: itemsList.length,
       ),
     );
   }
 
-  Widget buildChatItem({required String image, required String name}) {
+  Widget buildChatItem({required String? image, required String name}) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
       child: Container(
@@ -79,10 +93,10 @@ class VendorMessagesScreen extends StatelessWidget {
               clipBehavior: Clip.antiAlias,
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(10.r)),
-              child: Image.asset(
+              child:image!=null? Image.network(
                 image,
                 fit: BoxFit.cover,
-              ),
+              ):Image.asset(ImagePath.gallery13,fit: BoxFit.cover,),
             ),
             SizedBox(
               width: 10.w,
