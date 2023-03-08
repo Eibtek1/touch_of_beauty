@@ -41,11 +41,11 @@ class _CityDropDownButtonState extends State<CityDropDownButton> {
                   hint: const Text('المدينة'),
                   elevation: 0,
                   underline: const SizedBox.shrink(),
-                  value: cubit.cityValue,
-                  items: cubit.citiesNamesList
+                  value: cubit.citiesModel,
+                  items: cubit.citiesList
                       .map((e) => DropdownMenuItem(
                             value: e,
-                            child: Text(e),
+                            child: Text(e.name!),
                           ))
                       .toList(),
                   onChanged: (value) {

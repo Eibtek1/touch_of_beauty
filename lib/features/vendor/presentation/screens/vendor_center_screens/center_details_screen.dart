@@ -82,7 +82,8 @@ class CenterDetailsScreen extends StatelessWidget {
                             var cubit = AuthCubit.get(context);
                             return state is! GetUserDataLoading
                                 ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'صور للصالون أو الخدمات المقدمة',
@@ -105,8 +106,8 @@ class CenterDetailsScreen extends StatelessWidget {
                                           boxShadow: [
                                             BoxShadow(
                                               offset: const Offset(0, 0),
-                                              color:
-                                                  Colors.black.withOpacity(0.14),
+                                              color: Colors.black
+                                                  .withOpacity(0.14),
                                               blurRadius: 10.r,
                                             ),
                                           ],
@@ -132,10 +133,6 @@ class CenterDetailsScreen extends StatelessWidget {
                                           errorWidget: (context, url, error) =>
                                               const Icon(Icons.error),
                                         ),
-                                        // Image.asset(
-                                        //   ImagePath.onboarding3,
-                                        //   fit: BoxFit.cover,
-                                        // ),
                                       ),
                                       SizedBox(
                                         height: 10.h,
@@ -148,8 +145,8 @@ class CenterDetailsScreen extends StatelessWidget {
                                               vertical: 4.5.h),
                                           itemCount: cubit.picturesList.length,
                                           scrollDirection: Axis.horizontal,
-                                          itemBuilder:
-                                              (BuildContext context, int index) {
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
                                             return Row(
                                               children: [
                                                 Padding(
@@ -162,13 +159,15 @@ class CenterDetailsScreen extends StatelessWidget {
                                                         width: 70.w,
                                                         clipBehavior: Clip
                                                             .antiAliasWithSaveLayer,
-                                                        decoration: BoxDecoration(
+                                                        decoration:
+                                                            BoxDecoration(
                                                           border: Border.all(
                                                               color: AppColorsLightTheme
                                                                   .primaryColor),
                                                           borderRadius:
                                                               BorderRadius
-                                                                  .circular(2.r),
+                                                                  .circular(
+                                                                      2.r),
                                                           boxShadow: [
                                                             BoxShadow(
                                                                 offset:
@@ -181,26 +180,29 @@ class CenterDetailsScreen extends StatelessWidget {
                                                                 blurRadius: 8.r)
                                                           ],
                                                         ),
-                                                        child: CachedNetworkImage(
+                                                        child:
+                                                            CachedNetworkImage(
                                                           fit: BoxFit.cover,
                                                           imageUrl:
                                                               '${EndPoints.imageBaseUrl}${cubit.picturesList[index].imgUrl}',
                                                           placeholder: (context,
                                                                   url) =>
-                                                              Shimmer.fromColors(
-                                                            baseColor:
-                                                                Colors.grey[400]!,
+                                                              Shimmer
+                                                                  .fromColors(
+                                                            baseColor: Colors
+                                                                .grey[400]!,
                                                             highlightColor:
-                                                                Colors.grey[300]!,
+                                                                Colors
+                                                                    .grey[300]!,
                                                             child: Container(
-                                                              height:
-                                                                  double.infinity,
-                                                              width:
-                                                                  double.infinity,
+                                                              height: double
+                                                                  .infinity,
+                                                              width: double
+                                                                  .infinity,
                                                               decoration:
                                                                   BoxDecoration(
-                                                                color:
-                                                                    Colors.black,
+                                                                color: Colors
+                                                                    .black,
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
@@ -213,10 +215,6 @@ class CenterDetailsScreen extends StatelessWidget {
                                                               const Icon(
                                                                   Icons.error),
                                                         ),
-                                                        // Image.asset(
-                                                        //   ImagePath.gallery13,
-                                                        //   fit: BoxFit.cover,
-                                                        // ),
                                                       ),
                                                       Positioned(
                                                         top: 0,
@@ -224,14 +222,15 @@ class CenterDetailsScreen extends StatelessWidget {
                                                         child: IconButton(
                                                           onPressed: () {
                                                             showDialog(
-                                                                context: context,
-                                                                builder: (context) =>
-                                                                    DeleteImageAlertDialog(
-                                                                      id: cubit
-                                                                          .picturesList[
-                                                                              index]
-                                                                          .id!,
-                                                                    ));
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) =>
+                                                                        DeleteImageAlertDialog(
+                                                                          id: cubit
+                                                                              .picturesList[index]
+                                                                              .id!,
+                                                                        ));
                                                           },
                                                           icon: Icon(
                                                             Icons.delete,
@@ -244,10 +243,12 @@ class CenterDetailsScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                                 if (index ==
-                                                    cubit.picturesList.length - 1)
+                                                    cubit.picturesList.length -
+                                                        1)
                                                   Padding(
-                                                    padding: EdgeInsets.symmetric(
-                                                        horizontal: 5.w),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 5.w),
                                                     child: InkWell(
                                                       onTap: () {
                                                         cubit.getImagePick();
@@ -255,33 +256,39 @@ class CenterDetailsScreen extends StatelessWidget {
                                                       child: Container(
                                                         height: 46.h,
                                                         width: 46.w,
-                                                        padding:
-                                                            EdgeInsets.all(10.r),
+                                                        padding: EdgeInsets.all(
+                                                            10.r),
                                                         clipBehavior: Clip
                                                             .antiAliasWithSaveLayer,
-                                                        decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                                color: AppColorsLightTheme
-                                                                    .primaryColor),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        2.r),
-                                                            boxShadow: [
-                                                              BoxShadow(
-                                                                  offset:
-                                                                      const Offset(
-                                                                          0, 0),
-                                                                  color: Colors
-                                                                      .black
-                                                                      .withOpacity(
-                                                                          0.28),
-                                                                  blurRadius: 8.r)
-                                                            ],
-                                                            color: Colors.white),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                border: Border.all(
+                                                                    color: AppColorsLightTheme
+                                                                        .primaryColor),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(2
+                                                                            .r),
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                      offset:
+                                                                          const Offset(
+                                                                              0,
+                                                                              0),
+                                                                      color: Colors
+                                                                          .black
+                                                                          .withOpacity(
+                                                                              0.28),
+                                                                      blurRadius:
+                                                                          8.r)
+                                                                ],
+                                                                color: Colors
+                                                                    .white),
                                                         child: Center(
-                                                          child: SvgPicture.asset(
-                                                            SvgPath.cameraPicture,
+                                                          child:
+                                                              SvgPicture.asset(
+                                                            SvgPath
+                                                                .cameraPicture,
                                                             width: 30.w,
                                                             height: 30.h,
                                                           ),
@@ -309,7 +316,8 @@ class CenterDetailsScreen extends StatelessWidget {
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
                                                 fontSize: 12.sp,
-                                                fontFamily: FontPath.almaraiBold,
+                                                fontFamily:
+                                                    FontPath.almaraiBold,
                                                 color: const Color(0xff8B8989),
                                               ),
                                             ),
@@ -324,7 +332,8 @@ class CenterDetailsScreen extends StatelessWidget {
                                                   fontSize: 14.sp,
                                                   fontFamily:
                                                       FontPath.almaraiBold,
-                                                  color: const Color(0xff8B8989),
+                                                  color:
+                                                      const Color(0xff8B8989),
                                                 ),
                                               ),
                                             ),
@@ -346,7 +355,8 @@ class CenterDetailsScreen extends StatelessWidget {
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
                                                 fontSize: 14.sp,
-                                                fontFamily: FontPath.almaraiBold,
+                                                fontFamily:
+                                                    FontPath.almaraiBold,
                                                 color: const Color(0xff8B8989),
                                               ),
                                             ),
@@ -355,17 +365,20 @@ class CenterDetailsScreen extends StatelessWidget {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                cubit.getUserModel!.description ??
+                                                cubit.getUserModel!
+                                                        .description ??
                                                     'قم بإضافة وصف للمركز',
                                                 textAlign: TextAlign.start,
                                                 maxLines: 5,
                                                 style: TextStyle(
                                                   height: 1.3.h,
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   fontSize: 12.sp,
                                                   fontFamily:
                                                       FontPath.almaraiRegular,
-                                                  color: const Color(0xff8B8989),
+                                                  color:
+                                                      const Color(0xff8B8989),
                                                 ),
                                               ),
                                             )
@@ -387,7 +400,8 @@ class CenterDetailsScreen extends StatelessWidget {
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
                                                 fontSize: 12.sp,
-                                                fontFamily: FontPath.almaraiBold,
+                                                fontFamily:
+                                                    FontPath.almaraiBold,
                                                 color: const Color(0xff8B8989),
                                               ),
                                             ),
@@ -402,7 +416,8 @@ class CenterDetailsScreen extends StatelessWidget {
                                                   fontSize: 14.sp,
                                                   fontFamily:
                                                       FontPath.almaraiBold,
-                                                  color: const Color(0xff8B8989),
+                                                  color:
+                                                      const Color(0xff8B8989),
                                                 ),
                                               ),
                                             )
@@ -424,7 +439,8 @@ class CenterDetailsScreen extends StatelessWidget {
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
                                                 fontSize: 12.sp,
-                                                fontFamily: FontPath.almaraiBold,
+                                                fontFamily:
+                                                    FontPath.almaraiBold,
                                                 color: const Color(0xff8B8989),
                                               ),
                                             ),
@@ -433,14 +449,16 @@ class CenterDetailsScreen extends StatelessWidget {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                cubit.getUserModel!.phoneNumber ??
+                                                cubit.getUserModel!
+                                                        .phoneNumber ??
                                                     'قم بإضافة رقم هاتف للمركز',
                                                 textAlign: TextAlign.start,
                                                 style: TextStyle(
                                                   fontSize: 14.sp,
                                                   fontFamily:
                                                       FontPath.almaraiBold,
-                                                  color: const Color(0xff8B8989),
+                                                  color:
+                                                      const Color(0xff8B8989),
                                                 ),
                                               ),
                                             ),
@@ -462,7 +480,8 @@ class CenterDetailsScreen extends StatelessWidget {
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
                                                 fontSize: 12.sp,
-                                                fontFamily: FontPath.almaraiBold,
+                                                fontFamily:
+                                                    FontPath.almaraiBold,
                                                 color: const Color(0xff8B8989),
                                               ),
                                             ),
@@ -478,7 +497,8 @@ class CenterDetailsScreen extends StatelessWidget {
                                                   fontSize: 14.sp,
                                                   fontFamily:
                                                       FontPath.almaraiBold,
-                                                  color: const Color(0xff8B8989),
+                                                  color:
+                                                      const Color(0xff8B8989),
                                                 ),
                                               ),
                                             ),
@@ -512,7 +532,8 @@ class CenterDetailsScreen extends StatelessWidget {
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
                                                 fontSize: 14.sp,
-                                                fontFamily: FontPath.almaraiBold,
+                                                fontFamily:
+                                                    FontPath.almaraiBold,
                                                 color: const Color(0xff8B8989),
                                               ),
                                             ),
@@ -522,7 +543,8 @@ class CenterDetailsScreen extends StatelessWidget {
                                             height: 44.h,
                                             width: 45.w,
                                             padding: EdgeInsets.symmetric(
-                                                horizontal: 12.w, vertical: 12.h),
+                                                horizontal: 12.w,
+                                                vertical: 12.h),
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(8.r),
@@ -553,7 +575,8 @@ class CenterDetailsScreen extends StatelessWidget {
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
                                                 fontSize: 14.sp,
-                                                fontFamily: FontPath.almaraiBold,
+                                                fontFamily:
+                                                    FontPath.almaraiBold,
                                                 color: const Color(0xff8B8989),
                                               ),
                                             ),
