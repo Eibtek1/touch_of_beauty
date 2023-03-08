@@ -19,10 +19,8 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
 
   static AuthCubit get(context) => BlocProvider.of(context);
-  String? cityValue;
-  int cityId = 1;
+
   List<CitiesModel> citiesList = [];
-  List<String> citiesNamesList = [];
   List<PicturesModel> picturesList = [];
   Map<String, dynamic> picturesMap = {};
   late MainResponse mainResponse;
@@ -32,33 +30,24 @@ class AuthCubit extends Cubit<AuthState> {
   File? freelancerImage;
   String? message;
   GetUserModel? getUserModel;
+  late CitiesModel citiesModel;
+
+  void onCityChanged(CitiesModel value) {
+    citiesModel = value;
+    emit(GetChangedCity());
+  }
 
   void getCities() async {
-    cityValue = null;
     emit(GetCitiesLoading());
     final response = await DioHelper.getData(
         url: 'http://lightbulbtech-001-site13.etempurl.com/api/Cities',
         bearerToken: token);
     citiesList.clear();
-    citiesNamesList.clear();
     for (var element in response.data['data']) {
       citiesList.add(CitiesModel.fromJson(element));
     }
-    for (var element in citiesList) {
-      citiesNamesList.add(element.name!);
-    }
-    cityValue = citiesNamesList.first;
+    citiesModel = citiesList.first;
     emit(GetCitiesSuccess());
-  }
-
-  void onCityChanged(String value) {
-    cityValue = value;
-    for (var element in citiesList) {
-      if (element.name == cityValue) {
-        cityId = element.id!;
-      }
-    }
-    emit(GetChangedCity());
   }
 
   Future<void> getImagePick() async {
@@ -71,13 +60,23 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future<void> getPictureLibraryImagePick() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      profileImage = File(pickedFile.path);
+      emit(GetPictureLibraryPickedSuccessState());
+    } else {
+      emit(GetPictureLibraryPickedErrorState());
+    }
+  }
+
   Future<void> getFreelanceImagePick() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       freelancerImage = File(pickedFile.path);
-      emit(GetProfilePickedImageSuccessState());
+      emit(GetFreelanceImagePickedSuccessState());
     } else {
-      emit(GetPickedImageErrorState());
+      emit(GetFreelanceImagePickedErrorState());
     }
   }
 
@@ -112,6 +111,9 @@ class AuthCubit extends Cubit<AuthState> {
       freelancerImage = null;
       message = null;
       getUserModel = null;
+      citiesList = [];
+      picturesList = [];
+      picturesMap = {};
       await CacheHelper.removeData(key: CacheKeys.token);
       await CacheHelper.removeData(key: CacheKeys.userType);
       emit(LogoutSuccess());
@@ -133,7 +135,7 @@ class AuthCubit extends Cubit<AuthState> {
         password: password,
         email: email,
         phone: phone,
-        cityId: cityId,
+        cityId: citiesModel.id,
         image: profileImage,
       );
       mainResponse = MainResponse.fromJson(response.data);
@@ -161,7 +163,7 @@ class AuthCubit extends Cubit<AuthState> {
         email: email,
         description: description,
         phone: phone,
-        cityId: cityId,
+        cityId: citiesModel.id,
         image: profileImage,
         taxNumber: taxNumber,
       );
@@ -189,7 +191,7 @@ class AuthCubit extends Cubit<AuthState> {
         email: email,
         description: description,
         phone: phone,
-        cityId: cityId,
+        cityId: citiesModel.id,
         freelancerImage: freelancerImage,
         image: profileImage,
       );
@@ -251,6 +253,7 @@ class AuthCubit extends Cubit<AuthState> {
         getAllPicturesForProvider();
         getAllPicturesForProvider();
       }
+      print(response.data);
       emit(GetUserDataSuccess());
     } catch (error) {
       emit(GetUserDataError(error.toString()));
@@ -265,14 +268,14 @@ class AuthCubit extends Cubit<AuthState> {
       if (mainResponse.errorCode == 0) {
         for (var element in mainResponse.data) {
           print(picturesList.contains(PicturesModel.fromJson(element)));
-          if(!picturesList.contains(PicturesModel.fromJson(element))){
+          if (!picturesList.contains(PicturesModel.fromJson(element))) {
             picturesList.add(PicturesModel.fromJson(element));
           }
         }
       } else {
         data = mainResponse.errorCode;
       }
-      picturesList.length;
+      print(picturesList.length);
       emit(GetPicturesForProviderSuccess());
     } catch (error) {
       emit(GetPicturesForProviderError(error.toString()));
@@ -299,15 +302,37 @@ class AuthCubit extends Cubit<AuthState> {
   void deletePictureToLibrary({required int id}) async {
     emit(DeletePictureLoading());
     try {
-      final response =
-          await AuthRepository.deleteImage(id: id);
+      final response = await AuthRepository.deleteImage(id: id);
       mainResponse = MainResponse.fromJson(response.data);
-      if(mainResponse.errorCode == 0){
+      if (mainResponse.errorCode == 0) {
         picturesList.removeWhere((element) => element.id! == id);
       }
       emit(DeletePictureSuccess());
     } catch (error) {
       emit(DeletePictureError(error.toString()));
+    }
+  }
+
+  void freelancerUpdateProfile({
+    required String userName,
+    required String email,
+    required String description,
+    required String phone,
+  }) async {
+    emit(UpdateProfileLoading());
+    try {
+      await AuthRepository.freelancerUpdateProfile(
+        userName: userName,
+        email: email,
+        description: description,
+        phone: phone,
+        image: profileImage,
+      );
+      profileImage = null;
+      emit(UpdateProfileSuccess());
+    } catch (error) {
+      print(error.toString());
+      emit(UpdateProfileError(error.toString()));
     }
   }
 

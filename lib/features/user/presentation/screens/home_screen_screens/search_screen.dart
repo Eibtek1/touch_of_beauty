@@ -213,17 +213,17 @@ class SearchScreen extends StatelessWidget {
                               return SearchCheckButtonItem(
                                 title: cubit.citiesList[index].name!,
                                 index: index,
-                                currentIndex: cubit.cityCI,
+                                currentIndex: cubit.cityCurrentId,
                                 onPressed: () {
                                   cubit.changeButtonState(onPressed: () {
                                     cubit.cityId = cubit.citiesList[index].id!;
-                                    cubit.cityCI = index;
+                                    cubit.cityCurrentId = index;
                                   });
                                 },
                                 onChanged: (value) {
                                   cubit.changeButtonState(onPressed: () {
                                     cubit.cityId = cubit.citiesList[index].id!;
-                                    cubit.cityCI = index;
+                                    cubit.cityCurrentId = index;
                                   });
                                 },
                               );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -6,6 +7,9 @@ import '../../../../core/app_router/screens_name.dart';
 import '../../../../core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/svg_path.dart';
+import '../../../../core/constants/constants.dart';
+import '../../../authentication/buisness_logic/auth_cubit.dart';
+import '../../../authentication/buisness_logic/auth_state.dart';
 import '../../../vendor/presentation/widgets/screen_layout_widget_with_logo.dart';
 
 class FreelancerCentersScreen extends StatelessWidget {
@@ -41,7 +45,7 @@ class FreelancerCentersScreen extends StatelessWidget {
                     },
                     child: SvgPicture.asset(
                       SvgPath.notificationBill,
-                      color: Colors.white,
+                      colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                       height: 28.h,
                       width: 23.w,
                     ),
@@ -51,30 +55,68 @@ class FreelancerCentersScreen extends StatelessWidget {
               SizedBox(
                 height: 186.h,
               ),
-              buildItem(svgImage: SvgPath.centersIcon, title: 'بيانات مقدم الخدمة', onTap: (){
+              buildItem1(svgImage: SvgPath.centersIcon, title: 'بيانات مقدم الخدمة', onTap: (){
+                print(token);
+                if (AuthCubit.get(context).getUserModel == null) {
+                  AuthCubit.get(context).getUserData();
+                }
                 Navigator.pushNamed(context, ScreenName.freelancerDetailsScreen);
               }),
               SizedBox(
                 height: 10.h,
               ),
               const Divider(),
-              buildItem(svgImage: SvgPath.clock, title: 'مواعيد العمل', onTap: (){
+              buildItem1(svgImage: SvgPath.clock, title: 'مواعيد العمل', onTap: (){
                 Navigator.pushNamed(context, ScreenName.freelancerTimeScreen);
               }),
               SizedBox(
                 height: 10.h,
               ),
               const Divider(),
-              buildItem(svgImage: SvgPath.bag, title: 'خدماتي', onTap: (){
+              buildItem1(svgImage: SvgPath.bag, title: 'خدماتي', onTap: (){
                 Navigator.pushNamed(context, ScreenName.freelancerServicesScreen);
               }),
               SizedBox(
                 height: 10.h,
               ),
               const Divider(),
-              buildItem(svgImage: SvgPath.calender2, title: 'حجوزاتي', onTap: (){
+              buildItem1(svgImage: SvgPath.calender2, title: 'حجوزاتي', onTap: (){
                 Navigator.pushNamed(context, ScreenName.vendorReservationsScreen);
               }),
+              SizedBox(
+                height: 10.h,
+              ),
+
+              const Divider(),
+              BlocConsumer<AuthCubit, AuthState>(
+                listener: (context, state) {
+                  if(state is LogoutLoading){
+                    showProgressIndicator(context);
+                  }
+                  if(state is LogoutError){
+                    Navigator.pop(context);
+                  }
+                  if(state is LogoutSuccess){
+                    Navigator.pushNamedAndRemoveUntil(context, ScreenName.loginScreen, (route) => false);
+                  }
+                },
+                builder: (context, state) {
+                  var cubit = AuthCubit.get(context);
+                  return buildItem1(
+                    svgImage: SvgPath.calender2,
+                    child: Icon(
+                      Icons.exit_to_app,
+                      size: 24.r,
+                      color: AppColorsLightTheme.primaryColor,
+                    ),
+                    title: 'تسجيل الخروج',
+                    onTap: () {
+                      // print(token);
+                      cubit.logout();
+                    },
+                  );
+                },
+              ),
               SizedBox(
                 height: 10.h,
               ),
@@ -84,18 +126,21 @@ class FreelancerCentersScreen extends StatelessWidget {
         ),
       ),
     );
-  } Widget buildItem({
-    required String svgImage,
+  }
+  Widget buildItem1({required String svgImage,
     required String title,
-    required Function onTap
-  }) {
+    Widget? child,
+    required Function onTap}) {
     return ListTile(
-      onTap: (){
+      onTap: () {
         onTap();
       },
-      leading: SvgPicture.asset(
+      leading: child ?? SvgPicture.asset(
         svgImage,
-        color: AppColorsLightTheme.primaryColor,
+        colorFilter: const ColorFilter.mode(
+          AppColorsLightTheme.primaryColor,
+          BlendMode.srcIn,
+        ),
       ),
       title: Text(
         title,

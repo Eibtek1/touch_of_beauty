@@ -60,7 +60,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
   bool reserveOrderStatusInHome = true;
   bool getServicesByMainSectionAndServicesProvidersIdLoading = false;
   int servicesCI = 0;
-  int cityCI = 0;
+  int cityCurrentId = 0;
   int cityId = 1;
   int addressCityId = 1;
   int arrangementCI = 0;

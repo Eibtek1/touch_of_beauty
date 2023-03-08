@@ -18,12 +18,13 @@ class VendorMainLayout extends StatefulWidget {
 
 class _UserMainLayoutState extends State<VendorMainLayout> {
   int cIndex = 0;
-  List<Widget> screens= [
+  List<Widget> screens = [
     const VendorHomeScreen(),
-     VendorMessagesScreen(),
+    const VendorMessagesScreen(),
     const VendorCentersScreen(),
     const VendorMoreScreen(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -51,35 +52,57 @@ class _UserMainLayoutState extends State<VendorMainLayout> {
                 cIndex = index;
               });
               print(token);
+              print(DateTime.now().toIso8601String());
             },
             items: [
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   SvgPath.homeIcon,
-                  color: cIndex == 0
-                      ? AppColorsLightTheme.primaryColor
-                      : Colors.grey,
+                  colorFilter: ColorFilter.mode(
+                    cIndex == 0
+                        ? AppColorsLightTheme.primaryColor
+                        : Colors.grey,
+                    BlendMode.srcIn,
+                  ),
                 ),
                 label: 'الرئيسية',
               ),
               BottomNavigationBarItem(
-                  icon: SvgPicture.asset(SvgPath.messagesIcon,
-                      color: cIndex == 1
-                          ? AppColorsLightTheme.primaryColor
-                          : Colors.grey),
-                  label: 'محادثاتي'),
+                icon: SvgPicture.asset(
+                  SvgPath.messagesIcon,
+                  colorFilter: ColorFilter.mode(
+                    cIndex == 1
+                        ? AppColorsLightTheme.primaryColor
+                        : Colors.grey,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                label: 'محادثاتي',
+              ),
               BottomNavigationBarItem(
-                  icon: SvgPicture.asset(SvgPath.centersIcon,
-                      color: cIndex == 2
-                          ? AppColorsLightTheme.primaryColor
-                          : Colors.grey),
-                  label: 'صالوني'),
+                icon: SvgPicture.asset(
+                  SvgPath.centersIcon,
+                  colorFilter: ColorFilter.mode(
+                    cIndex == 2
+                        ? AppColorsLightTheme.primaryColor
+                        : Colors.grey,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                label: 'صالوني',
+              ),
               BottomNavigationBarItem(
-                  icon: SvgPicture.asset(SvgPath.moreIcon,
-                      color: cIndex == 3
-                          ? AppColorsLightTheme.primaryColor
-                          : Colors.grey),
-                  label: 'المزيد'),
+                icon: SvgPicture.asset(
+                  SvgPath.moreIcon,
+                  colorFilter: ColorFilter.mode(
+                    cIndex == 3
+                        ? AppColorsLightTheme.primaryColor
+                        : Colors.grey,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                label: 'المزيد',
+              ),
             ],
           ),
         ),
