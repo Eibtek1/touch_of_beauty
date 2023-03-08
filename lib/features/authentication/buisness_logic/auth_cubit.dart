@@ -60,13 +60,23 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future<void> getPictureLibraryImagePick() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      profileImage = File(pickedFile.path);
+      emit(GetPictureLibraryPickedSuccessState());
+    } else {
+      emit(GetPictureLibraryPickedErrorState());
+    }
+  }
+
   Future<void> getFreelanceImagePick() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       freelancerImage = File(pickedFile.path);
-      emit(GetProfilePickedImageSuccessState());
+      emit(GetFreelanceImagePickedSuccessState());
     } else {
-      emit(GetPickedImageErrorState());
+      emit(GetFreelanceImagePickedErrorState());
     }
   }
 
@@ -300,6 +310,29 @@ class AuthCubit extends Cubit<AuthState> {
       emit(DeletePictureSuccess());
     } catch (error) {
       emit(DeletePictureError(error.toString()));
+    }
+  }
+
+  void freelancerUpdateProfile({
+    required String userName,
+    required String email,
+    required String description,
+    required String phone,
+  }) async {
+    emit(UpdateProfileLoading());
+    try {
+      await AuthRepository.freelancerUpdateProfile(
+        userName: userName,
+        email: email,
+        description: description,
+        phone: phone,
+        image: profileImage,
+      );
+      profileImage = null;
+      emit(UpdateProfileSuccess());
+    } catch (error) {
+      print(error.toString());
+      emit(UpdateProfileError(error.toString()));
     }
   }
 

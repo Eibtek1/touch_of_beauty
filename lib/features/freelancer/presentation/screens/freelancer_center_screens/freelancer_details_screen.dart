@@ -62,12 +62,12 @@ class FreelancerDetailsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 130.h,
+                height: 120.h,
               ),
               Expanded(
                 child: BlocConsumer<AuthCubit, AuthState>(
                   listener: (context, state) {
-                    if (state is GetProfilePickedImageSuccessState) {
+                    if (state is GetPictureLibraryPickedSuccessState) {
                       showDialog(
                           context: context,
                           builder: (context) =>
@@ -252,19 +252,42 @@ class FreelancerDetailsScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: 10.h,
+                          height: 5.h,
                         ),
                         CustomDetailsContainer(
-                          height: 44.h,
+                          height: 68.h,
                           width: double.infinity,
-                          child: Text(
-                            'متجر اونلاين',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontFamily: FontPath.almaraiBold,
-                              color: const Color(0xff8B8989),
-                            ),
+                          child: Column(
+                            crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'اسم مقدم الخدمة',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 10.sp,
+                                  fontFamily:
+                                  FontPath.almaraiBold,
+                                  color: const Color(0xff8B8989),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  cubit.getUserModel!.fullName!,
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontFamily:
+                                    FontPath.almaraiBold,
+                                    color:
+                                    const Color(0xff8B8989),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(
@@ -274,14 +297,16 @@ class FreelancerDetailsScreen extends StatelessWidget {
                           height: 190.h,
                           width: double.infinity,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment:
+                            CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'وصف المركز',
+                                'وصف الخدمات المقدمة',
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontFamily: FontPath.almaraiBold,
+                                  fontSize: 10.sp,
+                                  fontFamily:
+                                  FontPath.almaraiBold,
                                   color: const Color(0xff8B8989),
                                 ),
                               ),
@@ -290,15 +315,20 @@ class FreelancerDetailsScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 child: Text(
-                                  'لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا',
+                                  cubit.getUserModel!
+                                      .description ??
+                                      'قم بإضافة وصف للمركز',
                                   textAlign: TextAlign.start,
                                   maxLines: 5,
                                   style: TextStyle(
                                     height: 1.3.h,
-                                    overflow: TextOverflow.ellipsis,
+                                    overflow:
+                                    TextOverflow.ellipsis,
                                     fontSize: 12.sp,
-                                    fontFamily: FontPath.almaraiRegular,
-                                    color: const Color(0xff8B8989),
+                                    fontFamily:
+                                    FontPath.almaraiRegular,
+                                    color:
+                                    const Color(0xff8B8989),
                                   ),
                                 ),
                               )
@@ -309,16 +339,41 @@ class FreelancerDetailsScreen extends StatelessWidget {
                           height: 14.h,
                         ),
                         CustomDetailsContainer(
-                          height: 44.h,
+                          height: 64.h,
                           width: double.infinity,
-                          child: Text(
-                            'رقم الهاتف',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontFamily: FontPath.almaraiBold,
-                              color: const Color(0xff8B8989),
-                            ),
+                          child: Column(
+                            crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'رقم الهاتف',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 10.sp,
+                                  fontFamily:
+                                  FontPath.almaraiBold,
+                                  color: const Color(0xff8B8989),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5.h,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  cubit.getUserModel!
+                                      .phoneNumber ??
+                                      'قم بإضافة رقم هاتف للمركز',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontFamily:
+                                    FontPath.almaraiBold,
+                                    color:
+                                    const Color(0xff8B8989),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(

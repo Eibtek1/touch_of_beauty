@@ -33,6 +33,12 @@ class LoginError extends AuthState {
 class GetProfilePickedImageSuccessState extends AuthState {}
 class GetPickedImageErrorState extends AuthState {}
 
+class GetFreelanceImagePickedSuccessState extends AuthState {}
+class GetFreelanceImagePickedErrorState extends AuthState {}
+
+class GetPictureLibraryPickedSuccessState extends AuthState {}
+class GetPictureLibraryPickedErrorState extends AuthState {}
+
 
 class RegisterLoading extends AuthState {}
 class RegisterSuccess extends AuthState {

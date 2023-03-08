@@ -93,6 +93,32 @@ class AuthRepository{
   }
 
 
+  static Future<Response> freelancerUpdateProfile({
+    required String? userName,
+    required String? email,
+    required String? description,
+    required String? phone,
+    required File? image,
+  }) async {
+
+    final response = await DioHelper.putData(
+      url: EndPoints.updateFreelancerProfile,
+      token: token,
+      data: {
+        "description": description==""? "null null null":description,
+        "email": email??"",
+        "phoneNumber": phone??"",
+        "fullName": userName??"",
+        "lat": "0.0",
+        "lng": "0.0",
+        "freelanceFormImg": "",
+        "img": image != null?"data:image/${image.path.split('.').last};base64,${imageToBase64(image)}":"",
+      },
+    );
+    return response;
+  }
+
+
   static Future<Response> userUpdateProfile({
     required int cityId,
     required String email,

@@ -5,6 +5,7 @@ class EndPoints{
   static const centerRegister = '/Users/CenterRegister';
   static const updateCenterProfile = '/Users/UpdateCenterProfile';
   static const updateUserProfile = '/Users/UpdateUserProfile';
+  static const updateFreelancerProfile = '/Users/UpdateFreeAgentProfile';
   static const freelancerRegister = '/Users/FreeAgentRegister';
   static const login = '/Users/login';
   static const logout = '/Users/logout';

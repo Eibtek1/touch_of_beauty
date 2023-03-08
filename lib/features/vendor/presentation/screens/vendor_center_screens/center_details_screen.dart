@@ -71,7 +71,7 @@ class CenterDetailsScreen extends StatelessWidget {
                       children: [
                         BlocConsumer<AuthCubit, AuthState>(
                           listener: (context, state) {
-                            if (state is GetProfilePickedImageSuccessState) {
+                            if (state is GetPictureLibraryPickedSuccessState) {
                               showDialog(
                                   context: context,
                                   builder: (context) =>

@@ -81,7 +81,7 @@ class AppRouter {
         case ScreenName.freelancerDetailsScreen:
           return _animateRouteBuilder( const FreelancerDetailsScreen());
         case ScreenName.freelancerEditDetailsScreen:
-          return _animateRouteBuilder( const EditFreelancerDetailsScreen());
+          return _animateRouteBuilder( EditFreelancerDetailsScreen());
         case ScreenName.freelancerTimeScreen:
           return _animateRouteBuilder( const FreelancerWorkingTimeScreen());
         case ScreenName.vendorServicesScreen:
