@@ -78,6 +78,18 @@ class ServicesProvidersRepository {
     return response;
   }
 
+  static Future<Response> getFavoriteServiceProviders() async {
+    final response = await DioHelper.getData(
+        url: EndPoints.getFavoriteProviders, bearerToken: token);
+    return response;
+  }
+
+  static Future<Response> getFavoriteService() async {
+    final response = await DioHelper.getData(
+        url: EndPoints.getFavoriteServices, bearerToken: token);
+    return response;
+  }
+
   static Future<Response> getServices({
     int? pageNumber,
     int? pageSize,

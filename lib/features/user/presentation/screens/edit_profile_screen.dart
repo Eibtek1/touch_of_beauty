@@ -150,17 +150,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   alignment: Alignment.center,
                                   children: [
                                     Container(
-                                        height: 120.h,
-                                        width: 120.w,
-                                        clipBehavior: Clip.antiAlias,
-                                        decoration: const BoxDecoration(
-                                          color: Colors.white,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Image.file(
-                                          cubit.profileImage!,
-                                          fit: BoxFit.cover,
-                                        )),
+                                      height: 120.h,
+                                      width: 120.w,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Image.file(
+                                        cubit.profileImage!,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
                                     IconButton(
                                       onPressed: () {
                                         cubit.getImagePick();
@@ -180,70 +181,70 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
               ),
               Expanded(
-                  child: ListView(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                children: [
-                  SizedBox(
-                    height: 5.h,
-                  ),
-                  Text(
-                    'الاسم',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontFamily: FontPath.almaraiBold,
-                      color: const Color(0xff3C475C),
+                child: ListView(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  children: [
+                    SizedBox(
+                      height: 5.h,
                     ),
-                  ),
-                  SizedBox(
-                    height: 5.h,
-                  ),
-                  CustomTextFormField(
-                    height: 44.h,
-                    width: double.infinity,
-                    controller: name,
-                  ),
-                  SizedBox(
-                    height: 40.h,
-                  ),
-                  Text(
-                    'البريد الاليكتروني',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontFamily: FontPath.almaraiBold,
-                      color: const Color(0xff3C475C),
+                    Text(
+                      'الاسم',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontFamily: FontPath.almaraiBold,
+                        color: const Color(0xff3C475C),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 5.h,
-                  ),
-                  CustomTextFormField(
-                    height: 44.h,
-                    width: double.infinity,
-                    controller: email,
-                  ),
-                  SizedBox(
-                    height: 40.h,
-                  ),
-                  Text(
-                    'رقم الهاتف',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontFamily: FontPath.almaraiBold,
-                      color: const Color(0xff3C475C),
+                    SizedBox(
+                      height: 5.h,
                     ),
-                  ),
-                  SizedBox(
-                    height: 5.h,
-                  ),
-                  CustomTextFormField(
-                    height: 44.h,
-                    width: double.infinity,
-                    controller: phone,
-                  ),
-                  SizedBox(
-                    height: 60.h,
-                  ),
-                  CustomUserButton(
+                    CustomTextFormField(
+                      height: 44.h,
+                      width: double.infinity,
+                      controller: name,
+                    ),
+                    SizedBox(
+                      height: 40.h,
+                    ),
+                    Text(
+                      'البريد الاليكتروني',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontFamily: FontPath.almaraiBold,
+                        color: const Color(0xff3C475C),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    CustomTextFormField(
+                      height: 44.h,
+                      width: double.infinity,
+                      controller: email,
+                    ),
+                    SizedBox(
+                      height: 40.h,
+                    ),
+                    Text(
+                      'رقم الهاتف',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontFamily: FontPath.almaraiBold,
+                        color: const Color(0xff3C475C),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    CustomTextFormField(
+                      height: 44.h,
+                      width: double.infinity,
+                      controller: phone,
+                    ),
+                    SizedBox(
+                      height: 60.h,
+                    ),
+                    CustomUserButton(
                       buttonTitle: 'تعديل',
                       isTapped: () {
                         // if(centerDetailsController.text.length>=5&&centerNameController.text.isNotEmpty&&centerEmailController.text.isNotEmpty&&centerPhoneController.text.isNotEmpty){
@@ -256,9 +257,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       },
                       width: double.infinity,
                       paddingVertical: 12.h,
-                      paddingHorizontal: 45.w),
-                ],
-              )),
+                      paddingHorizontal: 45.w,
+                    ),
+                  ],
+                ),
+              ),
             ],
           );
         },

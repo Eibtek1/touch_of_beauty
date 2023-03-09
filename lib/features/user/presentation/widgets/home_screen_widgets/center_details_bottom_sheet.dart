@@ -211,20 +211,6 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                   SizedBox(
                     height: 21.h,
                     width: 52.w,
-                    // decoration: BoxDecoration(
-                    //   color:
-                    //       AppColorsLightTheme.secondaryColor.withOpacity(0.3),
-                    //   borderRadius: BorderRadius.circular(11.r),
-                    // ),
-                    // child: Text(
-                    //   'متاح',
-                    //   textAlign: TextAlign.center,
-                    //   style: TextStyle(
-                    //     fontSize: 12.sp,
-                    //     fontFamily: FontPath.almaraiRegular,
-                    //     color: AppColorsLightTheme.secondaryColor,
-                    //   ),
-                    // ),
                   )
                 ],
               ),
@@ -395,7 +381,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                 onPressed: () {
                   UserServicesCubit.get(context).servicesPageNumber = 1;
                   UserServicesCubit.get(context).getServicesByServiceProviderId(
-                      servicesProviderId: widget.servicesProvidersModel.id);
+                      servicesProviderId: widget.servicesProvidersModel.providerId);
                   Navigator.pushNamed(context, ScreenName.ourServicesScreen,
                       arguments: widget.servicesProvidersModel.id);
                 },

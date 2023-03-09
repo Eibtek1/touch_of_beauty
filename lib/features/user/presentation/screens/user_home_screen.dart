@@ -1,8 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
@@ -12,13 +10,16 @@ import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_
 import 'package:touch_of_beauty/features/user/presentation/widgets/home_screen_widgets/center_details_bottom_sheet.dart';
 import 'package:touch_of_beauty/features/user/presentation/widgets/home_screen_widgets/custom_appbar.dart';
 import '../../../../core/assets_path/font_path.dart';
-import '../../../../core/network/api_end_points.dart';
 import '../../buisness_logic/main_features_cubit/main_features_cubit.dart';
 import '../../buisness_logic/main_features_cubit/main_features_state.dart';
+import '../../buisness_logic/services_cubit/services_state.dart';
 import '../widgets/home_screen_widgets/build_custom_drawer.dart';
 import '../widgets/home_screen_widgets/cursol_slider_widget.dart';
+import '../widgets/home_screen_widgets/fav_services_builder.dart';
+import '../widgets/home_screen_widgets/favorite_services_provider_item_builder.dart';
 import '../widgets/home_screen_widgets/grid_item_builder.dart';
 import '../widgets/home_screen_widgets/salon_item.dart';
+import '../widgets/home_screen_widgets/services_bottom_sheet.dart';
 import 'home_screen_screens/main_featuers_services.dart';
 
 class UserHomeScreen extends StatefulWidget {
@@ -44,7 +45,14 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
     if (ServicesProvidersCubit.get(context).servicesProvidersList.isEmpty) {
       ServicesProvidersCubit.get(context).getAllServicesProviders();
     }
+    if(ServicesProvidersCubit.get(context).favoritesServicesProvidersList.isEmpty){
+      ServicesProvidersCubit.get(context).getFavoritesServicesProviders();
+    }
+    if(UserServicesCubit.get(context).favoriteServicesList.isEmpty){
+      UserServicesCubit.get(context).getFavoritesServicesProviders();
+    }
     UserServicesCubit.get(context).getAddress();
+
     super.initState();
   }
 
@@ -204,10 +212,12 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     height: 15.h,
                   ),
                   BlocConsumer<ServicesProvidersCubit, ServicesProvidersState>(
-                    buildWhen: (p,c)=>p!=c,
+                    buildWhen: (p, c) => p != c,
                     listener: (context, state) {
                       var cubit = ServicesProvidersCubit.get(context);
-                      if (state is GetFeaturedServicesProviderDetailsByItsIdSuccess && cubit.servicesProviderModel != null) {
+                      if (state
+                              is GetFeaturedServicesProviderDetailsByItsIdSuccess &&
+                          cubit.servicesProviderModel != null) {
                         Navigator.pop(context);
                         showBottomSheet(
                           context: context,
@@ -217,18 +227,22 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                           ),
                         );
                       }
-                      if (state is GetFeaturedServicesProviderDetailsByItsIdLoadingState) {
+                      if (state
+                          is GetFeaturedServicesProviderDetailsByItsIdLoadingState) {
                         showProgressIndicator(context);
                       }
                     },
                     builder: (context, state) {
                       var cubit = ServicesProvidersCubit.get(context);
                       return SizedBox(
-                        height: cubit.featuredServicesProvidersList.isEmpty?40.h:195.h,
+                        height: cubit.featuredServicesProvidersList.isEmpty
+                            ? 40.h
+                            : 195.h,
                         child: !cubit.getFeaturedServicesProviderLoading
                             ? cubit.featuredServicesProvidersList.isNotEmpty
                                 ? ListView.builder(
-                                    padding: EdgeInsets.symmetric(vertical: 3.h),
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 3.h),
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
                                     itemCount: cubit
@@ -241,7 +255,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                               id: cubit
                                                   .featuredServicesProvidersList[
                                                       index]
-                                                  .id!);
+                                                  .providerId!);
                                         },
                                         child: SalonItemBuilder(
                                           servicesProviderModel: cubit
@@ -271,7 +285,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     height: 15.h,
                   ),
                   Text(
-                    'الصالونات التي تتابعها',
+                    'الصالونات المفضلة',
                     style: TextStyle(
                         fontSize: 16.sp,
                         fontFamily: FontPath.almaraiBold,
@@ -281,72 +295,71 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     height: 15.h,
                   ),
                   BlocConsumer<ServicesProvidersCubit, ServicesProvidersState>(
-                    buildWhen: (p,a)=>p!=a,
-                    listener: (context, state) {},
+                    buildWhen: (p, a) => p != a,
+                    listener: (context, state) {
+                      var cubit = ServicesProvidersCubit.get(context);
+                      if (state
+                              is GetFavoriteServicesProviderDetailsByItsIdSuccess &&
+                          cubit.servicesProviderModel != null) {
+                        Navigator.pop(context);
+                        showBottomSheet(
+                          context: context,
+                          builder: (context) => CenterDetailsBottomSheet(
+                            servicesProvidersModel:
+                                cubit.servicesProviderModel!,
+                          ),
+                        );
+                      }
+                      if (state
+                          is GetFavoriteServicesProviderDetailsByItsIdLoadingState) {
+                        showProgressIndicator(context);
+                      }
+                    },
                     builder: (context, state) {
                       var cubit = ServicesProvidersCubit.get(context);
                       return SizedBox(
-                        height: cubit.servicesProvidersList.isEmpty?40.h:75.h,
-                        child: !cubit.getFeaturedServicesProviderLoading
-                            ? cubit.servicesProvidersList.isNotEmpty
+                        height: cubit.favoritesServicesProvidersList.isEmpty
+                            ? 40.h
+                            : 195.h,
+                        child: !cubit.getFavoriteServicesProviderLoading
+                            ? cubit.favoritesServicesProvidersList.isNotEmpty
                                 ? ListView.builder(
-                                    padding: EdgeInsets.symmetric(vertical: 3.h),
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 3.h),
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
                                     itemCount: cubit
-                                        .servicesProvidersList.length,
-                                    itemBuilder: (BuildContext context, int index) {
-                                      return Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 2.w),
-                                        child: Container(
-                                          height: 70.h,
-                                          width: 70.w,
-                                          padding: EdgeInsets.all(2.r),
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.white,
-                                            border: Border.all(
-                                              color: AppColorsLightTheme.primaryColor,
-                                              width: 1.5.w,
-                                            )
-                                          ),
-                                          child: Container(
-                                            width: 70.w,
-                                            height: 70.h,
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child:  CachedNetworkImage(
-                                              fit: BoxFit.cover,
-                                              imageUrl:
-                                              "${EndPoints.imageBaseUrl}${cubit
-                                                  .servicesProvidersList[index]
-                                                  .userImgUrl}",
-                                              placeholder: (context, url) =>
-                                                  Shimmer.fromColors(
-                                                    baseColor: Colors.grey[400]!,
-                                                    highlightColor: Colors.grey[300]!,
-                                                    child: Container(
-                                                      height: double.infinity,
-                                                      width: double.infinity,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.black,
-                                                        borderRadius: BorderRadius.circular(8.0),
-                                                      ),
-                                                    ),
-                                                  ),
-                                              errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
-                                            ),
-                                          ),
+                                        .favoritesServicesProvidersList.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          cubit.getFavoriteServicesProviderDataByItsId(
+                                              id: cubit
+                                                  .favoritesServicesProvidersList[
+                                                      index]
+                                                  .providerId!);
+                                        },
+                                        child: FavoriteSalonItemBuilder(
+                                          servicesProviderModel: cubit
+                                                  .favoritesServicesProvidersList[
+                                              index],
+                                          delete: () {
+                                            cubit.deleteServicesProviderToFavorite(
+                                                id: cubit
+                                                    .favoritesServicesProvidersList[
+                                                        index]
+                                                    .providerId!);
+                                            cubit.favoritesServicesProvidersList
+                                                .removeAt(index);
+                                          },
                                         ),
                                       );
                                     },
                                   )
                                 : Center(
                                     child: Text(
-                                      'لا يوجد صالونات مميزة',
+                                      'لا يوجد صالونات مفضلة',
                                       style: TextStyle(
                                           color:
                                               AppColorsLightTheme.primaryColor,
@@ -362,6 +375,95 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   ),
                   SizedBox(
                     height: 15.h,
+                  ),
+                  Text(
+                    'الخدمات المفضلة',
+                    style: TextStyle(
+                        fontSize: 16.sp,
+                        fontFamily: FontPath.almaraiBold,
+                        color: const Color(0xff1E2432)),
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+
+                  BlocConsumer<UserServicesCubit, UserServicesState>(
+                    listener: (context, state) {
+                      var cubit = UserServicesCubit.get(context);
+                      if (state
+                              is GetServicesDetailsInCentersBottomSheetByItsIdSuccess &&
+                          cubit.servicesModel != null) {
+                        Navigator.pop(context);
+                        showBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return ServicesBottomSheet(
+                                servicesModel: cubit.servicesModel!);
+                          },
+                        );
+                      }
+                      if (state
+                          is GetServicesDetailsInCentersBottomSheetByItsIdLoadingState) {
+                        showProgressIndicator(context);
+                      }
+                    },
+                    builder: (context, state) {
+                      var cubit = UserServicesCubit.get(context);
+                      return SizedBox(
+                        height:
+                            cubit.favoriteServicesList.isEmpty ? 40.h : 195.h,
+                        child: !cubit
+                                .getFavoriteServicesLoading
+                            ? cubit.favoriteServicesList.isNotEmpty
+                                ? ListView.builder(
+                          padding:
+                          EdgeInsets.symmetric(vertical: 3.h),
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          cubit
+                                              .getServicesDetailsInCentersBottomSheetByItsId(
+                                                  id: cubit
+                                                      .favoriteServicesList[
+                                                          index]
+                                                      .serviceId!);
+                                        },
+                                        child: FavoriteServicesItem(
+                                          servicesModel:
+                                              cubit.favoriteServicesList[index],
+                                          delete: () {
+                                            cubit
+                                                .deleteServicesProviderToFavorite2(
+                                                    id: cubit
+                                                        .favoriteServicesList[
+                                                            index]
+                                                        .serviceId!);
+                                            cubit.favoriteServicesList.removeAt(index);
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    itemCount:
+                                        cubit.favoriteServicesList.length,
+                                  )
+                                : Center(
+                                    child: Text(
+                                      'لا توجد خدمات مفضلة',
+                                      style: TextStyle(
+                                          color:
+                                              AppColorsLightTheme.primaryColor,
+                                          fontFamily: FontPath.almaraiBold,
+                                          fontSize: 16.sp),
+                                    ),
+                                  )
+                            : const Center(
+                                child: CircularProgressIndicator.adaptive(),
+                              ),
+                      );
+                    },
                   ),
                 ],
               ),

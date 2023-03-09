@@ -360,6 +360,22 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  void sendComplaint({
+    required String title,
+    required String data,
+  }) async {
+    emit(SendCompLoading());
+    try {
+      await AuthRepository.sendComplains(title: title, data: data);
+      profileImage = null;
+      emit(SendCompSuccess());
+    } catch (error) {
+      print(error.toString());
+      emit(SendCompError(error.toString()));
+    }
+  }
+
+
   void userUpdateProfile({
      int? cityId,
     required String email,

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:touch_of_beauty/features/authentication/data/models/main_response.dart';
 import 'package:touch_of_beauty/features/user/data/models/paginate_model.dart';
 import 'package:touch_of_beauty/features/user/data/repository/services_providers_repository.dart';
+import '../../data/models/favorites_services_provider_model.dart';
 import '../../data/models/services_providers_model.dart';
 import '../../data/models/slider_model.dart';
 import 'services_providers_state.dart';
@@ -29,8 +30,10 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
   List<ServicesProviderModel> servicesProvidersList =[];
   List<ServicesProviderModel> searchServicesProvidersList =[];
   List<ServicesProviderModel> featuredServicesProvidersList =[];
+  List<FavoriteServicesProviderModel> favoritesServicesProvidersList =[];
   bool getSliderPhotosLoading = false;
   bool getFeaturedServicesProviderLoading = false;
+  bool getFavoriteServicesProviderLoading = false;
   bool searchForServicesProviderLoading = false;
   String servicesProviderSearchMessage = '';
    void getFeaturedServicesProviders() async{
@@ -129,6 +132,20 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
 
    }
 
+   void getFavoriteServicesProviderDataByItsId({required String id}) async{
+     servicesProviderModel = null;
+     emit(GetFavoriteServicesProviderDetailsByItsIdLoadingState());
+     try{
+       final response = await ServicesProvidersRepository.getServicesProviderById(id: id);
+       mainResponse = MainResponse.fromJson(response.data);
+       servicesProviderModel = ServicesProviderModel.fromJson(mainResponse.data);
+       emit(GetFavoriteServicesProviderDetailsByItsIdSuccess());
+     }catch(error){
+       emit(GetFavoriteServicesProviderDetailsByItsIdError(error: error.toString()));
+     }
+
+   }
+
    void getFeaturedServicesProviderDataByItsId({required String id}) async{
      servicesProviderModel = null;
      emit(GetFeaturedServicesProviderDetailsByItsIdLoadingState());
@@ -149,6 +166,7 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
      final response = await ServicesProvidersRepository.addServicesProviderToFavorite(id: id);
      mainResponse = MainResponse.fromJson(response.data);
      if(mainResponse.errorCode == 0){
+       getFavoritesServicesProviders();
        emit(AddServicesProviderToFavSuccess());
      }else{
        emit(AddServicesProviderToFavError(error: mainResponse.errorMessage.toString()));
@@ -235,4 +253,24 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
     }
   }
 
+
+  void getFavoritesServicesProviders() async{
+    getFavoriteServicesProviderLoading = true;
+     emit(GetFavoritesServicesProvidersLoadingState());
+    try{
+      final response = await ServicesProvidersRepository.getFavoriteServiceProviders();
+      mainResponse = MainResponse.fromJson(response.data);
+      for(var element in mainResponse.data){
+        if(!favoritesServicesProvidersList.contains(FavoriteServicesProviderModel.fromJson(element))){
+          favoritesServicesProvidersList.add(FavoriteServicesProviderModel.fromJson(element));
+        }
+      }
+      getFavoriteServicesProviderLoading = false;
+      emit(GetFavoritesServicesProvidersSuccess());
+    }catch(error){
+      getFavoriteServicesProviderLoading = false;
+      print(error.toString());
+      emit(GetFavoritesServicesProvidersError(error: error.toString()));
+    }
+  }
 }

@@ -8,6 +8,7 @@ import '../../../../core/constants/constants.dart';
 import '../../../../core/network/dio_helper.dart';
 import '../../../authentication/data/models/cities_model.dart';
 import '../../data/models/address_model.dart';
+import '../../data/models/fav_services_model.dart';
 
 class UserServicesCubit extends Cubit<UserServicesState> {
   UserServicesCubit() : super(UserServicesInitial());
@@ -37,8 +38,10 @@ class UserServicesCubit extends Cubit<UserServicesState> {
   List<ServicesModel> servicesList = [];
 
   List<ServicesModel> searchList = [];
+  List<FavoriteServicesModel> favoriteServicesList = [];
 
   List<ServicesModel> servicesByMainSectionAndServicesProviderList =[];
+  bool getFavoriteServicesLoading = false;
 
   Map<dynamic , bool> favorites = {} ;
 
@@ -203,6 +206,26 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       emit(GetServicesByServiceProviderIdError(error: error.toString()));
     }
   }
+  void getFavoritesServicesProviders() async{
+    getFavoriteServicesLoading = true;
+    emit(GetFavoritesServicesLoadingState());
+    try{
+      final response = await ServicesProvidersRepository.getFavoriteService();
+      mainResponse = MainResponse.fromJson(response.data);
+      for(var element in mainResponse.data){
+        if(!favoriteServicesList.contains(FavoriteServicesModel.fromJson(element))){
+          favoriteServicesList.add(FavoriteServicesModel.fromJson(element));
+        }
+      }
+      getFavoriteServicesLoading = false;
+      emit(GetFavoritesServicesSuccess());
+    }catch(error){
+      getFavoriteServicesLoading = false;
+      emit(GetFavoritesServicesError(error: error.toString()));
+    }
+  }
+
+
 
 
 
@@ -213,6 +236,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     mainResponse = MainResponse.fromJson(response.data);
     if(mainResponse.errorCode == 0){
       emit(AddServiceToFavSuccess());
+      getFavoritesServicesProviders();
     }else{
       emit(AddServiceToFavError(error: mainResponse.errorMessage.toString()));
     }
@@ -224,6 +248,19 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     final response = await ServicesProvidersRepository.deleteServiceFromFavorite(id: id);
     mainResponse = MainResponse.fromJson(response.data);
     if(mainResponse.errorCode == 0){
+      emit(DeleteServiceFromFavSuccess());
+      getFavoritesServicesProviders();
+    }else{
+      emit(DeleteServiceFromFavError(error: mainResponse.errorMessage.toString()));
+    }
+  }
+
+  void deleteServicesProviderToFavorite2({required int id})async{
+    emit(DeleteServiceFromFavLoading());
+    final response = await ServicesProvidersRepository.deleteServiceFromFavorite(id: id);
+    mainResponse = MainResponse.fromJson(response.data);
+    if(mainResponse.errorCode == 0){
+      favorites.remove([id]);
       emit(DeleteServiceFromFavSuccess());
     }else{
       emit(DeleteServiceFromFavError(error: mainResponse.errorMessage.toString()));

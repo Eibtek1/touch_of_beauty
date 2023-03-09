@@ -27,6 +27,13 @@ class GetAllServicesProvidersError extends ServicesProvidersState {
   GetAllServicesProvidersError({required this.error});
 }
 
+class GetFavoritesServicesProvidersLoadingState extends ServicesProvidersState {}
+class GetFavoritesServicesProvidersSuccess extends ServicesProvidersState {}
+class GetFavoritesServicesProvidersError extends ServicesProvidersState {
+  final String error;
+  GetFavoritesServicesProvidersError({required this.error});
+}
+
 class GetSearchServicesProvidersLoadingState extends ServicesProvidersState {}
 class GetSearchServicesProvidersSuccess extends ServicesProvidersState {}
 class GetSearchServicesProvidersError extends ServicesProvidersState {
@@ -39,6 +46,13 @@ class GetServicesProviderDetailsByItsIdSuccess extends ServicesProvidersState {}
 class GetServicesProviderDetailsByItsIdError extends ServicesProvidersState {
   final String error;
   GetServicesProviderDetailsByItsIdError({required this.error});
+}
+
+class GetFavoriteServicesProviderDetailsByItsIdLoadingState extends ServicesProvidersState {}
+class GetFavoriteServicesProviderDetailsByItsIdSuccess extends ServicesProvidersState {}
+class GetFavoriteServicesProviderDetailsByItsIdError extends ServicesProvidersState {
+  final String error;
+  GetFavoriteServicesProviderDetailsByItsIdError({required this.error});
 }
 
 

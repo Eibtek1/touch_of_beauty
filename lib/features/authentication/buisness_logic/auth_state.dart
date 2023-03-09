@@ -98,6 +98,14 @@ class UpdateProfileError extends AuthState {
 }
 
 
+class SendCompLoading extends AuthState {}
+class SendCompSuccess extends AuthState {}
+class SendCompError extends AuthState {
+  final String error;
+  SendCompError(this.error);
+}
+
+
 class ForgetPasswordLoading extends AuthState {}
 class ForgetPasswordSuccess extends AuthState {
   final MainResponse mainResponse;

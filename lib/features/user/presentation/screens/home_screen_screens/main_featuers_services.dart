@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/main_features_cubit/main_features_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/main_features_cubit/main_features_state.dart';
 import '../../../../../core/app_router/screens_name.dart';
@@ -76,6 +77,9 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                 },
               );
             }
+            if(state is GetServicesDetailsByItsIdLoadingState){
+              showProgressIndicator(context);
+            }
           },
           builder: (context, state) {
             var cubit = MainFeaturesCubit.get(context);
@@ -133,31 +137,7 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                   height: 20.h,
                 ),
                 const Divider(),
-                // Padding(
-                //   padding: EdgeInsets.symmetric(horizontal: 20.w),
-                //   child: Row(
-                //     children: [
-                //       Icon(
-                //         Icons.location_on,
-                //         size: 20.r,
-                //         color: const Color(0xffB83561),
-                //       ),
-                //       SizedBox(
-                //         width: 5.w,
-                //       ),
-                //       Text(
-                //         'الرجاء اختيار عنوانك',
-                //         style: TextStyle(
-                //             color: const Color(0xff263238),
-                //             fontFamily: FontPath.almaraiBold,
-                //             fontSize: 12.sp),
-                //       )
-                //     ],
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 18.h,
-                // ),
+
                 SizedBox(
                   height: 20.h,
                 ),

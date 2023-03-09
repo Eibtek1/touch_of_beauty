@@ -202,34 +202,34 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 15.h,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                          padding: EdgeInsets.all(5.r),
-                          height: 30.h,
-                          width: 30.w,
-                          decoration: const BoxDecoration(
-                              color: AppColorsLightTheme.primaryColor,
-                              shape: BoxShape.circle),
-                          child: SvgPicture.asset(
-                            SvgPath.bulb,
-                            width: 15.w,
-                            height: 15.h,
-                            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                          )),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      Text(
-                        'استكشاف التطبيق',
-                        style: TextStyle(
-                            color: AppColorsLightTheme.secondaryColor,
-                            fontFamily: FontPath.almaraiRegular,
-                            fontSize: 10.sp),
-                      )
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     Container(
+                  //         padding: EdgeInsets.all(5.r),
+                  //         height: 30.h,
+                  //         width: 30.w,
+                  //         decoration: const BoxDecoration(
+                  //             color: AppColorsLightTheme.primaryColor,
+                  //             shape: BoxShape.circle),
+                  //         child: SvgPicture.asset(
+                  //           SvgPath.bulb,
+                  //           width: 15.w,
+                  //           height: 15.h,
+                  //           colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                  //         )),
+                  //     SizedBox(
+                  //       width: 10.w,
+                  //     ),
+                  //     Text(
+                  //       'استكشاف التطبيق',
+                  //       style: TextStyle(
+                  //           color: AppColorsLightTheme.secondaryColor,
+                  //           fontFamily: FontPath.almaraiRegular,
+                  //           fontSize: 10.sp),
+                  //     )
+                  //   ],
+                  // ),
                   SizedBox(
                     height: 57.h,
                   ),
