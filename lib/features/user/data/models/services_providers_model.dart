@@ -23,6 +23,7 @@ class GetServicesProviderModel {
 
 class ServicesProviderModel {
   String? id;
+  String? providerId;
   String? title;
   String? description;
   String? userImgUrl;
@@ -41,6 +42,7 @@ class ServicesProviderModel {
 
   ServicesProviderModel(
       {this.id,
+        this.providerId,
         this.title,
         this.description,
         this.userImgUrl,
@@ -60,6 +62,7 @@ class ServicesProviderModel {
 
   ServicesProviderModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    providerId = json['providerId'];
     title = json['title'];
     description = json['description'];
     userImgUrl = json['userImgUrl'];

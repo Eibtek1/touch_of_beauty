@@ -29,7 +29,6 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,12 +47,16 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
         elevation: 0,
       ),
       body: BlocConsumer<ServicesProvidersCubit, ServicesProvidersState>(
-        listener: (context, state){
+        listener: (context, state) {
           var cubit = ServicesProvidersCubit.get(context);
-          if(state is GetServicesProviderDetailsByItsIdSuccess&&cubit.servicesProviderModel!=null){
+          if (state is GetServicesProviderDetailsByItsIdSuccess &&
+              cubit.servicesProviderModel != null) {
             Navigator.pop(context);
             UserServicesCubit.get(context).tabBarCIndex = 0;
-            UserServicesCubit.get(context).changeTabBarCurrentIndex(0, servicesProviderId: cubit.servicesProviderModel!.id!, mainSectionId: cubit.servicesProviderModel!.mainSection![0].mainSectionId!);
+            UserServicesCubit.get(context).changeTabBarCurrentIndex(0,
+                servicesProviderId: cubit.servicesProviderModel!.id!,
+                mainSectionId: cubit
+                    .servicesProviderModel!.mainSection![0].mainSectionId!);
             showBottomSheet(
               context: context,
               builder: (context) => CenterDetailsBottomSheet(
@@ -61,7 +64,7 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
               ),
             );
           }
-          if(state is GetServicesProviderDetailsByItsIdLoadingState){
+          if (state is GetServicesProviderDetailsByItsIdLoadingState) {
             showProgressIndicator(context);
           }
         },
@@ -74,7 +77,24 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
                 child: Row(
                   children: [
                     Expanded(
-                        child: SearchBarWidget(width: double.infinity, color: AppColorsLightTheme.authTextFieldFillColor, controller: searchController)),
+                        child: SearchBarWidget(
+                      onCancelSubmitted: () {
+                        setState(() {
+                          searchController.clear();
+                          cubit.searchServicesProvidersList.clear();
+                          cubit.searchServicesProviderPageNumber = 1;
+                        });
+                      },
+                      onSearchIconSubmitted: () {
+                        cubit.searchServicesProviderPageNumber = 1;
+                        cubit.searchForServicesProvider(
+                          searchName: searchController.text,
+                        );
+                      },
+                      width: double.infinity,
+                      color: AppColorsLightTheme.authTextFieldFillColor,
+                      controller: searchController,
+                    )),
                     SizedBox(
                       width: 10.w,
                     ),
@@ -97,21 +117,28 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
               ),
               const Divider(),
               Expanded(
-                child: state is! GetAllServicesProvidersLoadingState
+                child: !cubit.searchForServicesProviderLoading
                     ? ListView.builder(
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
                             onTap: () {
-                              cubit.getServicesProviderDataByItsId(id: cubit.servicesProvidersList[index].id!);
+                              cubit.getServicesProviderDataByItsId(
+                                  id: cubit.searchServicesProvidersList.isEmpty
+                                      ? cubit.servicesProvidersList[index].id!
+                                      : cubit.searchServicesProvidersList[index]
+                                          .id!);
                             },
                             child: AllCentersItemBuilder(
-                              servicesProviderModel:
-                                  cubit.servicesProvidersList[index],
+                              servicesProviderModel: cubit
+                                      .searchServicesProvidersList.isEmpty
+                                  ? cubit.servicesProvidersList[index]
+                                  : cubit.searchServicesProvidersList[index],
                             ),
                           );
                         },
-                        itemCount:
-                        cubit.servicesProvidersList.length,
+                        itemCount: cubit.searchServicesProvidersList.isEmpty
+                            ? cubit.servicesProvidersList.length
+                            : cubit.searchServicesProvidersList.length,
                       )
                     : const Center(
                         child: CircularProgressIndicator.adaptive(),

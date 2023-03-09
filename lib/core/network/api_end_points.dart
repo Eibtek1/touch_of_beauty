@@ -30,6 +30,8 @@ class EndPoints{
   static const addProviderToFavorite = '/Favorites/AddProviderInFavorite/';
   static const deleteProviderFromFavorite = '/Favorites/DeleteProviderFromFavorite/';
   static const addServiceToFavorite = '/Favorites/AddServiceInFavorite/';
+  static const getFavoriteProviders = '/Favorites/GetFavoriteProviders';
+  static const getFavoriteServices = '/Favorites/GetFavoriteServices';
   static const addresses = '/Addresses';
   static const employees = '/Employees';
   static const addOrder = '/OrderUsers/AddOrder';

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:jiffy/jiffy.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/user/presentation/widgets/custom_button.dart';
 
 import '../../../../../../core/app_router/screens_name.dart';
@@ -46,7 +49,21 @@ class ReserveOrderScreen extends StatelessWidget {
       ),
       body: BlocConsumer<UserServicesCubit, UserServicesState>(
         listener: (context, state) {
-          // TODO: implement listener
+          var cubit = UserServicesCubit.get(context);
+          if (state is AddOrderSuccess) {
+            Navigator.pop(context);
+            Navigator.pop(context);
+            Fluttertoast.showToast(
+              msg: 'تمت اضافة طلبك',
+              gravity: ToastGravity.CENTER,
+              backgroundColor: AppColorsLightTheme.primaryColor,
+              textColor: Colors.white,
+            );
+            cubit.addressModel = null;
+            cubit.dateTime = null;
+          }else if(state is AddOrderLoading){
+            showProgressIndicator(context);
+          }
         },
         builder: (context, state) {
           var cubit = UserServicesCubit.get(context);
@@ -75,7 +92,9 @@ class ReserveOrderScreen extends StatelessWidget {
                       width: 5.w,
                     ),
                     Text(
-                      'الرجاء اختيار عنوانك',
+                      cubit.addressModel == null
+                          ? 'الرجاء اختيار عنوانك'
+                          : 'تغيير عنوانك',
                       style: TextStyle(
                           color: const Color(0xff263238),
                           fontFamily: FontPath.almaraiBold,
@@ -83,7 +102,9 @@ class ReserveOrderScreen extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      '202020',
+                      cubit.addressModel == null
+                          ? ''
+                          : cubit.addressModel!.region!,
                       style: TextStyle(
                           color: AppColorsLightTheme.searchScreenTextColor,
                           fontFamily: FontPath.almaraiBold,
@@ -123,7 +144,9 @@ class ReserveOrderScreen extends StatelessWidget {
                   // ),
                 ],
               ),
-              OrderItemWidget(servicesModel: servicesModel,),
+              OrderItemWidget(
+                servicesModel: servicesModel,
+              ),
               SizedBox(
                 height: 10.h,
               ),
@@ -135,7 +158,7 @@ class ReserveOrderScreen extends StatelessWidget {
                 onTap: () {
                   showDatePicker(
                     context: context,
-                    initialDate: cubit.dateTime,
+                    initialDate: cubit.dateTime ?? DateTime.now(),
                     firstDate: DateTime.now(),
                     lastDate: DateTime(2024),
                     builder: (context, child) {
@@ -150,10 +173,38 @@ class ReserveOrderScreen extends StatelessWidget {
                       );
                     },
                   ).then((value) {
-                    cubit.changeButtonState(onPressed: (){
-                      cubit.dateTime =value!;
+                    cubit.changeButtonState(onPressed: () {
+                      cubit.dateTime = value!;
                     });
-                  }).catchError((error){
+                    showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay(
+                          hour: cubit.dateTime!.hour,
+                          minute: cubit.dateTime!.minute),
+                      builder: (context, child) {
+                        return Theme(
+                          data: ThemeData().copyWith(
+                            colorScheme: const ColorScheme.light(
+                                primary: AppColorsLightTheme.primaryColor,
+                                secondary: Colors.white),
+                            dialogBackgroundColor: Colors.white,
+                          ),
+                          child: child!,
+                        );
+                      },
+                    ).then((value) {
+                      cubit.changeButtonState(onPressed: () {
+                        cubit.dateTime = DateTime(
+                            cubit.dateTime!.year,
+                            cubit.dateTime!.month,
+                            cubit.dateTime!.day,
+                            value!.hour,
+                            value.minute);
+                      });
+                    }).catchError((error) {
+                      return;
+                    });
+                  }).catchError((error) {
                     return;
                   });
                 },
@@ -168,7 +219,9 @@ class ReserveOrderScreen extends StatelessWidget {
                       width: 5.w,
                     ),
                     Text(
-                      'الرجاء اختيار التوقيت',
+                      cubit.dateTime == null
+                          ? 'الرجاء اختيار التوقيت'
+                          : 'تغيير التوقيت',
                       style: TextStyle(
                           color: const Color(0xff263238),
                           fontFamily: FontPath.almaraiBold,
@@ -176,7 +229,9 @@ class ReserveOrderScreen extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      '202020',
+                      cubit.dateTime == null
+                          ? ''
+                          : Jiffy(cubit.dateTime).yMMMdjm.toString(),
                       style: TextStyle(
                           color: AppColorsLightTheme.searchScreenTextColor,
                           fontFamily: FontPath.almaraiBold,
@@ -204,33 +259,36 @@ class ReserveOrderScreen extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      if(servicesModel.inHome == true&&servicesModel.inCenter== true){
-                        cubit.changeButtonState(onPressed: (){
-                          cubit.reserveOrderStatusInHome = !cubit.reserveOrderStatusInHome;
+                      if (servicesModel.inHome == true &&
+                          servicesModel.inCenter == true) {
+                        cubit.changeButtonState(onPressed: () {
+                          cubit.reserveOrderStatusInHome =
+                              !cubit.reserveOrderStatusInHome;
                         });
                       }
                     },
                     style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,
-                        backgroundColor:
-                        cubit.reserveOrderStatusInHome
+                        backgroundColor: cubit.reserveOrderStatusInHome
                             ? AppColorsLightTheme.primaryColor
-                            : AppColorsLightTheme
-                            .authTextFieldFillColor,
+                            : AppColorsLightTheme.authTextFieldFillColor,
                         padding: EdgeInsets.symmetric(horizontal: 10.w),
                         shape: const StadiumBorder()),
                     child: Text(
-                      cubit.reserveOrderStatusInHome?'الخدمة بالمنزل':'الخدمة بالمركز',
+                      cubit.reserveOrderStatusInHome
+                          ? 'الخدمة بالمنزل'
+                          : 'الخدمة بالمركز',
                       style: TextStyle(
-                          color:
-                          cubit.reserveOrderStatusInHome
+                          color: cubit.reserveOrderStatusInHome
                               ? Colors.white
                               : Colors.grey,
                           fontFamily: FontPath.almaraiRegular,
                           fontSize: 12.sp),
                     ),
                   ),
-                  SizedBox(width: 90.w,),
+                  SizedBox(
+                    width: 90.w,
+                  ),
                 ],
               ),
               SizedBox(
@@ -261,8 +319,8 @@ class ReserveOrderScreen extends StatelessWidget {
                           width: 71.w,
                           padding: EdgeInsets.all(2.r),
                           decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.grey, width: 0.9.w),
+                              border:
+                                  Border.all(color: Colors.grey, width: 0.9.w),
                               shape: BoxShape.circle),
                           child: Image.asset(itemsList[index]['image']),
                         ),
@@ -320,13 +378,33 @@ class ReserveOrderScreen extends StatelessWidget {
                       child: CustomUserButton(
                         buttonTitle: 'اطلب الان',
                         isTapped: () {
-                          Navigator.pushNamed(
-                              context, ScreenName.addAddressScreen);
+                          if (cubit.dateTime == null) {
+                            Fluttertoast.showToast(
+                              msg: 'برجاء اختيار التاريخ',
+                              gravity: ToastGravity.CENTER,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                            );
+                          } else if (cubit.addressModel == null) {
+                            Fluttertoast.showToast(
+                              msg: 'برجاء اختيار العنوان',
+                              gravity: ToastGravity.CENTER,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                            );
+                          } else {
+                            cubit.addOrder(
+                                serviceId: servicesModel.id!,
+                                addressId: cubit.addressModel!.id!,
+                                dateTime: cubit.dateTime!.toIso8601String(),
+                                inHome: cubit.reserveOrderStatusInHome);
+                          }
                         },
                         width: 124.w,
                         paddingVertical: 0,
                         paddingHorizontal: 0,
-                      ),),
+                      ),
+                    ),
                   ],
                 ),
               ),

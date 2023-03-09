@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:touch_of_beauty/features/freelancer/buisness_logic/services_cubit/freelancer_services_cubit.dart';
 
 import '../../../../core/app_router/screens_name.dart';
 import '../../../../core/app_theme/light_theme.dart';
@@ -74,6 +75,7 @@ class FreelancerCentersScreen extends StatelessWidget {
               ),
               const Divider(),
               buildItem1(svgImage: SvgPath.bag, title: 'خدماتي', onTap: (){
+                FreelancerServicesCubit.get(context).getServicesByServiceProviderId();
                 Navigator.pushNamed(context, ScreenName.freelancerServicesScreen);
               }),
               SizedBox(

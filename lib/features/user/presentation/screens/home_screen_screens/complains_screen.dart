@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:touch_of_beauty/features/user/buisness_logic/reservation_cubit/reservation_cubit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
+import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
+import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
 import '../../../../../core/assets_path/font_path.dart';
-import '../../../buisness_logic/reservation_cubit/reservation_state.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/home_screen_widgets/complain_text_field.dart';
 
@@ -17,6 +19,13 @@ class ComplainsScreen extends StatefulWidget {
 class _ComplainsScreenState extends State<ComplainsScreen> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController textController = TextEditingController();
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    textController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +44,18 @@ class _ComplainsScreenState extends State<ComplainsScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: BlocConsumer<ReservationCubit, ReservationState>(
+      body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
-          // TODO: implement listener
+          if(state is SendCompLoading){
+            showProgressIndicator(context);
+          }if(state is SendCompSuccess){
+            Navigator.pop(context);
+            Fluttertoast.showToast(msg: 'تم ارسال الشكوي وسيتم مراجعتها');
+            Navigator.pop(context);
+          }
         },
         builder: (context, state) {
+          var cubit = AuthCubit.get(context);
           return SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -70,7 +86,17 @@ class _ComplainsScreenState extends State<ComplainsScreen> {
                   ),
                   CustomUserButton(
                     buttonTitle: 'ارسال',
-                    isTapped: () {},
+                    isTapped: () {
+                      if(titleController.text == ''&&titleController.text.isEmpty){
+                        Fluttertoast.showToast(msg: 'يجب ادخال عنوان الشكوي');
+                      }
+                      else if(textController.text == ''&&textController.text.isEmpty){
+                        Fluttertoast.showToast(msg: 'يجب نص عنوان الشكوي');
+                      }
+                      else{
+                        cubit.sendComplaint(title: titleController.text, data: textController.text);
+                      }
+                    },
                     width: double.infinity,
                     paddingVertical: 16.h,
                     paddingHorizontal: 45.w,

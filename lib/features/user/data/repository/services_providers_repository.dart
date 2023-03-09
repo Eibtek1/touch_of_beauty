@@ -78,6 +78,18 @@ class ServicesProvidersRepository {
     return response;
   }
 
+  static Future<Response> getFavoriteServiceProviders() async {
+    final response = await DioHelper.getData(
+        url: EndPoints.getFavoriteProviders, bearerToken: token);
+    return response;
+  }
+
+  static Future<Response> getFavoriteService() async {
+    final response = await DioHelper.getData(
+        url: EndPoints.getFavoriteServices, bearerToken: token);
+    return response;
+  }
+
   static Future<Response> getServices({
     int? pageNumber,
     int? pageSize,
@@ -185,7 +197,7 @@ class ServicesProvidersRepository {
   static Future<Response> addOrder({
     required int serviceId,
     required int addressId,
-    required DateTime dateTime,
+    required String dateTime,
     required bool inHome,
   }) async {
     final response = await DioHelper.postData(

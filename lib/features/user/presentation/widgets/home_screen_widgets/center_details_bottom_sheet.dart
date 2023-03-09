@@ -211,20 +211,6 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                   SizedBox(
                     height: 21.h,
                     width: 52.w,
-                    // decoration: BoxDecoration(
-                    //   color:
-                    //       AppColorsLightTheme.secondaryColor.withOpacity(0.3),
-                    //   borderRadius: BorderRadius.circular(11.r),
-                    // ),
-                    // child: Text(
-                    //   'متاح',
-                    //   textAlign: TextAlign.center,
-                    //   style: TextStyle(
-                    //     fontSize: 12.sp,
-                    //     fontFamily: FontPath.almaraiRegular,
-                    //     color: AppColorsLightTheme.secondaryColor,
-                    //   ),
-                    // ),
                   )
                 ],
               ),
@@ -347,7 +333,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
               BlocConsumer<UserServicesCubit, UserServicesState>(
                 listener: (context, state) {
                   var cubit = UserServicesCubit.get(context);
-                  if(state is GetServicesDetailsByItsIdSuccess&&cubit.servicesModel!=null){
+                  if(state is GetServicesDetailsInCentersBottomSheetByItsIdSuccess&&cubit.servicesModel!=null){
                     Navigator.pop(context);
                     showBottomSheet(
                       context: context,
@@ -357,7 +343,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                       },
                     );
                   }
-                  if(state is GetServicesDetailsByItsIdLoadingState){
+                  if(state is GetServicesDetailsInCentersBottomSheetByItsIdLoadingState){
                     showProgressIndicator(context);
                   }
                 },
@@ -370,7 +356,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                           itemBuilder: (BuildContext context, int index) {
                             return InkWell(
                               onTap: (){
-                                cubit.getServicesDetailsByItsId(id: cubit.servicesByMainSectionAndServicesProviderList[index].id!);
+                                cubit.getServicesDetailsInCentersBottomSheetByItsId(id: cubit.servicesByMainSectionAndServicesProviderList[index].id!);
                               },
                               child: CenterServicesCategoryItem(
                                 servicesModel: cubit.servicesByMainSectionAndServicesProviderList[index],
@@ -395,7 +381,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                 onPressed: () {
                   UserServicesCubit.get(context).servicesPageNumber = 1;
                   UserServicesCubit.get(context).getServicesByServiceProviderId(
-                      servicesProviderId: widget.servicesProvidersModel.id);
+                      servicesProviderId: widget.servicesProvidersModel.providerId);
                   Navigator.pushNamed(context, ScreenName.ourServicesScreen,
                       arguments: widget.servicesProvidersModel.id);
                 },

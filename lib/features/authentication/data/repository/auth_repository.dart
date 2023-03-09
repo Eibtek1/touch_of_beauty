@@ -64,6 +64,20 @@ class AuthRepository{
     return response;
   }
 
+  static Future<Response> sendComplains({
+    required String title,
+    required String data,
+  }) async {
+    final response = await DioHelper.postData(
+      url: EndPoints.sendComplain,
+      token: token,
+      data: {
+        'data': data,
+        'title': title,
+      },
+    );
+    return response;
+  }
 
   static Future<Response> vendorUpdateProfile({
     required String? userName,

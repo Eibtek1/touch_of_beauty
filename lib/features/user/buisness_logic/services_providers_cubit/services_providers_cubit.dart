@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:touch_of_beauty/features/authentication/data/models/main_response.dart';
 import 'package:touch_of_beauty/features/user/data/models/paginate_model.dart';
 import 'package:touch_of_beauty/features/user/data/repository/services_providers_repository.dart';
+import '../../data/models/favorites_services_provider_model.dart';
 import '../../data/models/services_providers_model.dart';
 import '../../data/models/slider_model.dart';
 import 'services_providers_state.dart';
@@ -17,17 +18,24 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
   late MainResponse mainResponse;
   ServicesProviderModel? servicesProviderModel;
   PaginateModel? servicesProviderPaginateModel;
+  PaginateModel? searchServicesProviderPaginateModel;
   PaginateModel? featuredServicesProviderPaginateModel;
   PaginateModel? servicesByMainSectionAndServicesProviderPaginateModel;
   Map<dynamic , bool> favorites = {} ;
   int servicesProviderPageNumber = 1;
+  int searchServicesProviderPageNumber = 1;
   int featuredServicesProviderPageNumber = 1;
   int servicesByMainSectionAndServicesProviderPageNumber = 1;
   List<SliderModel> sliderPhotosList =[];
   List<ServicesProviderModel> servicesProvidersList =[];
+  List<ServicesProviderModel> searchServicesProvidersList =[];
   List<ServicesProviderModel> featuredServicesProvidersList =[];
+  List<FavoriteServicesProviderModel> favoritesServicesProvidersList =[];
   bool getSliderPhotosLoading = false;
   bool getFeaturedServicesProviderLoading = false;
+  bool getFavoriteServicesProviderLoading = false;
+  bool searchForServicesProviderLoading = false;
+  String servicesProviderSearchMessage = '';
    void getFeaturedServicesProviders() async{
      if(featuredServicesProviderPageNumber == 1){
        featuredServicesProvidersList = [];
@@ -71,6 +79,7 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
    void getAllServicesProviders() async{
      if(servicesProviderPageNumber == 1){
        servicesProvidersList = [];
+       searchForServicesProviderLoading = true;
        emit(GetAllServicesProvidersLoadingState());
      }
      try{
@@ -98,8 +107,12 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
            servicesProviderPageNumber++;
          }
        }
+       searchForServicesProviderLoading = false;
+
        emit(GetAllServicesProvidersSuccess());
      }catch(error){
+       searchForServicesProviderLoading = false;
+
        emit(GetAllServicesProvidersError(error: error.toString()));
      }
 
@@ -115,6 +128,20 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
        emit(GetServicesProviderDetailsByItsIdSuccess());
      }catch(error){
        emit(GetServicesProviderDetailsByItsIdError(error: error.toString()));
+     }
+
+   }
+
+   void getFavoriteServicesProviderDataByItsId({required String id}) async{
+     servicesProviderModel = null;
+     emit(GetFavoriteServicesProviderDetailsByItsIdLoadingState());
+     try{
+       final response = await ServicesProvidersRepository.getServicesProviderById(id: id);
+       mainResponse = MainResponse.fromJson(response.data);
+       servicesProviderModel = ServicesProviderModel.fromJson(mainResponse.data);
+       emit(GetFavoriteServicesProviderDetailsByItsIdSuccess());
+     }catch(error){
+       emit(GetFavoriteServicesProviderDetailsByItsIdError(error: error.toString()));
      }
 
    }
@@ -139,6 +166,7 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
      final response = await ServicesProvidersRepository.addServicesProviderToFavorite(id: id);
      mainResponse = MainResponse.fromJson(response.data);
      if(mainResponse.errorCode == 0){
+       getFavoritesServicesProviders();
        emit(AddServicesProviderToFavSuccess());
      }else{
        emit(AddServicesProviderToFavError(error: mainResponse.errorMessage.toString()));
@@ -175,4 +203,74 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
 
 
 
+  void searchForServicesProvider({
+    String? searchName,
+  }) async {
+    try {
+      if (searchServicesProviderPageNumber == 1) {
+        searchServicesProviderPaginateModel =null;
+        searchServicesProvidersList = [];
+        searchForServicesProviderLoading = true;
+        emit(GetSearchServicesProvidersLoadingState());
+      }
+      final response = await ServicesProvidersRepository.getServices(
+        pageNumber: searchServicesProviderPageNumber,
+        pageSize: 15,
+        searchName: searchName,
+      );
+      mainResponse = MainResponse.fromJson(response.data);
+      if (mainResponse.errorCode == 0) {
+        searchServicesProviderPaginateModel = PaginateModel.fromJson(mainResponse.data);
+        if(searchServicesProviderPaginateModel!.items !=null){
+          if (searchServicesProviderPageNumber == 1) {
+            for (var element in searchServicesProviderPaginateModel!.items) {
+              searchServicesProvidersList.add(ServicesProviderModel.fromJson(element));
+              if(!favorites.containsKey(element['id'])){
+                favorites.addAll({element['id']: element['isFavourite']});
+              }
+            }
+            searchServicesProviderPageNumber++;
+          } else if (searchServicesProviderPageNumber <= searchServicesProviderPaginateModel!.totalPages!) {
+            for (var element in searchServicesProviderPaginateModel!.items) {
+              searchServicesProvidersList.add(ServicesProviderModel.fromJson(element));
+              if(!favorites.containsKey(element['id'])){
+                favorites.addAll({element['id']: element['isFavourite']});
+              }
+            }
+            searchServicesProviderPageNumber++;
+          }
+        }
+      }else{
+        servicesProviderSearchMessage = mainResponse.errorMessage;
+      }
+
+      searchForServicesProviderLoading = false;
+      emit(GetSearchServicesProvidersSuccess());
+    } catch (error) {
+      print(error.toString());
+      searchForServicesProviderLoading = false;
+      emit(GetSearchServicesProvidersError(error: error.toString()));
+    }
+  }
+
+
+  void getFavoritesServicesProviders() async{
+    getFavoriteServicesProviderLoading = true;
+     emit(GetFavoritesServicesProvidersLoadingState());
+    try{
+      final response = await ServicesProvidersRepository.getFavoriteServiceProviders();
+      mainResponse = MainResponse.fromJson(response.data);
+      for(var element in mainResponse.data){
+        if(!favoritesServicesProvidersList.contains(FavoriteServicesProviderModel.fromJson(element))){
+          favoritesServicesProvidersList.add(FavoriteServicesProviderModel.fromJson(element));
+        }
+      }
+      getFavoriteServicesProviderLoading = false;
+      emit(GetFavoritesServicesProvidersSuccess());
+    }catch(error){
+      getFavoriteServicesProviderLoading = false;
+      print(error.toString());
+      emit(GetFavoritesServicesProvidersError(error: error.toString()));
+    }
+  }
 }

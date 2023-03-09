@@ -30,6 +30,14 @@ class GetServicesByServiceProviderIdError extends UserServicesState {
 
 
 
+class GetFavoritesServicesLoadingState extends UserServicesState {}
+class GetFavoritesServicesSuccess extends UserServicesState {}
+class GetFavoritesServicesError extends UserServicesState {
+  final String error;
+  GetFavoritesServicesError({required this.error});
+}
+
+
 class DeleteServiceFromFavLoading extends UserServicesState {}
 class DeleteServiceFromFavSuccess extends UserServicesState {}
 class DeleteServiceFromFavError extends UserServicesState {
@@ -93,4 +101,12 @@ class GetServicesDetailsByItsIdSuccess extends UserServicesState {}
 class GetServicesDetailsByItsIdError extends UserServicesState {
   final String error;
   GetServicesDetailsByItsIdError({required this.error});
+}
+
+
+class GetServicesDetailsInCentersBottomSheetByItsIdLoadingState extends UserServicesState {}
+class GetServicesDetailsInCentersBottomSheetByItsIdSuccess extends UserServicesState {}
+class GetServicesDetailsInCentersBottomSheetByItsIdError extends UserServicesState {
+  final String error;
+  GetServicesDetailsInCentersBottomSheetByItsIdError({required this.error});
 }

@@ -13,8 +13,9 @@ import '../../../../../core/assets_path/font_path.dart';
 
 class SalonItemBuilder extends StatelessWidget {
   final ServicesProviderModel servicesProviderModel;
+  final bool isFavoriteItemBuilder;
 
-  const SalonItemBuilder({Key? key, required this.servicesProviderModel})
+  const SalonItemBuilder({Key? key, required this.servicesProviderModel, this.isFavoriteItemBuilder = false})
       : super(key: key);
 
   @override
@@ -35,6 +36,7 @@ class SalonItemBuilder extends StatelessWidget {
           ],
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
               children: [
@@ -62,10 +64,16 @@ class SalonItemBuilder extends StatelessWidget {
                     errorWidget: (context, url, error) =>
                     const Icon(Icons.error),
                   ),),
-                Positioned(
+                if(!isFavoriteItemBuilder)Positioned(
                   top: 14.h,
                   left: 14.w,
-                  child: BlocBuilder<ServicesProvidersCubit, ServicesProvidersState>(
+                  child: BlocConsumer<ServicesProvidersCubit, ServicesProvidersState>(
+                    listener: (context, state ){
+                      var cubit = ServicesProvidersCubit.get(context);
+                      if(state is DeleteServicesProviderToFavSuccess){
+                        cubit.favoritesServicesProvidersList.remove(servicesProviderModel);
+                      }
+                    },
                     builder: (context, state) {
                       var cubit = ServicesProvidersCubit.get(context);
                       return InkWell(
@@ -90,28 +98,44 @@ class SalonItemBuilder extends StatelessWidget {
                         ),
                       );
                     },
+                  ),),
+                if(isFavoriteItemBuilder)Positioned(
+                  top: 14.h,
+                  left: 14.w,
+                  child: BlocConsumer<ServicesProvidersCubit, ServicesProvidersState>(
+                    listener: (context, state ){
+                      var cubit = ServicesProvidersCubit.get(context);
+                      if(state is DeleteServicesProviderToFavSuccess){
+                        cubit.favoritesServicesProvidersList.remove(servicesProviderModel);
+                      }
+                    },
+                    builder: (context, state) {
+                      var cubit = ServicesProvidersCubit.get(context);
+                      return InkWell(
+                        onTap: (){
+                            cubit.deleteServicesProviderToFavorite(id: servicesProviderModel.id!);
+                        },
+                        child: CircleAvatar(
+                          radius: 15.r,
+                          backgroundColor: Colors.white,
+                          child: Center(
+                            child: Icon(
+                              Icons.favorite,
+                              color: AppColorsLightTheme.secondaryColor,
+                              size: 23.r,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),)
               ],
             ),
-            Padding(
+            if(!isFavoriteItemBuilder)Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 5.h,
-                  ),
-                  Text(
-                    '{شعر. الأظافر. الوجه}',
-                    style: TextStyle(
-                      fontSize: 8.sp,
-                      fontFamily: FontPath.almaraiRegular,
-                      color: const Color(0xffCCB48C),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5.h,
-                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -153,6 +177,47 @@ class SalonItemBuilder extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+            ),
+            if(isFavoriteItemBuilder)Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${servicesProviderModel.title}',
+                      style: TextStyle(
+                          fontSize: 12.sp,
+                          fontFamily: FontPath.almaraiBold,
+                          color: const Color(0xff1E2432)),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Text(
+                      '${servicesProviderModel.addresses![0].city}',
+                      style: TextStyle(
+                        fontSize: 11.sp,
+                        fontFamily: FontPath.almaraiRegular,
+                        color: const Color(0xff666666),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Expanded(
+                      child: Text(
+                        '${servicesProviderModel.description}',
+                        style: TextStyle(
+                          fontSize: 11.sp,
+                          fontFamily: FontPath.almaraiRegular,
+                          color: const Color(0xff666666),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             )
           ],

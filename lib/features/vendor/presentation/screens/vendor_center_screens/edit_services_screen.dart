@@ -490,7 +490,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                               buttonTitle: 'تعديل',
                               isTapped: () {
                                 if(formKey.currentState!.validate()){
-                                  cubit.addServices(
+                                  cubit.addServicesOfCenter(
                                     titleAr: aNameController.text,
                                     titleEn: eNameController.text,
                                     description: detailsController.text,
