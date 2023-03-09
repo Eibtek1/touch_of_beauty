@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_center_screens/add_services_screen.dart';
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
@@ -93,7 +94,7 @@ class VendorServicesScreen extends StatelessWidget {
                       buttonTitle: 'اضافة خدمة جديدة',
                       isTapped: () {
                         Navigator.pushNamed(
-                            context, ScreenName.vendorAddToServicesScreen);
+                            context, ScreenName.vendorAddToServicesScreen,arguments: AddToServicesArguments(servicesModel: null, type: 0));
                       },
                       width: double.infinity,
                       paddingVertical: 14.h,

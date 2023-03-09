@@ -22,7 +22,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
   AddressModel? addressModel;
 
-  DateTime dateTime = DateTime.now();
+  DateTime? dateTime;
 
   int servicesPageNumber = 1;
 
@@ -287,10 +287,24 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
   }
 
+  void getServicesDetailsInCentersBottomSheetByItsId({required int id}) async{
+    servicesModel = null;
+    emit(GetServicesDetailsInCentersBottomSheetByItsIdLoadingState());
+    try{
+      final response = await ServicesProvidersRepository.getServicesDetailsById(id: id);
+      mainResponse = MainResponse.fromJson(response.data);
+      servicesModel = ServicesModel.fromJson(mainResponse.data);
+      emit(GetServicesDetailsInCentersBottomSheetByItsIdSuccess());
+    }catch(error){
+      emit(GetServicesDetailsInCentersBottomSheetByItsIdError(error: error.toString()));
+    }
+
+  }
+
   void addOrder({
     required int serviceId,
     required int addressId,
-    required DateTime dateTime,
+    required String dateTime,
     required bool inHome,
   })async{
     try{

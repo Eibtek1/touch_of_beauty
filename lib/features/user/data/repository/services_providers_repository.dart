@@ -185,7 +185,7 @@ class ServicesProvidersRepository {
   static Future<Response> addOrder({
     required int serviceId,
     required int addressId,
-    required DateTime dateTime,
+    required String dateTime,
     required bool inHome,
   }) async {
     final response = await DioHelper.postData(

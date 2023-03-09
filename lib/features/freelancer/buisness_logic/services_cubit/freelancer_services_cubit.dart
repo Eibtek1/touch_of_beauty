@@ -7,9 +7,10 @@ import 'freelancer_services_state.dart';
 import '../../../freelancer/data/repository/freelancer_services.dart';
 class FreelancerServicesCubit extends Cubit<FreelancerServicesState> {
   FreelancerServicesCubit() : super(FreelancerServicesInitial());
+
+  static FreelancerServicesCubit get(context) =>BlocProvider.of(context);
   int servicesPageNumber = 1;
   List<ServicesModel> servicesList = [];
-
   late MainResponse mainResponse;
   late PaginateModel paginateModel;
   String errorMessage = '';

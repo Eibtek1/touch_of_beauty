@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_center_screens/add_services_screen.dart';
 
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/app_theme/light_theme.dart';
@@ -10,6 +12,8 @@ import '../../../../../core/assets_path/svg_path.dart';
 import '../../../../freelancer/presentation/widgets/custom_vendor_button.dart';
 import '../../../../user/presentation/widgets/home_screen_widgets/grid_item_builder.dart';
 import '../../../../vendor/presentation/widgets/screen_layout_widget_with_logo.dart';
+import '../../../buisness_logic/services_cubit/freelancer_services_cubit.dart';
+import '../../../buisness_logic/services_cubit/freelancer_services_state.dart';
 
 class FreelancerServicesScreen extends StatelessWidget {
   FreelancerServicesScreen({Key? key}) : super(key: key);
@@ -73,41 +77,56 @@ class FreelancerServicesScreen extends StatelessWidget {
         firstContainerBackgroundHeight: 60.h,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 130.h,
-              ),
-              SizedBox(
-                height: 400.h,
-                child: GridView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: itemsList.length,
-                    gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      childAspectRatio: 1,
-                    ),
-                    itemBuilder: (context, index) => InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, ScreenName.userCategoryDetailsScreen,
-                            arguments: itemsList[index]['title']);
-                      },
-                      child: GridItemBuilder(
-                        model: itemsList[index],
+          child: BlocConsumer<FreelancerServicesCubit, FreelancerServicesState>(
+            listener: (context, state) {
+              // TODO: implement listener
+            },
+            builder: (context, state) {
+              var cubit = FreelancerServicesCubit.get(context);
+              return Column(
+                children: [
+                  SizedBox(
+                    height: 130.h,
+                  ),
+                  SizedBox(
+                    height: 400.h,
+                    child: state is! GetServicesByServiceProviderIdLoading
+                        ? GridView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: cubit.servicesList.length,
+                      gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4,
+                        childAspectRatio: 1,
                       ),
-                    )),
-              ),
-              const Spacer(),
-              CustomVendorButton(buttonTitle: 'اضافة خدمة جديدة', isTapped: (){
-                Navigator.pushNamed(context, ScreenName.vendorAddToServicesScreen);
-              }, width: double.infinity, paddingVertical: 14.h, paddingHorizontal: 45.w),
-              SizedBox(
-                height: 40.h,
-              ),
-            ],
+                      itemBuilder: (context, index) => InkWell(
+                        onTap: () {},
+                        child: GridItemBuilder(
+                          model: cubit.servicesList[index],
+                        ),
+                      ),
+                    )
+                        : const Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    ),
+                  ),
+                  const Spacer(),
+                  CustomVendorButton(
+                      buttonTitle: 'اضافة خدمة جديدة',
+                      isTapped: () {
+                        Navigator.pushNamed(
+                            context, ScreenName.vendorAddToServicesScreen,arguments: AddToServicesArguments(servicesModel: null, type: 1));
+                      },
+                      width: double.infinity,
+                      paddingVertical: 14.h,
+                      paddingHorizontal: 45.w),
+                  SizedBox(
+                    height: 40.h,
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

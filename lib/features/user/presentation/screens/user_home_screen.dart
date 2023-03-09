@@ -204,7 +204,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     height: 15.h,
                   ),
                   BlocConsumer<ServicesProvidersCubit, ServicesProvidersState>(
-                    buildWhen: (p,a)=>p!=a,
+                    buildWhen: (p,c)=>p!=c,
                     listener: (context, state) {
                       var cubit = ServicesProvidersCubit.get(context);
                       if (state is GetFeaturedServicesProviderDetailsByItsIdSuccess && cubit.servicesProviderModel != null) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 
 import '../../../../../../core/assets_path/font_path.dart';
 import '../../../../buisness_logic/services_cubit/services_cubit.dart';
@@ -86,6 +87,33 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                             child: CircularProgressIndicator.adaptive(),
                           ),
                       ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, ScreenName.addAddressScreen);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          size: 28.r,
+                          color: const Color(0xffB83561),
+                        ),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        Text(
+                          'قم بأضافة عنوان جديد',
+                          style: TextStyle(
+                              color: const Color(0xff263238),
+                              fontFamily: FontPath.almaraiBold,
+                              fontSize: 16.sp),
+                        )
+                      ],
+                    ),
+                  ),
                   SizedBox(
                     height: 10.h,
                   ),

@@ -36,3 +36,12 @@ class AddServiceToFavError extends MainFeaturesState {
 }
 
 
+
+
+class GetServicesDetailsByItsIdLoadingState extends MainFeaturesState {}
+class GetServicesDetailsByItsIdSuccess extends MainFeaturesState {}
+class GetServicesDetailsByItsIdError extends MainFeaturesState {
+  final String error;
+  GetServicesDetailsByItsIdError({required this.error});
+}
+

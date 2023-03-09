@@ -5,6 +5,7 @@ import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_state.dart';
 import '../../../../../../core/assets_path/font_path.dart';
+import '../../../../../../core/constants/constants.dart';
 import '../../../../../authentication/presentation/widgets/citeis_dropdown_button.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/home_screen_widgets/complain_text_field.dart';
@@ -27,6 +28,15 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   var formKey = GlobalKey<FormState>();
 
   @override
+  void dispose() {
+    regionController.dispose();
+    streetController.dispose();
+    buildingNumberController.dispose();
+    flatNumberController.dispose();
+    addressDetailsController.dispose();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -47,7 +57,16 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: BlocConsumer<UserServicesCubit, UserServicesState>(
-            listener: (context, state) {},
+            listener: (context, state) {
+              var cubit = UserServicesCubit.get(context);
+              if(state is AddAddressSuccess){
+                Navigator.pop(context);
+                Navigator.pop(context);
+                cubit.getAddress();
+              }else if(state is AddAddressLoading){
+                showProgressIndicator(context);
+              }
+            },
             builder: (context, state) {
               var cubit = UserServicesCubit.get(context);
               return Form(

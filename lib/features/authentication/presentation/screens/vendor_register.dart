@@ -211,6 +211,7 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                   AuthTextFormField(
                     hintText: 'البريد الالكتروني',
                     controller: email,
+
                     validate: (value) {
                       if (value!.isEmpty) {
                         return 'ادخل البريد الالكتروني';
@@ -356,6 +357,7 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                   AuthTextFormField(
                     hintText: 'كلمة المرور',
                     controller: password,
+                    isPassword: true,
                     validate: (value) {
                       if (value!.isEmpty) {
                         return 'ادخل كلمة المرور';
@@ -371,6 +373,7 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                   AuthTextFormField(
                     hintText: 'اعد كتابة كلمة المرور',
                     controller: confirmPassword,
+                    isPassword: true,
                     validate: (value) {
                       if (confirmPassword.text != password.text) {
                         return 'كلمة المرور غير متشابهة';

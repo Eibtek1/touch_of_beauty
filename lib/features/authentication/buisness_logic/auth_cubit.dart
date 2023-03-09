@@ -361,16 +361,15 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void userUpdateProfile({
-    required int cityId,
+     int? cityId,
     required String email,
     required String name,
     required String phoneNumber,
-    required File? image,
   }) async {
     emit(UpdateProfileLoading());
     try {
       await AuthRepository.userUpdateProfile(
-          cityId: cityId,
+          cityId: 1,
           email: email,
           name: name,
           phoneNumber: phoneNumber,

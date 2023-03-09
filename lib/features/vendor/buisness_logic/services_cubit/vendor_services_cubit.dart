@@ -106,7 +106,7 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
     emit(GetChangedMainSectionId());
   }
 
-  void addServices({
+  void addServicesOfCenter({
     required String titleAr,
     required String titleEn,
     required String description,
@@ -129,6 +129,37 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
         mainSectionId: mainSectionId,
         inHome: inHome,
         inCenter: inCenter,
+        isAvailable: isAvailable,
+      );
+      emit(AddServicesSuccess());
+    } catch (error) {
+      emit(AddServicesError(error: error.toString()));
+    }
+  }
+
+  void addServicesOfFreelancer({
+    required String titleAr,
+    required String titleEn,
+    required String description,
+    required double price,
+    required double finalPrice,
+    required int empNumber,
+    required String duration,
+  }) async {
+    emit(AddServicesLoading());
+    try {
+      await VendorServicesRepository.addServices(
+        titleAr: titleAr,
+        titleEn: titleEn,
+        description: description,
+        image: servicesImage,
+        price: price,
+        finalPrice: finalPrice,
+        empNumber: empNumber,
+        duration: duration,
+        mainSectionId: mainSectionId,
+        inHome: true,
+        inCenter: false,
         isAvailable: isAvailable,
       );
       emit(AddServicesSuccess());

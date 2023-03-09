@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
+import 'package:touch_of_beauty/features/freelancer/buisness_logic/services_cubit/freelancer_services_cubit.dart';
 import 'package:touch_of_beauty/features/user/data/models/services_model.dart';
 import 'package:touch_of_beauty/features/vendor/buisness_logic/services_cubit/vendor_services_cubit.dart';
 import 'package:touch_of_beauty/features/vendor/buisness_logic/services_cubit/vendor_services_state.dart';
@@ -15,10 +16,16 @@ import '../../../../freelancer/presentation/widgets/custom_vendor_button.dart';
 import '../../widgets/center_details/custo_text_form_field.dart';
 import '../../widgets/main_section_drop_down.dart';
 import '../../widgets/screen_layout_widget_with_logo.dart';
+class AddToServicesArguments{
+  final ServicesModel? servicesModel;
+  final int type;
 
+  AddToServicesArguments({required this.servicesModel, required this.type});
+}
 class AddServicesScreen extends StatefulWidget {
   final ServicesModel? servicesModel;
-  const AddServicesScreen({Key? key, this.servicesModel}) : super(key: key);
+  final int type;
+  const AddServicesScreen({Key? key, this.servicesModel, required this.type}) : super(key: key);
 
   @override
   State<AddServicesScreen> createState() => _AddServicesScreenState();
@@ -58,6 +65,11 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
           cubit.servicesImage = null;
           cubit.getServicesByServiceProviderId();
           Navigator.pop(context);
+          if(widget.type == 1){
+            FreelancerServicesCubit.get(context).servicesPageNumber = 1;
+            cubit.servicesImage = null;
+            FreelancerServicesCubit.get(context).getServicesByServiceProviderId();
+          }
         }else if(state is AddServicesLoading){
           showProgressIndicator(context);
         }else if(state is AddServicesError){
@@ -360,7 +372,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                           SizedBox(
                             height: 20.h,
                           ),
-                          Text(
+                          if(widget.type == 0)Text(
                             'نوع الخدمة',
                             style: TextStyle(
                               fontSize: 14.sp,
@@ -368,10 +380,10 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                               color: const Color(0xff3C475C),
                             ),
                           ),
-                          SizedBox(
+                          if(widget.type == 0)SizedBox(
                             height: 5.h,
                           ),
-                          Padding(
+                          if(widget.type == 0)Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10.w),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -492,19 +504,36 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                               buttonTitle: 'اضافة',
                               isTapped: () {
                                 if(formKey.currentState!.validate()){
-                                  cubit.addServices(
-                                    titleAr: aNameController.text,
-                                    titleEn: eNameController.text,
-                                    description: detailsController.text,
-                                    price: double.parse(
-                                        priceController.text.toString()),
-                                    finalPrice: double.parse(
-                                        finalPriceController.text.toString()),
-                                    empNumber: double.parse(
-                                        emNumberController.text.toString())
-                                        .round(),
-                                    duration: timeController.text,
-                                  );
+                                  if(widget.type == 0){
+                                    cubit.addServicesOfCenter(
+                                      titleAr: aNameController.text,
+                                      titleEn: eNameController.text,
+                                      description: detailsController.text,
+                                      price: double.parse(
+                                          priceController.text.toString()),
+                                      finalPrice: double.parse(
+                                          finalPriceController.text.toString()),
+                                      empNumber: double.parse(
+                                          emNumberController.text.toString())
+                                          .round(),
+                                      duration: timeController.text,
+                                    );
+                                  }else if(widget.type == 1){
+                                    cubit.addServicesOfFreelancer(
+                                      titleAr: aNameController.text,
+                                      titleEn: eNameController.text,
+                                      description: detailsController.text,
+                                      price: double.parse(
+                                          priceController.text.toString()),
+                                      finalPrice: double.parse(
+                                          finalPriceController.text.toString()),
+                                      empNumber: double.parse(
+                                          emNumberController.text.toString())
+                                          .round(),
+                                      duration: timeController.text,
+                                    );
+                                  }
+
                                 }
                               },
                               width: double.infinity,

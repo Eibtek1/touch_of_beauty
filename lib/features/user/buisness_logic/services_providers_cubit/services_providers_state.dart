@@ -27,6 +27,13 @@ class GetAllServicesProvidersError extends ServicesProvidersState {
   GetAllServicesProvidersError({required this.error});
 }
 
+class GetSearchServicesProvidersLoadingState extends ServicesProvidersState {}
+class GetSearchServicesProvidersSuccess extends ServicesProvidersState {}
+class GetSearchServicesProvidersError extends ServicesProvidersState {
+  final String error;
+  GetSearchServicesProvidersError({required this.error});
+}
+
 class GetServicesProviderDetailsByItsIdLoadingState extends ServicesProvidersState {}
 class GetServicesProviderDetailsByItsIdSuccess extends ServicesProvidersState {}
 class GetServicesProviderDetailsByItsIdError extends ServicesProvidersState {

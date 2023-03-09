@@ -229,6 +229,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                   AuthTextFormField(
                     hintText: 'كلمة المرور',
                     controller: password,
+                    isPassword: true,
                     validate: (value) {
                       if (value!.isEmpty) {
                         return 'ادخل كلمة المرور';
@@ -244,6 +245,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                   AuthTextFormField(
                     hintText: 'اعد كتابة كلمة المرور',
                     controller: confirmPassword,
+                    isPassword: true,
                     validate: (value) {
                       if (confirmPassword.text != password.text) {
                         return 'كلمة المرور غير متشابهة';

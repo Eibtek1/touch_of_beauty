@@ -94,3 +94,11 @@ class GetServicesDetailsByItsIdError extends UserServicesState {
   final String error;
   GetServicesDetailsByItsIdError({required this.error});
 }
+
+
+class GetServicesDetailsInCentersBottomSheetByItsIdLoadingState extends UserServicesState {}
+class GetServicesDetailsInCentersBottomSheetByItsIdSuccess extends UserServicesState {}
+class GetServicesDetailsInCentersBottomSheetByItsIdError extends UserServicesState {
+  final String error;
+  GetServicesDetailsInCentersBottomSheetByItsIdError({required this.error});
+}

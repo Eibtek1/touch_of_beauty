@@ -66,6 +66,16 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                 gravity: ToastGravity.CENTER,
               );
             }
+            if(state is GetServicesDetailsByItsIdSuccess&&cubit.servicesModel!=null){
+              Navigator.pop(context);
+              showBottomSheet(
+                context: context,
+                builder: (context) {
+                  return ServicesBottomSheet(
+                      servicesModel: cubit.servicesModel!);
+                },
+              );
+            }
           },
           builder: (context, state) {
             var cubit = MainFeaturesCubit.get(context);
@@ -123,31 +133,31 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                   height: 20.h,
                 ),
                 const Divider(),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.location_on,
-                        size: 20.r,
-                        color: const Color(0xffB83561),
-                      ),
-                      SizedBox(
-                        width: 5.w,
-                      ),
-                      Text(
-                        'الرجاء اختيار عنوانك',
-                        style: TextStyle(
-                            color: const Color(0xff263238),
-                            fontFamily: FontPath.almaraiBold,
-                            fontSize: 12.sp),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 18.h,
-                ),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 20.w),
+                //   child: Row(
+                //     children: [
+                //       Icon(
+                //         Icons.location_on,
+                //         size: 20.r,
+                //         color: const Color(0xffB83561),
+                //       ),
+                //       SizedBox(
+                //         width: 5.w,
+                //       ),
+                //       Text(
+                //         'الرجاء اختيار عنوانك',
+                //         style: TextStyle(
+                //             color: const Color(0xff263238),
+                //             fontFamily: FontPath.almaraiBold,
+                //             fontSize: 12.sp),
+                //       )
+                //     ],
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 18.h,
+                // ),
                 SizedBox(
                   height: 20.h,
                 ),
@@ -167,19 +177,7 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                                   vertical: 10.h, horizontal: 20.w),
                               child: InkWell(
                                 onTap: () {
-                                  showBottomSheet(
-                                    context: context,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(25.0.r),
-                                      ),
-                                    ),
-                                    builder: (context) => ServicesBottomSheet(
-                                        servicesModel:
-                                            cubit.searchList.isNotEmpty
-                                                ? cubit.searchList[index]
-                                                : cubit.servicesList[index]),
-                                  );
+                                  cubit.getServicesDetailsByItsId(id: cubit.searchList.isNotEmpty?cubit.searchList[index].id!:cubit.servicesList[index].id!);
                                 },
                                 child: CenterCategoryItem(
                                   servicesModel: cubit.searchList.isNotEmpty
