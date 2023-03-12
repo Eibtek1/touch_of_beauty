@@ -29,7 +29,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
   int searchServicesPageNumber = 1;
 
-  String servicesSearchMessage ='';
+  String servicesSearchMessage = '';
 
   late CitiesModel citiesModel;
 
@@ -40,10 +40,10 @@ class UserServicesCubit extends Cubit<UserServicesState> {
   List<ServicesModel> searchList = [];
   List<FavoriteServicesModel> favoriteServicesList = [];
 
-  List<ServicesModel> servicesByMainSectionAndServicesProviderList =[];
+  List<ServicesModel> servicesByMainSectionAndServicesProviderList = [];
   bool getFavoriteServicesLoading = false;
 
-  Map<dynamic , bool> favorites = {} ;
+  Map<dynamic, bool> favorites = {};
 
   List<CitiesModel> citiesList = [];
 
@@ -75,8 +75,6 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     emit(ChangeButtonState());
   }
 
-
-
   void onCityChanged(CitiesModel value) {
     citiesModel = value;
     emit(GetChangedCity());
@@ -96,21 +94,21 @@ class UserServicesCubit extends Cubit<UserServicesState> {
   }
 
   void getServicesByServiceProviderId({
-     int? cityId,
-     int? mainSectionId,
-     int? serviceTypeDto,
-     int? maxPrice,
-     int? minPrice,
-     String? servicesProviderName,
-     String? servicesProviderId,
-     String? searchName,
-     bool? inHome,
-     bool? inCenter,
-     bool? orderFromNew,
+    int? cityId,
+    int? mainSectionId,
+    int? serviceTypeDto,
+    int? maxPrice,
+    int? minPrice,
+    String? servicesProviderName,
+    String? servicesProviderId,
+    String? searchName,
+    bool? inHome,
+    bool? inCenter,
+    bool? orderFromNew,
   }) async {
     try {
       if (servicesPageNumber == 1) {
-        paginateModel =null;
+        paginateModel = null;
         servicesList = [];
         emit(GetServicesByServiceProviderIdLoading());
       }
@@ -131,11 +129,11 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       mainResponse = MainResponse.fromJson(response.data);
       if (mainResponse.errorCode == 0) {
         paginateModel = PaginateModel.fromJson(mainResponse.data);
-        if(paginateModel!.items !=null){
+        if (paginateModel!.items != null) {
           if (servicesPageNumber == 1) {
             for (var element in paginateModel!.items) {
               servicesList.add(ServicesModel.fromJson(element));
-              if(!favorites.containsKey(element['id'])){
+              if (!favorites.containsKey(element['id'])) {
                 favorites.addAll({element['id']: element['isFavourite']});
               }
             }
@@ -143,62 +141,62 @@ class UserServicesCubit extends Cubit<UserServicesState> {
           } else if (servicesPageNumber <= paginateModel!.totalPages!) {
             for (var element in paginateModel!.items) {
               servicesList.add(ServicesModel.fromJson(element));
-              if(!favorites.containsKey(element['id'])){
+              if (!favorites.containsKey(element['id'])) {
                 favorites.addAll({element['id']: element['isFavourite']});
               }
             }
             servicesPageNumber++;
           }
         }
-      }else{
+      } else {
         servicesSearchMessage = mainResponse.errorMessage;
       }
       emit(GetServicesByServiceProviderIdSuccess());
     } catch (error) {
-
       emit(GetServicesByServiceProviderIdError(error: error.toString()));
     }
   }
 
   void searchForServicesOfServicesProviderByItsId({
-     String? servicesProviderId,
-     String? searchName,
+    String? servicesProviderId,
+    String? searchName,
   }) async {
     try {
       if (searchServicesPageNumber == 1) {
-        searchPaginateModel =null;
+        searchPaginateModel = null;
         searchList = [];
         emit(GetServicesByServiceProviderIdLoading());
       }
       final response = await ServicesProvidersRepository.getServices(
-          pageNumber: searchServicesPageNumber,
-          pageSize: 15,
-          servicesProviderId: servicesProviderId,
-          searchName: searchName,
-          );
+        pageNumber: searchServicesPageNumber,
+        pageSize: 15,
+        servicesProviderId: servicesProviderId,
+        searchName: searchName,
+      );
       mainResponse = MainResponse.fromJson(response.data);
       if (mainResponse.errorCode == 0) {
         searchPaginateModel = PaginateModel.fromJson(mainResponse.data);
-        if(searchPaginateModel!.items !=null){
+        if (searchPaginateModel!.items != null) {
           if (searchServicesPageNumber == 1) {
             for (var element in searchPaginateModel!.items) {
               searchList.add(ServicesModel.fromJson(element));
-              if(!favorites.containsKey(element['id'])){
+              if (!favorites.containsKey(element['id'])) {
                 favorites.addAll({element['id']: element['isFavourite']});
               }
             }
             searchServicesPageNumber++;
-          } else if (searchServicesPageNumber <= searchPaginateModel!.totalPages!) {
+          } else if (searchServicesPageNumber <=
+              searchPaginateModel!.totalPages!) {
             for (var element in searchPaginateModel!.items) {
               searchList.add(ServicesModel.fromJson(element));
-              if(!favorites.containsKey(element['id'])){
+              if (!favorites.containsKey(element['id'])) {
                 favorites.addAll({element['id']: element['isFavourite']});
               }
             }
             searchServicesPageNumber++;
           }
         }
-      }else{
+      } else {
         servicesSearchMessage = mainResponse.errorMessage;
       }
       emit(GetServicesByServiceProviderIdSuccess());
@@ -206,68 +204,74 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       emit(GetServicesByServiceProviderIdError(error: error.toString()));
     }
   }
-  void getFavoritesServicesProviders() async{
+
+  void getFavoritesServices() async {
     getFavoriteServicesLoading = true;
     emit(GetFavoritesServicesLoadingState());
-    try{
+    try {
       final response = await ServicesProvidersRepository.getFavoriteService();
       mainResponse = MainResponse.fromJson(response.data);
-      for(var element in mainResponse.data){
-        if(!favoriteServicesList.contains(FavoriteServicesModel.fromJson(element))){
+      for (var element in mainResponse.data) {
+        if (!favoriteServicesList.contains(FavoriteServicesModel.fromJson(element))) {
           favoriteServicesList.add(FavoriteServicesModel.fromJson(element));
+        }
+        if (!favorites.containsKey(element['serviceId'])) {
+          favorites.addAll({element['serviceId']: true});
         }
       }
       getFavoriteServicesLoading = false;
       emit(GetFavoritesServicesSuccess());
-    }catch(error){
+    } catch (error) {
       getFavoriteServicesLoading = false;
       emit(GetFavoritesServicesError(error: error.toString()));
     }
   }
 
-
-
-
-
-  void addServicesProviderToFavorite({required int id})async{
+  void addServicesProviderToFavorite({required int id}) async {
     favorites[id] = !favorites[id]!;
     emit(AddServiceToFavLoading());
-    final response = await ServicesProvidersRepository.addServiceToFavorite(id: id);
+    final response =
+        await ServicesProvidersRepository.addServiceToFavorite(id: id);
     mainResponse = MainResponse.fromJson(response.data);
-    if(mainResponse.errorCode == 0){
+    if (mainResponse.errorCode == 0) {
       emit(AddServiceToFavSuccess());
-      getFavoritesServicesProviders();
-    }else{
+      getFavoritesServices();
+    } else {
       emit(AddServiceToFavError(error: mainResponse.errorMessage.toString()));
     }
   }
 
-  void deleteServicesProviderToFavorite({required int id})async{
+  void deleteServicesProviderToFavorite({required int id}) async {
     favorites[id] = !favorites[id]!;
+    favoriteServicesList.removeWhere((element) => element.serviceId == id);
     emit(DeleteServiceFromFavLoading());
-    final response = await ServicesProvidersRepository.deleteServiceFromFavorite(id: id);
+    final response =
+        await ServicesProvidersRepository.deleteServiceFromFavorite(id: id);
     mainResponse = MainResponse.fromJson(response.data);
-    if(mainResponse.errorCode == 0){
+    if (mainResponse.errorCode == 0) {
       emit(DeleteServiceFromFavSuccess());
-      getFavoritesServicesProviders();
-    }else{
-      emit(DeleteServiceFromFavError(error: mainResponse.errorMessage.toString()));
+      getFavoritesServices();
+    } else {
+      emit(DeleteServiceFromFavError(
+          error: mainResponse.errorMessage.toString()));
     }
   }
 
-  void deleteServicesProviderToFavorite2({required int id})async{
+  void deleteServicesProviderToFavorite2({required int id}) async {
+    favorites[id] = !favorites[id]!;
+    favoriteServicesList.removeWhere((element) => element.serviceId == id);
     emit(DeleteServiceFromFavLoading());
-    final response = await ServicesProvidersRepository.deleteServiceFromFavorite(id: id);
+    final response =
+        await ServicesProvidersRepository.deleteServiceFromFavorite(id: id);
     mainResponse = MainResponse.fromJson(response.data);
-    if(mainResponse.errorCode == 0){
+    if (mainResponse.errorCode == 0) {
       favorites.remove([id]);
       emit(DeleteServiceFromFavSuccess());
-    }else{
-      emit(DeleteServiceFromFavError(error: mainResponse.errorMessage.toString()));
+    } else {
+      emit(DeleteServiceFromFavError(
+          error: mainResponse.errorMessage.toString()));
     }
   }
-
-
 
   void getServicesByMainSectionAndServicesProvidersId({
     required String servicesProviderId,
@@ -284,12 +288,16 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       );
       mainResponse = MainResponse.fromJson(response.data);
       if (mainResponse.errorCode == 0) {
-        servicesByMainSectionAndServicesProviderPaginateModel = PaginateModel.fromJson(mainResponse.data);
-        if(servicesByMainSectionAndServicesProviderPaginateModel!.items !=null){
+        servicesByMainSectionAndServicesProviderPaginateModel =
+            PaginateModel.fromJson(mainResponse.data);
+        if (servicesByMainSectionAndServicesProviderPaginateModel!.items !=
+            null) {
           servicesByMainSectionAndServicesProviderList.clear();
-          for (var element in servicesByMainSectionAndServicesProviderPaginateModel!.items) {
-            servicesByMainSectionAndServicesProviderList.add(ServicesModel.fromJson(element));
-            if(!favorites.containsKey(element['id'])){
+          for (var element
+              in servicesByMainSectionAndServicesProviderPaginateModel!.items) {
+            servicesByMainSectionAndServicesProviderList
+                .add(ServicesModel.fromJson(element));
+            if (!favorites.containsKey(element['id'])) {
               favorites.addAll({element['id']: element['isFavourite']});
             }
           }
@@ -303,39 +311,45 @@ class UserServicesCubit extends Cubit<UserServicesState> {
   }
 
   int tabBarCIndex = 0;
-  void changeTabBarCurrentIndex(int index,{ required String servicesProviderId,
-    required int mainSectionId,}){
+
+  void changeTabBarCurrentIndex(
+    int index, {
+    required String servicesProviderId,
+    required int mainSectionId,
+  }) {
     tabBarCIndex = index;
-    getServicesByMainSectionAndServicesProvidersId(servicesProviderId: servicesProviderId, mainSectionId: mainSectionId);
+    getServicesByMainSectionAndServicesProvidersId(
+        servicesProviderId: servicesProviderId, mainSectionId: mainSectionId);
     emit(ChangedTabBarCurrentIndex());
   }
 
-  void getServicesDetailsByItsId({required int id}) async{
+  void getServicesDetailsByItsId({required int id}) async {
     servicesModel = null;
     emit(GetServicesDetailsByItsIdLoadingState());
-    try{
-      final response = await ServicesProvidersRepository.getServicesDetailsById(id: id);
+    try {
+      final response =
+          await ServicesProvidersRepository.getServicesDetailsById(id: id);
       mainResponse = MainResponse.fromJson(response.data);
       servicesModel = ServicesModel.fromJson(mainResponse.data);
       emit(GetServicesDetailsByItsIdSuccess());
-    }catch(error){
+    } catch (error) {
       emit(GetServicesDetailsByItsIdError(error: error.toString()));
     }
-
   }
 
-  void getServicesDetailsInCentersBottomSheetByItsId({required int id}) async{
+  void getServicesDetailsInCentersBottomSheetByItsId({required int id}) async {
     servicesModel = null;
     emit(GetServicesDetailsInCentersBottomSheetByItsIdLoadingState());
-    try{
-      final response = await ServicesProvidersRepository.getServicesDetailsById(id: id);
+    try {
+      final response =
+          await ServicesProvidersRepository.getServicesDetailsById(id: id);
       mainResponse = MainResponse.fromJson(response.data);
       servicesModel = ServicesModel.fromJson(mainResponse.data);
       emit(GetServicesDetailsInCentersBottomSheetByItsIdSuccess());
-    }catch(error){
-      emit(GetServicesDetailsInCentersBottomSheetByItsIdError(error: error.toString()));
+    } catch (error) {
+      emit(GetServicesDetailsInCentersBottomSheetByItsIdError(
+          error: error.toString()));
     }
-
   }
 
   void addOrder({
@@ -343,20 +357,22 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     required int addressId,
     required String dateTime,
     required bool inHome,
-  })async{
-    try{
+  }) async {
+    try {
       emit(AddOrderLoading());
-      final response = await ServicesProvidersRepository.addOrder(serviceId: serviceId, addressId: addressId, dateTime: dateTime, inHome: inHome);
+      final response = await ServicesProvidersRepository.addOrder(
+          serviceId: serviceId,
+          addressId: addressId,
+          dateTime: dateTime,
+          inHome: inHome);
       mainResponse = MainResponse.fromJson(response.data);
-      if(mainResponse.errorCode == 0){
+      if (mainResponse.errorCode == 0) {
         emit(AddOrderSuccess());
       }
-    }catch(error){
+    } catch (error) {
       emit(AddOrderError(error: error.toString()));
     }
   }
-
-
 
   void addAddress({
     required String region,
@@ -364,50 +380,58 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     required String buildingNumber,
     required String flatNumber,
     required String addressDetails,
-  })async{
-    try{
+  }) async {
+    try {
       emit(AddAddressLoading());
-      final response = await ServicesProvidersRepository.addAddress(cityId: citiesModel.id!, region: region, street: street, buildingNumber: buildingNumber, flatNumber: flatNumber, addressDetails: addressDetails);
+      final response = await ServicesProvidersRepository.addAddress(
+        cityId: citiesModel.id!,
+        region: region,
+        street: street,
+        buildingNumber: buildingNumber,
+        flatNumber: flatNumber,
+        addressDetails: addressDetails,
+      );
       mainResponse = MainResponse.fromJson(response.data);
-      if(mainResponse.errorCode == 0){
+      if (mainResponse.errorCode == 0) {
         emit(AddAddressSuccess());
       }
-    }catch(error){
+    } catch (error) {
       emit(AddAddressError(error: error.toString()));
     }
   }
 
   void deleteAddress({
-  required int id,
-  })async{
-    try{
+    required int id,
+  }) async {
+    try {
       emit(DeleteAddressLoading());
       final response = await ServicesProvidersRepository.deleteAddress(id: id);
       mainResponse = MainResponse.fromJson(response.data);
-      if(mainResponse.errorCode == 0){
+      if (mainResponse.errorCode == 0) {
         emit(DeleteAddressSuccess());
       }
-    }catch(error){
+    } catch (error) {
       emit(DeleteAddressError(error: error.toString()));
     }
   }
 
   List<AddressModel> addressList = [];
-  void getAddress()async{
-    try{
+
+  void getAddress() async {
+    try {
       emit(GetAddressLoading());
       final response = await ServicesProvidersRepository.getAddress();
       mainResponse = MainResponse.fromJson(response.data);
-      if(mainResponse.errorCode == 0){
+      if (mainResponse.errorCode == 0) {
         addressList = [];
-        for(var element in mainResponse.data){
-          addressList.add(AddressModel.fromJson(element,mainResponse.data.indexOf(element)));
+        for (var element in mainResponse.data) {
+          addressList.add(AddressModel.fromJson(
+              element, mainResponse.data.indexOf(element)));
         }
       }
       emit(GetAddressSuccess());
-    }catch(error){
+    } catch (error) {
       emit(GetAddressError(error: error.toString()));
     }
   }
-
 }

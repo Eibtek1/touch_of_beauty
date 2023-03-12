@@ -61,6 +61,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             color: AppColorsLightTheme.primaryColor),
                         child: Row(
                           children: [
+                          SizedBox(
+                          height: 22.h,
+                          width: 22.w,
+                          ),
                             Expanded(
                               child: Text(
                                 'الملف الشخصي',
@@ -71,15 +75,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                     fontSize: 20.sp),
                               ),
                             ),
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, ScreenName.editProfileScreen);
+                            SizedBox(
+                              height: 22.h,
+                              width: 22.w,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, ScreenName.editProfileScreen);
                                 },
-                                icon: SvgPicture.asset(
+                                child: SvgPicture.asset(
                                   SvgPath.editIcon,
                                   width: 22.w,
                                   height: 22.w,
-                                ))
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),

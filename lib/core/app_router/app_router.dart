@@ -7,6 +7,7 @@ import 'package:touch_of_beauty/features/authentication/presentation/screens/otp
 import 'package:touch_of_beauty/features/authentication/presentation/screens/user_register.dart';
 import 'package:touch_of_beauty/features/intro_screens/screens/onboarding_screen.dart';
 import 'package:touch_of_beauty/features/intro_screens/screens/splash_screen.dart';
+import 'package:touch_of_beauty/features/user/presentation/screens/favorites_services_screen.dart';
 import 'package:touch_of_beauty/features/user/presentation/screens/home_screen_screens/search_screen.dart';
 import 'package:touch_of_beauty/features/user/presentation/screens/user_main_layout.dart';
 import '../../features/authentication/presentation/screens/vendor_register.dart';
@@ -100,9 +101,11 @@ class AppRouter {
         case ScreenName.centerWorkingTimeScreen:
           return _animateRouteBuilder( const CenterWorkingTimeScreen());
         case ScreenName.detailsCenterScreen:
-          return _animateRouteBuilder( CenterDetailsScreen());
+          return _animateRouteBuilder( const CenterDetailsScreen());
         case ScreenName.loginScreen:
           return _animateRouteBuilder(const LoginScreen());
+        case ScreenName.favoritesServicesScreen:
+          return _animateRouteBuilder(const FavoritesServicesScreen());
         case ScreenName.userRegister:
           return _animateRouteBuilder(const UserRegisterScreen());
         case ScreenName.vendorRegister:

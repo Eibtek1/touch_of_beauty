@@ -1,25 +1,4 @@
-class GetServicesProviderModel {
-  int? currentPage;
-  int? totalItems;
-  int? totalPages;
-  List<ServicesProviderModel>? items;
 
-  GetServicesProviderModel(
-      {this.currentPage, this.totalItems, this.totalPages, this.items});
-
-  GetServicesProviderModel.fromJson(Map<String, dynamic> json) {
-    currentPage = json['currentPage'];
-    totalItems = json['totalItems'];
-    totalPages = json['totalPages'];
-    if (json['items'] != null) {
-      items = <ServicesProviderModel>[];
-      json['items'].forEach((v) {
-        items!.add(ServicesProviderModel.fromJson(v));
-      });
-    }
-  }
-
-}
 
 class ServicesProviderModel {
   String? id;

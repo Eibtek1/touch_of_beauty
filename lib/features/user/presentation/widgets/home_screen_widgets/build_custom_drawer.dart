@@ -1,14 +1,19 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
-import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
 
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
-import '../../../../../core/assets_path/images_path.dart';
 import '../../../../../core/constants/constants.dart';
+import '../../../../../core/network/api_end_points.dart';
 import '../../../../authentication/buisness_logic/auth_cubit.dart';
+import '../../../../authentication/buisness_logic/auth_state.dart';
+import '../../../buisness_logic/main_cubit/main_cubit.dart';
+import '../../../buisness_logic/main_cubit/main_state.dart' as main_state;
 
 class AppDrawer extends StatelessWidget {
   final Function closeDrawer;
@@ -21,10 +26,11 @@ class AppDrawer extends StatelessWidget {
       backgroundColor: AppColorsLightTheme.primaryColor,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 25.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
-            SizedBox(height: 47.h,),
+            SizedBox(
+              height: 30.h,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -42,107 +48,212 @@ class AppDrawer extends StatelessWidget {
                     ),
                     child: Center(
                       child: Icon(
-                        Icons.cancel_outlined, color: const Color(0xffB83561),
-                        size: 24.r,),
+                        Icons.cancel_outlined,
+                        color: const Color(0xffB83561),
+                        size: 24.r,
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 43.h,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  height: 50.h,
-                  width: 50.w,
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  child: Image.asset(
-                    ImagePath.hairCare,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Text(
-                  'سارة احمد',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: FontPath.almaraiBold,
-                      fontSize: 14.sp),
-                )
-              ],
+            SizedBox(
+              height: 30.h,
             ),
-            SizedBox(height: 47.h,),
-            Text(
-              'من نحن',
-              style: TextStyle(
-                  fontSize: 14.sp,
-                  fontFamily: FontPath.almaraiLight,
-                  color: Colors.white),
+            BlocConsumer<MainCubit, main_state.MainState>(
+              listener: (context, state) {},
+              builder: (context, states) {
+                var cubit = MainCubit.get(context);
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 50.h,
+                      width: 50.w,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: cubit.getUserModel == null?Shimmer.fromColors(
+                        baseColor: Colors.grey[400]!,
+                        highlightColor: Colors.grey[300]!,
+                        child: Container(
+                          height: double.infinity,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                      ):CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        imageUrl: "${EndPoints.imageBaseUrl}${cubit.getUserModel!.userImgUrl}",
+                        placeholder: (context, url) => Shimmer.fromColors(
+                          baseColor: Colors.grey[400]!,
+                          highlightColor: Colors.grey[300]!,
+                          child: Container(
+                            height: double.infinity,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      ),
+                      // Image.asset(
+                      //   ImagePath.hairCare,
+                      //   fit: BoxFit.cover,
+                      // ),
+                    ),
+                    SizedBox(
+                      width: 5.w,
+                    ),
+                    Expanded(
+                      child: states is! main_state.GetUserDataLoading
+                          ? Text(
+                              '${cubit.getUserModel!.fullName}',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: FontPath.almaraiBold,
+                                  fontSize: 14.sp),
+                            )
+                          : Shimmer.fromColors(
+                              baseColor: Colors.grey[400]!,
+                              highlightColor: Colors.grey[300]!,
+                              child: Container(
+                                height: 20.h,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[400],
+                                  // borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                            ),
+                    )
+                  ],
+                );
+              },
             ),
-            SizedBox(height: 27.h,),
-            Text(
-              'ما هي مهمتنا',
-              style: TextStyle(
-                  fontSize: 14.sp,
-                  fontFamily: FontPath.almaraiLight,
-                  color: Colors.white),
+            SizedBox(
+              height: 47.h,
             ),
-            SizedBox(height: 27.h,),
-            Text(
-              'اتصل بنا',
-              style: TextStyle(
-                  fontSize: 14.sp,
-                  fontFamily: FontPath.almaraiLight,
-                  color: Colors.white),
+            buildTitleWidget(
+              onTap: () {},
+              title: 'الصفحة الرئيسية',
             ),
-            SizedBox(height: 27.h,),
-            InkWell(
+            SizedBox(
+              height: 15.h,
+            ),
+            buildTitleWidget(
+              onTap: () {},
+              title: 'الحجوزات',
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            buildTitleWidget(
+              onTap: () {
+                UserServicesCubit.get(context).getFavoritesServices();
+                Navigator.pushNamed(context, ScreenName.favoritesServicesScreen);
+              },
+              title: 'المفضلة',
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            const Divider(
+              color: Colors.white,
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            buildTitleWidget(
+              onTap: () {},
+              title: 'تفضيلات التطبيق',
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            buildTitleWidget(
+              onTap: () {},
+              title: 'حساب',
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            buildTitleWidget(
+              onTap: () {},
+              title: 'اللغات',
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            const Divider(
+              color: Colors.white,
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            buildTitleWidget(
+              onTap: () {},
+              title: 'المساعدة والخصوصية',
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            buildTitleWidget(
+              onTap: () {},
+              title: 'سياسة خصوصية',
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            buildTitleWidget(
               onTap: () {
                 Navigator.pushNamed(context, ScreenName.complainsScreen);
               },
-              child: Text(
-                'تقديم شكوى',
-                style: TextStyle(
-                    fontSize: 14.sp,
-                    fontFamily: FontPath.almaraiLight,
-                    color: Colors.white),
-              ),
+              title: 'الشكاوي',
             ),
-            SizedBox(height: 15.h,),
-            Container(
-              height: 1.h,
-              width: double.infinity,
-              color: Colors.white,
+            SizedBox(
+              height: 100.h,
             ),
-            SizedBox(height: 200.h,),
             BlocConsumer<AuthCubit, AuthState>(
               listener: (context, state) {
-                if(state is LogoutLoading){
+                if (state is LogoutLoading) {
                   showProgressIndicator(context);
                 }
-                if(state is LogoutError){
+                if (state is LogoutError) {
                   Navigator.pop(context);
                 }
-                if(state is LogoutSuccess){
-                  Navigator.pushNamedAndRemoveUntil(context, ScreenName.loginScreen, (route) => false);
+                if (state is LogoutSuccess) {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, ScreenName.loginScreen, (route) => false);
                 }
               },
               builder: (context, state) {
                 var cubit = AuthCubit.get(context);
                 return InkWell(
-                  onTap: (){
+                  onTap: () {
                     cubit.logout();
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(Icons.exit_to_app, size: 24.r, color: Colors.white,),
-                      SizedBox(width: 5.w,),
+                      Icon(
+                        Icons.exit_to_app,
+                        size: 24.r,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 5.w,
+                      ),
                       Text(
                         'تسجيل خروج',
                         style: TextStyle(
@@ -157,6 +268,20 @@ class AppDrawer extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildTitleWidget(
+      {required void Function()? onTap, required String title}) {
+    return InkWell(
+      onTap: onTap,
+      child: Text(
+        title,
+        style: TextStyle(
+            fontSize: 14.sp,
+            fontFamily: FontPath.almaraiLight,
+            color: Colors.white),
       ),
     );
   }
