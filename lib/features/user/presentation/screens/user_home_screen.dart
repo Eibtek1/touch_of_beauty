@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/main_cubit/main_cubit.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/main_cubit/main_state.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_state.dart';
@@ -13,7 +15,6 @@ import '../../../../core/assets_path/font_path.dart';
 import '../../buisness_logic/main_features_cubit/main_features_cubit.dart';
 import '../../buisness_logic/main_features_cubit/main_features_state.dart';
 import '../../buisness_logic/services_cubit/services_state.dart';
-import '../widgets/home_screen_widgets/build_custom_drawer.dart';
 import '../widgets/home_screen_widgets/cursol_slider_widget.dart';
 import '../widgets/home_screen_widgets/fav_services_builder.dart';
 import '../widgets/home_screen_widgets/favorite_services_provider_item_builder.dart';
@@ -30,10 +31,9 @@ class UserHomeScreen extends StatefulWidget {
 }
 
 class _UserHomeScreenState extends State<UserHomeScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   void initState() {
+    print(token);
     if (ServicesProvidersCubit.get(context)
         .featuredServicesProvidersList
         .isEmpty) {
@@ -45,11 +45,13 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
     if (ServicesProvidersCubit.get(context).servicesProvidersList.isEmpty) {
       ServicesProvidersCubit.get(context).getAllServicesProviders();
     }
-    if(ServicesProvidersCubit.get(context).favoritesServicesProvidersList.isEmpty){
+    if (ServicesProvidersCubit.get(context)
+        .favoritesServicesProvidersList
+        .isEmpty) {
       ServicesProvidersCubit.get(context).getFavoritesServicesProviders();
     }
-    if(UserServicesCubit.get(context).favoriteServicesList.isEmpty){
-      UserServicesCubit.get(context).getFavoritesServicesProviders();
+    if (UserServicesCubit.get(context).favoriteServicesList.isEmpty) {
+      UserServicesCubit.get(context).getFavoritesServices();
     }
     UserServicesCubit.get(context).getAddress();
 
@@ -59,20 +61,22 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       backgroundColor: Colors.white,
-      drawer: AppDrawer(
-        closeDrawer: () {
-          _scaffoldKey.currentState!.closeDrawer();
-        },
-      ),
       appBar: PreferredSize(
         preferredSize: Size(0, 70.h),
-        child: CustomAppbar(
-            openDrawer: () {
-              _scaffoldKey.currentState!.openDrawer();
-            },
-            titleName: 'محمد'),
+        child: BlocConsumer<MainCubit, MainState>(
+          listener: (context, state) {
+            // TODO: implement listener
+          },
+          builder: (context, state) {
+            var cubit = MainCubit.get(context);
+            return CustomAppbar(
+                openDrawer: () {
+                  cubit.scaffoldKey.currentState!.openDrawer();
+                },
+                titleName: state is GetUserDataLoading?"":cubit.getUserModel!.fullName!.split(" ").first);
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -298,10 +302,14 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     buildWhen: (p, a) => p != a,
                     listener: (context, state) {
                       var cubit = ServicesProvidersCubit.get(context);
-                      if (state
-                              is GetFavoriteServicesProviderDetailsByItsIdSuccess &&
+                      if (state is GetFavoriteServicesProviderDetailsByItsIdSuccess &&
                           cubit.servicesProviderModel != null) {
                         Navigator.pop(context);
+                        UserServicesCubit.get(context).tabBarCIndex = 0;
+                        UserServicesCubit.get(context).changeTabBarCurrentIndex(0,
+                            servicesProviderId: cubit.servicesProviderModel!.id!,
+                            mainSectionId: cubit
+                                .servicesProviderModel!.mainSection![0].mainSectionId!);
                         showBottomSheet(
                           context: context,
                           builder: (context) => CenterDetailsBottomSheet(
@@ -350,8 +358,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                     .favoritesServicesProvidersList[
                                                         index]
                                                     .providerId!);
-                                            cubit.favoritesServicesProvidersList
-                                                .removeAt(index);
                                           },
                                         ),
                                       );
@@ -386,7 +392,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   SizedBox(
                     height: 15.h,
                   ),
-
                   BlocConsumer<UserServicesCubit, UserServicesState>(
                     listener: (context, state) {
                       var cubit = UserServicesCubit.get(context);
@@ -412,14 +417,13 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                       return SizedBox(
                         height:
                             cubit.favoriteServicesList.isEmpty ? 40.h : 195.h,
-                        child: !cubit
-                                .getFavoriteServicesLoading
+                        child: !cubit.getFavoriteServicesLoading
                             ? cubit.favoriteServicesList.isNotEmpty
                                 ? ListView.builder(
-                          padding:
-                          EdgeInsets.symmetric(vertical: 3.h),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 3.h),
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return InkWell(
@@ -441,7 +445,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                         .favoriteServicesList[
                                                             index]
                                                         .serviceId!);
-                                            cubit.favoriteServicesList.removeAt(index);
+
                                           },
                                         ),
                                       );

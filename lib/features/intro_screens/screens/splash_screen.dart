@@ -16,6 +16,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
   @override
   void initState() {
     _loading();
@@ -28,36 +29,44 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
       const Duration(seconds: 2),
       () {
-        if(onboarding==null){
+        if (onboarding == null) {
           Navigator.pushReplacementNamed(context, ScreenName.onboardingScreen);
-        }else if(token!=null){
-          if(userType ==1.toString()){
-            Navigator.pushReplacementNamed(context, ScreenName.userMainLayout);
+        } else if (token != null) {
+          if(userType == 1.toString()){
+            Navigator.pushReplacementNamed(
+                context, ScreenName.userMainLayout);
+          }else if (userType == 2.toString()) {
+            Navigator.pushReplacementNamed(
+                context, ScreenName.vendorMainLayout);
+          } else if (userType == 3.toString()) {
+            Navigator.pushReplacementNamed(
+                context, ScreenName.freelancerMainLayout);
           }
-          else if(userType ==2.toString()){
-            Navigator.pushReplacementNamed(context, ScreenName.vendorMainLayout);
-          }
-          else if(userType ==3.toString()){
-            Navigator.pushReplacementNamed(context, ScreenName.freelancerMainLayout);
-          }
-        }else{
+        } else {
           Navigator.pushReplacementNamed(context, ScreenName.loginScreen);
         }
       },
     );
   }
 
+  void loadingUserData() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColorsLightTheme.primaryColor,
-      body: Center(
-        child: Image.asset(
-          ImagePath.splashLogoImage,
-          height: 227.h,
-          width: 320.w,
-        ),
-      ),
+      body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                  Center(
+                    child: Image.asset(
+                      ImagePath.splashLogoImage,
+                      height: 227.h,
+                      width: 320.w,
+                    ),
+                  ),
+                ]),
     );
   }
 }

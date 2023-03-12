@@ -175,6 +175,7 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
 
    void deleteServicesProviderToFavorite({required String id})async{
      favorites[id] = !favorites[id]!;
+     favoritesServicesProvidersList.removeWhere((element) => element.providerId == id);
      emit(DeleteServicesProviderToFavLoading());
      final response = await ServicesProvidersRepository.deleteServicesProviderFromFavorite(id: id);
      mainResponse = MainResponse.fromJson(response.data);

@@ -206,7 +206,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       emit(GetServicesByServiceProviderIdError(error: error.toString()));
     }
   }
-  void getFavoritesServicesProviders() async{
+  void getFavoritesServices() async{
     getFavoriteServicesLoading = true;
     emit(GetFavoritesServicesLoadingState());
     try{
@@ -236,7 +236,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     mainResponse = MainResponse.fromJson(response.data);
     if(mainResponse.errorCode == 0){
       emit(AddServiceToFavSuccess());
-      getFavoritesServicesProviders();
+      getFavoritesServices();
     }else{
       emit(AddServiceToFavError(error: mainResponse.errorMessage.toString()));
     }
@@ -244,18 +244,21 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
   void deleteServicesProviderToFavorite({required int id})async{
     favorites[id] = !favorites[id]!;
+    favoriteServicesList.removeWhere((element) => element.serviceId==id);
     emit(DeleteServiceFromFavLoading());
     final response = await ServicesProvidersRepository.deleteServiceFromFavorite(id: id);
     mainResponse = MainResponse.fromJson(response.data);
     if(mainResponse.errorCode == 0){
       emit(DeleteServiceFromFavSuccess());
-      getFavoritesServicesProviders();
+      getFavoritesServices();
     }else{
       emit(DeleteServiceFromFavError(error: mainResponse.errorMessage.toString()));
     }
   }
 
   void deleteServicesProviderToFavorite2({required int id})async{
+    favorites[id] = !favorites[id]!;
+    favoriteServicesList.removeWhere((element) => element.serviceId==id);
     emit(DeleteServiceFromFavLoading());
     final response = await ServicesProvidersRepository.deleteServiceFromFavorite(id: id);
     mainResponse = MainResponse.fromJson(response.data);
