@@ -9,6 +9,7 @@ class ScreenName{
   static const userMainLayout = 'user_main_layout.dart';
   static const vendorMainLayout = 'vendor_main_layout.dart';
   static const freelancerMainLayout = 'freelancer_main_layout.dart';
+  static const favoritesServicesScreen = 'favorites_services_screen';
   static const forgetPasswordScreen = 'forget_password_screen.dart';
   static const userCategoryDetailsScreen = 'main_featuers_services.dart';
   static const userSearchScreen = 'user_search_screen';

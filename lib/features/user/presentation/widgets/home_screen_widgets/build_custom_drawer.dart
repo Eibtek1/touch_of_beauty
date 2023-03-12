@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
 
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
@@ -158,7 +159,10 @@ class AppDrawer extends StatelessWidget {
               height: 15.h,
             ),
             buildTitleWidget(
-              onTap: () {},
+              onTap: () {
+                UserServicesCubit.get(context).getFavoritesServices();
+                Navigator.pushNamed(context, ScreenName.favoritesServicesScreen);
+              },
               title: 'المفضلة',
             ),
             SizedBox(
