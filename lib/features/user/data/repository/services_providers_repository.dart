@@ -229,5 +229,9 @@ class ServicesProvidersRepository {
     );
     return response;
   }
-
+  static Future<Response> getOrdersForUser() async {
+    final response = await DioHelper.getData(
+        url: EndPoints.getOrdersForUser, bearerToken: token);
+    return response;
+  }
 }

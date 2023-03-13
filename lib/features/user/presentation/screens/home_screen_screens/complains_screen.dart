@@ -77,6 +77,7 @@ class _ComplainsScreenState extends State<ComplainsScreen> {
                     height: 12.h,
                   ),
                   CustomUserTextField(
+                    isComplaints: true,
                     hintText: 'نص الشكوى',
                     height: 150.h,
                     controller: textController,

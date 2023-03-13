@@ -33,7 +33,7 @@ class _FavoritesServicesScreenState extends State<FavoritesServicesScreen> {
                   SizedBox(
                     height: 22.h,
                     width: 22.w,
-                    child: Icon(Icons.arrow_back_rounded,color: Colors.black,size: 24.r,),
+                    child: InkWell(onTap:(){Navigator.pop(context);},child: Icon(Icons.arrow_back_rounded,color: Colors.black,size: 24.r,)),
                   ),
                   Expanded(
                     child: Text(

@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/chat/buisness_logic/chat_cubit.dart';
+import 'package:touch_of_beauty/features/chat/presentation/screens/chat_screen.dart';
 
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/images_path.dart';
+import '../../../data/models/reservation_model.dart';
 
 class OrderedOrdersWidgetBuilder extends StatelessWidget {
-  const OrderedOrdersWidgetBuilder({Key? key}) : super(key: key);
+  final ReservationModel reservationModel;
+  const OrderedOrdersWidgetBuilder({Key? key, required this.reservationModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +50,7 @@ class OrderedOrdersWidgetBuilder extends StatelessWidget {
                   height: 10.h,
                 ),
                 Text(
-                  'خدمة العناية بالبشرة',
+                  '${reservationModel.service!.title}',
                   style: TextStyle(
                       fontSize: 12.sp,
                       fontFamily: FontPath.almaraiBold,
@@ -56,7 +60,7 @@ class OrderedOrdersWidgetBuilder extends StatelessWidget {
                   height: 10.h,
                 ),
                 Text(
-                  'المدينة الرياض',
+                  reservationModel.addressData!.region!,
                   style: TextStyle(
                       fontSize: 10.sp,
                       fontFamily: FontPath.almaraiRegular,
@@ -76,8 +80,8 @@ class OrderedOrdersWidgetBuilder extends StatelessWidget {
             ),
             const Spacer(),
             IconButton(onPressed: (){
-              ChatCubit.get(context).getMessages(receiverId: "2", senderId: "1");
-              Navigator.pushNamed(context, ScreenName.chatScreen,arguments: 'مقدم الخدمة');
+              ChatCubit.get(context).getMessages(receiverId: reservationModel.provider!.id, senderId: userId);
+              Navigator.pushNamed(context, ScreenName.chatScreen,arguments: ChatScreenArgs(title: '${reservationModel.provider!.fullName}', receiverId: '${reservationModel.provider!.id}'));
             }, icon: SvgPicture.asset(SvgPath.chatIcon,width: 50.w,height: 50.h,))
           ],
         ),

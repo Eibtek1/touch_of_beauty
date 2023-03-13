@@ -17,7 +17,7 @@ void showProgressIndicator(BuildContext context){
       child: CircularProgressIndicator.adaptive(),
     ),
   );
-  showDialog(context: context, builder: (context)=>alertDialog,barrierDismissible: false);
+  showDialog(context: context, builder: (context)=>alertDialog,barrierDismissible: false,);
 }
 String? token = CacheHelper.getData(key: CacheKeys.token);
 String? userId = CacheHelper.getData(key: CacheKeys.userId);

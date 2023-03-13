@@ -10,7 +10,7 @@ import '../../../../../core/network/api_end_points.dart';
 import '../../../data/models/services_model.dart';
 
 class OrderItemWidget extends StatelessWidget {
-  final ServicesModel servicesModel;
+  final dynamic servicesModel;
   const OrderItemWidget({Key? key, required this.servicesModel}) : super(key: key);
 
   @override

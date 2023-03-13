@@ -51,26 +51,35 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.pop(context);
               Fluttertoast.showToast(msg: cubit.mainResponse.errorMessage);
               if(cubit.mainResponse.errorCode ==0 && state.loginModel.userType==1){
-                CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
-                  CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
-                    token = CacheHelper.getData(key: CacheKeys.token);
-                    Navigator.pushNamedAndRemoveUntil(context, ScreenName.userMainLayout, (route) => false);
+                CacheHelper.saveData(key: CacheKeys.userId, value: state.loginModel.userId).whenComplete(() {
+                  CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
+                    CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
+                      token = CacheHelper.getData(key: CacheKeys.token);
+                      userId = CacheHelper.getData(key: CacheKeys.token);
+                      Navigator.pushNamedAndRemoveUntil(context, ScreenName.userMainLayout, (route) => false);
+                    });
                   });
                 });
               }
               else if(cubit.mainResponse.errorCode ==0 && state.loginModel.userType==2){
-                CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
-                  CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
-                    token = CacheHelper.getData(key: CacheKeys.token);
-                    Navigator.pushNamedAndRemoveUntil(context, ScreenName.vendorMainLayout, (route) => false);
+                CacheHelper.saveData(key: CacheKeys.userId, value: state.loginModel.userId).whenComplete(() {
+                  CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
+                    CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
+                      token = CacheHelper.getData(key: CacheKeys.token);
+                      userId = CacheHelper.getData(key: CacheKeys.token);
+                      Navigator.pushNamedAndRemoveUntil(context, ScreenName.vendorMainLayout, (route) => false);
+                    });
                   });
                 });
               }
               else if(cubit.mainResponse.errorCode ==0 && state.loginModel.userType==3){
-                CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
-                  CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
-                    token = CacheHelper.getData(key: CacheKeys.token);
-                    Navigator.pushNamedAndRemoveUntil(context, ScreenName.freelancerMainLayout, (route) => false);
+                CacheHelper.saveData(key: CacheKeys.userId, value: state.loginModel.userId).whenComplete(() {
+                  CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
+                    CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
+                      token = CacheHelper.getData(key: CacheKeys.token);
+                      userId = CacheHelper.getData(key: CacheKeys.token);
+                      Navigator.pushNamedAndRemoveUntil(context, ScreenName.freelancerMainLayout, (route) => false);
+                    });
                   });
                 });
               }

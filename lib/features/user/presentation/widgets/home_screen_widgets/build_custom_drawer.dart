@@ -145,14 +145,20 @@ class AppDrawer extends StatelessWidget {
               height: 47.h,
             ),
             buildTitleWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                MainCubit.get(context).onTap(0);
+              },
               title: 'الصفحة الرئيسية',
             ),
             SizedBox(
               height: 15.h,
             ),
             buildTitleWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                MainCubit.get(context).onTap(1);
+              },
               title: 'الحجوزات',
             ),
             SizedBox(
@@ -161,6 +167,7 @@ class AppDrawer extends StatelessWidget {
             buildTitleWidget(
               onTap: () {
                 UserServicesCubit.get(context).getFavoritesServices();
+                Navigator.pop(context);
                 Navigator.pushNamed(context, ScreenName.favoritesServicesScreen);
               },
               title: 'المفضلة',
@@ -182,7 +189,10 @@ class AppDrawer extends StatelessWidget {
               height: 15.h,
             ),
             buildTitleWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                MainCubit.get(context).onTap(3);
+              },
               title: 'حساب',
             ),
             SizedBox(
@@ -217,6 +227,7 @@ class AppDrawer extends StatelessWidget {
             ),
             buildTitleWidget(
               onTap: () {
+                Navigator.pop(context);
                 Navigator.pushNamed(context, ScreenName.complainsScreen);
               },
               title: 'الشكاوي',

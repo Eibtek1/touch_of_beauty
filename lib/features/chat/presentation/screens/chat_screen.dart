@@ -2,19 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/chat/buisness_logic/chat_cubit.dart';
 import 'package:touch_of_beauty/features/chat/buisness_logic/chat_state.dart';
-import 'package:touch_of_beauty/features/chat/data/message_model.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../widgets/build_another_person_message_item.dart';
 import '../widgets/build_my_message_item.dart';
 import '../widgets/chat_text_field.dart';
+class ChatScreenArgs{
+  final String title;
+  final String receiverId;
 
+  ChatScreenArgs({required this.title, required this.receiverId});
+}
 class ChatScreen extends StatefulWidget {
   final dynamic title;
-
-  const ChatScreen({Key? key, required this.title}) : super(key: key);
+  final dynamic receiverId;
+  const ChatScreen({Key? key, required this.title, required this.receiverId}) : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -62,26 +68,20 @@ class _ChatScreenState extends State<ChatScreen> {
                   reverse: true,
                   padding: EdgeInsets.symmetric(horizontal: 20.h),
                   itemBuilder: (BuildContext context, int index) {
-                    if (cubit.messagesList[index].senderId == "1") {
+                    if (cubit.messagesList[index].senderId == userId) {
                       return Padding(
                         padding: EdgeInsets.symmetric(vertical: 20.h),
                         child: MyMessageItem(
                             message: cubit.messagesList[index].messageText,
-                            time: DateTime.parse(
-                                    cubit.messagesList[index].dateTime.toString())
-                                .hour
-                                .toString()),
-                      );
+                            time: Jiffy(cubit.messagesList[index].dateTime).Hm,
+                      ));
                     } else {
                       return Padding(
                         padding: EdgeInsets.symmetric(vertical: 20.h),
                         child: AnotherPersonMessageItem(
                             message: cubit.messagesList[index].messageText,
-                            time: DateTime.parse(
-                                cubit.messagesList[index].dateTime.toString())
-                                .hour
-                                .toString()),
-                      );
+                            time: Jiffy(cubit.messagesList[index].dateTime).Hm,
+                      ));
                     }
                   },
                   itemCount: cubit.messagesList.length,
@@ -100,8 +100,8 @@ class _ChatScreenState extends State<ChatScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             cubit.sendMessage(
-                                receiverId: "2",
-                                senderId: "1",
+                                receiverId: widget.receiverId,
+                                senderId: userId,
                                 receiverName: "receiverName",
                                 senderName: "senderName",
                                 receiverImg: null,

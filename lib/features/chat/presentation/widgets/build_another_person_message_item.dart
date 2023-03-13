@@ -53,11 +53,11 @@ class AnotherPersonMessageItem extends StatelessWidget {
                 SizedBox(
                   width: 5.h,
                 ),
-                Icon(
-                  Icons.done_all,
-                  color: Colors.blue,
-                  size: 20.r,
-                ),
+                // Icon(
+                //   Icons.done_all,
+                //   color: Colors.blue,
+                //   size: 20.r,
+                // ),
               ],
             )
           ],

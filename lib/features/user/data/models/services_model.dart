@@ -1,4 +1,6 @@
-class ServicesModel {
+import 'package:equatable/equatable.dart';
+
+class ServicesModel extends Equatable {
   final int? id;
   final String? title;
   final bool? forCenter;
@@ -18,7 +20,7 @@ class ServicesModel {
   final ServiceProvider? serviceProvider;
   final MainSection? mainSection;
 
-  ServicesModel(
+  const ServicesModel(
       {this.id,
       this.title,
       this.forCenter,
@@ -64,16 +66,39 @@ class ServicesModel {
           : null,
     );
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+        id,
+        title,
+        forCenter,
+        description,
+        imgUrl,
+        isFeatured,
+        priceUnit,
+        price,
+        discount,
+        finalPrice,
+        inCenter,
+        inHome,
+        isAvailable,
+        employeesNumber,
+        numberOfStar,
+        isFavourite,
+        serviceProvider,
+        mainSection,
+      ];
 }
 
-class ServiceProvider {
+class ServiceProvider extends Equatable {
   final String? id;
   final String? fullName;
   final String? userImgUrl;
   final Addresses? addresses;
   final double? numberOfStar;
 
-  ServiceProvider(
+  const ServiceProvider(
       {this.id,
       this.fullName,
       this.userImgUrl,
@@ -91,9 +116,19 @@ class ServiceProvider {
       numberOfStar: json['numberOfStar'],
     );
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+        id,
+        fullName,
+        userImgUrl,
+        addresses,
+        numberOfStar,
+      ];
 }
 
-class Addresses {
+class Addresses extends Equatable {
   final String? addressDetails;
   final String? region;
   final String? street;
@@ -101,7 +136,7 @@ class Addresses {
   final String? flatNumber;
   final String? city;
 
-  Addresses(
+  const Addresses(
       {this.addressDetails,
       this.region,
       this.street,
@@ -119,14 +154,25 @@ class Addresses {
       city: json['city'],
     );
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+        addressDetails,
+        region,
+        street,
+        buildingNumber,
+        flatNumber,
+        city,
+      ];
 }
 
-class MainSection {
+class MainSection extends Equatable {
   final int? id;
   final String? title;
   final String? imgUrl;
 
-  MainSection({this.id, this.title, this.imgUrl});
+  const MainSection({this.id, this.title, this.imgUrl});
 
   factory MainSection.fromJson(Map<String, dynamic> json) {
     return MainSection(
@@ -135,4 +181,12 @@ class MainSection {
       imgUrl: json['imgUrl'],
     );
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+        id,
+        title,
+        imgUrl,
+      ];
 }

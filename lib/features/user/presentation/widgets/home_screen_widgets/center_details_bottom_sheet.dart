@@ -381,7 +381,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                 onPressed: () {
                   UserServicesCubit.get(context).servicesPageNumber = 1;
                   UserServicesCubit.get(context).getServicesByServiceProviderId(
-                      servicesProviderId: widget.servicesProvidersModel.providerId);
+                      servicesProviderId: widget.servicesProvidersModel.id);
                   Navigator.pushNamed(context, ScreenName.ourServicesScreen,
                       arguments: widget.servicesProvidersModel.id);
                 },

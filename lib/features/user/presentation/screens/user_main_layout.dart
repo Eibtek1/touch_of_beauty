@@ -4,14 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
-import 'package:touch_of_beauty/core/constants/constants.dart';
-import 'package:touch_of_beauty/features/user/presentation/screens/user_profile_screen.dart';
-import 'package:touch_of_beauty/features/user/presentation/screens/user_reservations_screen.dart';
 import '../../buisness_logic/main_cubit/main_cubit.dart';
 import '../../buisness_logic/main_cubit/main_state.dart';
 import '../widgets/home_screen_widgets/build_custom_drawer.dart';
-import 'user_home_screen.dart';
-import 'user_notification_screen.dart';
 
 class UserMainLayout extends StatelessWidget {
   const UserMainLayout({Key? key}) : super(key: key);

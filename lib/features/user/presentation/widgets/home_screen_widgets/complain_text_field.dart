@@ -9,14 +9,54 @@ import '../../../../../core/assets_path/svg_path.dart';
 class CustomUserTextField extends StatelessWidget {
   final String hintText;
   final double height;
+  final bool isComplaints;
   final TextInputType keyboardType;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
-  const CustomUserTextField({Key? key, required this.hintText, required this.height, this.keyboardType = TextInputType.text, this.controller, this.validator}) : super(key: key);
+
+  const CustomUserTextField({Key? key, required this.hintText, required this.height, this.keyboardType = TextInputType.text, this.controller, this.validator, this.isComplaints = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return isComplaints?Container(
+      height: height,
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 10.w,),
+      decoration: BoxDecoration(
+          color: AppColorsLightTheme.authTextFieldFillColor,
+          borderRadius: BorderRadius.circular(8.r)
+      ),
+      child: TextFormField(
+        controller: controller,
+        keyboardType: keyboardType,
+        expands: true,
+        maxLines: null,
+        minLines: null,
+        validator: validator,
+        textAlign: TextAlign.start,
+        style: TextStyle(
+          height: 1.3.h,
+          fontSize: 12.sp,
+          fontFamily: FontPath.almaraiRegular,
+          color: const Color(0xff8B8989),
+        ),
+        decoration: InputDecoration(
+          hintText: hintText,
+            hintStyle: TextStyle(
+              fontSize: 14.sp,
+              fontFamily: FontPath.almaraiRegular,
+              color: const Color(0xff8B8989),
+            ),
+            border: InputBorder.none,
+            suffix: SvgPicture.asset(
+              SvgPath.edit,
+              width: 22.w,
+              height: 22.h,
+              colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
+            )
+        ),
+      ),
+    ):TextFormField(
       controller: controller!,
       validator:validator,
       keyboardType: keyboardType,
