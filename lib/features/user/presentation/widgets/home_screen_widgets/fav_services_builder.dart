@@ -6,11 +6,13 @@ import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_state.dart';
 import 'package:touch_of_beauty/features/user/data/models/services_model.dart';
+import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/images_path.dart';
 import '../../../../../core/network/api_end_points.dart';
 import '../../../data/models/fav_services_model.dart';
+import '../../screens/home_screen_screens/order_screens/reserve_order_screen.dart';
 
 class FavoriteServicesItem extends StatelessWidget {
   final FavoriteServicesModel? servicesModel;
@@ -193,7 +195,9 @@ class FavoriteServicesItem extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, ScreenName.reserveOrderScreen,arguments: ReserveOrderScreenArguments(servicesModel: servicesModel,isFav: true));
+                          },
                           icon: Icon(
                             Icons.add_circle_outlined,
                             size: 24.r,

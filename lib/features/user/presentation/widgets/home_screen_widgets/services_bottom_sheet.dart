@@ -1,15 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_state.dart';
 import 'package:touch_of_beauty/features/user/presentation/widgets/custom_button.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/network/api_end_points.dart';
 import '../../../data/models/services_model.dart';
+import '../../screens/home_screen_screens/order_screens/reserve_order_screen.dart';
 
 class ServicesBottomSheet extends StatelessWidget {
   final ServicesModel servicesModel;
@@ -228,16 +232,31 @@ class ServicesBottomSheet extends StatelessWidget {
                         Positioned(
                           top: 14.h,
                           left: 14.w,
-                          child: CircleAvatar(
-                            radius: 10.r,
-                            backgroundColor: Colors.white,
-                            child: Center(
-                              child: Icon(
-                                Icons.favorite_border,
-                                color: AppColorsLightTheme.secondaryColor,
-                                size: 12.r,
-                              ),
-                            ),
+                          child:BlocBuilder<ServicesProvidersCubit, ServicesProvidersState>(
+                            builder: (context, state) {
+                              var cubit = ServicesProvidersCubit.get(context);
+                              return InkWell(
+                                onTap: (){
+                                  if(!cubit.favorites[servicesModel.serviceProvider!.id]!){
+                                    cubit.addServicesProviderToFavorite(id: servicesModel.serviceProvider!.id!);
+                                  }
+                                  else if(cubit.favorites[servicesModel.serviceProvider!.id!]!){
+                                    cubit.deleteServicesProviderToFavorite(id: servicesModel.serviceProvider!.id!);
+                                  }
+                                },
+                                child: CircleAvatar(
+                                  radius: 15.r,
+                                  backgroundColor: Colors.white,
+                                  child: Center(
+                                    child: Icon(
+                                      cubit.favorites[servicesModel.serviceProvider!.id!]!?Icons.favorite:Icons.favorite_border,
+                                      color: AppColorsLightTheme.secondaryColor,
+                                      size: 23.r,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         )
                       ],
@@ -278,9 +297,9 @@ class ServicesBottomSheet extends StatelessWidget {
                           RatingBar.builder(
                             itemSize: 14.r,
                             ignoreGestures: true,
-                            initialRating: 4,
+                            initialRating: servicesModel.serviceProvider!.numberOfStar!,
                             minRating: 1,
-                            unratedColor: Colors.white,
+                            unratedColor: Colors.grey,
                             direction: Axis.horizontal,
                             allowHalfRating: true,
                             itemCount: 5,
@@ -301,12 +320,12 @@ class ServicesBottomSheet extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 15.h,
+                height: 30.h,
               ),
               CustomUserButton(
                   buttonTitle: 'اطلب الخدمة',
                   isTapped: () {
-                    Navigator.pushNamed(context, ScreenName.reserveOrderScreen,arguments: servicesModel);
+                    Navigator.pushNamed(context, ScreenName.reserveOrderScreen,arguments: ReserveOrderScreenArguments(servicesModel: servicesModel,));
                   },
                   width: double.infinity,
                   paddingVertical: 16.h,

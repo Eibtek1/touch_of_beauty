@@ -12,11 +12,15 @@ import '../../../../../../core/assets_path/font_path.dart';
 import '../../../../../../core/assets_path/images_path.dart';
 import '../../../../buisness_logic/services_cubit/services_cubit.dart';
 import '../../../../buisness_logic/services_cubit/services_state.dart';
-import '../../../../data/models/services_model.dart';
 import '../../../widgets/home_screen_widgets/order_item_widget.dart';
+class ReserveOrderScreenArguments{
+  final dynamic servicesModel;
+  final bool isFav;
 
+  ReserveOrderScreenArguments({required this.servicesModel, this.isFav = false });
+}
 class ReserveOrderScreen extends StatelessWidget {
-  ReserveOrderScreen({Key? key, required this.servicesModel}) : super(key: key);
+  ReserveOrderScreen({Key? key, required this.servicesModel, required this.isFav}) : super(key: key);
   final List<Map<String, dynamic>> itemsList = [
     {'image': ImagePath.babyCare, 'title': "سارة"},
     {'image': ImagePath.beautyCenter, 'title': "فاتن"},
@@ -27,7 +31,8 @@ class ReserveOrderScreen extends StatelessWidget {
     {'image': ImagePath.selfCare, 'title': "اميره"},
     {'image': ImagePath.skinCare, 'title': "سعاد"},
   ];
-  final ServicesModel servicesModel;
+  final dynamic servicesModel;
+  final bool isFav;
   final TextEditingController controller = TextEditingController();
 
   @override
@@ -394,7 +399,7 @@ class ReserveOrderScreen extends StatelessWidget {
                             );
                           } else {
                             cubit.addOrder(
-                                serviceId: servicesModel.id!,
+                                serviceId: isFav?servicesModel.serviceId:servicesModel.id!,
                                 addressId: cubit.addressModel!.id!,
                                 dateTime: cubit.dateTime!.toIso8601String(),
                                 inHome: cubit.reserveOrderStatusInHome);

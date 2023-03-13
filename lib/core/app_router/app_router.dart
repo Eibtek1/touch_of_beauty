@@ -124,8 +124,8 @@ class AppRouter {
           return _animateRouteBuilder(const ChooseAddressScreen());
         case ScreenName.reserveOrderScreen:
           final args = settings.arguments;
-          final ServicesModel arguments = args as ServicesModel;
-          return _animateRouteBuilder(ReserveOrderScreen(servicesModel: arguments,));
+          ReserveOrderScreenArguments arguments = args as ReserveOrderScreenArguments;
+          return _animateRouteBuilder(ReserveOrderScreen(servicesModel: arguments.servicesModel, isFav: arguments.isFav,));
         case ScreenName.allCentersScreen:
           return _animateRouteBuilder(const AllCentersScreen());
         case ScreenName.ourServicesScreen:
@@ -140,7 +140,8 @@ class AppRouter {
           return _animateRouteBuilder(GalleryScreen(galleryList: arg,));
         case ScreenName.chatScreen:
           final args = settings.arguments;
-          return _animateRouteBuilder(ChatScreen(title: args,));
+          ChatScreenArgs arguments = args as ChatScreenArgs;
+          return _animateRouteBuilder(ChatScreen(title: arguments.title, receiverId: arguments.receiverId,));
         case ScreenName.forgetPasswordScreen:
           return _animateRouteBuilder(const ForgetPasswordScreen());
         default:

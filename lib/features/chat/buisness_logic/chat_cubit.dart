@@ -175,6 +175,14 @@ class ChatCubit extends Cubit<ChatState> {
         messagesList.add(MessageModel.fromJson(element.data()));
 
       }
+      print(FirebaseFirestore.instance
+          .collection('users')
+          .doc("$senderId")
+          .collection('chats')
+          .doc("$receiverId")
+          .collection('messages')
+          .orderBy('dateTime')
+          .snapshots());
       emit(GetMessageSuccess());
     });
   }

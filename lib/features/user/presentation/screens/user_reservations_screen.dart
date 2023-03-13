@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/reservation_cubit/reservation_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/reservation_cubit/reservation_state.dart';
 import '../../../../core/assets_path/font_path.dart';
@@ -45,6 +46,7 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
   void initState() {
     super.initState();
     ReservationCubit.get(context).tabBarCIndex = 0;
+    ReservationCubit.get(context).getOrdersForUser();
     tabController = TabController(length: titles.length, vsync: this);
   }
 
@@ -93,6 +95,8 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
                                 horizontal: 19.w, vertical: 12.h),
                           ),
                           onPressed: () {
+                            print(token);
+                            cubit.getOrdersForUser();
                             tabController!.animateTo(index);
                             cubit.changeTabBarCurrentIndex(index);
                           },
@@ -116,21 +120,45 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
                         ListView.builder(
-                          itemCount: 3,
+                          itemCount: cubit.reservationsList.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return const AllOrdersWidgetItem();
+                            return AllOrdersWidgetItem(
+                              reservationModel: cubit.reservationsList[index],
+                            );
                           },
                         ),
                         ListView.builder(
-                          itemCount: 3,
+                          itemCount: cubit.reservationsList
+                              .where((element) =>
+                                  element.orderStatus != 5 &&
+                                  element.orderStatus != 4)
+                              .toList()
+                              .length,
                           itemBuilder: (BuildContext context, int index) {
-                            return const OrderedOrdersWidgetBuilder();
+                            return OrderedOrdersWidgetBuilder(
+                              reservationModel: cubit.reservationsList
+                                  .where((element) =>
+                                      element.orderStatus != 5 &&
+                                      element.orderStatus != 4)
+                                  .toList()[index],
+                            );
                           },
                         ),
                         ListView.builder(
-                          itemCount: 3,
+                          itemCount: cubit.reservationsList
+                              .where((element) =>
+                                  element.orderStatus == 5 &&
+                                  element.orderStatus == 4)
+                              .toList()
+                              .length,
                           itemBuilder: (BuildContext context, int index) {
-                            return const EndOrdersWidgetBuilder();
+                            return EndOrdersWidgetBuilder(
+                              reservationModel: cubit.reservationsList
+                                  .where((element) =>
+                                      element.orderStatus == 5 &&
+                                      element.orderStatus == 4)
+                                  .toList()[index],
+                            );
                           },
                         ),
                       ],

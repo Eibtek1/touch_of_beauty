@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
               providers: [
                 // BlocProvider(create: (context) => MainCubit(authCubit: AuthCubit.get(context))),
                 BlocProvider(create: (context) => MainCubit()..initFunction()),
-                BlocProvider(create: (context) => ReservationCubit()),
+                BlocProvider(create: (context) => ReservationCubit()..getOrdersForUser()),
                 BlocProvider(create: (context) => FreelancerServicesCubit()),
                 BlocProvider(create: (context) => UserServicesCubit()..getAddress()),
                 BlocProvider(create: (context) => VendorServicesCubit()),
