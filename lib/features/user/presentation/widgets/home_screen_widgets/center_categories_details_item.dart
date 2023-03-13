@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+// import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/main_features_cubit/main_features_state.dart';
 import 'package:touch_of_beauty/features/user/data/models/services_model.dart';
@@ -130,7 +130,16 @@ class CenterCategoryItem extends StatelessWidget {
                 SizedBox(
                   height: 15.h,
                 ),
-                HtmlWidget(servicesModel.description!),
+                Text(
+                  servicesModel.description!,
+                  style: TextStyle(
+                    height: 1.2.h,
+                    fontSize: 10.sp,
+                    fontFamily: FontPath.almaraiBold,
+                    color: const Color(0xff666666),
+                  ),
+                ),
+                // HtmlWidget(servicesModel.description!),
                 SizedBox(
                   height: 20.h,
                 ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+// import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
@@ -181,16 +181,16 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
               SizedBox(
                 height: 8.h,
               ),
-              HtmlWidget(widget.servicesProvidersModel.description!),
-              // Text(
-              //
-              //   style: TextStyle(
-              //     height: 1.5.h,
-              //     fontSize: 10.sp,
-              //     fontFamily: FontPath.almaraiBold,
-              //     color: const Color(0xff666666),
-              //   ),
-              // ),
+              // HtmlWidget(widget.servicesProvidersModel.description!),
+              Text(
+                widget.servicesProvidersModel.description!,
+                style: TextStyle(
+                  height: 1.5.h,
+                  fontSize: 10.sp,
+                  fontFamily: FontPath.almaraiBold,
+                  color: const Color(0xff666666),
+                ),
+              ),
               SizedBox(
                 height: 20.h,
               ),

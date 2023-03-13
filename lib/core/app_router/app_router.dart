@@ -30,6 +30,7 @@ import '../../features/user/presentation/screens/home_screen_screens/order_scree
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/choose_address_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/order_details_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/payment_screen.dart';
+import '../../features/user/presentation/screens/home_screen_screens/order_screens/payment_web_view.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/reserve_order_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/our_services_screen.dart';
 import '../../features/vendor/presentation/screens/order_screens/center_orders_details_screen.dart';
@@ -131,6 +132,9 @@ class AppRouter {
         case ScreenName.ourServicesScreen:
           final args = settings.arguments;
           return _animateRouteBuilder(OurServicesScreen(id:args));
+        case ScreenName.paymentWebView:
+          final args = settings.arguments.toString();
+          return _animateRouteBuilder(PaymentWebView(url:args));
         case ScreenName.offersScreen:
           return _animateRouteBuilder(const OffersScreen());
         case ScreenName.complainsScreen:
