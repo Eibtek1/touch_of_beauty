@@ -41,9 +41,6 @@ class AllOrdersWidgetItem extends StatelessWidget {
               ],
             ),
           ),
-          onExpansionChanged: (d){
-            print(reservationModel!.orderStatus);
-          },
           title: SizedBox(
             width: 75.w,
             height: 75.h,
@@ -87,9 +84,9 @@ class AllOrdersWidgetItem extends StatelessWidget {
                           fontFamily: FontPath.almaraiRegular,
                           color: const Color(0xff1E2432)),
                     ),
-                    // SizedBox(
-                    //   height: 5.h,
-                    // ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
                     if(reservationModel.orderStatus==0&&reservationModel.service!.isAvailable!)Text(
                       'حالة الطلب : بأنتظار الدفع',
                       style: TextStyle(
@@ -97,7 +94,6 @@ class AllOrdersWidgetItem extends StatelessWidget {
                           fontFamily: FontPath.almaraiRegular,
                           color: const Color(0xff1E2432)),
                     ),
-
                     if(reservationModel.orderStatus==1)Text(
                       'حالة الطلب : بأنتظار التأكيد مع المقدم',
                       style: TextStyle(
@@ -156,13 +152,13 @@ class AllOrdersWidgetItem extends StatelessWidget {
                     //       fontFamily: FontPath.almaraiBold,
                     //       color: const Color(0xff484848)),
                     // ),
-                    Text(
-                      '${reservationModel.id}',
-                      style: TextStyle(
-                          fontSize: 20.sp,
-                          fontFamily: FontPath.almaraiRegular,
-                          color: const Color(0xff1E2432)),
-                    ),
+                    // Text(
+                    //   '${reservationModel.id}',
+                    //   style: TextStyle(
+                    //       fontSize: 20.sp,
+                    //       fontFamily: FontPath.almaraiRegular,
+                    //       color: const Color(0xff1E2432)),
+                    // ),
                     SizedBox(
                       height: 10.h,
                     ),

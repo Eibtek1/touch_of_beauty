@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+// import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
@@ -147,16 +147,16 @@ class ServicesBottomSheet extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              // Text(
-              //   'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،لقد تم توليد هذا النص هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،لقد تم توليد هذا النص',
-              //   style: TextStyle(
-              //     height: 1.2.h,
-              //     fontSize: 10.sp,
-              //     fontFamily: FontPath.almaraiBold,
-              //     color: const Color(0xff666666),
-              //   ),
-              // ),
-              HtmlWidget(servicesModel.description!),
+              Text(
+                servicesModel.description!,
+                style: TextStyle(
+                  height: 1.2.h,
+                  fontSize: 10.sp,
+                  fontFamily: FontPath.almaraiBold,
+                  color: const Color(0xff666666),
+                ),
+              ),
+              // HtmlWidget(servicesModel.description!),
               SizedBox(
                 height: 20.h,
               ),

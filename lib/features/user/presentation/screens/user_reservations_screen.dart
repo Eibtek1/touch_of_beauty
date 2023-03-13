@@ -95,8 +95,7 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
                                 horizontal: 19.w, vertical: 12.h),
                           ),
                           onPressed: () {
-                            print(token);
-                            cubit.getOrdersForUser();
+                            // cubit.getOrdersForUser();
                             tabController!.animateTo(index);
                             cubit.changeTabBarCurrentIndex(index);
                           },
@@ -131,7 +130,8 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
                           itemCount: cubit.reservationsList
                               .where((element) =>
                                   element.orderStatus != 5 &&
-                                  element.orderStatus != 4)
+                                  element.orderStatus != 4&&
+                                      element.orderStatus != 0)
                               .toList()
                               .length,
                           itemBuilder: (BuildContext context, int index) {
@@ -139,7 +139,8 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
                               reservationModel: cubit.reservationsList
                                   .where((element) =>
                                       element.orderStatus != 5 &&
-                                      element.orderStatus != 4)
+                                      element.orderStatus != 4&&
+                                      element.orderStatus != 0)
                                   .toList()[index],
                             );
                           },

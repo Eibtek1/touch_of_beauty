@@ -69,8 +69,36 @@ class OrderedOrdersWidgetBuilder extends StatelessWidget {
                 SizedBox(
                   height: 5.h,
                 ),
-                Text(
-                  'حالة الطلب :- بانتظار الرد',
+                if(reservationModel.orderStatus==1)Text(
+                  'حالة الطلب : بأنتظار التأكيد مع المقدم',
+                  style: TextStyle(
+                      fontSize: 10.sp,
+                      fontFamily: FontPath.almaraiRegular,
+                      color: const Color(0xff1E2432)),
+                ),
+                if(reservationModel.orderStatus==2)Text(
+                  'حالة الطلب : تمت موافقة المقدم',
+                  style: TextStyle(
+                      fontSize: 10.sp,
+                      fontFamily: FontPath.almaraiRegular,
+                      color: const Color(0xff1E2432)),
+                ),
+                if(reservationModel.orderStatus==3)Text(
+                  'حالة الطلب : قيد الوصول',
+                  style: TextStyle(
+                      fontSize: 10.sp,
+                      fontFamily: FontPath.almaraiRegular,
+                      color: const Color(0xff1E2432)),
+                ),
+                if(reservationModel.orderStatus==4)Text(
+                  'حالة الطلب : انتهت الخدمة',
+                  style: TextStyle(
+                      fontSize: 10.sp,
+                      fontFamily: FontPath.almaraiRegular,
+                      color: const Color(0xff1E2432)),
+                ),
+                if(reservationModel.orderStatus==5)Text(
+                  'حالة الطلب : تم الالغاء',
                   style: TextStyle(
                       fontSize: 10.sp,
                       fontFamily: FontPath.almaraiRegular,
