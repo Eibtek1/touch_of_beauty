@@ -37,31 +37,27 @@ class VendorServicesRepository {
     required bool isAvailable,
   }) async {
     final response = await DioHelper.postData(
-      url: EndPoints.addService,
-      token: token,
-      data: FormData.fromMap({
-        'Description':description,
-        'Duration':duration,
-        'FinalPrice':finalPrice,
-        'Price':price,
-        'InCenter':inCenter,
-        'InHome':inHome,
-        'IsAvailable':isAvailable,
-        'MainSectionId':mainSectionId,
-        'PriceUnit':1,
-        'TitleAr':titleAr,
-        'TitleEn':titleEn,
-        'EmployeesNumber':empNumber,
-        'Img':image != null
-            ? "data:image/${image.path.split('.').last};base64,${imageToBase64(image)}"
-            : null,
-
-      })
-    );
+        url: EndPoints.addService,
+        token: token,
+        data: FormData.fromMap({
+          'Description': description,
+          'Duration': duration,
+          'FinalPrice': finalPrice,
+          'Price': price,
+          'InCenter': inCenter,
+          'InHome': inHome,
+          'IsAvailable': isAvailable,
+          'MainSectionId': mainSectionId,
+          'PriceUnit': 1,
+          'TitleAr': titleAr,
+          'TitleEn': titleEn,
+          'EmployeesNumber': empNumber,
+          'Img': image != null
+              ? "data:image/${image.path.split('.').last};base64,${imageToBase64(image)}"
+              : null,
+        }));
     return response;
   }
-
-
 
   static Future<Response> deleteEmployee({required int id}) async {
     final response = await DioHelper.deleteData(
@@ -71,32 +67,95 @@ class VendorServicesRepository {
     return response;
   }
 
-
   static Future<Response> addEmployee({
     required String name,
     required String email,
     required String phoneNumber,
     required File? image,
   }) async {
-    final response = await DioHelper.postData(
-        url: EndPoints.employees,
-        token: token,
-        data: {
-          "fullName": name,
-          "email": email,
-          "phoneNumber": phoneNumber,
-          "imgUrl":  image != null
-              ? "data:image/${image.path.split('.').last};base64,${imageToBase64(image)}"
-              : "",
-        });
+    final response =
+        await DioHelper.postData(url: EndPoints.employees, token: token, data: {
+      "fullName": name,
+      "email": email,
+      "phoneNumber": phoneNumber,
+      "imgUrl": image != null
+          ? "data:image/${image.path.split('.').last};base64,${imageToBase64(image)}"
+          : "",
+    });
     return response;
   }
-
-
 
   static Future<Response> getEmployees() async {
-    final response = await DioHelper.getData(
-        url: EndPoints.employees, bearerToken: token);
+    final response =
+        await DioHelper.getData(url: EndPoints.employees, bearerToken: token);
     return response;
   }
+
+  static Future<Response> getConfirmedOrders() async {
+    final response = await DioHelper.getData(
+      url: EndPoints.confirmedOrders,
+      bearerToken: token,
+    );
+    return response;
+  }
+
+  static Future<Response> getWithDriverOrders() async {
+    final response = await DioHelper.getData(
+      url: EndPoints.withDriverOrders,
+      bearerToken: token,
+    );
+    return response;
+  }
+
+  static Future<Response> getFinishedOrders() async {
+    final response = await DioHelper.getData(
+      url: EndPoints.finishedOrders,
+      bearerToken: token,
+    );
+    return response;
+  }
+
+  static Future<Response> getCanceledOrders() async {
+    final response = await DioHelper.getData(
+      url: EndPoints.cancelledOrders,
+      bearerToken: token,
+    );
+    return response;
+  }
+
+  static Future<Response> getPreparedOrders() async {
+    final response = await DioHelper.getData(
+      url: EndPoints.preparedOrders,
+      bearerToken: token,
+    );
+    return response;
+  }
+
+  static Future<Response> getOrdersById({required int orderId}) async {
+    final response = await DioHelper.getData(
+      url:"${EndPoints.getOrderById}/$orderId",
+      bearerToken: token,
+    );
+    return response;
+  }
+  static Future<Response> getTodayOrders({required bool inHome}) async {
+    final response = await DioHelper.getData(
+      url:EndPoints.getTodayOrders,
+      bearerToken: token,
+      query: {
+        'InHome':inHome,
+        'Start':DateTime.now().subtract(const Duration(days: 1)).toIso8601String(),
+        'End':DateTime.now().add(const Duration(days: 1)).toIso8601String(),
+      }
+    );
+    return response;
+  }
+  static Future<Response> changeOrderStatus({required int orderId,required int orderStatus,}) async {
+    final response = await DioHelper.putData(
+      url: "${EndPoints.changeOrderStatus}/$orderId/$orderStatus",
+      token: token,
+    );
+    return response;
+  }
+
 }

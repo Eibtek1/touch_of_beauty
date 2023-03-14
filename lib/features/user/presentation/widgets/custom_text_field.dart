@@ -81,7 +81,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       width: widget.width,
       padding: EdgeInsets.symmetric(horizontal: 5.w),
       decoration: BoxDecoration(
-        color: AppColorsLightTheme.authTextFieldFillColor.withOpacity(0.5),
+        color: AppColorsLightTheme.authTextFieldFillColor,
         borderRadius: BorderRadius.circular(25.r),
       ),
       child: Center(

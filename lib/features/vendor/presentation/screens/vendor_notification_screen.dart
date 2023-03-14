@@ -25,11 +25,11 @@ class VendorNotificationScreen extends StatelessWidget {
               color: const Color(0xff1E2432)),
         ),
       ),
-      body: ListView.builder(itemBuilder: (BuildContext context, int index) { return NotificationBuilder(); },itemCount: 10,),
+      body: ListView.builder(itemBuilder: (BuildContext context, int index) { return notificationBuilder(); },itemCount: 10,),
     );
   }
 
-  Widget NotificationBuilder() {
+  Widget notificationBuilder() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 16.h),
       child: Container(

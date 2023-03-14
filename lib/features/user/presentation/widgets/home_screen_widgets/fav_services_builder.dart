@@ -1,11 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
-import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_state.dart';
-import 'package:touch_of_beauty/features/user/data/models/services_model.dart';
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
@@ -122,7 +118,7 @@ class FavoriteServicesItem extends StatelessWidget {
                             color: const Color(0xffB83561),
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         if (servicesModel!.finalPrice !=
                             servicesModel!.price)
                           Container(

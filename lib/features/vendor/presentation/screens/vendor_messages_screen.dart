@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/images_path.dart';
 import '../../../chat/buisness_logic/chat_cubit.dart';
+import '../../../chat/presentation/screens/chat_screen.dart';
 
 class VendorMessagesScreen extends StatelessWidget {
   const VendorMessagesScreen({Key? key}) : super(key: key);
@@ -30,7 +32,7 @@ class VendorMessagesScreen extends StatelessWidget {
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("users")
-            .doc("2")
+            .doc(userId)
             .collection("chats")
             .orderBy("dateTime")
             .snapshots(),
@@ -50,12 +52,12 @@ class VendorMessagesScreen extends StatelessWidget {
                 onTap: () {
                   ChatCubit.get(context)
                       .getMessages(
-                      receiverId: "2", senderId: "1")
+                      receiverId: chatItemsList[index]['id'], senderId: userId)
                       .then(
                         (value) {
                       Navigator.pushNamed(
                           context, ScreenName.chatScreen,
-                          arguments: 'title');
+                          arguments: ChatScreenArgs(title: chatItemsList[index]['name'], receiverId: chatItemsList[index]['id']));
                     },
                   );
                 },

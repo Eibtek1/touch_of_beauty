@@ -34,4 +34,27 @@ class ReservationCubit extends Cubit<ReservationState> {
     }
   }
 
+  void confirmOrder({required int id}) async{
+    emit(ConfirmOrderLoadingState());
+    try{
+      final response = await ServicesProvidersRepository.confirmOrder(id: id);
+      mainResponse = MainResponse.fromJson(response.data);
+      emit(ConfirmOrderSuccessState(mainResponse: mainResponse));
+    }catch(error){
+    emit(ConfirmOrderErrorState(error.toString()));
+    }
+  }
+
+  void removeOrder({required int id}) async{
+    emit(RemoveOrderLoadingState());
+    try{
+      final response = await ServicesProvidersRepository.removeOrder(id: id);
+      mainResponse = MainResponse.fromJson(response.data);
+      emit(RemoveOrderSuccessState(mainResponse: mainResponse));
+    }catch(error){
+      print(error.toString());
+    emit(RemoveOrderErrorState(error.toString()));
+    }
+  }
+
 }

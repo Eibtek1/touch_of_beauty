@@ -8,7 +8,6 @@ import 'package:touch_of_beauty/features/user/data/models/services_model.dart';
 import 'package:touch_of_beauty/features/vendor/buisness_logic/services_cubit/vendor_services_state.dart';
 
 import '../../../user/data/models/main_sections_model.dart';
-import '../../data/models/employee_model.dart';
 import '../../data/repository/services_repo.dart';
 
 class VendorServicesCubit extends Cubit<VendorServicesState> {

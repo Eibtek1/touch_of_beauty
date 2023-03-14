@@ -1,48 +1,47 @@
 import 'package:equatable/equatable.dart';
 
-class ReservationModel extends Equatable {
+class ReserveModel extends Equatable {
   final int? id;
   final String? createdOn;
   final AddressData? addressData;
-  final String? addressDetails;
   final double? total;
   final int? orderStatus;
   final Service? service;
-  final Provider? provider;
+  final User? user;
 
-  const ReservationModel(
+  const ReserveModel(
       {this.id,
       this.createdOn,
+      this.user,
       this.addressData,
-      this.addressDetails,
       this.total,
       this.orderStatus,
-      this.service,
-      this.provider});
+      this.service});
 
-  factory ReservationModel.fromJson(Map<String, dynamic> json) {
-    return ReservationModel(
+  factory ReserveModel.fromJson(Map<String, dynamic> json) {
+    return ReserveModel(
       id: json['id'],
       createdOn: json['createdOn'],
-      addressData: AddressData.fromJson(json['addressData']),
-      addressDetails: json['addressDetails'],
+      addressData: json['addressData'] != null
+          ? AddressData.fromJson(json['addressData'])
+          : null,
       total: json['total'],
       orderStatus: json['orderStatus'],
-      service: Service.fromJson(json['service']),
-      provider: Provider.fromJson(json['provider']),
+      user: json['user'] != null ? User.fromJson(json['user']) : null,
+      service:
+          json['service'] != null ? Service.fromJson(json['service']) : null,
     );
   }
 
   @override
+  // TODO: implement props
   List<Object?> get props => [
         id,
         createdOn,
         addressData,
-        addressDetails,
         total,
         orderStatus,
         service,
-        provider,
       ];
 }
 
@@ -74,6 +73,7 @@ class AddressData extends Equatable {
   }
 
   @override
+  // TODO: implement props
   List<Object?> get props => [
         name,
         region,
@@ -107,24 +107,24 @@ class Service extends Equatable {
   @override
   // TODO: implement props
   List<Object?> get props => [
-    id,
-    title,
-    isAvailable,
-    finalPrice,
-    imgUrl,
-  ];
+        id,
+        title,
+        isAvailable,
+        finalPrice,
+        imgUrl,
+      ];
 }
 
-class Provider extends Equatable {
+class User extends Equatable {
   final String? id;
   final String? fullName;
   final String? phoneNumber;
   final String? email;
 
-  const Provider({this.id, this.fullName, this.phoneNumber, this.email});
+  const User({this.id, this.fullName, this.phoneNumber, this.email});
 
-  factory Provider.fromJson(Map<String, dynamic> json) {
-    return Provider(
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
       id: json['id'],
       fullName: json['fullName'],
       phoneNumber: json['phoneNumber'],
@@ -133,6 +133,7 @@ class Provider extends Equatable {
   }
 
   @override
+  // TODO: implement props
   List<Object?> get props => [
         id,
         fullName,

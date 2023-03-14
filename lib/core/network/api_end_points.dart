@@ -27,6 +27,16 @@ class EndPoints{
   static const getServicesByMainFeatureId = '/Services/ServicesByMainSection/';
   static const getServicesForUser = '/Services/ServicesForUser';
   static const getServiceDetailsById = '/Services/ServiceDetails/';
+  static const confirmOrder = '/OrderUsers/ConfirmOrder/';
+  static const removeOrder = '/OrderUsers/RemoveOrder/';
+  static const preparedOrders = '/OrderProviders/PreparedOrders';
+  static const getOrderById = '/OrderProviders/GetOrderById';
+  static const getTodayOrders = '/OrderProviders/GetAllOrders';
+  static const changeOrderStatus = '/OrderProviders/ChangeOrderStatus';
+  static const confirmedOrders = '/OrderProviders/ConfirmedOrders';
+  static const withDriverOrders = '/OrderProviders/WithDriverOrders';
+  static const finishedOrders = '/OrderProviders/FinishedOrders';
+  static const cancelledOrders = '/OrderProviders/CancelledOrders';
   static const addProviderToFavorite = '/Favorites/AddProviderInFavorite/';
   static const deleteProviderFromFavorite = '/Favorites/DeleteProviderFromFavorite/';
   static const addServiceToFavorite = '/Favorites/AddServiceInFavorite/';

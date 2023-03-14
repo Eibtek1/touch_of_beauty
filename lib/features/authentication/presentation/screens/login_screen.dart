@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
                     CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
                       token = CacheHelper.getData(key: CacheKeys.token);
-                      userId = CacheHelper.getData(key: CacheKeys.token);
+                      userId = CacheHelper.getData(key: CacheKeys.userId);
                       Navigator.pushNamedAndRemoveUntil(context, ScreenName.userMainLayout, (route) => false);
                     });
                   });
@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
                     CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
                       token = CacheHelper.getData(key: CacheKeys.token);
-                      userId = CacheHelper.getData(key: CacheKeys.token);
+                      userId = CacheHelper.getData(key: CacheKeys.userId);
                       Navigator.pushNamedAndRemoveUntil(context, ScreenName.vendorMainLayout, (route) => false);
                     });
                   });
@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
                     CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
                       token = CacheHelper.getData(key: CacheKeys.token);
-                      userId = CacheHelper.getData(key: CacheKeys.token);
+                      userId = CacheHelper.getData(key: CacheKeys.userId);
                       Navigator.pushNamedAndRemoveUntil(context, ScreenName.freelancerMainLayout, (route) => false);
                     });
                   });

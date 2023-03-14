@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -96,14 +98,14 @@ class RegisterScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset('assets/images/logoP.png'),
-                Text('دقائق قرانية',style: TextStyle(fontFamily: 'noto',fontSize: 22,fontWeight: FontWeight.bold,color: Colors.grey),),
+                const Text('دقائق قرانية',style: TextStyle(fontFamily: 'noto',fontSize: 22,fontWeight: FontWeight.bold,color: Colors.grey),),
               ],
             ),
           ),
           SizedBox(
             height: 50.h,
           ),
-          customTextField(
+          CustomTextField(
             controller: emailController,
             inputType: TextInputType.name,
             hint: 'الإسم بالكامل',
@@ -118,7 +120,7 @@ class RegisterScreen extends StatelessWidget {
           SizedBox(
             height: 20.h,
           ),
-          customTextField(
+          CustomTextField(
             controller: emailController,
             inputType: TextInputType.emailAddress,
             hint: 'الإيميل',
@@ -135,7 +137,7 @@ class RegisterScreen extends StatelessWidget {
           SizedBox(
             height: 20.h,
           ),
-          customTextField(
+          CustomTextField(
             controller: passwordController,
             inputType: TextInputType.visiblePassword,
             hint: 'كلمة المرور',
@@ -150,7 +152,7 @@ class RegisterScreen extends StatelessWidget {
           SizedBox(
             height: 20.h,
           ),
-          customTextField(
+          CustomTextField(
             controller: rePasswordController,
             inputType: TextInputType.visiblePassword,
             hint: 'اعد كتابة كلمة المرور',
@@ -198,8 +200,8 @@ class RegisterScreen extends StatelessWidget {
   }
 }
 
-class customTextField extends StatelessWidget {
-  customTextField({super.key,required this.controller,required this.hint,required this.icon,required this.inputType,required this.validator});
+class CustomTextField extends StatelessWidget {
+  CustomTextField({super.key,required this.controller,required this.hint,required this.icon,required this.inputType,required this.validator});
   TextEditingController controller = TextEditingController();
   TextInputType inputType;
   String hint;

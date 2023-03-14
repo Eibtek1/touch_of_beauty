@@ -248,7 +248,6 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
       searchForServicesProviderLoading = false;
       emit(GetSearchServicesProvidersSuccess());
     } catch (error) {
-      print(error.toString());
       searchForServicesProviderLoading = false;
       emit(GetSearchServicesProvidersError(error: error.toString()));
     }
@@ -270,7 +269,6 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
       emit(GetFavoritesServicesProvidersSuccess());
     }catch(error){
       getFavoriteServicesProviderLoading = false;
-      print(error.toString());
       emit(GetFavoritesServicesProvidersError(error: error.toString()));
     }
   }

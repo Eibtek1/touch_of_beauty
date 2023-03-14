@@ -70,7 +70,6 @@ class EmployeesCubit extends Cubit<EmployeesState> {
           }
         }
       }
-      print(response);
       emit(GetEmployeeSuccess());
     }catch(error){
       emit(GetEmployeeError(error: error.toString()));

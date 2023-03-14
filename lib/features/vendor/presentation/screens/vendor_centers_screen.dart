@@ -73,7 +73,6 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                 svgImage: SvgPath.centersIcon,
                 title: 'بيانات المركز',
                 onTap: () {
-                  print(token);
                   if (AuthCubit.get(context).getUserModel == null) {
                     AuthCubit.get(context).getUserData();
                   }

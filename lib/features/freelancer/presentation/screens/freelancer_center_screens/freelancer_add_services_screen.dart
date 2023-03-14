@@ -7,7 +7,6 @@ import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/images_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
 import '../../../../freelancer/presentation/widgets/custom_vendor_button.dart';
-import '../../../../vendor/presentation/widgets/center_details/center_employees_widget.dart';
 import '../../../../vendor/presentation/widgets/center_details/custo_text_form_field.dart';
 import '../../../../vendor/presentation/widgets/screen_layout_widget_with_logo.dart';
 
@@ -43,7 +42,7 @@ class FreelancerAddServicesScreen extends StatelessWidget {
               SvgPath.notificationBill,
               width: 23.w,
               height: 28.h,
-              color: Colors.white,
+              colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
             ),
           ),
           SizedBox(
