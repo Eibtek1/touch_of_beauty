@@ -71,7 +71,7 @@ class SalonItemBuilder extends StatelessWidget {
                     listener: (context, state ){
                       var cubit = ServicesProvidersCubit.get(context);
                       if(state is DeleteServicesProviderToFavSuccess){
-                        cubit.favoritesServicesProvidersList.remove(servicesProviderModel);
+                        cubit.favoritesServicesProvidersList.removeWhere((element) => element.providerId == servicesProviderModel.id);
                       }
                     },
                     builder: (context, state) {
@@ -106,7 +106,7 @@ class SalonItemBuilder extends StatelessWidget {
                     listener: (context, state ){
                       var cubit = ServicesProvidersCubit.get(context);
                       if(state is DeleteServicesProviderToFavSuccess){
-                        cubit.favoritesServicesProvidersList.remove(servicesProviderModel);
+                        cubit.favoritesServicesProvidersList.removeWhere((element) => element.providerId == servicesProviderModel.id);
                       }
                     },
                     builder: (context, state) {
@@ -149,7 +149,7 @@ class SalonItemBuilder extends StatelessWidget {
                       RatingBar.builder(
                         itemSize: 16.r,
                         ignoreGestures: true,
-                        initialRating: servicesProviderModel.numberOfStar!,
+                        initialRating: 0,
                         minRating: 1,
                         unratedColor: Colors.grey.shade400,
                         direction: Axis.horizontal,

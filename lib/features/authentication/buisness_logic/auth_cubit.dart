@@ -91,7 +91,6 @@ class AuthCubit extends Cubit<AuthState> {
       mainResponse = MainResponse.fromJson(response.data);
       message = mainResponse.errorMessage.toString();
       if (mainResponse.errorCode == 0) {
-        print(response);
         emit(LoginSuccess(loginModel: LoginModel.fromJson(mainResponse.data)));
       } else {
         emit(LoginSuccessButErrorInData(errorMessage: message!));
@@ -253,7 +252,6 @@ class AuthCubit extends Cubit<AuthState> {
         getAllPicturesForProvider();
         getAllPicturesForProvider();
       }
-      print(response.data);
       emit(GetUserDataSuccess());
     } catch (error) {
       emit(GetUserDataError(error.toString()));
@@ -267,7 +265,7 @@ class AuthCubit extends Cubit<AuthState> {
       mainResponse = MainResponse.fromJson(response.data);
       if (mainResponse.errorCode == 0) {
         for (var element in mainResponse.data) {
-          print(picturesList.contains(PicturesModel.fromJson(element)));
+
           if (!picturesList.contains(PicturesModel.fromJson(element))) {
             picturesList.add(PicturesModel.fromJson(element));
           }
@@ -275,7 +273,7 @@ class AuthCubit extends Cubit<AuthState> {
       } else {
         data = mainResponse.errorCode;
       }
-      print(picturesList.length);
+
       emit(GetPicturesForProviderSuccess());
     } catch (error) {
       emit(GetPicturesForProviderError(error.toString()));
@@ -288,7 +286,6 @@ class AuthCubit extends Cubit<AuthState> {
       final response =
           await AuthRepository.addPictureToLibrary(image: profileImage);
       mainResponse = MainResponse.fromJson(response.data);
-      print(response);
       if (mainResponse.errorCode == 0) {
         profileImage = null;
         getAllPicturesForProvider();
@@ -331,7 +328,6 @@ class AuthCubit extends Cubit<AuthState> {
       profileImage = null;
       emit(UpdateProfileSuccess());
     } catch (error) {
-      print(error.toString());
       emit(UpdateProfileError(error.toString()));
     }
   }
@@ -355,7 +351,6 @@ class AuthCubit extends Cubit<AuthState> {
       profileImage = null;
       emit(UpdateProfileSuccess());
     } catch (error) {
-      print(error.toString());
       emit(UpdateProfileError(error.toString()));
     }
   }
@@ -370,7 +365,6 @@ class AuthCubit extends Cubit<AuthState> {
       profileImage = null;
       emit(SendCompSuccess());
     } catch (error) {
-      print(error.toString());
       emit(SendCompError(error.toString()));
     }
   }

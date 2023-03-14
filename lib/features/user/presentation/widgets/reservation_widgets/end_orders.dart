@@ -1,12 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 
 import '../../../../../core/assets_path/font_path.dart';
-import '../../../../../core/assets_path/images_path.dart';
 import '../../../../../core/constants/constants.dart';
+import '../../../../../core/network/api_end_points.dart';
 import '../../../../chat/buisness_logic/chat_cubit.dart';
 import '../../../../chat/presentation/screens/chat_screen.dart';
 import '../../../data/models/reservation_model.dart';
@@ -35,10 +37,28 @@ class EndOrdersWidgetBuilder extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.r),
                   border: Border.all(color: Colors.black)),
-              child: Image.asset(
-                ImagePath.onboarding2,
+              child: CachedNetworkImage(
                 fit: BoxFit.cover,
+                imageUrl:
+                "${EndPoints.imageBaseUrl}${reservationModel.service!.imgUrl}",
+                placeholder: (context, url) => Shimmer.fromColors(
+                  baseColor: Colors.grey[400]!,
+                  highlightColor: Colors.grey[300]!,
+                  child: Container(
+                    height: double.infinity,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                ),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
+              // Image.asset(
+              //   ImagePath.onboarding2,
+              //   fit: BoxFit.cover,
+              // ),
             ),
             SizedBox(
               width: 10.w,

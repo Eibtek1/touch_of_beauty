@@ -19,7 +19,6 @@ import '../../features/freelancer/presentation/screens/freelancer_center_screens
 import '../../features/freelancer/presentation/screens/freelancer_center_screens/freelancer_services_screen.dart';
 import '../../features/freelancer/presentation/screens/freelancer_center_screens/freelancer_working_time_screen.dart';
 import '../../features/freelancer/presentation/screens/freelancer_notification_screen.dart';
-import '../../features/user/data/models/services_model.dart';
 import '../../features/user/presentation/screens/edit_profile_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/all_centers_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/main_featuers_services.dart';
@@ -133,8 +132,9 @@ class AppRouter {
           final args = settings.arguments;
           return _animateRouteBuilder(OurServicesScreen(id:args));
         case ScreenName.paymentWebView:
-          final args = settings.arguments.toString();
-          return _animateRouteBuilder(PaymentWebView(url:args));
+          final args = settings.arguments;
+          String arguments = args as String;
+          return _animateRouteBuilder(PaymentWebView(url:arguments));
         case ScreenName.offersScreen:
           return _animateRouteBuilder(const OffersScreen());
         case ScreenName.complainsScreen:

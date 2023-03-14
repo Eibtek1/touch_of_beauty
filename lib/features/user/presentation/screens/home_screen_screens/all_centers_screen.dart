@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_state.dart';
-import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
-import '../../../../../core/assets_path/svg_path.dart';
 import '../../../buisness_logic/services_cubit/services_cubit.dart';
-import '../../widgets/custom_text_field.dart';
 import '../../widgets/home_screen_widgets/all_centers_item.dart';
 import '../../widgets/home_screen_widgets/center_details_bottom_sheet.dart';
 
@@ -21,11 +17,23 @@ class AllCentersScreen extends StatefulWidget {
 }
 
 class _AllCentersScreenState extends State<AllCentersScreen> {
-  final TextEditingController searchController = TextEditingController();
-
+  // final TextEditingController searchController = TextEditingController();
+  ScrollController scrollController = ScrollController();
   @override
   void initState() {
-    ServicesProvidersCubit.get(context).getAllServicesProviders();
+    // ServicesProvidersCubit.get(context).getAllServicesProviders();
+    scrollController.addListener(() {
+      if (scrollController.position.maxScrollExtent ==
+          scrollController.offset) {
+        if(BlocProvider.of<ServicesProvidersCubit>(context).servicesProvidersList.isEmpty){
+          BlocProvider.of<ServicesProvidersCubit>(context)
+              .getAllServicesProviders();
+        }else{
+          BlocProvider.of<ServicesProvidersCubit>(context)
+              .getAllServicesProviders();
+        }
+      }
+    });
     super.initState();
   }
 
@@ -72,53 +80,54 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
           var cubit = ServicesProvidersCubit.get(context);
           return Column(
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: SearchBarWidget(
-                      onCancelSubmitted: () {
-                        setState(() {
-                          searchController.clear();
-                          cubit.searchServicesProvidersList.clear();
-                          cubit.searchServicesProviderPageNumber = 1;
-                        });
-                      },
-                      onSearchIconSubmitted: () {
-                        cubit.searchServicesProviderPageNumber = 1;
-                        cubit.searchForServicesProvider(
-                          searchName: searchController.text,
-                        );
-                      },
-                      width: double.infinity,
-                      color: AppColorsLightTheme.authTextFieldFillColor,
-                      controller: searchController,
-                    )),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    Container(
-                      height: 45.h,
-                      width: 45.w,
-                      decoration: BoxDecoration(
-                          color: AppColorsLightTheme.secondaryColor
-                              .withOpacity(0.2),
-                          shape: BoxShape.circle),
-                      child: Center(
-                        child: SvgPicture.asset(SvgPath.settingsSliders),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              const Divider(),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: 20.w),
+              //   child: Row(
+              //     children: [
+              //       Expanded(
+              //           child: SearchBarWidget(
+              //         onCancelSubmitted: () {
+              //           setState(() {
+              //             searchController.clear();
+              //             cubit.searchServicesProvidersList.clear();
+              //             cubit.searchServicesProviderPageNumber = 1;
+              //           });
+              //         },
+              //         onSearchIconSubmitted: () {
+              //           cubit.searchServicesProviderPageNumber = 1;
+              //           cubit.searchForServicesProvider(
+              //             searchName: searchController.text,
+              //           );
+              //         },
+              //         width: double.infinity,
+              //         color: AppColorsLightTheme.authTextFieldFillColor,
+              //         controller: searchController,
+              //       )),
+              //       SizedBox(
+              //         width: 10.w,
+              //       ),
+              //       Container(
+              //         height: 45.h,
+              //         width: 45.w,
+              //         decoration: BoxDecoration(
+              //             color: AppColorsLightTheme.secondaryColor
+              //                 .withOpacity(0.2),
+              //             shape: BoxShape.circle),
+              //         child: Center(
+              //           child: SvgPicture.asset(SvgPath.settingsSliders),
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 20.h,
+              // ),
+              // const Divider(),
               Expanded(
                 child: !cubit.searchForServicesProviderLoading
                     ? ListView.builder(
+                  controller: scrollController,
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
                             onTap: () {

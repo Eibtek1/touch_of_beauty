@@ -39,8 +39,6 @@ class FavoriteServicesModel extends Equatable {
       this.mainSection});
 
   factory FavoriteServicesModel.fromJson(Map<String, dynamic> json) {
-    MainSection? mainSection = MainSection.fromJson(json['mainSection']);
-    ServiceProvider? serviceProvider = ServiceProvider.fromJson(json['serviceProvider']);
     return FavoriteServicesModel(
       id: json['id'],
       serviceId: json['serviceId'],

@@ -56,29 +56,29 @@ class _UserMainLayoutState extends State<FreelancerMainLayout> {
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   SvgPath.homeIcon,
-                  color: cIndex == 0
+                  colorFilter: ColorFilter.mode(cIndex == 0
                       ? AppColorsLightTheme.primaryColor
-                      : Colors.grey,
+                      : Colors.grey, BlendMode.srcIn),
                 ),
                 label: 'الرئيسية',
               ),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(SvgPath.messagesIcon,
-                      color: cIndex == 1
+                      colorFilter: ColorFilter.mode(cIndex == 1
                           ? AppColorsLightTheme.primaryColor
-                          : Colors.grey),
+                          : Colors.grey, BlendMode.srcIn)),
                   label: 'محادثاتي'),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(SvgPath.centersIcon,
-                      color: cIndex == 2
+                      colorFilter: ColorFilter.mode(cIndex == 2
                           ? AppColorsLightTheme.primaryColor
-                          : Colors.grey),
+                          : Colors.grey, BlendMode.srcIn)),
                   label: 'صالوني'),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(SvgPath.moreIcon,
-                      color: cIndex == 3
+                      colorFilter: ColorFilter.mode(cIndex == 3
                           ? AppColorsLightTheme.primaryColor
-                          : Colors.grey),
+                          : Colors.grey, BlendMode.srcIn)),
                   label: 'المزيد'),
             ],
           ),

@@ -65,7 +65,7 @@ class FreelancerServicesScreen extends StatelessWidget {
               SvgPath.notificationBill,
               width: 23.w,
               height: 28.h,
-              color: Colors.white,
+              colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
             ),
           ),
           SizedBox(

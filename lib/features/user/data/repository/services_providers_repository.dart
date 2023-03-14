@@ -160,8 +160,6 @@ class ServicesProvidersRepository {
     return response;
   }
 
-
-
   static Future<Response> deleteAddress({required int id}) async {
     final response = await DioHelper.deleteData(
       url: "${EndPoints.addresses}/$id",
@@ -170,29 +168,25 @@ class ServicesProvidersRepository {
     return response;
   }
 
-
   static Future<Response> addAddress({
     required int cityId,
-    required String?region,
+    required String? region,
     required String? street,
     required String? buildingNumber,
     required String? flatNumber,
     required String? addressDetails,
   }) async {
-    final response = await DioHelper.postData(
-        url: EndPoints.addresses,
-        token: token,
-        data: {
-          "region": region??"",
-          "street": street??"",
-          "buildingNumber": buildingNumber??"",
-          "flatNumber": flatNumber??"",
-          "addressDetails": addressDetails??"",
-          "cityId": cityId
-        });
+    final response =
+        await DioHelper.postData(url: EndPoints.addresses, token: token, data: {
+      "region": region ?? "",
+      "street": street ?? "",
+      "buildingNumber": buildingNumber ?? "",
+      "flatNumber": flatNumber ?? "",
+      "addressDetails": addressDetails ?? "",
+      "cityId": cityId
+    });
     return response;
   }
-
 
   static Future<Response> addOrder({
     required int serviceId,
@@ -200,23 +194,19 @@ class ServicesProvidersRepository {
     required String dateTime,
     required bool inHome,
   }) async {
-    final response = await DioHelper.postData(
-        url: EndPoints.addOrder,
-        token: token,
-        data: {
-          "startingOn": "$dateTime",
-          "serviceId": serviceId,
-          "addressId": addressId,
-          "inHome": inHome
-        });
+    final response =
+        await DioHelper.postData(url: EndPoints.addOrder, token: token, data: {
+      "startingOn": dateTime,
+      "serviceId": serviceId,
+      "addressId": addressId,
+      "inHome": inHome
+    });
     return response;
   }
 
-
-
   static Future<Response> getAddress() async {
-    final response = await DioHelper.getData(
-        url: EndPoints.addresses, bearerToken: token);
+    final response =
+        await DioHelper.getData(url: EndPoints.addresses, bearerToken: token);
     return response;
   }
 
@@ -229,9 +219,26 @@ class ServicesProvidersRepository {
     );
     return response;
   }
+
   static Future<Response> getOrdersForUser() async {
     final response = await DioHelper.getData(
         url: EndPoints.getOrdersForUser, bearerToken: token);
+    return response;
+  }
+
+  static Future<Response> confirmOrder({required int id}) async {
+    final response = await DioHelper.postData(
+      url: "${EndPoints.confirmOrder}$id",
+      token: token,
+    );
+    return response;
+  }
+
+  static Future<Response> removeOrder({required int id}) async {
+    final response = await DioHelper.postData(
+      url: "${EndPoints.removeOrder}$id",
+      token: token,
+    );
     return response;
   }
 }

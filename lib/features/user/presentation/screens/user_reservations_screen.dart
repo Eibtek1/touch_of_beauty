@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/reservation_cubit/reservation_cubit.dart';
@@ -53,7 +54,22 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ReservationCubit, ReservationState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is ConfirmOrderSuccessState){
+          Navigator.pop(context);
+          Navigator.pushNamed(context, ScreenName.paymentWebView,arguments: state.mainResponse.data);
+        }
+        if(state is ConfirmOrderLoadingState){
+          showProgressIndicator(context);
+        }
+        if(state is RemoveOrderSuccessState){
+          Navigator.pop(context);
+          ReservationCubit.get(context).getOrdersForUser();
+        }
+        if(state is RemoveOrderLoadingState){
+          showProgressIndicator(context);
+        }
+      },
       builder: (context, state) {
         var cubit = ReservationCubit.get(context);
         return Scaffold(
@@ -123,6 +139,15 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
                           itemBuilder: (BuildContext context, int index) {
                             return AllOrdersWidgetItem(
                               reservationModel: cubit.reservationsList[index],
+                              goToPay: (){
+                                cubit.confirmOrder(id: cubit.reservationsList[index].id!);
+                              },
+                              removeOrder: (){
+                                // print(cubit.reservationsList[index].id!);
+                                // print(token);
+                                cubit.removeOrder(id: cubit.reservationsList[index].id!);
+                                cubit.reservationsList.removeAt(index);
+                              },
                             );
                           },
                         ),
@@ -148,7 +173,7 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
                         ListView.builder(
                           itemCount: cubit.reservationsList
                               .where((element) =>
-                                  element.orderStatus == 5 &&
+                                  element.orderStatus == 5 ||
                                   element.orderStatus == 4)
                               .toList()
                               .length,
@@ -156,7 +181,7 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
                             return EndOrdersWidgetBuilder(
                               reservationModel: cubit.reservationsList
                                   .where((element) =>
-                                      element.orderStatus == 5 &&
+                                      element.orderStatus == 5 ||
                                       element.orderStatus == 4)
                                   .toList()[index],
                             );

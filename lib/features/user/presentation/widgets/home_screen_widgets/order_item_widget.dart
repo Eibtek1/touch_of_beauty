@@ -5,9 +5,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 
 import '../../../../../core/assets_path/font_path.dart';
-import '../../../../../core/assets_path/images_path.dart';
 import '../../../../../core/network/api_end_points.dart';
-import '../../../data/models/services_model.dart';
 
 class OrderItemWidget extends StatelessWidget {
   final dynamic servicesModel;

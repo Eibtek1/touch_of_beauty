@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
-// Import for iOS features.
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 import '../../../../../../core/assets_path/font_path.dart';
+import '../../../../buisness_logic/reservation_cubit/reservation_cubit.dart';
 
 class PaymentWebView extends StatefulWidget {
   final String url;
@@ -80,21 +80,32 @@ Page resource error:
     _controller = controller;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'الدفع',
-          style: TextStyle(
-            fontSize: 14.sp,
-            color: Colors.white,
-            fontFamily: FontPath.almaraiBold,
+    return WillPopScope(
+      onWillPop: () async{
+        ReservationCubit.get(context).getOrdersForUser();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'الدفع',
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: Colors.white,
+              fontFamily: FontPath.almaraiBold,
+            ),
           ),
+          leading: IconButton(onPressed: (){
+            ReservationCubit.get(context).getOrdersForUser();
+            Navigator.pop(context);
+          }, icon: const Icon(Icons.arrow_back,color: Colors.white,)),
+          centerTitle: true,
         ),
-        centerTitle: true,
+        body: WebViewWidget(controller: _controller,),
       ),
-      body: WebViewWidget(controller: _controller,),
     );
   }
 }

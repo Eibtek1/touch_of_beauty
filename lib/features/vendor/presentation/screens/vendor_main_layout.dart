@@ -48,11 +48,12 @@ class _UserMainLayoutState extends State<VendorMainLayout> {
               color: Colors.grey,
             ),
             onTap: (index) {
+              print(userId);
+              print(token);
               setState(() {
                 cIndex = index;
               });
-              print(token);
-              print(DateTime.now().toIso8601String());
+
             },
             items: [
               BottomNavigationBarItem(

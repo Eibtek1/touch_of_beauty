@@ -1,14 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import 'package:touch_of_beauty/features/user/data/models/reservation_model.dart';
 
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../core/network/api_end_points.dart';
 
 class AllOrdersWidgetItem extends StatelessWidget {
   final ReservationModel reservationModel;
-
-  const AllOrdersWidgetItem({Key? key, required this.reservationModel})
+  final void Function()? goToPay;
+  final void Function()? removeOrder;
+  const AllOrdersWidgetItem({Key? key, required this.reservationModel, this.goToPay, this.removeOrder})
       : super(key: key);
 
   @override
@@ -53,10 +57,25 @@ class AllOrdersWidgetItem extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.r),
                       border: Border.all(color: Colors.black)),
-                  child: Image.asset(
-                    ImagePath.onboarding1,
+                  child: CachedNetworkImage(
                     fit: BoxFit.cover,
+                    imageUrl:
+                    "${EndPoints.imageBaseUrl}${reservationModel.service!.imgUrl}",
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor: Colors.grey[400]!,
+                      highlightColor: Colors.grey[300]!,
+                      child: Container(
+                        height: double.infinity,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
                   ),
+
                 ),
                 SizedBox(
                   width: 10.w,
@@ -189,10 +208,10 @@ class AllOrdersWidgetItem extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          width: 100.w,
+                        if(reservationModel.orderStatus==0)SizedBox(
+                          width: 110.w,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: removeOrder,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.red,
                               shape: RoundedRectangleBorder(
@@ -224,7 +243,7 @@ class AllOrdersWidgetItem extends StatelessWidget {
                         if(reservationModel.orderStatus==0)SizedBox(
                           width: 100.w,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: goToPay,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.green,
                               shape: RoundedRectangleBorder(

@@ -1,25 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import '../../../../core/assets_path/font_path.dart';
-import '../widgets/custom_vendor_button.dart';
+import '../../../vendor/buisness_logic/v_reservations_cubit/v_reservation_cubit.dart';
+import '../../../vendor/buisness_logic/v_reservations_cubit/v_reservation_state.dart';
+import '../../../vendor/presentation/widgets/order_item_builder.dart';
 import '../widgets/screen_layout_widget.dart';
 
 class FreelancerHomeScreen extends StatefulWidget {
   const FreelancerHomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<FreelancerHomeScreen> createState() => _VendorHomeScreenState();
+  State<FreelancerHomeScreen> createState() => _FreelancerHomeScreenState();
 }
 
 List<String> itemsList = [
+  'في المركز',
   'في المنزل',
 ];
 
-class _VendorHomeScreenState extends State<FreelancerHomeScreen> {
+class _FreelancerHomeScreenState extends State<FreelancerHomeScreen> {
   String value = itemsList.first;
+  int homeZeroOrCenterOne = 0;
+
+  @override
+  void initState() {
+    VReservationCubit.get(context).getTodayOrders(inHome: false);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +57,18 @@ class _VendorHomeScreenState extends State<FreelancerHomeScreen> {
                           fontSize: 17.sp),
                     ),
                   ),
-                  SvgPicture.asset(
-                    SvgPath.notificationBill,
-                    color: Colors.white,
-                    height: 28.h,
-                    width: 23.w,
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                          context, ScreenName.vendorNotificationScreen);
+                    },
+                    icon: SvgPicture.asset(
+                      SvgPath.notificationBill,
+                      colorFilter:
+                          const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                      height: 28.h,
+                      width: 23.w,
+                    ),
                   ),
                 ],
               ),
@@ -68,7 +87,7 @@ class _VendorHomeScreenState extends State<FreelancerHomeScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        'اليوم',
+                        'خلال يومان',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.grey,
@@ -105,6 +124,15 @@ class _VendorHomeScreenState extends State<FreelancerHomeScreen> {
                       onChanged: (val) {
                         setState(() {
                           value = val!;
+                          if (value == 'في المركز') {
+                            homeZeroOrCenterOne = 0;
+                            VReservationCubit.get(context)
+                                .getTodayOrders(inHome: false);
+                          } else {
+                            VReservationCubit.get(context)
+                                .getTodayOrders(inHome: true);
+                            homeZeroOrCenterOne = 0;
+                          }
                         });
                       },
                       value: value,
@@ -115,101 +143,44 @@ class _VendorHomeScreenState extends State<FreelancerHomeScreen> {
               SizedBox(
                 height: 29.h,
               ),
-              Expanded(
-                child: ListView.builder(
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: orderItemBuilder(),
-                    );
-                  },
-                  itemCount: 10,
-                ),
+              BlocConsumer<VReservationCubit, VReservationState>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  var cubit = VReservationCubit.get(context);
+                  return Expanded(
+                    child: state is GetTodayOrdersLoading
+                        ? const Center(
+                            child: CircularProgressIndicator.adaptive(),
+                          )
+                        : cubit.getTodayOrdersList.isNotEmpty
+                            ? ListView.builder(
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 10.sp),
+                                    child: OrderItemBuilder(
+                                      homeZeroOrCenterOne: homeZeroOrCenterOne,
+                                      reserveModel:
+                                          cubit.getTodayOrdersList[index],
+                                    ),
+                                  );
+                                },
+                                itemCount: cubit.getTodayOrdersList.length,
+                              )
+                            : Text(
+                                'لا يوجد خدمات بعد',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: AppColorsLightTheme.primaryColor,
+                                    fontFamily: FontPath.almaraiBold,
+                                    fontSize: 17.sp),
+                              ),
+                  );
+                },
               )
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget orderItemBuilder(){
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 24.h,horizontal: 10.w),
-      height: 340.h,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10.r),
-        boxShadow: [
-          BoxShadow(offset: const Offset(0, 0),blurRadius: 10.r,color: Colors.black.withOpacity(0.14))
-        ]
-      ),
-      child: Column(
-        children: [
-          Text(
-            '1 يناير 2020 مساء',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: AppColorsLightTheme.secondaryColor,
-                fontFamily: FontPath.almaraiRegular,
-                fontSize: 14.sp),
-          ),
-          SizedBox(height: 17.h,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              customContainer(title: 'اسم العميل', bodyTitle: 'يسرا محسن'),
-              customContainer(title: 'رقم الطلب', bodyTitle: '13455'),
-            ],
-          ),
-          SizedBox(height: 13.h,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              customContainer(title: 'اجمالي سعر الخدمات', bodyTitle: '100 ريال سعودي'),
-              customContainer(title: 'عدد الخدمات', bodyTitle: '10 خدمات'),
-            ],
-          ),
-          SizedBox(height: 17.h,),
-          CustomVendorButton(buttonTitle: 'عرض تفاصيل الطلب', isTapped: (){}, width: double.infinity, paddingVertical: 12.h, paddingHorizontal: 45.w)
-        ],
-      ),
-    );
-  }
-
-  Widget customContainer({required String title,required String bodyTitle,}){
-    return Container(
-      height: 88.h,
-      width: 150.w,
-      decoration: BoxDecoration(
-        color: AppColorsLightTheme.authTextFieldFillColor,
-        borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(color: AppColorsLightTheme.primaryColor),
-
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: const Color(0xff3C475C),
-                fontFamily: FontPath.almaraiRegular,
-                fontSize: 14.sp),
-          ),
-          SizedBox(height: 12.h,),
-          Text(
-            bodyTitle,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: const Color(0xff3C475C),
-                fontFamily: FontPath.almaraiRegular,
-                fontSize: 12.sp),
-          ),
-        ],
       ),
     );
   }

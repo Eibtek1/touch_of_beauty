@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import '../../../../core/assets_path/font_path.dart';
+import '../../buisness_logic/v_reservations_cubit/v_reservation_cubit.dart';
+import '../../buisness_logic/v_reservations_cubit/v_reservation_state.dart';
 import '../widgets/order_item_builder.dart';
 import '../widgets/screen_layout_widget.dart';
 
@@ -22,8 +25,12 @@ List<String> itemsList = [
 
 class _VendorHomeScreenState extends State<VendorHomeScreen> {
   String value = itemsList.first;
-  int homeZeroOrCenterOne =0;
-
+  int homeZeroOrCenterOne = 0;
+  @override
+  void initState() {
+    VReservationCubit.get(context).getTodayOrders(inHome: false);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,12 +55,19 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                           fontSize: 17.sp),
                     ),
                   ),
-                  IconButton(onPressed: (){Navigator.pushNamed(context, ScreenName.vendorNotificationScreen);}, icon: SvgPicture.asset(
-                    SvgPath.notificationBill,
-                    color: Colors.white,
-                    height: 28.h,
-                    width: 23.w,
-                  )),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                          context, ScreenName.vendorNotificationScreen);
+                    },
+                    icon: SvgPicture.asset(
+                      SvgPath.notificationBill,
+                      colorFilter:
+                          const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                      height: 28.h,
+                      width: 23.w,
+                    ),
+                  ),
                 ],
               ),
               SizedBox(
@@ -71,7 +85,7 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        'اليوم',
+                        'خلال يومان',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.grey,
@@ -108,9 +122,13 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                       onChanged: (val) {
                         setState(() {
                           value = val!;
-                          if(value == 'في المركز'){
-                            homeZeroOrCenterOne = 1;
-                          }else{
+                          if (value == 'في المركز') {
+                            homeZeroOrCenterOne = 0;
+                            VReservationCubit.get(context)
+                                .getTodayOrders(inHome: false);
+                          } else {
+                            VReservationCubit.get(context)
+                                .getTodayOrders(inHome: true);
                             homeZeroOrCenterOne = 0;
                           }
                         });
@@ -123,16 +141,36 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
               SizedBox(
                 height: 29.h,
               ),
-              Expanded(
-                child: ListView.builder(
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.sp),
-                      child: OrderItemBuilder(homeZeroOrCenterOne: homeZeroOrCenterOne),
-                    );
-                  },
-                  itemCount: 10,
-                ),
+              BlocConsumer<VReservationCubit, VReservationState>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  var cubit = VReservationCubit.get(context);
+                  return Expanded(
+                    child: state is GetTodayOrdersLoading
+                        ? const Center(
+                            child: CircularProgressIndicator.adaptive(),
+                          )
+                        : cubit.getTodayOrdersList.isNotEmpty?ListView.builder(
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10.sp),
+                                child: OrderItemBuilder(
+                                  homeZeroOrCenterOne: homeZeroOrCenterOne,
+                                  reserveModel: cubit.getTodayOrdersList[index],
+                                ),
+                              );
+                            },
+                            itemCount: cubit.getTodayOrdersList.length,
+                          ):Text(
+                      'لا يوجد خدمات بعد',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: AppColorsLightTheme.primaryColor,
+                          fontFamily: FontPath.almaraiBold,
+                          fontSize: 17.sp),
+                    ),
+                  );
+                },
               )
             ],
           ),
@@ -140,5 +178,4 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
       ),
     );
   }
-
 }
