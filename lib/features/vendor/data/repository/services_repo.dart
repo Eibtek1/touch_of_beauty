@@ -144,8 +144,8 @@ class VendorServicesRepository {
       bearerToken: token,
       query: {
         'InHome':inHome,
-        'Start':DateTime.now().subtract(const Duration(days: 1)).toIso8601String(),
-        'End':DateTime.now().add(const Duration(days: 1)).toIso8601String(),
+        'Start':DateTime.now().subtract(const Duration(days: 1)).toString(),
+        'End':DateTime.now().add(const Duration(days: 1)).toString(),
       }
     );
     return response;
@@ -158,4 +158,49 @@ class VendorServicesRepository {
     return response;
   }
 
+  static Future<Response> getWorkHours() async {
+    final response = await DioHelper.getData(
+      url:EndPoints.workHours,
+      bearerToken: token,
+    );
+    return response;
+  }
+
+  static Future<Response> addWorkHours({required int day, required DateTime from, required DateTime to, }) async {
+    final response = await DioHelper.postData(
+      url:EndPoints.workHours,
+      token: token,
+      data: {
+        "day" : day,
+        'from' :from.toIso8601String(),
+        "to" :to.toIso8601String(),
+        "moreData" : "moreData"
+      }
+    );
+    return response;
+  }
+
+  static Future<Response> updateWorkHours({required int day,required int id, required DateTime from, required DateTime to, }) async {
+    final response = await DioHelper.putData(
+      url:EndPoints.workHours,
+      token: token,
+      data: {
+        "id": id,
+        "day": day,
+        "from": from.toIso8601String(),
+        "to": to.toIso8601String(),
+        "moreData": "moreData"
+      }
+    );
+    return response;
+  }
+
+
+
+  static Future<Response> deleteWorkHours({required int id}) async {
+    final response = await DioHelper.deleteData(
+      url: "${EndPoints.workHours}/$id", token: token,
+    );
+    return response;
+  }
 }

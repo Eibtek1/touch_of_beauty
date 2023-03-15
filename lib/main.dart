@@ -20,6 +20,7 @@ import 'features/user/buisness_logic/services_providers_cubit/services_providers
 import 'features/vendor/buisness_logic/employees_cubit/employees_cubit.dart';
 import 'features/vendor/buisness_logic/services_cubit/vendor_services_cubit.dart';
 import 'features/vendor/buisness_logic/v_reservations_cubit/v_reservation_cubit.dart';
+import 'features/vendor/buisness_logic/work_hours_cubit/work_hours_cubit.dart';
 import 'firebase_options.dart';
 
 
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (context) => ReservationCubit()..getOrdersForUser()),
                 BlocProvider(create: (context) => FreelancerServicesCubit()),
                 BlocProvider(create: (context) => VReservationCubit()),
+                BlocProvider(create: (context) => WorkHoursCubit()..getWorkHours()),
                 BlocProvider(create: (context) => UserServicesCubit()..getAddress()),
                 BlocProvider(create: (context) => VendorServicesCubit()),
                 BlocProvider(create: (context) => ServicesProvidersCubit()..getSliderPhotos()),

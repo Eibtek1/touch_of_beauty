@@ -75,7 +75,7 @@ class CenterEmployeesWidget extends StatelessWidget {
                   SvgPath.edit,
                   width: 15.w,
                   height: 15.h,
-                  color: Colors.grey,
+                  colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
                 ),
               )
             ),

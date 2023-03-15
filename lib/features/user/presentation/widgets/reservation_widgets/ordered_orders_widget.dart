@@ -10,7 +10,6 @@ import 'package:touch_of_beauty/features/chat/presentation/screens/chat_screen.d
 
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/assets_path/font_path.dart';
-import '../../../../../core/assets_path/images_path.dart';
 import '../../../../../core/network/api_end_points.dart';
 import '../../../data/models/reservation_model.dart';
 

@@ -244,6 +244,7 @@ class AppDrawer extends StatelessWidget {
                   Navigator.pop(context);
                 }
                 if (state is LogoutSuccess) {
+                  MainCubit.get(context).onTap(0);
                   Navigator.pushNamedAndRemoveUntil(
                       context, ScreenName.loginScreen, (route) => false);
                 }
