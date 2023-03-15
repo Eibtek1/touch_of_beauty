@@ -26,7 +26,9 @@ class DeleteWorkTimeDialog extends StatelessWidget {
         height: 170.h,
         child: BlocConsumer<WorkHoursCubit, WorkHoursState>(
           listener: (context, state) {
+            var cubit = WorkHoursCubit.get(context);
             if (state is DeleteWorkHoursSuccess) {
+              cubit.getWorkHours();
               Navigator.pop(context);
             }
           },

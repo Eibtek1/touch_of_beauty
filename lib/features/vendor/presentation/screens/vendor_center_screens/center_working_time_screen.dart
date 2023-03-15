@@ -50,6 +50,16 @@ class CenterWorkingTimeScreen extends StatelessWidget {
                           padding: EdgeInsets.symmetric(
                               horizontal: 24.w, vertical: 16.w),
                           children: [
+                            Center(
+                              child: Text(
+                                'قم بالضغط مطولا لحذف التوقيت',
+                                style: TextStyle(
+                                    color: const Color(0xff3C475C),
+                                    fontSize: 14.sp,
+                                    fontFamily: FontPath.almaraiRegular),
+                              ),
+                            ),
+                            SizedBox(height: 20.h,),
                             TimeContainerWidget(
                               onLongPress: () {
                                 if(cubit.workOursList
@@ -64,7 +74,7 @@ class CenterWorkingTimeScreen extends StatelessWidget {
                                     ),
                                   );
                                 }else{
-                                  Fluttertoast.showToast(msg: 'لا يوجد توقيت');
+                                  Fluttertoast.showToast(msg: 'لا يوجد توقيت للحذف',gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
                                 }
                               },
                               title: 'السبت',
@@ -116,7 +126,7 @@ class CenterWorkingTimeScreen extends StatelessWidget {
                                       ),
                                     );
                                   }else{
-                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت');
+                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت للحذف',gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
                                   }
                                 },
                                 title: 'الاحد',
@@ -169,7 +179,7 @@ class CenterWorkingTimeScreen extends StatelessWidget {
                                       ),
                                     );
                                   }else{
-                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت');
+                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت للحذف',gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
                                   }
                                 },
                                 title: 'الاثنين',
@@ -222,7 +232,7 @@ class CenterWorkingTimeScreen extends StatelessWidget {
                                       ),
                                     );
                                   }else{
-                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت');
+                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت للحذف',gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
                                   }
                                 },
                                 title: 'الثلثاء',
@@ -275,7 +285,7 @@ class CenterWorkingTimeScreen extends StatelessWidget {
                                       ),
                                     );
                                   }else{
-                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت');
+                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت للحذف',gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
                                   }
                                 },
                                 title: 'الاربعاء',
@@ -328,7 +338,7 @@ class CenterWorkingTimeScreen extends StatelessWidget {
                                       ),
                                     );
                                   }else{
-                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت');
+                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت للحذف',gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
                                   }
                                 },
                                 title: 'الخميس',
@@ -381,7 +391,7 @@ class CenterWorkingTimeScreen extends StatelessWidget {
                                       ),
                                     );
                                   }else{
-                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت');
+                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت للحذف',gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
                                   }
                                 },
                                 title: 'الجمعه',

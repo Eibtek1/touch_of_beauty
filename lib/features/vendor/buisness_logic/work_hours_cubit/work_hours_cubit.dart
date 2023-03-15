@@ -20,14 +20,15 @@ class WorkHoursCubit extends Cubit<WorkHoursState> {
       final response = await VendorServicesRepository.getWorkHours();
       mainResponse  = MainResponse.fromJson(response.data);
       if(mainResponse.errorCode == 0){
-        workOursList.clear();
+        workOursList = [];
         for(var element in mainResponse.data){
           workOursList.add(WorkHoursModel.fromJson(element));
         }
+        emit(WorkHoursSuccess());
       }else{
-        return null;
+        workOursList = [];
+        emit(WorkHoursSuccess());
       }
-      emit(WorkHoursSuccess());
     }catch(error){
       emit(WorkHoursError(error.toString()));
     }
