@@ -5,6 +5,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 class PinFieldBuilder extends StatelessWidget {
   final TextEditingController controller;
+
   const PinFieldBuilder({Key? key, required this.controller}) : super(key: key);
 
   @override
@@ -24,7 +25,7 @@ class PinFieldBuilder extends StatelessWidget {
           fieldHeight: 50.h,
           fieldWidth: 50.w,
           borderWidth: 0.5.w,
-          activeFillColor:AppColorsLightTheme.authTextFieldFillColor,
+          activeFillColor: AppColorsLightTheme.authTextFieldFillColor,
           selectedFillColor: AppColorsLightTheme.authTextFieldFillColor,
           activeColor: AppColorsLightTheme.authTextFieldFillColor,
           inactiveColor: AppColorsLightTheme.authTextFieldFillColor,

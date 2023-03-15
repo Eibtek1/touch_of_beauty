@@ -52,7 +52,6 @@ class ReservationCubit extends Cubit<ReservationState> {
       mainResponse = MainResponse.fromJson(response.data);
       emit(RemoveOrderSuccessState(mainResponse: mainResponse));
     }catch(error){
-      print(error.toString());
     emit(RemoveOrderErrorState(error.toString()));
     }
   }
