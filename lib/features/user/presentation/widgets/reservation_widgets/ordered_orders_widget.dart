@@ -35,8 +35,7 @@ class OrderedOrdersWidgetBuilder extends StatelessWidget {
               width: 70.w,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  border: Border.all(color: Colors.black)),
+                  borderRadius: BorderRadius.circular(10.r),),
               child: CachedNetworkImage(
                 fit: BoxFit.cover,
                 imageUrl:

@@ -33,7 +33,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
   late CitiesModel citiesModel;
 
-  ServicesModel? servicesModel;
+  ServicesDetailsModel? servicesModel;
 
   List<ServicesModel> servicesList = [];
 
@@ -330,7 +330,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       final response =
           await ServicesProvidersRepository.getServicesDetailsById(id: id);
       mainResponse = MainResponse.fromJson(response.data);
-      servicesModel = ServicesModel.fromJson(mainResponse.data);
+      servicesModel = ServicesDetailsModel.fromJson(mainResponse.data);
       emit(GetServicesDetailsByItsIdSuccess());
     } catch (error) {
       emit(GetServicesDetailsByItsIdError(error: error.toString()));
@@ -344,7 +344,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       final response =
           await ServicesProvidersRepository.getServicesDetailsById(id: id);
       mainResponse = MainResponse.fromJson(response.data);
-      servicesModel = ServicesModel.fromJson(mainResponse.data);
+      servicesModel = ServicesDetailsModel.fromJson(mainResponse.data);
       emit(GetServicesDetailsInCentersBottomSheetByItsIdSuccess());
     } catch (error) {
       emit(GetServicesDetailsInCentersBottomSheetByItsIdError(

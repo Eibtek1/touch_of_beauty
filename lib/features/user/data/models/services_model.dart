@@ -190,3 +190,97 @@ class MainSection extends Equatable {
         imgUrl,
       ];
 }
+
+class ServicesDetailsModel extends Equatable {
+  final int? id;
+  final String? titleAr;
+  final String? titleEn;
+  final bool? forCenter;
+  final String? description;
+  final String? imgUrl;
+  final bool? isFeatured;
+  final int? priceUnit;
+  final double? price;
+  final double? discount;
+  final double? finalPrice;
+  final bool? inCenter;
+  final bool? inHome;
+  final bool? isAvailable;
+  final int? employeesNumber;
+  final double? numberOfStar;
+  final bool? isFavourite;
+  final ServiceProvider? serviceProvider;
+  final MainSection? mainSection;
+
+  const ServicesDetailsModel(
+      {this.id,
+      this.titleAr,
+      this.titleEn,
+      this.forCenter,
+      this.isAvailable,
+      this.description,
+      this.imgUrl,
+      this.isFeatured,
+      this.priceUnit,
+      this.price,
+      this.discount,
+      this.finalPrice,
+      this.inCenter,
+      this.inHome,
+      this.employeesNumber,
+      this.numberOfStar,
+      this.isFavourite,
+      this.serviceProvider,
+      this.mainSection});
+
+  factory ServicesDetailsModel.fromJson(Map<String, dynamic> json) {
+    return ServicesDetailsModel(
+      id: json['id'],
+      titleAr: json['titleAr'],
+      titleEn: json['titleEn'],
+      forCenter: json['forCenter'],
+      description: json['description'],
+      imgUrl: json['imgUrl'],
+      isFeatured: json['isFeatured'],
+      priceUnit: json['priceUnit'],
+      price: json['price'],
+      discount: json['discount'],
+      finalPrice: json['finalPrice'],
+      inCenter: json['inCenter'],
+      inHome: json['inHome'],
+      employeesNumber: json['employeesNumber'],
+      numberOfStar: json['numberOfStar'],
+      isFavourite: json['isFavourite'],
+      serviceProvider: json['serviceProvider'] != null
+          ? ServiceProvider.fromJson(json['serviceProvider'])
+          : null,
+      mainSection: json['mainSection'] != null
+          ? MainSection.fromJson(json['mainSection'])
+          : null,
+    );
+  }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+    id,
+    titleAr,
+    titleEn,
+    forCenter,
+    description,
+    imgUrl,
+    isFeatured,
+    priceUnit,
+    price,
+    discount,
+    finalPrice,
+    inCenter,
+    inHome,
+    isAvailable,
+    employeesNumber,
+    numberOfStar,
+    isFavourite,
+    serviceProvider,
+    mainSection,
+  ];
+}

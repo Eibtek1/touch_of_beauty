@@ -251,7 +251,7 @@ class CenterDetailsScreen extends StatelessWidget {
                                                             horizontal: 5.w),
                                                     child: InkWell(
                                                       onTap: () {
-                                                        cubit.getImagePick();
+                                                        cubit.getPictureLibraryImagePick();
                                                       },
                                                       child: Container(
                                                         height: 46.h,

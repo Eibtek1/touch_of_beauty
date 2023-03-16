@@ -130,7 +130,7 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
                   ),
                   const Divider(),
                   Expanded(
-                    child: TabBarView(
+                    child: state is! GetReservationsLoadingState?TabBarView(
                       controller: tabController,
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
@@ -188,7 +188,7 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
                           },
                         ),
                       ],
-                    ),
+                    ):const Center(child: CircularProgressIndicator.adaptive(),),
                   ),
                 ],
               ),

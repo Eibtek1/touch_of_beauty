@@ -212,14 +212,20 @@ class AppDrawer extends StatelessWidget {
               height: 15.h,
             ),
             buildTitleWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, ScreenName.helpPrivacy);
+              },
               title: 'المساعدة والخصوصية',
             ),
             SizedBox(
               height: 15.h,
             ),
             buildTitleWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, ScreenName.privacyScreen);
+              },
               title: 'سياسة خصوصية',
             ),
             SizedBox(

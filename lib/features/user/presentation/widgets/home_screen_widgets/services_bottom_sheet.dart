@@ -16,7 +16,7 @@ import '../../../data/models/services_model.dart';
 import '../../screens/home_screen_screens/order_screens/reserve_order_screen.dart';
 
 class ServicesBottomSheet extends StatelessWidget {
-  final ServicesModel servicesModel;
+  final ServicesDetailsModel servicesModel;
   const ServicesBottomSheet({Key? key, required this.servicesModel}) : super(key: key);
 
   @override
@@ -57,7 +57,7 @@ class ServicesBottomSheet extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.h),
             children: [
               Text(
-                servicesModel.title!,
+                servicesModel.titleAr!,
                 style: TextStyle(
                     color: const Color(0xff263238),
                     fontFamily: FontPath.almaraiBold,

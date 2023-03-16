@@ -20,6 +20,7 @@ import '../../features/freelancer/presentation/screens/freelancer_center_screens
 import '../../features/freelancer/presentation/screens/freelancer_center_screens/freelancer_working_time_screen.dart';
 import '../../features/freelancer/presentation/screens/freelancer_notification_screen.dart';
 import '../../features/user/presentation/screens/edit_profile_screen.dart';
+import '../../features/user/presentation/screens/help_privacy_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/all_centers_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/main_featuers_services.dart';
 import '../../features/user/presentation/screens/home_screen_screens/complains_screen.dart';
@@ -32,6 +33,7 @@ import '../../features/user/presentation/screens/home_screen_screens/order_scree
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/payment_web_view.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/reserve_order_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/our_services_screen.dart';
+import '../../features/user/presentation/screens/privacy_and_policy.dart';
 import '../../features/vendor/presentation/screens/order_screens/center_orders_details_screen.dart';
 import '../../features/vendor/presentation/screens/order_screens/home_orders_details_screen.dart';
 import '../../features/vendor/presentation/screens/vendor_center_screens/add_services_screen.dart';
@@ -82,6 +84,10 @@ class AppRouter {
           return _animateRouteBuilder( const EditCenterDetailsScreen());
         case ScreenName.freelancerDetailsScreen:
           return _animateRouteBuilder( const FreelancerDetailsScreen());
+        case ScreenName.helpPrivacy:
+          return _animateRouteBuilder( const HelpAnpPrivacyScreen());
+        case ScreenName.privacyScreen:
+          return _animateRouteBuilder( const PrivacyAndPolicy());
         case ScreenName.freelancerEditDetailsScreen:
           return _animateRouteBuilder( EditFreelancerDetailsScreen());
         case ScreenName.freelancerTimeScreen:

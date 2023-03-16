@@ -28,7 +28,7 @@ class MainFeaturesCubit extends Cubit<MainFeaturesState> {
   int servicesPageNumber = 1;
   int searchServicesPageNumber = 1;
   PaginateModel? searchPaginateModel;
-  ServicesModel? servicesModel;
+  ServicesDetailsModel? servicesModel;
   void getFeaturedMainSections() async{
     emit(GetFeaturedMainSectionsLoadingState());
     try{
@@ -141,7 +141,7 @@ class MainFeaturesCubit extends Cubit<MainFeaturesState> {
     try{
       final response = await ServicesProvidersRepository.getServicesDetailsById(id: id);
       mainResponse = MainResponse.fromJson(response.data);
-      servicesModel = ServicesModel.fromJson(mainResponse.data);
+      servicesModel = ServicesDetailsModel.fromJson(mainResponse.data);
       emit(GetServicesDetailsByItsIdSuccess());
     }catch(error){
       emit(GetServicesDetailsByItsIdError(error: error.toString()));
