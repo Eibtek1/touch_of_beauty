@@ -308,7 +308,7 @@ class HomeOrderDetailsScreen extends StatelessWidget {
                                             1
                                         ? 'في انتظار الموافقة'
                                         : cubit.reserveModel!.orderStatus == 0
-                                            ? "في انتظار موافقتك"
+                                            ? "في انتظار دفع العميل"
                                             : cubit.reserveModel!.orderStatus ==
                                                     2
                                                 ? "في انتظار الوصول"
@@ -326,7 +326,7 @@ class HomeOrderDetailsScreen extends StatelessWidget {
                                   height: 24.h,
                                 ),
                                 if (cubit.reserveModel!.orderStatus == 1 ||
-                                    cubit.reserveModel!.orderStatus == 0 ||
+
                                     cubit.reserveModel!.orderStatus == 2 ||
                                     cubit.reserveModel!.orderStatus == 3)
                                   state is! ChangeOrderStatusLoading
@@ -364,7 +364,6 @@ class HomeOrderDetailsScreen extends StatelessWidget {
                                               .adaptive(),
                                         ),
                                 if (cubit.reserveModel!.orderStatus == 1 ||
-                                    cubit.reserveModel!.orderStatus == 0 ||
                                     cubit.reserveModel!.orderStatus == 2 ||
                                     cubit.reserveModel!.orderStatus == 3)
                                   SizedBox(

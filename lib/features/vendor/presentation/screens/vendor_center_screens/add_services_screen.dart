@@ -17,13 +17,13 @@ import '../../widgets/center_details/custo_text_form_field.dart';
 import '../../widgets/main_section_drop_down.dart';
 import '../../widgets/screen_layout_widget_with_logo.dart';
 class AddToServicesArguments{
-  final ServicesModel? servicesModel;
+  final ServicesDetailsModel? servicesModel;
   final int type;
 
   AddToServicesArguments({required this.servicesModel, required this.type});
 }
 class AddServicesScreen extends StatefulWidget {
-  final ServicesModel? servicesModel;
+  final ServicesDetailsModel? servicesModel;
   final int type;
   const AddServicesScreen({Key? key, this.servicesModel, required this.type}) : super(key: key);
 
@@ -54,6 +54,16 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    aNameController.text = widget.servicesModel?.titleAr??'';
+    eNameController.text = widget.servicesModel?.titleEn??'';
+    detailsController.text = widget.servicesModel?.description??'';
+    priceController.text = widget.servicesModel?.price.toString()??'';
+    finalPriceController.text = widget.servicesModel?.finalPrice.toString()??'';
+    emNumberController.text = widget.servicesModel?.employeesNumber.toString()??'';
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<VendorServicesCubit, VendorServicesState>(
@@ -274,10 +284,10 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                               color: const Color(0xff3C475C),
                             ),
                           ),
-                          SizedBox(
+                          if(widget.servicesModel!=null)SizedBox(
                             height: 5.h,
                           ),
-                          CustomTextFormField(
+                          if(widget.servicesModel!=null)CustomTextFormField(
                             keyboardType: TextInputType.phone,
                             height: 44.h,
                             width: double.infinity,

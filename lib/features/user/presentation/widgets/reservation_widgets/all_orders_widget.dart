@@ -11,7 +11,12 @@ class AllOrdersWidgetItem extends StatelessWidget {
   final ReservationModel reservationModel;
   final void Function()? goToPay;
   final void Function()? removeOrder;
-  const AllOrdersWidgetItem({Key? key, required this.reservationModel, this.goToPay, this.removeOrder})
+
+  const AllOrdersWidgetItem(
+      {Key? key,
+      required this.reservationModel,
+      this.goToPay,
+      this.removeOrder})
       : super(key: key);
 
   @override
@@ -54,12 +59,11 @@ class AllOrdersWidgetItem extends StatelessWidget {
                   width: 70.w,
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
-                      border: Border.all(color: Colors.black)),
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
                   child: CachedNetworkImage(
                     fit: BoxFit.cover,
-                    imageUrl:
-                    "${EndPoints.imageBaseUrl}${reservationModel.service!.imgUrl}",
+                    imageUrl: "${EndPoints.imageBaseUrl}${reservationModel.service!.imgUrl}",
                     placeholder: (context, url) => Shimmer.fromColors(
                       baseColor: Colors.grey[400]!,
                       highlightColor: Colors.grey[300]!,
@@ -72,9 +76,9 @@ class AllOrdersWidgetItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ),
-
                 ),
                 SizedBox(
                   width: 10.w,
@@ -105,48 +109,55 @@ class AllOrdersWidgetItem extends StatelessWidget {
                     SizedBox(
                       height: 5.h,
                     ),
-                    if(reservationModel.orderStatus==0&&reservationModel.service!.isAvailable!)Text(
-                      'حالة الطلب : بأنتظار الدفع',
-                      style: TextStyle(
-                          fontSize: 10.sp,
-                          fontFamily: FontPath.almaraiRegular,
-                          color: const Color(0xff1E2432)),
-                    ),
-                    if(reservationModel.orderStatus==1)Text(
-                      'حالة الطلب : بأنتظار التأكيد مع المقدم',
-                      style: TextStyle(
-                          fontSize: 10.sp,
-                          fontFamily: FontPath.almaraiRegular,
-                          color: const Color(0xff1E2432)),
-                    ),
-                    if(reservationModel.orderStatus==2)Text(
-                      'حالة الطلب : تمت موافقة المقدم',
-                      style: TextStyle(
-                          fontSize: 10.sp,
-                          fontFamily: FontPath.almaraiRegular,
-                          color: const Color(0xff1E2432)),
-                    ),
-                    if(reservationModel.orderStatus==3)Text(
-                      'حالة الطلب : قيد الوصول',
-                      style: TextStyle(
-                          fontSize: 10.sp,
-                          fontFamily: FontPath.almaraiRegular,
-                          color: const Color(0xff1E2432)),
-                    ),
-                    if(reservationModel.orderStatus==4)Text(
-                      'حالة الطلب : انتهت الخدمة',
-                      style: TextStyle(
-                          fontSize: 10.sp,
-                          fontFamily: FontPath.almaraiRegular,
-                          color: const Color(0xff1E2432)),
-                    ),
-                    if(reservationModel.orderStatus==5)Text(
-                      'حالة الطلب : تم الالغاء',
-                      style: TextStyle(
-                          fontSize: 10.sp,
-                          fontFamily: FontPath.almaraiRegular,
-                          color: const Color(0xff1E2432)),
-                    ),
+                    if (reservationModel.orderStatus == 0 &&
+                        reservationModel.service!.isAvailable!)
+                      Text(
+                        'حالة الطلب : بأنتظار الدفع',
+                        style: TextStyle(
+                            fontSize: 10.sp,
+                            fontFamily: FontPath.almaraiRegular,
+                            color: const Color(0xff1E2432)),
+                      ),
+                    if (reservationModel.orderStatus == 1)
+                      Text(
+                        'حالة الطلب : بأنتظار التأكيد مع المقدم',
+                        style: TextStyle(
+                            fontSize: 10.sp,
+                            fontFamily: FontPath.almaraiRegular,
+                            color: const Color(0xff1E2432)),
+                      ),
+                    if (reservationModel.orderStatus == 2)
+                      Text(
+                        'حالة الطلب : تمت موافقة المقدم',
+                        style: TextStyle(
+                            fontSize: 10.sp,
+                            fontFamily: FontPath.almaraiRegular,
+                            color: const Color(0xff1E2432)),
+                      ),
+                    if (reservationModel.orderStatus == 3)
+                      Text(
+                        'حالة الطلب : قيد الوصول',
+                        style: TextStyle(
+                            fontSize: 10.sp,
+                            fontFamily: FontPath.almaraiRegular,
+                            color: const Color(0xff1E2432)),
+                      ),
+                    if (reservationModel.orderStatus == 4)
+                      Text(
+                        'حالة الطلب : انتهت الخدمة',
+                        style: TextStyle(
+                            fontSize: 10.sp,
+                            fontFamily: FontPath.almaraiRegular,
+                            color: const Color(0xff1E2432)),
+                      ),
+                    if (reservationModel.orderStatus == 5)
+                      Text(
+                        'حالة الطلب : تم الالغاء',
+                        style: TextStyle(
+                            fontSize: 10.sp,
+                            fontFamily: FontPath.almaraiRegular,
+                            color: const Color(0xff1E2432)),
+                      ),
                   ],
                 ),
               ],
@@ -207,58 +218,60 @@ class AllOrdersWidgetItem extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        if(reservationModel.orderStatus==0)SizedBox(
-                          width: 110.w,
-                          child: ElevatedButton(
-                            onPressed: removeOrder,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red,
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(5.r), // <-- Radius
+                        if (reservationModel.orderStatus == 0)
+                          SizedBox(
+                            width: 110.w,
+                            child: ElevatedButton(
+                              onPressed: removeOrder,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(5.r), // <-- Radius
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                    size: 20.r,
+                                  ),
+                                  SizedBox(
+                                    width: 5.w,
+                                  ),
+                                  Text(
+                                    'الغاء الطلب',
+                                    style: TextStyle(
+                                        fontSize: 10.sp,
+                                        fontFamily: FontPath.almaraiRegular,
+                                        color: Colors.white),
+                                  )
+                                ],
                               ),
                             ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.delete,
-                                  color: Colors.white,
-                                  size: 20.r,
-                                ),
-                                SizedBox(
-                                  width: 5.w,
-                                ),
-                                Text(
-                                  'الغاء الطلب',
-                                  style: TextStyle(
-                                      fontSize: 10.sp,
-                                      fontFamily: FontPath.almaraiRegular,
-                                      color: Colors.white),
-                                )
-                              ],
-                            ),
                           ),
-                        ),
-                        if(reservationModel.orderStatus==0)SizedBox(
-                          width: 100.w,
-                          child: ElevatedButton(
-                            onPressed: goToPay,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(5.r), // <-- Radius
+                        if (reservationModel.orderStatus == 0)
+                          SizedBox(
+                            width: 100.w,
+                            child: ElevatedButton(
+                              onPressed: goToPay,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(5.r), // <-- Radius
+                                ),
+                              ),
+                              child: Text(
+                                'أذهب للدفع',
+                                style: TextStyle(
+                                    fontSize: 10.sp,
+                                    fontFamily: FontPath.almaraiRegular,
+                                    color: Colors.white),
                               ),
                             ),
-                            child: Text(
-                              'أذهب للدفع',
-                              style: TextStyle(
-                                  fontSize: 10.sp,
-                                  fontFamily: FontPath.almaraiRegular,
-                                  color: Colors.white),
-                            ),
                           ),
-                        ),
                       ],
                     ),
                     SizedBox(

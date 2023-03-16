@@ -68,11 +68,7 @@ class OrderItemBuilder extends StatelessWidget {
               isTapped: () {
                 print(reserveModel.orderStatus);
                 VReservationCubit.get(context).getOrdersById(orderId:reserveModel.id!);
-                if(homeZeroOrCenterOne == 1){
-                  Navigator.pushNamed(context, ScreenName.orderInCenterDetailsScreen);
-                }else{
                   Navigator.pushNamed(context, ScreenName.orderInHomeDetailsScreen);
-                }
               },
               width: double.infinity,
               paddingVertical: 12.h,
