@@ -3,24 +3,44 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
+import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
 import 'package:touch_of_beauty/features/chat/buisness_logic/chat_cubit.dart';
 import 'package:touch_of_beauty/features/chat/buisness_logic/chat_state.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../widgets/build_another_person_message_item.dart';
 import '../widgets/build_my_message_item.dart';
 import '../widgets/chat_text_field.dart';
-class ChatScreenArgs{
+import '../widgets/send_image_alert_dialog.dart';
+
+class ChatScreenArgs {
   final String title;
   final String receiverId;
+  final String receiverName;
+  final String receiverImg;
 
-  ChatScreenArgs({required this.title, required this.receiverId});
+  ChatScreenArgs({
+    required this.title,
+    required this.receiverId,
+    required this.receiverName,
+    required this.receiverImg,
+  });
 }
+
 class ChatScreen extends StatefulWidget {
   final dynamic title;
   final dynamic receiverId;
-  const ChatScreen({Key? key, required this.title, required this.receiverId}) : super(key: key);
+  final dynamic receiverName;
+  final dynamic receiverImg;
+
+  const ChatScreen({Key? key,
+    required this.title,
+    required this.receiverId,
+    this.receiverName,
+    this.receiverImg})
+      : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -28,7 +48,14 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   TextEditingController chatController = TextEditingController();
-  bool isTapped =false;
+  bool isTapped = false;
+
+  @override
+  void initState() {
+    AuthCubit.get(context).getUserData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +85,27 @@ class _ChatScreenState extends State<ChatScreen> {
         elevation: 0,
       ),
       body: BlocConsumer<ChatCubit, ChatState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is GetProfilePickedImageSuccessState) {
+            showDialog(
+                context: context,
+                builder: (context) =>
+                    AddImageAlertDialog(
+                        receiverId: widget.receiverId,
+                        receiverName: widget.receiverName,
+                        senderName:
+                        AuthCubit
+                            .get(context)
+                            .getUserModel!
+                            .fullName ?? '',
+                        receiverImg: widget.receiverImg,
+                        senderImg:
+                        AuthCubit
+                            .get(context)
+                            .getUserModel!
+                            .userImgUrl ?? ''));
+          }
+        },
         builder: (context, state) {
           var cubit = ChatCubit.get(context);
           return Column(
@@ -69,19 +116,23 @@ class _ChatScreenState extends State<ChatScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 20.h),
                   itemBuilder: (BuildContext context, int index) {
                     if (cubit.messagesList[index].senderId == userId) {
-                      return Padding(
+                      return cubit.messagesList[index].messageType == 'text'
+                          ? Padding(
                         padding: EdgeInsets.symmetric(vertical: 20.h),
                         child: MyMessageItem(
-                            message: cubit.messagesList[index].messageText,
-                            time: Jiffy(cubit.messagesList[index].dateTime).Hm,
-                      ));
+                          message: cubit.messagesList[index].messageText,
+                          time: Jiffy(cubit.messagesList[index].dateTime).Hm,
+                        ),
+                      )
+                          :imageContainer(alignment: Alignment.centerRight, imagePath: cubit.messagesList[index].image);
                     } else {
-                      return Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20.h),
-                        child: AnotherPersonMessageItem(
+                      return cubit.messagesList[index].messageType == 'text'
+                          ?Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20.h),
+                          child: AnotherPersonMessageItem(
                             message: cubit.messagesList[index].messageText,
                             time: Jiffy(cubit.messagesList[index].dateTime).Hm,
-                      ));
+                          )):imageContainer(alignment: Alignment.centerLeft, imagePath: cubit.messagesList[index].image);
                     }
                   },
                   itemCount: cubit.messagesList.length,
@@ -103,9 +154,17 @@ class _ChatScreenState extends State<ChatScreen> {
                                 receiverId: widget.receiverId,
                                 senderId: userId,
                                 receiverName: "receiverName",
-                                senderName: "senderName",
+                                senderName: AuthCubit
+                                    .get(context)
+                                    .getUserModel!
+                                    .fullName ??
+                                    '',
                                 receiverImg: null,
-                                senderImg: null,
+                                senderImg: AuthCubit
+                                    .get(context)
+                                    .getUserModel!
+                                    .userImgUrl ??
+                                    '',
                                 text: chatController.text,
                                 dateTime: DateTime.now().toString(),
                                 orderId: "1",
@@ -135,9 +194,12 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                       Expanded(
                           child: ChatTextField(
-                            pickImageFunction: (){},
-                        controller: chatController, isTapped: isTapped,
-                      ))
+                            pickImageFunction: () {
+                              cubit.getImagePick();
+                            },
+                            controller: chatController,
+                            isTapped: isTapped,
+                          ))
                     ],
                   ),
                 ),
@@ -145,6 +207,22 @@ class _ChatScreenState extends State<ChatScreen> {
             ],
           );
         },
+      ),
+    );
+  }
+
+  Widget imageContainer({required Alignment alignment,required String imagePath}) {
+    return Align(
+      alignment: alignment,
+      child: Container(
+        height: 300.h,
+        width: 200.w,
+        padding: EdgeInsets.all(7.r),
+        decoration: BoxDecoration(
+          color: AppColorsLightTheme.primaryColor,
+          borderRadius: BorderRadius.circular(5.r)
+        ),
+        child: Image.network(imagePath,fit: BoxFit.cover,),
       ),
     );
   }

@@ -79,3 +79,11 @@ class AddServicesProviderToFavError extends ServicesProvidersState {
   AddServicesProviderToFavError({required this.error});
 }
 
+
+class GetContactUsLoading extends  ServicesProvidersState{}
+class GetContactUsSuccess extends  ServicesProvidersState{}
+class GetContactUsError extends  ServicesProvidersState{
+  final String error;
+
+  GetContactUsError({required this.error});
+}

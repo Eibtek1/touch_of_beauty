@@ -57,7 +57,7 @@ class VendorMessagesScreen extends StatelessWidget {
                         (value) {
                       Navigator.pushNamed(
                           context, ScreenName.chatScreen,
-                          arguments: ChatScreenArgs(title: chatItemsList[index]['name'], receiverId: chatItemsList[index]['id']));
+                          arguments: ChatScreenArgs(title: chatItemsList[index]['name'], receiverId: chatItemsList[index]['id'], receiverName: '', receiverImg: ''));
                     },
                   );
                 },

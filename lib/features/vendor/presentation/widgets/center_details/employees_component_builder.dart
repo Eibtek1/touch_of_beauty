@@ -22,6 +22,7 @@ class EmployeesComponentBuilder extends StatelessWidget {
         var cubit = EmployeesCubit.get(context);
         return SizedBox(
           height: 120.h,
+          // width: 100.w,
           child: cubit.employeesList.isNotEmpty
               ? ListView.builder(
                   padding: EdgeInsets.symmetric(vertical: 1.h),
@@ -31,75 +32,92 @@ class EmployeesComponentBuilder extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return Row(
                       children: [
-                        Column(
-                          children: [
-                            Container(
-                              height: 71.h,
-                              width: 71.w,
-                              clipBehavior: Clip.antiAlias,
-                              padding: EdgeInsets.all(3.r),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: AppColorsLightTheme.primaryColor,
-                                      width: 0.9.w),
-                                  shape: BoxShape.circle),
-                              child: Container(
-                                height: 61.h,
-                                width: 61.w,
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 71.h,
+                                width: 71.w,
                                 clipBehavior: Clip.antiAlias,
-                                decoration: const BoxDecoration(
+                                padding: EdgeInsets.all(3.r),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: AppColorsLightTheme.primaryColor,
+                                        width: 0.9.w),
                                     shape: BoxShape.circle),
-                                child: CachedNetworkImage(
-                                  fit: BoxFit.cover,
-                                  imageUrl:
-                                      '${EndPoints.imageBaseUrl}${cubit.employeesList[index].imgUrl}',
-                                  placeholder: (context, url) =>
-                                      Shimmer.fromColors(
-                                    baseColor: Colors.grey[400]!,
-                                    highlightColor: Colors.grey[300]!,
-                                    child: Container(
-                                      height: double.infinity,
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Colors.black,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
+                                child: Container(
+                                  height: 61.h,
+                                  width: 61.w,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration:
+                                      const BoxDecoration(shape: BoxShape.circle),
+                                  child: CachedNetworkImage(
+                                    fit: BoxFit.cover,
+                                    imageUrl:
+                                        '${EndPoints.imageBaseUrl}${cubit.employeesList[index].imgUrl}',
+                                    placeholder: (context, url) =>
+                                        Shimmer.fromColors(
+                                      baseColor: Colors.grey[400]!,
+                                      highlightColor: Colors.grey[300]!,
+                                      child: Container(
+                                        height: double.infinity,
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: Colors.black,
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
                                       ),
                                     ),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
                                   ),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
+                                ),
+                                // Image.network(
+                                //     cubit.employeesList[index].),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  cubit.employeesList[index].fullName!,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontFamily: FontPath.almaraiBold,
+                                    color: const Color(0xff1E2432),
+                                  ),
                                 ),
                               ),
-                              // Image.network(
-                              //     cubit.employeesList[index].),
-                            ),
-                            Text(
-                              cubit.employeesList[index].fullName!,
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontFamily: FontPath.almaraiBold,
-                                color: const Color(0xff1E2432),
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         if (index == cubit.employeesList.length - 1)
-                          addEmployeeWidget(onTao: () { showDialog(context: context, builder: (context)=>const EmployeeAlertDialog(),); }),
+                          addEmployeeWidget(onTao: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => const EmployeeAlertDialog(),
+                            );
+                          }),
                       ],
                     );
                   },
                 )
               : addEmployeeWidget(onTao: () {
-            showDialog(context: context, builder: (context)=>const EmployeeAlertDialog(),);
-          }),
+                  showDialog(
+                    context: context,
+                    builder: (context) => const EmployeeAlertDialog(),
+                  );
+                }),
         );
       },
     );
   }
-  Widget addEmployeeWidget({required void Function()? onTao}){
+
+  Widget addEmployeeWidget({required void Function()? onTao}) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),      child: Column(
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(

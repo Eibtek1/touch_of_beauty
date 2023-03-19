@@ -246,6 +246,7 @@ class ServicesDetailsModel extends Equatable {
       price: json['price'],
       discount: json['discount'],
       finalPrice: json['finalPrice'],
+      isAvailable: json['isAvailable'],
       inCenter: json['inCenter'],
       inHome: json['inHome'],
       employeesNumber: json['employeesNumber'],

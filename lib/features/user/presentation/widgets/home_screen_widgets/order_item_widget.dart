@@ -9,7 +9,8 @@ import '../../../../../core/network/api_end_points.dart';
 
 class OrderItemWidget extends StatelessWidget {
   final dynamic servicesModel;
-  const OrderItemWidget({Key? key, required this.servicesModel}) : super(key: key);
+  final bool isBottomSheet;
+  const OrderItemWidget({Key? key, required this.servicesModel, required this.isBottomSheet}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +90,7 @@ class OrderItemWidget extends StatelessWidget {
                     height: 10.h,
                   ),
                   Text(
-                    '${servicesModel.title}',
+                    isBottomSheet?'${servicesModel.titleAr}':'${servicesModel.title}',
                     style: TextStyle(
                       fontSize: 8.sp,
                       fontFamily: FontPath.almaraiRegular,

@@ -101,7 +101,7 @@ class AppRouter {
         case ScreenName.vendorAddToServicesScreen:
           final args = settings.arguments;
           AddToServicesArguments arguments = args as AddToServicesArguments;
-          return _animateRouteBuilder(  AddServicesScreen(type: arguments.type,servicesModel: null,));
+          return _animateRouteBuilder(  AddServicesScreen(type: arguments.type,servicesModel: arguments.servicesModel,));
         case ScreenName.freelancerAddToServicesScreen:
           return _animateRouteBuilder( const FreelancerAddServicesScreen());
         case ScreenName.centerWorkingTimeScreen:
@@ -131,7 +131,7 @@ class AppRouter {
         case ScreenName.reserveOrderScreen:
           final args = settings.arguments;
           ReserveOrderScreenArguments arguments = args as ReserveOrderScreenArguments;
-          return _animateRouteBuilder(ReserveOrderScreen(servicesModel: arguments.servicesModel, isFav: arguments.isFav,));
+          return _animateRouteBuilder(ReserveOrderScreen(servicesModel: arguments.servicesModel, isFav: arguments.isFav,isBottomSheet: arguments.isBottomSheet,));
         case ScreenName.allCentersScreen:
           return _animateRouteBuilder(const AllCentersScreen());
         case ScreenName.ourServicesScreen:
@@ -151,7 +151,7 @@ class AppRouter {
         case ScreenName.chatScreen:
           final args = settings.arguments;
           ChatScreenArgs arguments = args as ChatScreenArgs;
-          return _animateRouteBuilder(ChatScreen(title: arguments.title, receiverId: arguments.receiverId,));
+          return _animateRouteBuilder(ChatScreen(title: arguments.title, receiverId: arguments.receiverId,receiverImg: arguments.receiverImg,receiverName: arguments.receiverName,));
         case ScreenName.forgetPasswordScreen:
           return _animateRouteBuilder(const ForgetPasswordScreen());
         default:

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/main_cubit/main_state.dart';
+import 'package:touch_of_beauty/features/user/data/repository/services_providers_repository.dart';
 import '../../../authentication/data/models/get_user_data_model.dart';
 import '../../../authentication/data/models/main_response.dart';
 import '../../../authentication/data/repository/auth_repository.dart';
+import '../../data/models/contact_us_model.dart';
 import '../../presentation/screens/user_home_screen.dart';
 import '../../presentation/screens/user_notification_screen.dart';
 import '../../presentation/screens/user_profile_screen.dart';
@@ -19,7 +21,6 @@ class MainCubit extends Cubit<MainState> {
   late MainResponse mainResponse;
   String? message;
   bool loadingUserDataBoolean = false;
-
   List<Widget> screens = [
     const UserHomeScreen(),
     const UserReservationsScreen(),

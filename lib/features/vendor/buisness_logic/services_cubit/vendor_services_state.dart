@@ -50,3 +50,9 @@ class GetMainSectionsError extends VendorServicesState {
 }
 
 
+class GetServicesDetailsByItsIdLoadingState extends VendorServicesState {}
+class GetServicesDetailsByItsIdSuccess extends VendorServicesState {}
+class GetServicesDetailsByItsIdError extends VendorServicesState {
+  final String error;
+  GetServicesDetailsByItsIdError({required this.error});
+}

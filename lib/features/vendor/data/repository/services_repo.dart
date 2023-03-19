@@ -59,6 +59,44 @@ class VendorServicesRepository {
     return response;
   }
 
+  static Future<Response> updateServices({
+    required String titleAr,
+    required String titleEn,
+    required String description,
+    required String duration,
+    required File? image,
+    required double price,
+    required double finalPrice,
+    required int empNumber,
+    required int mainSectionId,
+    required bool inHome,
+    required bool inCenter,
+    required bool isAvailable,
+    required int id,
+  }) async {
+    final response = await DioHelper.putData(
+        url: "${EndPoints.editServices}$id",
+        token: token,
+        data: FormData.fromMap({
+          'Description': description,
+          'Duration': duration,
+          'FinalPrice': finalPrice,
+          'Price': price,
+          'InCenter': inCenter,
+          'InHome': inHome,
+          'IsAvailable': isAvailable,
+          'MainSectionId': mainSectionId,
+          'PriceUnit': 1,
+          'TitleAr': titleAr,
+          'TitleEn': titleEn,
+          'EmployeesNumber': empNumber,
+          'Img': image != null
+              ? "data:image/${image.path.split('.').last};base64,${imageToBase64(image)}"
+              : null,
+        }));
+    return response;
+  }
+
   static Future<Response> deleteEmployee({required int id}) async {
     final response = await DioHelper.deleteData(
       url: "${EndPoints.employees}/$id",

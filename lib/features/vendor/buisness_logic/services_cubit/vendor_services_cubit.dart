@@ -8,6 +8,7 @@ import 'package:touch_of_beauty/features/user/data/models/services_model.dart';
 import 'package:touch_of_beauty/features/vendor/buisness_logic/services_cubit/vendor_services_state.dart';
 
 import '../../../user/data/models/main_sections_model.dart';
+import '../../../user/data/repository/services_providers_repository.dart';
 import '../../data/repository/services_repo.dart';
 
 class VendorServicesCubit extends Cubit<VendorServicesState> {
@@ -30,6 +31,7 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
   bool isAvailable = false;
   String? mainSectionValue;
   int mainSectionId = 1;
+  ServicesDetailsModel? servicesModel;
 
   void changeButtonState({required void Function() onPressed}) {
     onPressed();
@@ -136,6 +138,38 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
     }
   }
 
+  void updateServicesOfCenter({
+    required String titleAr,
+    required String titleEn,
+    required String description,
+    required double price,
+    required double finalPrice,
+    required int empNumber,
+    required int id,
+    required String duration,
+  }) async {
+    emit(AddServicesLoading());
+    try {
+      await VendorServicesRepository.updateServices(
+        titleAr: titleAr,
+        titleEn: titleEn,
+        description: description,
+        image: servicesImage,
+        price: price,
+        finalPrice: finalPrice,
+        empNumber: empNumber,
+        duration: duration,
+        mainSectionId: mainSectionId,
+        inHome: inHome,
+        inCenter: inCenter,
+        isAvailable: isAvailable, id: id,
+      );
+      emit(AddServicesSuccess());
+    } catch (error) {
+      emit(AddServicesError(error: error.toString()));
+    }
+  }
+
   void addServicesOfFreelancer({
     required String titleAr,
     required String titleEn,
@@ -164,6 +198,21 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
       emit(AddServicesSuccess());
     } catch (error) {
       emit(AddServicesError(error: error.toString()));
+    }
+  }
+
+
+  void getServicesDetailsByItsId({required int id}) async {
+    servicesModel = null;
+    emit(GetServicesDetailsByItsIdLoadingState());
+    try {
+      final response =
+      await ServicesProvidersRepository.getServicesDetailsById(id: id);
+      mainResponse = MainResponse.fromJson(response.data);
+      servicesModel = ServicesDetailsModel.fromJson(mainResponse.data);
+      emit(GetServicesDetailsByItsIdSuccess());
+    } catch (error) {
+      emit(GetServicesDetailsByItsIdError(error: error.toString()));
     }
   }
 

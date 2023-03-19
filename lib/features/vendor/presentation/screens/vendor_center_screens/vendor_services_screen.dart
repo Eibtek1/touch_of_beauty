@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_center_screens/add_services_screen.dart';
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/app_theme/light_theme.dart';
@@ -57,7 +58,19 @@ class VendorServicesScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: BlocConsumer<VendorServicesCubit, VendorServicesState>(
             listener: (context, state) {
-              // TODO: implement listener
+              var cubit = VendorServicesCubit.get(context);
+
+              if(state is GetServicesDetailsByItsIdLoadingState){
+                showProgressIndicator(context);
+              }else if(state is GetServicesDetailsByItsIdSuccess){
+                cubit.inCenter = cubit.servicesModel!.inCenter!;
+                cubit.inHome = cubit.servicesModel!.inHome!;
+                cubit.mainSectionValue = cubit.servicesModel!.mainSection!.title!;
+                cubit.isAvailable = cubit.isAvailable;
+                Navigator.pop(context);
+                Navigator.pushNamed(
+                    context, ScreenName.vendorAddToServicesScreen,arguments: AddToServicesArguments(servicesModel: cubit.servicesModel, type: 0));
+              }
             },
             builder: (context, state) {
               var cubit = VendorServicesCubit.get(context);
@@ -79,7 +92,10 @@ class VendorServicesScreen extends StatelessWidget {
                               childAspectRatio: 1,
                             ),
                             itemBuilder: (context, index) => InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                print(cubit.servicesList[index]);
+                                cubit.getServicesDetailsByItsId(id: cubit.servicesList[index].id!);
+                              },
                               child: GridItemBuilder(
                                 model: cubit.servicesList[index],
                               ),
@@ -93,6 +109,9 @@ class VendorServicesScreen extends StatelessWidget {
                   CustomVendorButton(
                       buttonTitle: 'اضافة خدمة جديدة',
                       isTapped: () {
+                        cubit.inCenter = false;
+                        cubit.inHome = false;
+                        cubit.isAvailable = false;
                         Navigator.pushNamed(
                             context, ScreenName.vendorAddToServicesScreen,arguments: AddToServicesArguments(servicesModel: null, type: 0));
                       },

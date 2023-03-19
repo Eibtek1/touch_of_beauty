@@ -11,3 +11,5 @@ class GetUserDataError extends  MainState{
 
   GetUserDataError({required this.error});
 }
+
+
