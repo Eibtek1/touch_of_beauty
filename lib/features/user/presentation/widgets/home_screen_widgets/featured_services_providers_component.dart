@@ -34,8 +34,7 @@ class _FeaturedServicesProvidersComponentState extends State<FeaturedServicesPro
       listener: (context, state) {
         var cubit = ServicesProvidersCubit.get(context);
         if (state
-        is GetFeaturedServicesProviderDetailsByItsIdSuccess &&
-            cubit.servicesProviderModel != null) {
+        is GetFeaturedServicesProviderDetailsByItsIdSuccess && cubit.servicesProviderModel != null) {
           Navigator.pop(context);
           showBottomSheet(
             context: context,
@@ -68,11 +67,11 @@ class _FeaturedServicesProvidersComponentState extends State<FeaturedServicesPro
                 (BuildContext context, int index) {
               return InkWell(
                 onTap: () {
-                  cubit.getServicesProviderDataByItsId(
+                  cubit.getFeaturedServicesProviderDataByItsId(
                       id: cubit
                           .featuredServicesProvidersList[
                       index]
-                          .providerId!);
+                          .id!);
                 },
                 child: SalonItemBuilder(
                   servicesProviderModel: cubit

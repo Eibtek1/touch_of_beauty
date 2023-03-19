@@ -64,41 +64,41 @@ class SalonItemBuilder extends StatelessWidget {
                     errorWidget: (context, url, error) =>
                     const Icon(Icons.error),
                   ),),
-                if(!isFavoriteItemBuilder)Positioned(
-                  top: 14.h,
-                  left: 14.w,
-                  child: BlocConsumer<ServicesProvidersCubit, ServicesProvidersState>(
-                    listener: (context, state ){
-                      var cubit = ServicesProvidersCubit.get(context);
-                      if(state is DeleteServicesProviderToFavSuccess){
-                        cubit.favoritesServicesProvidersList.removeWhere((element) => element.providerId == servicesProviderModel.id);
-                      }
-                    },
-                    builder: (context, state) {
-                      var cubit = ServicesProvidersCubit.get(context);
-                      return InkWell(
-                        onTap: (){
-                          if(!cubit.favorites[servicesProviderModel.id!]!){
-                            cubit.addServicesProviderToFavorite(id: servicesProviderModel.id!);
-                          }
-                          else if(cubit.favorites[servicesProviderModel.id!]!){
-                            cubit.deleteServicesProviderToFavorite(id: servicesProviderModel.id!);
-                          }
-                        },
-                        child: CircleAvatar(
-                          radius: 15.r,
-                          backgroundColor: Colors.white,
-                          child: Center(
-                            child: Icon(
-                              cubit.favorites[servicesProviderModel.id!]!?Icons.favorite:Icons.favorite_border,
-                              color: AppColorsLightTheme.secondaryColor,
-                              size: 23.r,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),),
+                // if(!isFavoriteItemBuilder)Positioned(
+                //   top: 14.h,
+                //   left: 14.w,
+                //   child: BlocConsumer<ServicesProvidersCubit, ServicesProvidersState>(
+                //     listener: (context, state ){
+                //       var cubit = ServicesProvidersCubit.get(context);
+                //       if(state is DeleteServicesProviderToFavSuccess){
+                //         cubit.favoritesServicesProvidersList.removeWhere((element) => element.providerId == servicesProviderModel.id);
+                //       }
+                //     },
+                //     builder: (context, state) {
+                //       var cubit = ServicesProvidersCubit.get(context);
+                //       return InkWell(
+                //         onTap: (){
+                //           if(!cubit.favorites[servicesProviderModel.id!]!){
+                //             cubit.addServicesProviderToFavorite(id: servicesProviderModel.id!);
+                //           }
+                //           else if(cubit.favorites[servicesProviderModel.id!]!){
+                //             cubit.deleteServicesProviderToFavorite(id: servicesProviderModel.id!);
+                //           }
+                //         },
+                //         child: CircleAvatar(
+                //           radius: 15.r,
+                //           backgroundColor: Colors.white,
+                //           child: Center(
+                //             child: Icon(
+                //               cubit.favorites[servicesProviderModel.id!]!?Icons.favorite:Icons.favorite_border,
+                //               color: AppColorsLightTheme.secondaryColor,
+                //               size: 23.r,
+                //             ),
+                //           ),
+                //         ),
+                //       );
+                //     },
+                //   ),),
                 if(isFavoriteItemBuilder)Positioned(
                   top: 14.h,
                   left: 14.w,

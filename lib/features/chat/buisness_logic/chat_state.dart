@@ -9,4 +9,9 @@ class SendMessageError extends ChatState{
 }
 class GetMessageSuccess extends ChatState{}
 
-class FilePickedSuccess extends ChatState{}
+class GetProfilePickedImageSuccessState extends ChatState{}
+class GetProfilePickedImageErrorState extends ChatState{}
+
+class SendImageLoadingState extends ChatState{}
+class SendImageSuccessState extends ChatState{}
+class SendImageErrorState extends ChatState{}

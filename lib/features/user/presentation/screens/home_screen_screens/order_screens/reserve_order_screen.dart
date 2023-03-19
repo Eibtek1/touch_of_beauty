@@ -16,11 +16,12 @@ import '../../../widgets/home_screen_widgets/order_item_widget.dart';
 class ReserveOrderScreenArguments{
   final dynamic servicesModel;
   final bool isFav;
+  final bool isBottomSheet;
 
-  ReserveOrderScreenArguments({required this.servicesModel, this.isFav = false });
+  ReserveOrderScreenArguments({this.servicesModel, this.isFav = false ,this.isBottomSheet = false, });
 }
 class ReserveOrderScreen extends StatelessWidget {
-  ReserveOrderScreen({Key? key, required this.servicesModel, required this.isFav}) : super(key: key);
+  ReserveOrderScreen({Key? key, required this.servicesModel, required this.isFav, this.isBottomSheet =false}) : super(key: key);
   final List<Map<String, dynamic>> itemsList = [
     {'image': ImagePath.babyCare, 'title': "سارة"},
     {'image': ImagePath.beautyCenter, 'title': "فاتن"},
@@ -33,6 +34,7 @@ class ReserveOrderScreen extends StatelessWidget {
   ];
   final dynamic servicesModel;
   final bool isFav;
+  final bool isBottomSheet;
   final TextEditingController controller = TextEditingController();
 
   @override
@@ -151,6 +153,7 @@ class ReserveOrderScreen extends StatelessWidget {
               ),
               OrderItemWidget(
                 servicesModel: servicesModel,
+                isBottomSheet: isBottomSheet,
               ),
               SizedBox(
                 height: 10.h,

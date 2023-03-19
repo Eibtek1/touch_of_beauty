@@ -17,7 +17,7 @@ import '../../screens/home_screen_screens/order_screens/reserve_order_screen.dar
 
 class ServicesBottomSheet extends StatelessWidget {
   final ServicesDetailsModel servicesModel;
-  const ServicesBottomSheet({Key? key, required this.servicesModel}) : super(key: key);
+  const ServicesBottomSheet({Key? key, required this.servicesModel,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -325,7 +325,7 @@ class ServicesBottomSheet extends StatelessWidget {
               CustomUserButton(
                   buttonTitle: 'اطلب الخدمة',
                   isTapped: () {
-                    Navigator.pushNamed(context, ScreenName.reserveOrderScreen,arguments: ReserveOrderScreenArguments(servicesModel: servicesModel,));
+                    Navigator.pushNamed(context, ScreenName.reserveOrderScreen,arguments: ReserveOrderScreenArguments(servicesModel: servicesModel,isBottomSheet: true));
                   },
                   width: double.infinity,
                   paddingVertical: 16.h,

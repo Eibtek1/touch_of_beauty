@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:touch_of_beauty/features/authentication/data/models/main_response.dart';
 import 'package:touch_of_beauty/features/user/data/models/paginate_model.dart';
 import 'package:touch_of_beauty/features/user/data/repository/services_providers_repository.dart';
+import '../../data/models/contact_us_model.dart';
 import '../../data/models/favorites_services_provider_model.dart';
 import '../../data/models/services_providers_model.dart';
 import '../../data/models/slider_model.dart';
@@ -45,24 +46,25 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
      try{
        final response = await ServicesProvidersRepository.getAllFeaturedServicesProviders(pageNumber: featuredServicesProviderPageNumber);
        mainResponse = MainResponse.fromJson(response.data);
+       print(response.data);
        if (mainResponse.errorCode == 0) {
          featuredServicesProviderPaginateModel =
              PaginateModel.fromJson(mainResponse.data);
          if (featuredServicesProviderPageNumber == 1) {
            for (var element in featuredServicesProviderPaginateModel!.items) {
              featuredServicesProvidersList.add(ServicesProviderModel.fromJson(element));
-             if(!favorites.containsKey(element['id'])){
-               favorites.addAll({element['id']: element['isFavourite']});
-             }
+             // if(!favorites.containsKey(element['id'])){
+             //   favorites.addAll({element['id']: element['isFavourite']});
+             // }
            }
            featuredServicesProviderPageNumber++;
          } else if (featuredServicesProviderPageNumber <=
              featuredServicesProviderPaginateModel!.totalPages!) {
            for (var element in featuredServicesProviderPaginateModel!.items) {
              featuredServicesProvidersList.add(ServicesProviderModel.fromJson(element));
-             if(!favorites.containsKey(element['id'])){
-               favorites.addAll({element['id']: element['isFavourite']});
-             }
+             // if(!favorites.containsKey(element['id'])){
+             //   favorites.addAll({element['id']: element['isFavourite']});
+             // }
            }
            featuredServicesProviderPageNumber++;
          }
@@ -70,6 +72,7 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
        getFeaturedServicesProviderLoading = false;
        emit(GetFeaturedServicesProvidersSuccess());
      }catch(error){
+       print(error.toString());
        emit(GetFeaturedServicesProvidersError(error: error.toString()));
      }
 
@@ -153,6 +156,7 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
        final response = await ServicesProvidersRepository.getServicesProviderById(id: id);
        mainResponse = MainResponse.fromJson(response.data);
        servicesProviderModel = ServicesProviderModel.fromJson(mainResponse.data);
+       print(mainResponse.data);
        emit(GetFeaturedServicesProviderDetailsByItsIdSuccess());
      }catch(error){
        emit(GetFeaturedServicesProviderDetailsByItsIdError(error: error.toString()));
@@ -272,4 +276,19 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
       emit(GetFavoritesServicesProvidersError(error: error.toString()));
     }
   }
+  ContactUsModel? contactUsModel;
+
+void getContactUs() async{
+  emit(GetContactUsLoading());
+  try{
+    final response = await ServicesProvidersRepository.getContactUs();
+    mainResponse = MainResponse.fromJson(response.data);
+    contactUsModel = ContactUsModel.fromJson(mainResponse.data);
+    print(contactUsModel);
+    emit(GetContactUsSuccess());
+  }catch(error){
+    emit(GetContactUsError(error: error.toString()));
+  }
+}
+
 }

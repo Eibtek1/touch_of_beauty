@@ -128,7 +128,7 @@ class OrderedOrdersWidgetBuilder extends StatelessWidget {
             const Spacer(),
             IconButton(onPressed: (){
               ChatCubit.get(context).getMessages(receiverId: reservationModel.provider!.id, senderId: userId);
-              Navigator.pushNamed(context, ScreenName.chatScreen,arguments: ChatScreenArgs(title: '${reservationModel.provider!.fullName}', receiverId: '${reservationModel.provider!.id}'));
+              Navigator.pushNamed(context, ScreenName.chatScreen,arguments: ChatScreenArgs(title: '${reservationModel.provider!.fullName}', receiverId: '${reservationModel.provider!.id}', receiverName: reservationModel.provider!.fullName!, receiverImg: ''));
             }, icon: SvgPicture.asset(SvgPath.chatIcon,width: 50.w,height: 50.h,))
           ],
         ),

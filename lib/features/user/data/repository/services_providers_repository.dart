@@ -220,6 +220,14 @@ class ServicesProvidersRepository {
     return response;
   }
 
+  static Future<Response> getContactUs() async {
+    final response = await DioHelper.getData(
+      url: EndPoints.contactUs,
+      bearerToken: token,
+    );
+    return response;
+  }
+
   static Future<Response> getOrdersForUser() async {
     final response = await DioHelper.getData(
         url: EndPoints.getOrdersForUser, bearerToken: token);

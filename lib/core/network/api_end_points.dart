@@ -31,6 +31,8 @@ class EndPoints{
   static const removeOrder = '/OrderUsers/RemoveOrder/';
   static const preparedOrders = '/OrderProviders/PreparedOrders';
   static const getOrderById = '/OrderProviders/GetOrderById';
+  static const editServices = '/Services/UpdateService/';
+  static const contactUs = '/ContactUs/ContactUs';
   static const workHours = '/WorkHours';
   static const getTodayOrders = '/OrderProviders/GetAllOrders';
   static const changeOrderStatus = '/OrderProviders/ChangeOrderStatus';

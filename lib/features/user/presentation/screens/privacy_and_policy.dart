@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
+import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_state.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/svg_path.dart';
 import '../widgets/about_widget.dart';
@@ -72,17 +75,17 @@ class PrivacyAndPolicy extends StatelessWidget {
             SizedBox(
               height: 30.h,
             ),
-            Expanded(
-              child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) {
-                  return const AboutWidget(
-                    title:
-                    'لوريم ايبسوم هو نموذج افتراضي يوضع في التصاميم يوضع في التصاميم  لتعرض على العميللوريم ايبسوم هو نموذج افتراضي  يوضع في التصاميم',
-                  );
-                },
-                itemCount: 10,
-              ),
+            BlocConsumer<ServicesProvidersCubit, ServicesProvidersState>(
+              listener: (context, state) {
+                // TODO: implement listener
+              },
+              builder: (context, state) {
+                var cubit = ServicesProvidersCubit.get(context);
+                return AboutWidget(
+                  title:
+                  '${cubit.contactUsModel!.termsAndConditions}',
+                );
+              },
             )
           ],
         ),
