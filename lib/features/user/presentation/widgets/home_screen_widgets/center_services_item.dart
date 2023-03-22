@@ -9,7 +9,6 @@ import 'package:touch_of_beauty/features/user/data/models/services_model.dart';
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
-import '../../../../../core/assets_path/images_path.dart';
 import '../../../../../core/network/api_end_points.dart';
 import '../../screens/home_screen_screens/order_screens/reserve_order_screen.dart';
 
@@ -44,8 +43,7 @@ class CenterServicesCategoryItem extends StatelessWidget {
                 SizedBox(
                   height: double.infinity,
                   width: 100.w,
-                  child: servicesModel != null
-                      ? CachedNetworkImage(
+                  child:  CachedNetworkImage(
                           fit: BoxFit.cover,
                           imageUrl:
                               "${EndPoints.imageBaseUrl}${servicesModel!.imgUrl}",
@@ -64,10 +62,6 @@ class CenterServicesCategoryItem extends StatelessWidget {
                           errorWidget: (context, url, error) =>
                               const Icon(Icons.error),
                         )
-                      : Image.asset(
-                          ImagePath.carouselImage1,
-                          fit: BoxFit.cover,
-                        ),
                 ),
                 Positioned(
                   top: 14.h,

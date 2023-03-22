@@ -122,10 +122,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   AuthTextFormField(
                     hintText: 'رقم الهاتف',
-                    maxLength: 20,
                     keyboardType: TextInputType.phone,
+                    textDirection: TextDirection.ltr,
                     validate: (value) {
-                      var regex = RegExp(r'^((?:[+?0?0?966]+)(?:\s?\d{2})(?:\s?\d{7}))$');
+                      var regex = RegExp(r'^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$');
                       if (value!.isEmpty) {
                         return 'ادخل رقم الهاتف';
                       } else if (!regex.hasMatch(value)) {
