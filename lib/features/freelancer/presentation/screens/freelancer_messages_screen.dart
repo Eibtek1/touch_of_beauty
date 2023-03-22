@@ -1,24 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../core/app_router/screens_name.dart';
 import '../../../../core/assets_path/font_path.dart';
-import '../../../../core/assets_path/images_path.dart';
+import '../../../../core/constants/constants.dart';
+import '../../../chat/buisness_logic/chat_cubit.dart';
+import '../../../chat/presentation/screens/chat_screen.dart';
 
 class FreelancerMessagesScreen extends StatelessWidget {
-  FreelancerMessagesScreen({Key? key}) : super(key: key);
-  final List<Map<String, dynamic>> itemsList = [
-    {'image': ImagePath.gallery1, 'title': "سارة"},
-    {'image': ImagePath.gallery2, 'title': "فاتن"},
-    {'image': ImagePath.gallery3, 'title': "هند"},
-    {'image': ImagePath.gallery4, 'title': "هدي"},
-    {'image': ImagePath.gallery5, 'title': "حنان"},
-    {'image': ImagePath.gallery6, 'title': "هاله"},
-    {'image': ImagePath.gallery7, 'title': "اميره"},
-    {'image': ImagePath.gallery8, 'title': "سعاد"},
-    {'image': ImagePath.gallery10, 'title': "هدي"},
-    {'image': ImagePath.gallery11, 'title': "فاتن"},
-    {'image': ImagePath.gallery12, 'title': "حنان"},
-    {'image': ImagePath.gallery13, 'title': "حنان"},
-  ];
+  const FreelancerMessagesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +27,43 @@ class FreelancerMessagesScreen extends StatelessWidget {
               color: const Color(0xff1E2432)),
         ),
       ),
-      body: ListView.builder(
-        itemBuilder: (BuildContext context, int index) {return buildChatItem(image: itemsList[index]['image'], name: itemsList[index]['title']);},itemCount: itemsList.length,
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection("users")
+            .doc(userId)
+            .collection("chats")
+            .orderBy("dateTime")
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          if (snapshot.hasError) {
+            return const Text('Something went wrong');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          List<Map<String, dynamic>> chatItemsList =
+          snapshot.data!.docs.reversed.map((e) => e.data()).toList();
+          return ListView.builder(
+            itemCount: chatItemsList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return InkWell(
+                onTap: () {
+                  ChatCubit.get(context)
+                      .getMessages(
+                      receiverId: chatItemsList[index]['id'], senderId: userId)
+                      .then(
+                        (value) {
+                      Navigator.pushNamed(
+                          context, ScreenName.chatScreen,
+                          arguments: ChatScreenArgs(title: chatItemsList[index]['name'], receiverId: chatItemsList[index]['id'], receiverName: '', receiverImg: ''));
+                    },
+                  );
+                },
+                child: buildChatItem(image: chatItemsList[index]['profileImage'], name: chatItemsList[index]['name']),
+              );
+            },
+          );
+        },
       ),
     );
   }

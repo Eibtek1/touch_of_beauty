@@ -66,7 +66,6 @@ class OrderItemBuilder extends StatelessWidget {
           CustomVendorButton(
               buttonTitle: 'عرض تفاصيل الطلب',
               isTapped: () {
-                print(reserveModel.orderStatus);
                 VReservationCubit.get(context).getOrdersById(orderId:reserveModel.id!);
                   Navigator.pushNamed(context, ScreenName.orderInHomeDetailsScreen);
               },

@@ -46,7 +46,6 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
      try{
        final response = await ServicesProvidersRepository.getAllFeaturedServicesProviders(pageNumber: featuredServicesProviderPageNumber);
        mainResponse = MainResponse.fromJson(response.data);
-       print(response.data);
        if (mainResponse.errorCode == 0) {
          featuredServicesProviderPaginateModel =
              PaginateModel.fromJson(mainResponse.data);
@@ -72,7 +71,6 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
        getFeaturedServicesProviderLoading = false;
        emit(GetFeaturedServicesProvidersSuccess());
      }catch(error){
-       print(error.toString());
        emit(GetFeaturedServicesProvidersError(error: error.toString()));
      }
 
@@ -156,7 +154,6 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
        final response = await ServicesProvidersRepository.getServicesProviderById(id: id);
        mainResponse = MainResponse.fromJson(response.data);
        servicesProviderModel = ServicesProviderModel.fromJson(mainResponse.data);
-       print(mainResponse.data);
        emit(GetFeaturedServicesProviderDetailsByItsIdSuccess());
      }catch(error){
        emit(GetFeaturedServicesProviderDetailsByItsIdError(error: error.toString()));
@@ -284,7 +281,6 @@ void getContactUs() async{
     final response = await ServicesProvidersRepository.getContactUs();
     mainResponse = MainResponse.fromJson(response.data);
     contactUsModel = ContactUsModel.fromJson(mainResponse.data);
-    print(contactUsModel);
     emit(GetContactUsSuccess());
   }catch(error){
     emit(GetContactUsError(error: error.toString()));

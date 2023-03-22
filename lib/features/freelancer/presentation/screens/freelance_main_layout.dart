@@ -21,7 +21,7 @@ class _UserMainLayoutState extends State<FreelancerMainLayout> {
   int cIndex = 0;
   List<Widget> screens= [
     const FreelancerHomeScreen(),
-    FreelancerMessagesScreen(),
+    const FreelancerMessagesScreen(),
     const FreelancerCentersScreen(),
     const FreelancerMoreScreen(),
   ];

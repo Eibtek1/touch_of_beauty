@@ -123,11 +123,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   AuthTextFormField(
                     hintText: 'رقم الهاتف',
                     maxLength: 20,
+                    keyboardType: TextInputType.phone,
                     validate: (value) {
+                      var regex = RegExp(r'^((?:[+?0?0?966]+)(?:\s?\d{2})(?:\s?\d{7}))$');
                       if (value!.isEmpty) {
                         return 'ادخل رقم الهاتف';
-                      } else if (value.length < 9) {
-                        return 'لا يحب ان يقل الرقم عن 10 ارقام';
+                      } else if (!regex.hasMatch(value)) {
+                        return 'صيغة الهاتف غير صحيحة';
                       }
                       return null;
                     },
