@@ -25,7 +25,6 @@ import '../../features/user/presentation/screens/home_screen_screens/all_centers
 import '../../features/user/presentation/screens/home_screen_screens/main_featuers_services.dart';
 import '../../features/user/presentation/screens/home_screen_screens/complains_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/gallery_screen.dart';
-import '../../features/user/presentation/screens/home_screen_screens/offers_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/add_address_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/choose_address_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/order_details_screen.dart';
@@ -141,8 +140,6 @@ class AppRouter {
           final args = settings.arguments;
           String arguments = args as String;
           return _animateRouteBuilder(PaymentWebView(url:arguments));
-        case ScreenName.offersScreen:
-          return _animateRouteBuilder(const OffersScreen());
         case ScreenName.complainsScreen:
           return _animateRouteBuilder(const ComplainsScreen());
         case ScreenName.galleryScreen:

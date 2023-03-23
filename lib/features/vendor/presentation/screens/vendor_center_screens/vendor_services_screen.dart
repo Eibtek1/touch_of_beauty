@@ -93,7 +93,6 @@ class VendorServicesScreen extends StatelessWidget {
                             ),
                             itemBuilder: (context, index) => InkWell(
                               onTap: () {
-                                print(cubit.servicesList[index]);
                                 cubit.getServicesDetailsByItsId(id: cubit.servicesList[index].id!);
                               },
                               child: GridItemBuilder(

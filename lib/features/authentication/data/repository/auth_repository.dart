@@ -95,7 +95,7 @@ class AuthRepository{
         "description":description==""? "null null null":description,
         "email": email??"",
         "fullName": userName??"",
-        "phoneNumber": phone??"",
+        "phoneNumber": phone,
         "taxNumber": taxNumber??"",
         "lat": "0.0",
         "lng":"0.0",
@@ -121,7 +121,7 @@ class AuthRepository{
       data: {
         "description": description==""? "null null null":description,
         "email": email??"",
-        "phoneNumber": phone??"",
+        "phoneNumber": phone,
         "fullName": userName??"",
         "lat": "0.0",
         "lng": "0.0",
@@ -239,7 +239,7 @@ class AuthRepository{
     final response = await DioHelper.postData(
       url: EndPoints.forgetPassword,
       data: {
-        "phoneNumber": phone
+        "phoneNumber": phone,
       },
     );
     return response;

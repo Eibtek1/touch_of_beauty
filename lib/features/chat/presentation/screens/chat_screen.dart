@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
@@ -124,7 +126,10 @@ class _ChatScreenState extends State<ChatScreen> {
                           time: Jiffy(cubit.messagesList[index].dateTime).Hm,
                         ),
                       )
-                          :imageContainer(alignment: Alignment.centerRight, imagePath: cubit.messagesList[index].image);
+                          :Padding(
+                        padding: EdgeInsets.symmetric(vertical: 20.h),
+                            child: imageContainer(alignment: Alignment.centerRight, imagePath: cubit.messagesList[index].image),
+                          );
                     } else {
                       return cubit.messagesList[index].messageType == 'text'
                           ?Padding(
@@ -132,7 +137,10 @@ class _ChatScreenState extends State<ChatScreen> {
                           child: AnotherPersonMessageItem(
                             message: cubit.messagesList[index].messageText,
                             time: Jiffy(cubit.messagesList[index].dateTime).Hm,
-                          )):imageContainer(alignment: Alignment.centerLeft, imagePath: cubit.messagesList[index].image);
+                          )):Padding(
+                        padding: EdgeInsets.symmetric(vertical: 20.h),
+                            child: imageContainer(alignment: Alignment.centerLeft, imagePath: cubit.messagesList[index].image),
+                          );
                     }
                   },
                   itemCount: cubit.messagesList.length,
@@ -222,7 +230,28 @@ class _ChatScreenState extends State<ChatScreen> {
           color: AppColorsLightTheme.primaryColor,
           borderRadius: BorderRadius.circular(5.r)
         ),
-        child: Image.network(imagePath,fit: BoxFit.cover,),
+        child: CachedNetworkImage(
+          fit: BoxFit.cover,
+          imageUrl:
+          imagePath,
+          placeholder: (context, url) =>
+              Shimmer.fromColors(
+                baseColor: Colors.grey[400]!,
+                highlightColor: Colors.grey[300]!,
+                child: Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius:
+                    BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+          errorWidget: (context, url, error) =>
+          const Icon(Icons.error),
+        ),
+        // Image.network(imagePath,fit: BoxFit.cover,),
       ),
     );
   }

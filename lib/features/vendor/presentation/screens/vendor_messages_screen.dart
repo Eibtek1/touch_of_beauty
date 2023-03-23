@@ -98,7 +98,7 @@ class VendorMessagesScreen extends StatelessWidget {
               child:image!=null? Image.network(
                 image,
                 fit: BoxFit.cover,
-              ):Image.asset(ImagePath.gallery13,fit: BoxFit.cover,),
+              ):Image.asset(ImagePath.beautyCenter,fit: BoxFit.cover,),
             ),
             SizedBox(
               width: 10.w,

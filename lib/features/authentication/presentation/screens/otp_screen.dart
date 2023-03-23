@@ -16,8 +16,7 @@ import '../widgets/auht_text_form_field.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/pin_field_builder.dart';
 
-
-class OtpArgs{
+class OtpArgs {
   final dynamic phoneNumber;
   final bool isConfirmPassword;
 
@@ -27,7 +26,9 @@ class OtpArgs{
 class OtpScreen extends StatefulWidget {
   final dynamic phoneNumber;
   final bool isConfirmPassword;
-  const OtpScreen({Key? key, this.phoneNumber, required this.isConfirmPassword}) : super(key: key);
+
+  const OtpScreen({Key? key, this.phoneNumber, required this.isConfirmPassword})
+      : super(key: key);
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -39,9 +40,11 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   void initState() {
-    phone.text = widget.phoneNumber!=null?widget.phoneNumber.toString():'';
+    phone.text =
+        widget.phoneNumber != null ? widget.phoneNumber.toString() : '';
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,56 +56,83 @@ class _OtpScreenState extends State<OtpScreen> {
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           var cubit = AuthCubit.get(context);
-          if(state is ConfirmRegisterLoading){
+          if (state is ConfirmRegisterLoading) {
             showProgressIndicator(context);
           }
-          if(state is ConfirmRegisterSuccess){
+          if (state is ConfirmRegisterSuccess) {
             Navigator.pop(context);
-            if(cubit.mainResponse.errorCode==0){
+            if (cubit.mainResponse.errorCode == 0) {
               Fluttertoast.showToast(msg: cubit.mainResponse.errorMessage);
               Navigator.pushReplacementNamed(context, ScreenName.loginScreen);
-            }else{
+            } else {
               Fluttertoast.showToast(msg: cubit.mainResponse.errorMessage);
             }
           }
-          if(state is ConfirmRegisterError){
+          if (state is ConfirmRegisterError) {
             Navigator.pop(context);
             Fluttertoast.showToast(msg: cubit.mainResponse.errorMessage);
           }
-          if(state is ConfirmForgetPasswordLoading){
+          if (state is ConfirmForgetPasswordLoading) {
             showProgressIndicator(context);
           }
-          if(state is ConfirmForgetPasswordSuccess){
+          if (state is ConfirmForgetPasswordSuccess) {
             Navigator.pop(context);
             Fluttertoast.showToast(msg: cubit.mainResponse.errorMessage);
-            if(cubit.mainResponse.errorCode ==0&&state.confirmForgetPasswordModel.userType==1){
-              CacheHelper.saveData(key: CacheKeys.token, value: state.confirmForgetPasswordModel.token).whenComplete(() {
-                CacheHelper.saveData(key: CacheKeys.userType, value: state.confirmForgetPasswordModel.userType.toString()).whenComplete(() {
+            if (cubit.mainResponse.errorCode == 0 &&
+                state.confirmForgetPasswordModel.userType == 1) {
+              CacheHelper.saveData(
+                      key: CacheKeys.token,
+                      value: state.confirmForgetPasswordModel.token)
+                  .whenComplete(() {
+                CacheHelper.saveData(
+                        key: CacheKeys.userType,
+                        value: state.confirmForgetPasswordModel.userType
+                            .toString())
+                    .whenComplete(() {
                   token = CacheHelper.getData(key: CacheKeys.token);
-                  Navigator.pushNamedAndRemoveUntil(context, ScreenName.userMainLayout, (route) => false);
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, ScreenName.userMainLayout, (route) => false);
                 });
               });
-            }else if(cubit.mainResponse.errorCode ==0&&state.confirmForgetPasswordModel.userType==2){
-              CacheHelper.saveData(key: CacheKeys.token, value: state.confirmForgetPasswordModel.token).whenComplete(() {
-                CacheHelper.saveData(key: CacheKeys.userType, value: state.confirmForgetPasswordModel.userType.toString()).whenComplete(() {
+            } else if (cubit.mainResponse.errorCode == 0 &&
+                state.confirmForgetPasswordModel.userType == 2) {
+              CacheHelper.saveData(
+                      key: CacheKeys.token,
+                      value: state.confirmForgetPasswordModel.token)
+                  .whenComplete(() {
+                CacheHelper.saveData(
+                        key: CacheKeys.userType,
+                        value: state.confirmForgetPasswordModel.userType
+                            .toString())
+                    .whenComplete(() {
                   token = CacheHelper.getData(key: CacheKeys.token);
-                  Navigator.pushNamedAndRemoveUntil(context, ScreenName.vendorMainLayout, (route) => false);
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, ScreenName.vendorMainLayout, (route) => false);
                 });
               });
-            }else if(cubit.mainResponse.errorCode ==0&&state.confirmForgetPasswordModel.userType==3){
-              CacheHelper.saveData(key: CacheKeys.token, value: state.confirmForgetPasswordModel.token).whenComplete(() {
-                CacheHelper.saveData(key: CacheKeys.userType, value: state.confirmForgetPasswordModel.userType.toString()).whenComplete(() {
+            } else if (cubit.mainResponse.errorCode == 0 &&
+                state.confirmForgetPasswordModel.userType == 3) {
+              CacheHelper.saveData(
+                      key: CacheKeys.token,
+                      value: state.confirmForgetPasswordModel.token)
+                  .whenComplete(() {
+                CacheHelper.saveData(
+                        key: CacheKeys.userType,
+                        value: state.confirmForgetPasswordModel.userType
+                            .toString())
+                    .whenComplete(() {
                   token = CacheHelper.getData(key: CacheKeys.token);
-                  Navigator.pushNamedAndRemoveUntil(context, ScreenName.freelancerMainLayout, (route) => false);
+                  Navigator.pushNamedAndRemoveUntil(context,
+                      ScreenName.freelancerMainLayout, (route) => false);
                 });
               });
             }
           }
-          if(state is ConfirmForgetPasswordSuccessButErrorInData){
+          if (state is ConfirmForgetPasswordSuccessButErrorInData) {
             Navigator.pop(context);
             Fluttertoast.showToast(msg: state.errorMessage);
           }
-          if(state is ConfirmForgetPasswordError){
+          if (state is ConfirmForgetPasswordError) {
             Navigator.pop(context);
             Fluttertoast.showToast(msg: state.error);
           }
@@ -119,15 +149,16 @@ class _OtpScreenState extends State<OtpScreen> {
                     height: 30.h,
                   ),
                   Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 25.w),
-                        child: Image.asset(
-                          ImagePath.phoneLogo,
-                          width: 206.w,
-                          height: 221.h,
-                        ),
-                      ),),
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 25.w),
+                      child: Image.asset(
+                        ImagePath.phoneLogo,
+                        width: 206.w,
+                        height: 221.h,
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     height: 55.h,
                   ),
@@ -157,12 +188,14 @@ class _OtpScreenState extends State<OtpScreen> {
                   ),
                   AuthTextFormField(
                     hintText: 'رقم الهاتف',
-                    maxLength: 20,
+                    keyboardType: TextInputType.phone,
+                    textDirection: TextDirection.ltr,
                     validate: (value) {
+                      var regex = RegExp(r'^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$');
                       if (value!.isEmpty) {
                         return 'ادخل رقم الهاتف';
-                      } else if (value.length < 9) {
-                        return 'لا يحب ان يقل الرقم عن 10 ارقام';
+                      } else if (!regex.hasMatch(value)) {
+                        return 'صيغة الهاتف غير صحيحة';
                       }
                       return null;
                     },
@@ -191,10 +224,14 @@ class _OtpScreenState extends State<OtpScreen> {
                   AuthButton(
                       buttonTitle: 'تأكيد الرقم',
                       isTapped: () {
-                        if(!widget.isConfirmPassword){
-                          cubit.confirmRegister(phone: phone.text, randomCode: pinController.text);
-                        }else if(widget.isConfirmPassword){
-                          cubit.confirmPassword(phone: phone.text, randomCode: pinController.text);
+                        if (!widget.isConfirmPassword) {
+                          cubit.confirmRegister(
+                              phone: phone.text,
+                              randomCode: pinController.text);
+                        } else if (widget.isConfirmPassword) {
+                          cubit.confirmPassword(
+                              phone: phone.text,
+                              randomCode: pinController.text);
                         }
                       },
                       width: double.infinity),

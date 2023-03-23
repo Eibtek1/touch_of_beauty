@@ -138,10 +138,17 @@ class AuthCubit extends Cubit<AuthState> {
         image: profileImage,
       );
       mainResponse = MainResponse.fromJson(response.data);
-      message = mainResponse.errorMessage.toString();
-      profileImage = null;
-      emit(RegisterSuccess(RegisterModel.fromJson(mainResponse.data)));
+      if(mainResponse.errorCode == 0){
+        message = mainResponse.errorMessage.toString();
+        profileImage = null;
+        emit(RegisterSuccess(RegisterModel.fromJson(mainResponse.data)));
+      }else{
+        message = mainResponse.errorMessage.toString();
+        emit(RegisterErrorInData(message!));
+      }
+
     } catch (error) {
+      print(error.toString());
       emit(RegisterError(error.toString()));
     }
   }
@@ -167,9 +174,14 @@ class AuthCubit extends Cubit<AuthState> {
         taxNumber: taxNumber,
       );
       mainResponse = MainResponse.fromJson(response.data);
-      message = mainResponse.errorMessage.toString();
-      profileImage = null;
-      emit(RegisterSuccess(RegisterModel.fromJson(mainResponse.data)));
+      if(mainResponse.errorCode == 0){
+        message = mainResponse.errorMessage.toString();
+        profileImage = null;
+        emit(RegisterSuccess(RegisterModel.fromJson(mainResponse.data)));
+      }else{
+        message = mainResponse.errorMessage.toString();
+        emit(RegisterErrorInData(message!));
+      }
     } catch (error) {
       emit(RegisterError(error.toString()));
     }
@@ -195,9 +207,14 @@ class AuthCubit extends Cubit<AuthState> {
         image: profileImage,
       );
       mainResponse = MainResponse.fromJson(response.data);
-      message = mainResponse.errorMessage.toString();
-      profileImage = null;
-      emit(RegisterSuccess(RegisterModel.fromJson(mainResponse.data)));
+      if(mainResponse.errorCode == 0){
+        message = mainResponse.errorMessage.toString();
+        profileImage = null;
+        emit(RegisterSuccess(RegisterModel.fromJson(mainResponse.data)));
+      }else{
+        message = mainResponse.errorMessage.toString();
+        emit(RegisterErrorInData(message!));
+      }
     } catch (error) {
       emit(RegisterError(error.toString()));
     }

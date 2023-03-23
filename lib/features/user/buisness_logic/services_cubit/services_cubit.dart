@@ -31,7 +31,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
   String servicesSearchMessage = '';
 
-  late CitiesModel citiesModel;
+  CitiesModel? citiesModel;
 
   ServicesDetailsModel? servicesModel;
 
@@ -77,6 +77,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
   void onCityChanged(CitiesModel value) {
     citiesModel = value;
+    print(citiesModel);
     emit(GetChangedCity());
   }
 
@@ -384,7 +385,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     try {
       emit(AddAddressLoading());
       final response = await ServicesProvidersRepository.addAddress(
-        cityId: citiesModel.id!,
+        cityId: citiesModel!.id!,
         region: region,
         street: street,
         buildingNumber: buildingNumber,
@@ -396,6 +397,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
         emit(AddAddressSuccess());
       }
     } catch (error) {
+      print(error.toString());
       emit(AddAddressError(error: error.toString()));
     }
   }

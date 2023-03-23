@@ -77,6 +77,14 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                 backgroundColor: AppColorsLightTheme.primaryColor,
               );
             }
+            if (state is RegisterErrorInData) {
+              Navigator.pop(context);
+              Fluttertoast.showToast(
+                msg: state.error,
+                gravity: ToastGravity.CENTER,
+                backgroundColor: AppColorsLightTheme.primaryColor,
+              );
+            }
           },
           builder: (context, state) {
             var cubit = AuthCubit.get(context);
@@ -232,8 +240,8 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                   ),
                   AuthTextFormField(
                     hintText: 'رقم الهاتف',
-                    maxLength: 10,
                     keyboardType: TextInputType.phone,
+                    textDirection: TextDirection.ltr,
                     suffix: Padding(
                       padding: EdgeInsets.only(left: 10.w),
                       child: SvgPicture.asset(
@@ -243,10 +251,11 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                       ),
                     ),
                     validate: (value) {
+                      var regex = RegExp(r'^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$');
                       if (value!.isEmpty) {
                         return 'ادخل رقم الهاتف';
-                      }else if(value.length<10){
-                        return 'لا يحب ان يقل الرقم عن 10 ارقام';
+                      } else if (!regex.hasMatch(value)) {
+                        return 'صيغة الهاتف غير صحيحة';
                       }
                       return null;
                     },
@@ -257,21 +266,10 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                   ),
                   AuthTextFormField(
                     hintText: 'الرقم الضريبي',
-                    maxLength: 10,
                     keyboardType: TextInputType.phone,
-                    suffix: Padding(
-                      padding: EdgeInsets.only(left: 10.w),
-                      child: SvgPicture.asset(
-                        SvgPath.saudiPhoneFieldIcon,
-                        width: 52.w,
-                        height: 15.h,
-                      ),
-                    ),
                     validate: (value) {
                       if (value!.isEmpty) {
-                        return 'ادخل الرقم الضريبي';
-                      }else if(value.length<10){
-                        return 'لا يحب ان يقل الرقم عن 10 ارقام';
+                        return 'ادخل الخدمات التي تقدمها';
                       }
                       return null;
                     },

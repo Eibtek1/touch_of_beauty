@@ -38,7 +38,7 @@ class CenterEmployeesWidget extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: Image.asset(
-                    ImagePath.gallery13,
+                    ImagePath.hairCare,
                     fit: BoxFit.cover,
                   ),
                 ),

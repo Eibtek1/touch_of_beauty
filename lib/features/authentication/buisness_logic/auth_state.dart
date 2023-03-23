@@ -41,6 +41,10 @@ class GetPictureLibraryPickedErrorState extends AuthState {}
 
 
 class RegisterLoading extends AuthState {}
+class RegisterErrorInData extends AuthState {
+  final String error;
+  RegisterErrorInData(this.error);
+}
 class RegisterSuccess extends AuthState {
   final RegisterModel? registerModel;
 
