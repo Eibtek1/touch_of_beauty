@@ -10,6 +10,7 @@ import 'package:touch_of_beauty/features/intro_screens/screens/splash_screen.dar
 import 'package:touch_of_beauty/features/user/presentation/screens/favorites_services_screen.dart';
 import 'package:touch_of_beauty/features/user/presentation/screens/home_screen_screens/search_screen.dart';
 import 'package:touch_of_beauty/features/user/presentation/screens/user_main_layout.dart';
+import '../../features/authentication/presentation/screens/change_forget_password.dart';
 import '../../features/authentication/presentation/screens/vendor_register.dart';
 import '../../features/chat/presentation/screens/chat_screen.dart';
 import '../../features/freelancer/presentation/screens/freelance_main_layout.dart';
@@ -115,6 +116,8 @@ class AppRouter {
           return _animateRouteBuilder(const UserRegisterScreen());
         case ScreenName.vendorRegister:
           return _animateRouteBuilder(const VendorRegisterScreen());
+        case ScreenName.changeForgetPasswordScreen:
+          return _animateRouteBuilder(const ChangeForgetPasswordScreen());
         case ScreenName.otpScreen:
           final args = settings.arguments;
           OtpArgs arguments = args as OtpArgs;

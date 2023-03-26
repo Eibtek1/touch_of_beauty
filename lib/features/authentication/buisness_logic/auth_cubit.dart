@@ -251,10 +251,26 @@ class AuthCubit extends Cubit<AuthState> {
       );
       mainResponse = MainResponse.fromJson(response.data);
       message = mainResponse.errorMessage.toString();
-      emit(
-          ConfirmForgetPasswordSuccess(LoginModel.fromJson(mainResponse.data)));
+      emit(ConfirmForgetPasswordSuccess(LoginModel.fromJson(mainResponse.data)));
+      print(response);
     } catch (error) {
       emit(ConfirmForgetPasswordError(error.toString()));
+    }
+  }
+
+  void changeConfirmPassword({
+    required String password,
+  }) async {
+    emit(ChangeConfirmForgetPasswordLoading());
+    try {
+      final response = await AuthRepository.changeForgetPassword(password: password, );
+      mainResponse = MainResponse.fromJson(response.data);
+      message = mainResponse.errorMessage.toString();
+      emit(ChangeConfirmForgetPasswordSuccess(mainResponse));
+      print(response);
+    } catch (error) {
+      print(error);
+      emit(ChangeConfirmForgetPasswordError(error.toString()));
     }
   }
 
@@ -417,6 +433,7 @@ class AuthCubit extends Cubit<AuthState> {
         phone: phoneNumber,
       );
       mainResponse = MainResponse.fromJson(response.data);
+      print(response);
       emit(ForgetPasswordSuccess(mainResponse: mainResponse));
     } catch (error) {
       emit(ForgetPasswordError(error.toString()));

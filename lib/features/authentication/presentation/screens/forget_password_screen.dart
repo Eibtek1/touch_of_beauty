@@ -47,7 +47,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 ScreenName.otpScreen,
                 (route) => false,
                 arguments: OtpArgs(
-                  phoneNumber: null,
+                  phoneNumber: phone.text,
                   isConfirmPassword: true,
                 ),
               );

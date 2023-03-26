@@ -4,14 +4,14 @@ import '../../../../core/assets_path/font_path.dart';
 
 class AuthButton extends StatelessWidget {
   final String buttonTitle;
-  final Function isTapped;
+  final void Function()? isTapped;
   final double? height;
   final double width;
 
   const AuthButton(
       {Key? key,
       required this.buttonTitle,
-      required this.isTapped,
+      this.isTapped,
       required this.width, this.height})
       : super(key: key);
 
@@ -25,10 +25,7 @@ class AuthButton extends StatelessWidget {
           shape: const StadiumBorder(),
           padding: EdgeInsets.symmetric(horizontal: 45.w, vertical: 16.h),
         ),
-        onPressed: () {
-          isTapped();
-        },
-
+        onPressed: isTapped,
         child: Center(
           child: Text(
             buttonTitle,

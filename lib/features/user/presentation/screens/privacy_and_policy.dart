@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_state.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../widgets/about_widget.dart';
 
-class PrivacyAndPolicy extends StatelessWidget {
+class PrivacyAndPolicy extends StatefulWidget {
   const PrivacyAndPolicy({Key? key}) : super(key: key);
 
+  @override
+  State<PrivacyAndPolicy> createState() => _PrivacyAndPolicyState();
+}
+
+class _PrivacyAndPolicyState extends State<PrivacyAndPolicy> {
+  @override
+  void initState() {
+    ServicesProvidersCubit.get(context).getContactUs();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,21 +36,7 @@ class PrivacyAndPolicy extends StatelessWidget {
                 SizedBox(
                   width: 34.w,
                   height: 34.h,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      backgroundColor: Colors.white,
-                      foregroundColor: AppColorsLightTheme.primaryColor,
-                    ),
-                    child: Icon(
-                      Icons.arrow_back_ios_rounded,
-                      color: AppColorsLightTheme.primaryColor,
-                      size: 15.r,
-                    ),
-                  ),
+                  child: IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.arrow_back)),
                 ),
                 Expanded(
                   child: Text(
@@ -74,15 +69,13 @@ class PrivacyAndPolicy extends StatelessWidget {
               height: 30.h,
             ),
             BlocConsumer<ServicesProvidersCubit, ServicesProvidersState>(
-              listener: (context, state) {
-                // TODO: implement listener
-              },
+              listener: (context, state) {},
               builder: (context, state) {
                 var cubit = ServicesProvidersCubit.get(context);
-                return AboutWidget(
+                return state is! GetContactUsLoading&&cubit.contactUsModel!=null?AboutWidget(
                   title:
                   '${cubit.contactUsModel!.termsAndConditions}',
-                );
+                ):const Center(child: CircularProgressIndicator.adaptive(),);
               },
             )
           ],

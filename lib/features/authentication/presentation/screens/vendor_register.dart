@@ -223,9 +223,7 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                     validate: (value) {
                       if (value!.isEmpty) {
                         return 'ادخل البريد الالكتروني';
-                      } else if (!RegExp(
-                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                          .hasMatch(value)) {
+                      } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
                         return 'صيعة البريد غير صحيحة';
                       }
                       return null;

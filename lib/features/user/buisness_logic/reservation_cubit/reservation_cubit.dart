@@ -20,6 +20,7 @@ class ReservationCubit extends Cubit<ReservationState> {
     try{
       final response = await ServicesProvidersRepository.getOrdersForUser();
       mainResponse = MainResponse.fromJson(response.data);
+      print(response);
       for(var element in mainResponse.data){
         if(!reservationsList.contains(ReservationModel.fromJson(element))){
           reservationsList.add(ReservationModel.fromJson(element));
@@ -30,6 +31,7 @@ class ReservationCubit extends Cubit<ReservationState> {
       }
       emit(GetReservationsSuccessState());
     }catch(error){
+      print(error.toString());
     emit(GetReservationsErrorState(error.toString()));
     }
   }

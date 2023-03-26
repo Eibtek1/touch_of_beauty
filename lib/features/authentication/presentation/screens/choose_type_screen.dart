@@ -12,7 +12,7 @@ class ChooseTypeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool type = false;
+    bool type = true;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(

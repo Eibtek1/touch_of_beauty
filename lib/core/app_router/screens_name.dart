@@ -4,6 +4,7 @@ class ScreenName{
   static const chooseRegisterType = 'choose_type_screen.dart';
   static const userRegister = 'user_register.dart';
   static const vendorRegister = 'vendor_register.dart';
+  static const changeForgetPasswordScreen = 'changeForgetPasswordScreen.dart';
   static const loginScreen = 'login_screen.dart';
   static const otpScreen = 'otp_screen.dart';
   static const userMainLayout = 'user_main_layout.dart';

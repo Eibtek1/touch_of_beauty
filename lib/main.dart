@@ -13,6 +13,7 @@ import 'core/app_router/app_router.dart';
 import 'core/app_router/screens_name.dart';
 import 'core/cache_manager/shared_preferences.dart';
 import 'features/authentication/buisness_logic/auth_cubit.dart';
+import 'features/authentication/presentation/screens/change_forget_password.dart';
 import 'features/freelancer/buisness_logic/services_cubit/freelancer_services_cubit.dart';
 import 'features/user/buisness_logic/main_cubit/main_cubit.dart';
 import 'features/user/buisness_logic/main_features_cubit/main_features_cubit.dart';
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (context) => WorkHoursCubit()..getWorkHours()),
                 BlocProvider(create: (context) => UserServicesCubit()..getAddress()),
                 BlocProvider(create: (context) => VendorServicesCubit()),
-                BlocProvider(create: (context) => ServicesProvidersCubit()..getSliderPhotos()..getContactUs()),
+                BlocProvider(create: (context) => ServicesProvidersCubit()),
                 BlocProvider(create: (context) => MainFeaturesCubit()),
                 BlocProvider(create: (context) => AuthCubit(),),
                 BlocProvider(create: (context) => ChatCubit(),),
@@ -81,7 +82,7 @@ class MyApp extends StatelessWidget {
                 ),
                 onGenerateRoute: AppRouter.generateRoute,
                 initialRoute: ScreenName.splashscreen,
-                // home:  const PrivacyAndPolicy(),
+                // home:  const ChangeForgetPasswordScreen(),
               ),
             );
           },

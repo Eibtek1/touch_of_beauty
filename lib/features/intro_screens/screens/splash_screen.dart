@@ -23,15 +23,17 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
-  _loading() {
+  _loading() async{
     bool? onboarding = CacheHelper.getData(key: CacheKeys.onboarding);
     token = CacheHelper.getData(key: CacheKeys.token);
+    userType = CacheHelper.getData(key: CacheKeys.userType);
+
     Timer(
       const Duration(seconds: 2),
       () {
         if (onboarding == null) {
           Navigator.pushReplacementNamed(context, ScreenName.onboardingScreen);
-        } else if (token != null) {
+        } else if (token != null&&userType != null) {
           if(userType == 1.toString()){
             Navigator.pushReplacementNamed(
                 context, ScreenName.userMainLayout);

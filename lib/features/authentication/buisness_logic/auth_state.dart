@@ -146,3 +146,14 @@ class ConfirmForgetPasswordError extends AuthState {
   final String error;
   ConfirmForgetPasswordError(this.error);
 }
+
+class ChangeConfirmForgetPasswordLoading extends AuthState {}
+class ChangeConfirmForgetPasswordSuccess extends AuthState {
+  final MainResponse confirmForgetPasswordModel;
+
+  ChangeConfirmForgetPasswordSuccess(this.confirmForgetPasswordModel);
+}
+class ChangeConfirmForgetPasswordError extends AuthState {
+  final String error;
+  ChangeConfirmForgetPasswordError(this.error);
+}

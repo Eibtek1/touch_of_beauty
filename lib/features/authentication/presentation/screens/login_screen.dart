@@ -12,7 +12,6 @@ import 'package:touch_of_beauty/core/cache_manager/shared_preferences.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
-import 'package:touch_of_beauty/features/authentication/presentation/screens/otp_screen.dart';
 import 'package:touch_of_beauty/features/authentication/presentation/widgets/auht_text_form_field.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../widgets/auth_button.dart';
@@ -162,38 +161,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 8.h,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, ScreenName.forgetPasswordScreen);
-                        },
-                        child: Text(
-                          'هل نسيت كلمة المرور؟',
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
-                              color: const Color(0xffAAADB5),
-                              fontFamily: FontPath.almaraiLight,
-                              fontSize: 13.sp),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, ScreenName.otpScreen,arguments: OtpArgs(phoneNumber: null,isConfirmPassword: false));
-                        },
-                        child: Text(
-                          'اذهب لتأكيد حسابك',
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
-                              color: AppColorsLightTheme.primaryColor,
-                              fontFamily: FontPath.almaraiLight,
-                              fontSize: 13.sp),
-                        ),
-                      ),
-                    ],
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, ScreenName.forgetPasswordScreen);
+                    },
+                    child: Text(
+                      'هل نسيت كلمة المرور؟',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                          color: const Color(0xffAAADB5),
+                          fontFamily: FontPath.almaraiLight,
+                          fontSize: 13.sp),
+                    ),
                   ),
                   SizedBox(
                     height: 8.h,
@@ -213,34 +192,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 15.h,
                   ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     Container(
-                  //         padding: EdgeInsets.all(5.r),
-                  //         height: 30.h,
-                  //         width: 30.w,
-                  //         decoration: const BoxDecoration(
-                  //             color: AppColorsLightTheme.primaryColor,
-                  //             shape: BoxShape.circle),
-                  //         child: SvgPicture.asset(
-                  //           SvgPath.bulb,
-                  //           width: 15.w,
-                  //           height: 15.h,
-                  //           colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                  //         )),
-                  //     SizedBox(
-                  //       width: 10.w,
-                  //     ),
-                  //     Text(
-                  //       'استكشاف التطبيق',
-                  //       style: TextStyle(
-                  //           color: AppColorsLightTheme.secondaryColor,
-                  //           fontFamily: FontPath.almaraiRegular,
-                  //           fontSize: 10.sp),
-                  //     )
-                  //   ],
-                  // ),
                   SizedBox(
                     height: 57.h,
                   ),

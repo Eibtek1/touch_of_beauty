@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import '../../../../core/cache_manager/cache_keys.dart';
+import '../../../../core/cache_manager/shared_preferences.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/network/api_end_points.dart';
 import '../../../../core/network/dio_helper.dart';
@@ -251,10 +253,26 @@ class AuthRepository{
     required String randomCode,
   }) async {
     final response = await DioHelper.postData(
-      url: EndPoints.changeForgetPassword,
+      url: EndPoints.changeConfirmPassword,
       data: {
         "phoneNumber": phone,
         "randomCode": randomCode
+      },
+    );
+    return response;
+  }
+
+
+  static Future<Response> changeForgetPassword({
+    required String password,
+  }) async {
+    print(token);
+    final response = await DioHelper.putData(
+      token: token,
+      url: EndPoints.changeForgetPassword,
+      data: {
+        "password": password,
+        "confirmPassword": password
       },
     );
     return response;

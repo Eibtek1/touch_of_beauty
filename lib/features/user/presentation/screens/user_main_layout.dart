@@ -69,7 +69,7 @@ class UserMainLayout extends StatelessWidget {
                           BlendMode.srcIn,
                         ),
                       ),
-                      label: 'حجزاتي'),
+                      label: 'حجوزاتي'),
                   BottomNavigationBarItem(
                       icon: SvgPicture.asset(
                         SvgPath.notificationIcon,
