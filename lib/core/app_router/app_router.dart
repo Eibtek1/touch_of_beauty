@@ -23,6 +23,7 @@ import '../../features/freelancer/presentation/screens/freelancer_notification_s
 import '../../features/user/presentation/screens/edit_profile_screen.dart';
 import '../../features/user/presentation/screens/help_privacy_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/all_centers_screen.dart';
+import '../../features/user/presentation/screens/home_screen_screens/filter_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/main_featuers_services.dart';
 import '../../features/user/presentation/screens/home_screen_screens/complains_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/gallery_screen.dart';
@@ -82,6 +83,8 @@ class AppRouter {
           return _animateRouteBuilder( SearchScreen(servicesProviderId: arg,));
         case ScreenName.editCenterScreen:
           return _animateRouteBuilder( const EditCenterDetailsScreen());
+        case ScreenName.filteredServicesScreen:
+          return _animateRouteBuilder( const FilteredServicesScreen());
         case ScreenName.freelancerDetailsScreen:
           return _animateRouteBuilder( const FreelancerDetailsScreen());
         case ScreenName.helpPrivacy:

@@ -178,13 +178,13 @@ class AppDrawer extends StatelessWidget {
             const Divider(
               color: Colors.white,
             ),
-            SizedBox(
-              height: 15.h,
-            ),
-            buildTitleWidget(
-              onTap: () {},
-              title: 'تفضيلات التطبيق',
-            ),
+            // SizedBox(
+            //   height: 15.h,
+            // ),
+            // buildTitleWidget(
+            //   onTap: () {},
+            //   title: 'تفضيلات التطبيق',
+            // ),
             SizedBox(
               height: 15.h,
             ),

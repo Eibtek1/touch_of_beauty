@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
+import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 
 import '../../../../../../core/assets_path/font_path.dart';
+import '../../../../../../core/assets_path/images_path.dart';
 import '../../../../buisness_logic/services_cubit/services_cubit.dart';
 import '../../../../buisness_logic/services_cubit/services_state.dart';
 import '../../../widgets/custom_button.dart';
@@ -90,28 +92,51 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                   SizedBox(
                     height: 10.h,
                   ),
-                  InkWell(
-                    onTap: (){
-                      Navigator.pushNamed(context, ScreenName.addAddressScreen);
-                    },
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.location_on,
-                          size: 28.r,
-                          color: const Color(0xffB83561),
-                        ),
-                        SizedBox(
-                          width: 5.w,
-                        ),
-                        Text(
-                          'قم بأضافة عنوان جديد',
-                          style: TextStyle(
-                              color: const Color(0xff263238),
-                              fontFamily: FontPath.almaraiBold,
-                              fontSize: 16.sp),
-                        )
-                      ],
+                  Container(
+                    height: 200.h,
+                    width: double.infinity,
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.r)
+                    ),
+                    child: Image.asset(ImagePath.saudiMap,fit: BoxFit.cover,),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Container(
+                    height: 45.h,
+                    // width: 100.w,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      color: AppColorsLightTheme.secondaryColor.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(50.r)
+                    ),
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.pushNamed(context, ScreenName.addAddressScreen);
+                      },
+                      borderRadius: BorderRadius.circular(50.r),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            size: 28.r,
+                            color: const Color(0xffB83561),
+                          ),
+                          SizedBox(
+                            width: 5.w,
+                          ),
+                          Text(
+                            'قم بأضافة عنوان جديد',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: FontPath.almaraiBold,
+                                fontSize: 13.sp),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(

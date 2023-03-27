@@ -64,8 +64,8 @@ class CenterServicesCategoryItem extends StatelessWidget {
                         )
                 ),
                 Positioned(
-                  top: 14.h,
-                  left: 14.w,
+                  top: 7.h,
+                  left: 7.w,
                   child:BlocBuilder<UserServicesCubit, UserServicesState>(
                     builder: (context, state) {
                       var cubit = UserServicesCubit.get(context);
@@ -79,7 +79,7 @@ class CenterServicesCategoryItem extends StatelessWidget {
                           }
                         },
                         child: CircleAvatar(
-                          radius: 15.r,
+                          radius: 14.r,
                           backgroundColor: Colors.white,
                           child: Center(
                             child: Icon(

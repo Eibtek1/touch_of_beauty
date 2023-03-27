@@ -29,9 +29,6 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
 
   @override
   void initState() {
-    if (UserServicesCubit.get(context).citiesList.isEmpty) {
-      UserServicesCubit.get(context).getCities();
-    }
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent ==
           scrollController.offset) {
