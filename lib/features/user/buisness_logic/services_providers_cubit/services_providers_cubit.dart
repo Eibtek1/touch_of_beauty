@@ -199,7 +199,6 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
       getSliderPhotosLoading = false;
       emit(GetSliderPhotosSuccess());
     }catch(error){
-      print(error);
       emit(GetSliderPhotosError(error: error.toString()));
     }
   }

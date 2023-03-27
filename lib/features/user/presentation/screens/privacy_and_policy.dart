@@ -36,7 +36,7 @@ class _PrivacyAndPolicyState extends State<PrivacyAndPolicy> {
                 SizedBox(
                   width: 34.w,
                   height: 34.h,
-                  child: IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.arrow_back)),
+                  child: IconButton(onPressed: (){Navigator.pop(context);}, icon: const Icon(Icons.arrow_back)),
                 ),
                 Expanded(
                   child: Text(

@@ -246,11 +246,4 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
     );
   }
 
-  Widget any() {
-    return TabBarView(
-      controller: tabController,
-      physics: const NeverScrollableScrollPhysics(),
-      children: [],
-    );
-  }
 }

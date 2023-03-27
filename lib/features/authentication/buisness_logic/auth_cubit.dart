@@ -148,7 +148,6 @@ class AuthCubit extends Cubit<AuthState> {
       }
 
     } catch (error) {
-      print(error.toString());
       emit(RegisterError(error.toString()));
     }
   }
@@ -252,7 +251,6 @@ class AuthCubit extends Cubit<AuthState> {
       mainResponse = MainResponse.fromJson(response.data);
       message = mainResponse.errorMessage.toString();
       emit(ConfirmForgetPasswordSuccess(LoginModel.fromJson(mainResponse.data)));
-      print(response);
     } catch (error) {
       emit(ConfirmForgetPasswordError(error.toString()));
     }
@@ -267,9 +265,7 @@ class AuthCubit extends Cubit<AuthState> {
       mainResponse = MainResponse.fromJson(response.data);
       message = mainResponse.errorMessage.toString();
       emit(ChangeConfirmForgetPasswordSuccess(mainResponse));
-      print(response);
     } catch (error) {
-      print(error);
       emit(ChangeConfirmForgetPasswordError(error.toString()));
     }
   }
@@ -433,7 +429,6 @@ class AuthCubit extends Cubit<AuthState> {
         phone: phoneNumber,
       );
       mainResponse = MainResponse.fromJson(response.data);
-      print(response);
       emit(ForgetPasswordSuccess(mainResponse: mainResponse));
     } catch (error) {
       emit(ForgetPasswordError(error.toString()));

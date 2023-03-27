@@ -80,7 +80,6 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
   void onCityChanged(CitiesModel value) {
     citiesModel = value;
-    print(citiesModel);
     emit(GetChangedCity());
   }
 
@@ -219,8 +218,6 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       } else {
         servicesSearchMessage = mainResponse.errorMessage;
       }
-      print(filteredServicesList);
-      print(mainResponse);
       emit(GetFilteredServicesByServiceProviderIdSuccess());
     } catch (error) {
       emit(GetFilteredServicesByServiceProviderIdError(error: error.toString()));
@@ -376,7 +373,6 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       getServicesByMainSectionAndServicesProvidersIdLoading = false;
       emit(GetServicesByMainSectionIdSuccess());
     } catch (error) {
-      print(error.toString());
       emit(GetServicesByMainSectionIdError(error: error.toString()));
     }
   }
@@ -467,7 +463,6 @@ class UserServicesCubit extends Cubit<UserServicesState> {
         emit(AddAddressSuccess());
       }
     } catch (error) {
-      print(error.toString());
       emit(AddAddressError(error: error.toString()));
     }
   }

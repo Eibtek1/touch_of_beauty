@@ -83,7 +83,6 @@ class _OtpScreenState extends State<OtpScreen> {
                 value: state.confirmForgetPasswordModel.token)
                 .whenComplete(() {
                   token = CacheHelper.getData(key: CacheKeys.token);
-                  print(token);
                   Navigator.pushReplacementNamed(context, ScreenName.changeForgetPasswordScreen, );
             });
           }
