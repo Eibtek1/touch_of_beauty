@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../buisness_logic/services_cubit/services_cubit.dart';
 import '../../../buisness_logic/services_cubit/services_state.dart';
@@ -10,12 +12,25 @@ import '../../widgets/custom_button.dart';
 import '../../widgets/home_screen_widgets/search_check_button_item.dart';
 
 // ignore: must_be_immutable
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   final dynamic servicesProviderId;
 
-  SearchScreen({super.key, this.servicesProviderId});
+  const SearchScreen({super.key, this.servicesProviderId});
 
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
   RangeValues rangeValues = const RangeValues(1, 4000);
+
+  @override
+  void initState() {
+    if (UserServicesCubit.get(context).citiesList.isEmpty) {
+      UserServicesCubit.get(context).getCities();
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,10 +111,16 @@ class SearchScreen extends StatelessWidget {
             BlocConsumer<UserServicesCubit, UserServicesState>(
               listener: (context, state) {
                 var cubit = UserServicesCubit.get(context);
-                if(state is GetServicesByServiceProviderIdSuccess){
+                if(state is GetFilteredServicesByServiceProviderIdSuccess){
+                  Navigator.pop(context);
                   if(cubit.mainResponse.errorCode != 0){
-                    Fluttertoast.showToast(msg: 'نتائج البحث غير موجودة');
+                    Fluttertoast.showToast(msg: '${cubit.mainResponse.errorMessage}');
+                  }else{
+                    Fluttertoast.showToast(msg: '${cubit.mainResponse.errorMessage}');
+                    Navigator.pushNamed(context, ScreenName.filteredServicesScreen);
                   }
+                }if (state is GetFilteredServicesByServiceProviderIdLoading){
+                  showProgressIndicator(context);
                 }
               },
               builder: (context, state) {
@@ -266,8 +287,9 @@ class SearchScreen extends StatelessWidget {
                           CustomUserButton(
                               buttonTitle: 'بحث',
                               isTapped: () {
-                                cubit.getServicesByServiceProviderId(
-                                  servicesProviderId: servicesProviderId,
+                                cubit.filteredServicesPageNumber = 1;
+                                cubit.getFilteredServices(
+                                  servicesProviderId: widget.servicesProviderId,
                                   inCenter: cubit.inCenter,
                                   inHome: cubit.inHome,
                                   minPrice: rangeValues.start.round(),

@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (context) => WorkHoursCubit()..getWorkHours()),
                 BlocProvider(create: (context) => UserServicesCubit()..getAddress()),
                 BlocProvider(create: (context) => VendorServicesCubit()),
-                BlocProvider(create: (context) => ServicesProvidersCubit()..getSliderPhotos()..getContactUs()),
+                BlocProvider(create: (context) => ServicesProvidersCubit()),
                 BlocProvider(create: (context) => MainFeaturesCubit()),
                 BlocProvider(create: (context) => AuthCubit(),),
                 BlocProvider(create: (context) => ChatCubit(),),
@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
                 ),
                 onGenerateRoute: AppRouter.generateRoute,
                 initialRoute: ScreenName.splashscreen,
-                // home:  const PrivacyAndPolicy(),
+                // home:  const ChangeForgetPasswordScreen(),
               ),
             );
           },

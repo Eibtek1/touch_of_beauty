@@ -4,6 +4,7 @@ class ScreenName{
   static const chooseRegisterType = 'choose_type_screen.dart';
   static const userRegister = 'user_register.dart';
   static const vendorRegister = 'vendor_register.dart';
+  static const changeForgetPasswordScreen = 'changeForgetPasswordScreen.dart';
   static const loginScreen = 'login_screen.dart';
   static const otpScreen = 'otp_screen.dart';
   static const userMainLayout = 'user_main_layout.dart';
@@ -31,6 +32,7 @@ class ScreenName{
   static const vendorNotificationScreen = 'vendor_notification.dart';
   static const freelancerNotificationScreen = 'freelancer_notification.dart';
   static const editCenterScreen = 'edit_center.dart';
+  static const filteredServicesScreen = 'filteredServicesScreen.dart';
   static const detailsCenterScreen = 'center_details.dart';
   static const centerWorkingTimeScreen = 'center_working_time_screen.dart';
   static const vendorServicesScreen = 'vendor_services_screen.dart';

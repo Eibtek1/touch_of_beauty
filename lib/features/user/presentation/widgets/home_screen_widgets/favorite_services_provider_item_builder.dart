@@ -80,47 +80,43 @@ class FavoriteSalonItemBuilder extends StatelessWidget {
                   ))
               ],
             ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${servicesProviderModel.title}',
-                      style: TextStyle(
-                          fontSize: 12.sp,
-                          fontFamily: FontPath.almaraiBold,
-                          color: const Color(0xff1E2432)),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${servicesProviderModel.title}',
+                    style: TextStyle(
+                        fontSize: 12.sp,
+                        fontFamily: FontPath.almaraiBold,
+                        color: const Color(0xff1E2432)),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Text(
+                    '${servicesProviderModel.addresses![0].city}',
+                    style: TextStyle(
+                      fontSize: 11.sp,
+                      fontFamily: FontPath.almaraiRegular,
+                      color: const Color(0xff666666),
                     ),
-                    SizedBox(
-                      height: 5.h,
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Text(
+                    '${servicesProviderModel.description}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 11.sp,
+                      fontFamily: FontPath.almaraiRegular,
+                      color: const Color(0xff666666),
                     ),
-                    Text(
-                      '${servicesProviderModel.addresses![0].city}',
-                      style: TextStyle(
-                        fontSize: 11.sp,
-                        fontFamily: FontPath.almaraiRegular,
-                        color: const Color(0xff666666),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    Expanded(
-                      child: Text(
-                        '${servicesProviderModel.description}',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          fontFamily: FontPath.almaraiRegular,
-                          color: const Color(0xff666666),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             )
           ],

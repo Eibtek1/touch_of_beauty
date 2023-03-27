@@ -178,10 +178,10 @@ class ServicesProvidersRepository {
   }) async {
     final response =
         await DioHelper.postData(url: EndPoints.addresses, token: token, data: {
-      "region": region ?? "",
-      "street": street ?? "",
-      "buildingNumber": buildingNumber ?? "",
-      "flatNumber": flatNumber ?? "",
+      "region": region,
+      "street": street ,
+      "buildingNumber":"مبني رقم $buildingNumber",
+      "flatNumber": "شقة رقم $flatNumber",
       "addressDetails": addressDetails ?? "",
       "cityId": cityId
     });

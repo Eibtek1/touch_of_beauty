@@ -28,6 +28,16 @@ class GetServicesByServiceProviderIdError extends UserServicesState {
 }
 
 
+class GetFilteredServicesByServiceProviderIdLoading extends UserServicesState {}
+class GetFilteredServicesByServiceProviderIdSuccess extends UserServicesState {}
+class GetFilteredServicesByServiceProviderIdError extends UserServicesState {
+  final String error;
+
+  GetFilteredServicesByServiceProviderIdError({required this.error});
+
+}
+
+
 
 
 class GetFavoritesServicesLoadingState extends UserServicesState {}

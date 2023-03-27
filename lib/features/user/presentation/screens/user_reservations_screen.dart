@@ -55,18 +55,19 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
   Widget build(BuildContext context) {
     return BlocConsumer<ReservationCubit, ReservationState>(
       listener: (context, state) {
-        if(state is ConfirmOrderSuccessState){
+        if (state is ConfirmOrderSuccessState) {
           Navigator.pop(context);
-          Navigator.pushNamed(context, ScreenName.paymentWebView,arguments: state.mainResponse.data);
+          Navigator.pushNamed(context, ScreenName.paymentWebView,
+              arguments: state.mainResponse.data);
         }
-        if(state is ConfirmOrderLoadingState){
+        if (state is ConfirmOrderLoadingState) {
           showProgressIndicator(context);
         }
-        if(state is RemoveOrderSuccessState){
+        if (state is RemoveOrderSuccessState) {
           Navigator.pop(context);
           ReservationCubit.get(context).getOrdersForUser();
         }
-        if(state is RemoveOrderLoadingState){
+        if (state is RemoveOrderLoadingState) {
           showProgressIndicator(context);
         }
       },
@@ -75,7 +76,7 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            title: Text('حجزاتي',
+            title: Text('حجوزاتي',
                 style: TextStyle(
                     fontSize: 18.sp,
                     fontFamily: FontPath.almaraiBold,
@@ -84,118 +85,165 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
             backgroundColor: Colors.white,
             elevation: 0,
           ),
-          body: DefaultTabController(
-            length: 3,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 70.h,
-                    child: TabBar(
-                      isScrollable: true,
-                      indicatorColor: Colors.transparent,
-                      overlayColor:
-                          MaterialStateProperty.all(Colors.transparent),
-                      tabs: List.generate(
-                        titles.length,
-                        (index) => ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            backgroundColor: cubit.tabBarCIndex == index
-                                ? AppColorsLightTheme.secondaryColor
-                                    .withOpacity(0.2)
-                                : AppColorsLightTheme.authTextFieldFillColor,
-                            shape: const StadiumBorder(),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 19.w, vertical: 12.h),
-                          ),
-                          onPressed: () {
-                            // cubit.getOrdersForUser();
-                            tabController!.animateTo(index);
-                            cubit.changeTabBarCurrentIndex(index);
-                          },
-                          child: Text(
-                            titles[index],
-                            style: TextStyle(
-                                color: cubit.tabBarCIndex == index
-                                    ? Colors.pink
-                                    : Colors.grey,
-                                fontFamily: FontPath.almaraiBold,
-                                fontSize: 12.sp),
-                          ),
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 70.h,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor: cubit.tabBarCIndex == 0
+                              ? AppColorsLightTheme.secondaryColor
+                                  .withOpacity(0.2)
+                              : AppColorsLightTheme.authTextFieldFillColor,
+                          shape: const StadiumBorder(),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.w, vertical: 12.h),
+                        ),
+                        onPressed: () {
+                          cubit.changeTabBarCurrentIndex(0);
+                        },
+                        child: Text(
+                          'كل الطلبات',
+                          style: TextStyle(
+                              color: cubit.tabBarCIndex == 0
+                                  ? Colors.pink
+                                  : Colors.grey,
+                              fontFamily: FontPath.almaraiBold,
+                              fontSize: 12.sp),
                         ),
                       ),
-                    ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor: cubit.tabBarCIndex == 1
+                              ? AppColorsLightTheme.secondaryColor
+                                  .withOpacity(0.2)
+                              : AppColorsLightTheme.authTextFieldFillColor,
+                          shape: const StadiumBorder(),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.w, vertical: 12.h),
+                        ),
+                        onPressed: () {
+                          // cubit.getOrdersForUser();
+                          cubit.changeTabBarCurrentIndex(1);
+                        },
+                        child: Text(
+                          'المطلوبة',
+                          style: TextStyle(
+                              color: cubit.tabBarCIndex == 1
+                                  ? Colors.pink
+                                  : Colors.grey,
+                              fontFamily: FontPath.almaraiBold,
+                              fontSize: 12.sp),
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor: cubit.tabBarCIndex == 2
+                              ? AppColorsLightTheme.secondaryColor
+                                  .withOpacity(0.2)
+                              : AppColorsLightTheme.authTextFieldFillColor,
+                          shape: const StadiumBorder(),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.w, vertical: 12.h),
+                        ),
+                        onPressed: () {
+                          // cubit.getOrdersForUser();
+                          cubit.changeTabBarCurrentIndex(2);
+                        },
+                        child: Text(
+                          "المنتهية",
+                          style: TextStyle(
+                              color: cubit.tabBarCIndex == 2
+                                  ? Colors.pink
+                                  : Colors.grey,
+                              fontFamily: FontPath.almaraiBold,
+                              fontSize: 12.sp),
+                        ),
+                      ),
+                    ],
                   ),
-                  const Divider(),
-                  Expanded(
-                    child: state is! GetReservationsLoadingState?TabBarView(
-                      controller: tabController,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: [
-                        ListView.builder(
-                          itemCount: cubit.reservationsList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return AllOrdersWidgetItem(
-                              reservationModel: cubit.reservationsList[index],
-                              goToPay: (){
-                                cubit.confirmOrder(id: cubit.reservationsList[index].id!);
+                ),
+                const Divider(),
+                Expanded(
+                  child: state is! GetReservationsLoadingState
+                      ? cubit.tabBarCIndex == 0
+                          ? ListView.builder(
+                              itemCount: cubit.reservationsList.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return AllOrdersWidgetItem(
+                                  reservationModel:
+                                      cubit.reservationsList[index],
+                                  goToPay: () {
+                                    cubit.confirmOrder(
+                                        id: cubit.reservationsList[index].id!);
+                                  },
+                                  removeOrder: () {
+                                    // print(cubit.reservationsList[index].id!);
+                                    // print(token);
+                                    cubit.removeOrder(
+                                        id: cubit.reservationsList[index].id!);
+                                    cubit.reservationsList.removeAt(index);
+                                  },
+                                );
                               },
-                              removeOrder: (){
-                                // print(cubit.reservationsList[index].id!);
-                                // print(token);
-                                cubit.removeOrder(id: cubit.reservationsList[index].id!);
-                                cubit.reservationsList.removeAt(index);
-                              },
-                            );
-                          },
+                            )
+                          : cubit.tabBarCIndex == 1
+                              ? ListView.builder(
+                                  itemCount: cubit.reservationsList
+                                      .where((element) =>
+                                          element.orderStatus != 5 &&
+                                          element.orderStatus != 4 &&
+                                          element.orderStatus != 0)
+                                      .toList()
+                                      .length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return OrderedOrdersWidgetBuilder(
+                                      reservationModel: cubit.reservationsList
+                                          .where((element) =>
+                                              element.orderStatus != 5 &&
+                                              element.orderStatus != 4 &&
+                                              element.orderStatus != 0)
+                                          .toList()[index],
+                                    );
+                                  },
+                                )
+                              : ListView.builder(
+                                  itemCount: cubit.reservationsList
+                                      .where((element) =>
+                                          element.orderStatus == 5 ||
+                                          element.orderStatus == 4)
+                                      .toList()
+                                      .length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return EndOrdersWidgetBuilder(
+                                      reservationModel: cubit.reservationsList
+                                          .where((element) =>
+                                              element.orderStatus == 5 ||
+                                              element.orderStatus == 4)
+                                          .toList()[index],
+                                    );
+                                  },
+                                )
+                      : const Center(
+                          child: CircularProgressIndicator.adaptive(),
                         ),
-                        ListView.builder(
-                          itemCount: cubit.reservationsList
-                              .where((element) =>
-                                  element.orderStatus != 5 &&
-                                  element.orderStatus != 4&&
-                                      element.orderStatus != 0)
-                              .toList()
-                              .length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return OrderedOrdersWidgetBuilder(
-                              reservationModel: cubit.reservationsList
-                                  .where((element) =>
-                                      element.orderStatus != 5 &&
-                                      element.orderStatus != 4&&
-                                      element.orderStatus != 0)
-                                  .toList()[index],
-                            );
-                          },
-                        ),
-                        ListView.builder(
-                          itemCount: cubit.reservationsList
-                              .where((element) =>
-                                  element.orderStatus == 5 ||
-                                  element.orderStatus == 4)
-                              .toList()
-                              .length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return EndOrdersWidgetBuilder(
-                              reservationModel: cubit.reservationsList
-                                  .where((element) =>
-                                      element.orderStatus == 5 ||
-                                      element.orderStatus == 4)
-                                  .toList()[index],
-                            );
-                          },
-                        ),
-                      ],
-                    ):const Center(child: CircularProgressIndicator.adaptive(),),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );
       },
     );
   }
+
 }

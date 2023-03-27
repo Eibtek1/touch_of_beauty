@@ -14,7 +14,8 @@ class EndPoints{
   static const getAllPicturesForProvider = '/PicturesLibrary/GetAllForProvider';
   static const addPictureToLibrary = '/PicturesLibrary/';
   static const forgetPassword = '/Users/ForgetPassword';
-  static const changeForgetPassword = '/Users/ChangePasswordConfirm';
+  static const changeConfirmPassword = '/Users/ChangePasswordConfirm';
+  static const changeForgetPassword = '/Users/changeForgotPassword';
   static const citiesList = '/Cities';
   static const slidePhotos = '/SlidePhotos';
   static const confirmRegister = '/Users/confirmRegister';

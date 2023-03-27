@@ -19,6 +19,7 @@ class ImagePath {
   static const mada = 'assets/images/mada.png'; //dummy data
   static const visa = 'assets/images/visa.png'; //dummy data
   static const deleteIcon = 'assets/images/deleteIcon.png'; //dummy data
+  static const saudiMap = 'assets/images/saudiMap.png'; //dummy data
 
 
   ImagePath._();

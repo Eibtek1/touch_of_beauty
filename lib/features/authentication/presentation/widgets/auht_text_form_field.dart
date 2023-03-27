@@ -13,13 +13,15 @@ class AuthTextFormField extends StatelessWidget {
   final TextDirection? textDirection;
   final int maxLength;
   final bool isPassword;
-  const AuthTextFormField({Key? key, required this.hintText, this.validate, this.suffix, required this.controller, this.keyboardType = TextInputType.text, this.maxLength = 100, this.isPassword = false, this.textDirection,}) : super(key: key);
+  final bool enable;
+  const AuthTextFormField({Key? key, required this.hintText, this.validate, this.suffix, required this.controller, this.keyboardType = TextInputType.text, this.maxLength = 100, this.isPassword = false, this.textDirection, this.enable = true,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       textDirection: textDirection,
       maxLength: maxLength,
+      enabled: enable,
       keyboardType: keyboardType,
       controller: controller,
       obscureText: isPassword,

@@ -79,7 +79,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     return Container(
       height: 50.h,
       width: widget.width,
-      padding: EdgeInsets.symmetric(horizontal: 5.w),
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
       decoration: BoxDecoration(
         color: AppColorsLightTheme.authTextFieldFillColor,
         borderRadius: BorderRadius.circular(25.r),
@@ -142,7 +142,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                   color: AppColorsLightTheme.secondaryColor.withOpacity(0.2),
                 ),
                 padding: EdgeInsets.only(
-                    left: 5.w, right: 5.w, bottom: 5.w, top: 5.w),
+                    left: 6.w, right: 6.w, bottom: 6.w, top: 6.w),
                 child: SvgPicture.asset(
                   SvgPath.searchIcon,
                   width: 30.w,

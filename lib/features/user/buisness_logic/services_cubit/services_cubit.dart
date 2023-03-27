@@ -18,6 +18,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
   late MainResponse mainResponse;
 
   PaginateModel? paginateModel;
+  PaginateModel? filteredPaginateModel;
 
   PaginateModel? searchPaginateModel;
 
@@ -26,6 +27,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
   DateTime? dateTime;
 
   int servicesPageNumber = 1;
+  int filteredServicesPageNumber = 1;
 
   int searchServicesPageNumber = 1;
 
@@ -36,6 +38,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
   ServicesDetailsModel? servicesModel;
 
   List<ServicesModel> servicesList = [];
+  List<ServicesModel> filteredServicesList = [];
 
   List<ServicesModel> searchList = [];
   List<FavoriteServicesModel> favoriteServicesList = [];
@@ -77,7 +80,6 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
   void onCityChanged(CitiesModel value) {
     citiesModel = value;
-    print(citiesModel);
     emit(GetChangedCity());
   }
 
@@ -155,6 +157,70 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       emit(GetServicesByServiceProviderIdSuccess());
     } catch (error) {
       emit(GetServicesByServiceProviderIdError(error: error.toString()));
+    }
+  }
+
+  void getFilteredServices({
+    int? cityId,
+    int? mainSectionId,
+    int? serviceTypeDto,
+    int? maxPrice,
+    int? minPrice,
+    String? servicesProviderName,
+    String? servicesProviderId,
+    String? searchName,
+    bool? inHome,
+    bool? inCenter,
+    bool? orderFromNew,
+  }) async {
+    try {
+      if (filteredServicesPageNumber == 1) {
+        filteredPaginateModel = null;
+        filteredServicesList = [];
+        emit(GetFilteredServicesByServiceProviderIdLoading());
+      }
+      final response = await ServicesProvidersRepository.getServices(
+          pageNumber: filteredServicesPageNumber,
+          pageSize: 40,
+          cityId: cityId,
+          mainSectionId: mainSectionId,
+          serviceTypeDto: serviceTypeDto,
+          maxPrice: maxPrice,
+          minPrice: minPrice,
+          servicesProviderName: servicesProviderName,
+          servicesProviderId: servicesProviderId,
+          searchName: searchName,
+          inHome: inHome,
+          inCenter: inCenter,
+          orderFromNew: orderFromNew);
+      mainResponse = MainResponse.fromJson(response.data);
+      if (mainResponse.errorCode == 0) {
+        filteredPaginateModel = PaginateModel.fromJson(mainResponse.data);
+        if (filteredPaginateModel!.items != null) {
+          if (filteredServicesPageNumber == 1) {
+            for (var element in filteredPaginateModel!.items) {
+              filteredServicesList.add(ServicesModel.fromJson(element));
+              if (!favorites.containsKey(element['id'])) {
+                favorites.addAll({element['id']: element['isFavourite']});
+              }
+            }
+            filteredServicesPageNumber++;
+          } else if (filteredServicesPageNumber <= filteredPaginateModel!.totalPages!) {
+            for (var element in filteredPaginateModel!.items) {
+              filteredServicesList.add(ServicesModel.fromJson(element));
+              if (!favorites.containsKey(element['id'])) {
+                favorites.addAll({element['id']: element['isFavourite']});
+              }
+            }
+            filteredServicesPageNumber++;
+          }
+        }
+      } else {
+        servicesSearchMessage = mainResponse.errorMessage;
+      }
+      emit(GetFilteredServicesByServiceProviderIdSuccess());
+    } catch (error) {
+      emit(GetFilteredServicesByServiceProviderIdError(error: error.toString()));
     }
   }
 
@@ -397,7 +463,6 @@ class UserServicesCubit extends Cubit<UserServicesState> {
         emit(AddAddressSuccess());
       }
     } catch (error) {
-      print(error.toString());
       emit(AddAddressError(error: error.toString()));
     }
   }

@@ -113,13 +113,12 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     ),
                     CustomUserTextField(
                       hintText: 'رقم المبني',
+                      keyboardType: TextInputType.phone,
                       height: 44.h,
                       controller: buildingNumberController,
                       validator: (value){
                       if(value!.isEmpty){
                         return 'لا يمكن ان يكون وصف رقم المبني فارغ';
-                      }else if(value.length<5){
-                        return 'وصف رقم المبني قصير';
                       }
                       return null;
                     },
@@ -131,11 +130,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       hintText: 'رقم الشقة',
                       height: 44.h,
                       controller: flatNumberController,
+                      keyboardType: TextInputType.phone,
                       validator: (value){
                         if(value!.isEmpty){
                           return 'لا يمكن ان يكون وصف رقم الشقة فارغ';
-                        }else if(value.length<5){
-                          return 'وصف رقم الشقة قصير';
                         }
                         return null;
                       },

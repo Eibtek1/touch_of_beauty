@@ -14,9 +14,21 @@ import '../widgets/home_screen_widgets/favorites_services_providers_component.da
 import '../widgets/home_screen_widgets/featured_services_providers_component.dart';
 import '../widgets/home_screen_widgets/main_featured_component.dart';
 
-class UserHomeScreen extends StatelessWidget {
+class UserHomeScreen extends StatefulWidget {
   const UserHomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<UserHomeScreen> createState() => _UserHomeScreenState();
+}
+
+class _UserHomeScreenState extends State<UserHomeScreen> {
+  @override
+  void initState() {
+    if(ServicesProvidersCubit.get(context).sliderPhotosList.isEmpty){
+      ServicesProvidersCubit.get(context).getSliderPhotos();
+    }
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

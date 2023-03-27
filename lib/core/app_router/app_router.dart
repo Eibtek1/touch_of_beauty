@@ -10,6 +10,7 @@ import 'package:touch_of_beauty/features/intro_screens/screens/splash_screen.dar
 import 'package:touch_of_beauty/features/user/presentation/screens/favorites_services_screen.dart';
 import 'package:touch_of_beauty/features/user/presentation/screens/home_screen_screens/search_screen.dart';
 import 'package:touch_of_beauty/features/user/presentation/screens/user_main_layout.dart';
+import '../../features/authentication/presentation/screens/change_forget_password.dart';
 import '../../features/authentication/presentation/screens/vendor_register.dart';
 import '../../features/chat/presentation/screens/chat_screen.dart';
 import '../../features/freelancer/presentation/screens/freelance_main_layout.dart';
@@ -22,6 +23,7 @@ import '../../features/freelancer/presentation/screens/freelancer_notification_s
 import '../../features/user/presentation/screens/edit_profile_screen.dart';
 import '../../features/user/presentation/screens/help_privacy_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/all_centers_screen.dart';
+import '../../features/user/presentation/screens/home_screen_screens/filter_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/main_featuers_services.dart';
 import '../../features/user/presentation/screens/home_screen_screens/complains_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/gallery_screen.dart';
@@ -81,6 +83,8 @@ class AppRouter {
           return _animateRouteBuilder( SearchScreen(servicesProviderId: arg,));
         case ScreenName.editCenterScreen:
           return _animateRouteBuilder( const EditCenterDetailsScreen());
+        case ScreenName.filteredServicesScreen:
+          return _animateRouteBuilder( const FilteredServicesScreen());
         case ScreenName.freelancerDetailsScreen:
           return _animateRouteBuilder( const FreelancerDetailsScreen());
         case ScreenName.helpPrivacy:
@@ -115,6 +119,8 @@ class AppRouter {
           return _animateRouteBuilder(const UserRegisterScreen());
         case ScreenName.vendorRegister:
           return _animateRouteBuilder(const VendorRegisterScreen());
+        case ScreenName.changeForgetPasswordScreen:
+          return _animateRouteBuilder(const ChangeForgetPasswordScreen());
         case ScreenName.otpScreen:
           final args = settings.arguments;
           OtpArgs arguments = args as OtpArgs;

@@ -31,7 +31,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
   final TextEditingController password = TextEditingController();
   final TextEditingController confirmPassword = TextEditingController();
   var formKey = GlobalKey<FormState>();
-  bool chosen = true;
+  bool chosen = false;
 
 
   @override
@@ -278,23 +278,28 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                       SizedBox(
                         width: 10.w,
                       ),
-                      RichText(
-                        text: TextSpan(
-                          text: 'الموافقة علي شروط الخصوصية  ',
-                          style: TextStyle(
-                              color: AppColorsLightTheme.secondaryColor,
-                              fontFamily: FontPath.almaraiRegular,
-                              fontSize: 10.sp),
-                          children: [
-                            TextSpan(
-                              text: 'شروط الخصوصية',
-                              style: TextStyle(
-                                  color: AppColorsLightTheme.secondaryColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: FontPath.almaraiBold,
-                                  fontSize: 12.sp),
-                            ),
-                          ],
+                      InkWell(
+                        onTap: (){
+                          Navigator.pushNamed(context, ScreenName.privacyScreen);
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            text: 'الموافقة علي شروط الخصوصية  ',
+                            style: TextStyle(
+                                color: AppColorsLightTheme.secondaryColor,
+                                fontFamily: FontPath.almaraiRegular,
+                                fontSize: 10.sp),
+                            children: [
+                              TextSpan(
+                                text: 'شروط الخصوصية',
+                                style: TextStyle(
+                                    color: AppColorsLightTheme.secondaryColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: FontPath.almaraiBold,
+                                    fontSize: 12.sp),
+                              ),
+                            ],
+                          ),
                         ),
                       )
                     ],
@@ -304,7 +309,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                   ),
                   AuthButton(
                       buttonTitle: 'تسجيل',
-                      isTapped: () {
+                      isTapped: chosen?() {
                         if (cubit.profileImage == null) {
                           Fluttertoast.showToast(
                               msg: 'برجال اختيار صورة شخصية',
@@ -314,7 +319,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                         }else if(formKey.currentState!.validate()){
                           cubit.userRegister(userName: name.text, password: password.text, email: email.text, phone: phone.text);
                         }
-                      },
+                      }:null,
                       width: double.infinity),
                   SizedBox(
                     height: 25.h,
