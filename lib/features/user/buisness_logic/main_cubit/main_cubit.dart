@@ -4,6 +4,7 @@ import 'package:touch_of_beauty/features/user/buisness_logic/main_cubit/main_sta
 import '../../../authentication/data/models/get_user_data_model.dart';
 import '../../../authentication/data/models/main_response.dart';
 import '../../../authentication/data/repository/auth_repository.dart';
+import '../../data/models/notification_model.dart';
 import '../../presentation/screens/user_home_screen.dart';
 import '../../presentation/screens/user_notification_screen.dart';
 import '../../presentation/screens/user_profile_screen.dart';
@@ -18,6 +19,7 @@ class MainCubit extends Cubit<MainState> {
   GetUserModel? getUserModel;
   late MainResponse mainResponse;
   String? message;
+  List<NotificationModel> notificationList =[];
   bool loadingUserDataBoolean = false;
   List<Widget> screens = [
     const UserHomeScreen(),
@@ -28,12 +30,14 @@ class MainCubit extends Cubit<MainState> {
 
   void onTap(int? index){
     cIndex = index!;
+    // print(token);
     emit(ChangeCurrentIndex());
   }
-  void initFunction(){
+  void initFunction()async{
     if(getUserModel == null){
       getUserDataFunction();
     }
+    await AuthRepository.sendNotification();
   }
   void getUserDataFunction() async{
     emit(GetUserDataLoading());
@@ -45,6 +49,21 @@ class MainCubit extends Cubit<MainState> {
       emit(GetUserDataSuccess());
     }catch(error){
       emit(GetUserDataError(error: error.toString()));
+    }
+  }
+  void getAllNotifications() async{
+    emit(GetNotificationLoading());
+    try{
+      final response = await AuthRepository.getAllNotifications();
+      mainResponse = MainResponse.fromJson(response.data);
+      message = mainResponse.errorMessage.toString();
+      notificationList = [];
+      for(var element in mainResponse.data){
+        notificationList.add(NotificationModel.fromJson(element));
+      }
+      emit(GetNotificationSuccess());
+    }catch(error){
+      emit(GetNotificationError(error: error.toString()));
     }
   }
 }

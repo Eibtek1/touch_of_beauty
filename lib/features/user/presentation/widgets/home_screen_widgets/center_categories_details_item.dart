@@ -89,86 +89,95 @@ class CenterCategoryItem extends StatelessWidget {
                   ))
             ],
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 20.h,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      servicesModel.title!,
-                      style: TextStyle(
-                          fontSize: 12.sp,
-                          fontFamily: FontPath.almaraiBold,
-                          color: const Color(0xff1E2432)),
-                    ),
-                    SizedBox(
-                      width: 54.w,
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.star,
-                          size: 15.r,
-                          color: AppColorsLightTheme.secondaryColor,
-                        ),
-                        Text(
-                          '(4.5)',
-                          style: TextStyle(
-                              fontSize: 10.sp,
-                              fontFamily: FontPath.almaraiBold,
-                              color: Colors.grey),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
-                Text(
-                  servicesModel.description!,
-                  style: TextStyle(
-                    height: 1.2.h,
-                    fontSize: 10.sp,
-                    fontFamily: FontPath.almaraiBold,
-                    color: const Color(0xff666666),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 20.h,
                   ),
-                ),
-                // HtmlWidget(servicesModel.description!),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      '${servicesModel.price!}  رس',
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          servicesModel.title!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 12.sp,
+                              fontFamily: FontPath.almaraiBold,
+                              color: const Color(0xff1E2432)),
+                        ),
+                      ),
+
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.star,
+                            size: 15.r,
+                            color: AppColorsLightTheme.secondaryColor,
+                          ),
+                          Text(
+                            '${servicesModel.numberOfStar}',
+                            style: TextStyle(
+                                fontSize: 10.sp,
+                                fontFamily: FontPath.almaraiBold,
+                                color: Colors.grey),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  Expanded(
+                    child: Text(
+                      servicesModel.description!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        decoration: TextDecoration.lineThrough,
-                        decorationThickness: 2.h,
-                        fontSize: 8.sp,
+                        height: 1.2.h,
+                        fontSize: 10.sp,
                         fontFamily: FontPath.almaraiBold,
                         color: const Color(0xff666666),
                       ),
                     ),
-                    SizedBox(
-                      width: 76.w,
-                    ),
-                    Text(
-                      '${servicesModel.finalPrice!}  رس',
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        fontFamily: FontPath.almaraiRegular,
-                        color: const Color(0xffB83561),
+                  ),
+                  // HtmlWidget(servicesModel.description!),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        '${servicesModel.price!}  رس',
+                        style: TextStyle(
+                          decoration: TextDecoration.lineThrough,
+                          decorationThickness: 2.h,
+                          fontSize: 8.sp,
+                          fontFamily: FontPath.almaraiBold,
+                          color: const Color(0xff666666),
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              ],
+                      SizedBox(
+                        width: 76.w,
+                      ),
+                      Text(
+                        '${servicesModel.finalPrice!}  رس',
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontFamily: FontPath.almaraiRegular,
+                          color: const Color(0xffB83561),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10.h,),
+                ],
+              ),
             ),
           )
         ],
