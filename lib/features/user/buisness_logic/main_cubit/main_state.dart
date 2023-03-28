@@ -12,4 +12,13 @@ class GetUserDataError extends  MainState{
   GetUserDataError({required this.error});
 }
 
+class GetNotificationLoading extends  MainState{}
+class GetNotificationSuccess extends  MainState{}
+class GetNotificationError extends  MainState{
+  final String error;
+
+  GetNotificationError({required this.error});
+}
+
+
 

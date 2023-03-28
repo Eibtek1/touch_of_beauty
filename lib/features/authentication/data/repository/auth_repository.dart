@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/network/api_end_points.dart';
 import '../../../../core/network/dio_helper.dart';
@@ -196,12 +197,14 @@ class AuthRepository{
     required String phone,
     required String password,
   }) async {
+    FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+    String? deviceToken = await firebaseMessaging.getToken();
     final response = await DioHelper.postData(
       url: EndPoints.login,
       data: {
         "phoneNumber": phone,
         "password": password,
-        "deviceToken": "string",
+        "deviceToken": deviceToken,
         "isPersist": true
       },
     );
@@ -294,6 +297,26 @@ class AuthRepository{
   static Future<Response> getUserData() async {
     final response = await DioHelper.getData(
       url: EndPoints.getUserData, bearerToken: token,
+    );
+    return response;
+  }
+
+
+  static Future<Response> getAllNotifications() async {
+    final response = await DioHelper.getData(
+      url: EndPoints.getAllNotifications, bearerToken: token,
+    );
+    return response;
+  }
+
+
+  static Future<Response> sendNotification() async {
+    FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+    String? deviceToken = await firebaseMessaging.getToken();
+    final response = await DioHelper.postData(
+      url: EndPoints.sendNotification, token: token,data: {
+        'token': deviceToken
+    }
     );
     return response;
   }

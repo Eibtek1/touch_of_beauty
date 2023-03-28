@@ -53,6 +53,8 @@ class EndPoints{
   static const deleteServiceFromFavorite = '/Favorites/DeleteServiceFromFavorite/';
   static const getServicesForServicesProvider = '/Services/ServicesForProvider';
   static const addService = '/Services/AddService';
+  static const getAllNotifications = '/Notification/GetAllNotifications';
+  static const sendNotification = '/Notification/SendNotification';
   static const getServicesByServiceProviderId = '/Services/ServicesByProvider/';
   static String getServicesInHomeOrInCenter({
   required bool inHome,
