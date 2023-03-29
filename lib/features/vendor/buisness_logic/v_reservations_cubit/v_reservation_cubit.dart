@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:touch_of_beauty/features/authentication/data/models/main_response.dart';
 
+import '../../../authentication/data/repository/auth_repository.dart';
+import '../../../user/data/models/notification_model.dart';
 import '../../data/models/reserve_model.dart';
 import '../../data/repository/services_repo.dart';
 
@@ -20,6 +22,7 @@ class VReservationCubit extends Cubit<VReservationState> {
   List<ReserveModel> getWithDriverOrdersList =[];
   List<ReserveModel> getFinishedOrdersList =[];
   List<ReserveModel> getCanceledOrdersList =[];
+  List<NotificationModel> notificationList =[];
 
   void getPreparedOrders()async{
     try{
@@ -176,5 +179,22 @@ class VReservationCubit extends Cubit<VReservationState> {
       emit(ChangeOrderStatusError(error: error.toString()));
     }
   }
+
+  void getAllNotifications() async{
+    emit(GetNotificationLoading());
+    try{
+      final response = await AuthRepository.getAllNotifications();
+      mainResponse = MainResponse.fromJson(response.data);
+      message = mainResponse.errorMessage.toString();
+      notificationList = [];
+      for(var element in mainResponse.data){
+        notificationList.add(NotificationModel.fromJson(element));
+      }
+      emit(GetNotificationSuccess());
+    }catch(error){
+      emit(GetNotificationError(error: error.toString()));
+    }
+  }
+
 
 }
