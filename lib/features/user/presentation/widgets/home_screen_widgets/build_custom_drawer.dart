@@ -216,7 +216,7 @@ class AppDrawer extends StatelessWidget {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, ScreenName.helpPrivacy);
               },
-              title: 'المساعدة والخصوصية',
+              title: 'مساعدة',
             ),
             SizedBox(
               height: 15.h,
