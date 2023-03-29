@@ -1,4 +1,5 @@
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,6 +26,17 @@ class _UserMainLayoutState extends State<FreelancerMainLayout> {
     const FreelancerCentersScreen(),
     const FreelancerMoreScreen(),
   ];
+
+  @override
+  void initState() {
+    FirebaseMessaging.onMessageOpenedApp.listen((event){
+      print(event);
+    });
+    FirebaseMessaging.onMessage.listen((event) {
+      print(event);
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(

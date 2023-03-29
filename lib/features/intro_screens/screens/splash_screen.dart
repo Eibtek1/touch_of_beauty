@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
@@ -19,10 +20,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    initFirebaseMessaging();
     _loading();
     super.initState();
   }
 
+  void initFirebaseMessaging()async{
+    FirebaseMessaging.instance.getInitialMessage().then((event) {
+      print(event);
+    });
+  }
   _loading() async{
     bool? onboarding = CacheHelper.getData(key: CacheKeys.onboarding);
     token = CacheHelper.getData(key: CacheKeys.token);

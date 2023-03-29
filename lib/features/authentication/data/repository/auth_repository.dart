@@ -310,16 +310,16 @@ class AuthRepository{
   }
 
 
-  static Future<Response> sendNotification() async {
-    FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-    String? deviceToken = await firebaseMessaging.getToken();
-    final response = await DioHelper.postData(
-      url: EndPoints.sendNotification, token: token,data: {
-        'token': deviceToken
-    }
-    );
-    return response;
-  }
+  // static Future<Response> sendNotification() async {
+  //   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  //   String? deviceToken = await firebaseMessaging.getToken();
+  //   final response = await DioHelper.postData(
+  //     url: EndPoints.sendNotification, token: token,data: {
+  //       'token': deviceToken
+  //   }
+  //   );
+  //   return response;
+  // }
 
 
   static Future<Response> getAllPicturesForProvider() async {

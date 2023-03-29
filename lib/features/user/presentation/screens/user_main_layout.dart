@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,9 +9,24 @@ import '../../buisness_logic/main_cubit/main_cubit.dart';
 import '../../buisness_logic/main_cubit/main_state.dart';
 import '../widgets/home_screen_widgets/build_custom_drawer.dart';
 
-class UserMainLayout extends StatelessWidget {
+class UserMainLayout extends StatefulWidget {
   const UserMainLayout({Key? key}) : super(key: key);
 
+  @override
+  State<UserMainLayout> createState() => _UserMainLayoutState();
+}
+
+class _UserMainLayoutState extends State<UserMainLayout> {
+  @override
+  void initState() {
+    FirebaseMessaging.onMessageOpenedApp.listen((event){
+      print(event);
+    });
+    FirebaseMessaging.onMessage.listen((event) {
+      print(event);
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(

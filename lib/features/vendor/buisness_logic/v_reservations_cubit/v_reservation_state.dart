@@ -60,3 +60,11 @@ class ChangeOrderStatusError extends VReservationState {
   final String error;
   ChangeOrderStatusError({required this.error});
 }
+
+class GetNotificationLoading extends  VReservationState{}
+class GetNotificationSuccess extends  VReservationState{}
+class GetNotificationError extends  VReservationState{
+  final String error;
+
+  GetNotificationError({required this.error});
+}

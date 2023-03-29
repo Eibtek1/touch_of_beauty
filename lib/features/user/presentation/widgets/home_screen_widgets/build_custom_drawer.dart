@@ -203,7 +203,7 @@ class AppDrawer extends StatelessWidget {
               title: 'اللغات',
             ),
             SizedBox(
-              height: 15.h,
+              height: 14.5.h,
             ),
             const Divider(
               color: Colors.white,
@@ -216,7 +216,7 @@ class AppDrawer extends StatelessWidget {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, ScreenName.helpPrivacy);
               },
-              title: 'المساعدة والخصوصية',
+              title: 'مساعدة',
             ),
             SizedBox(
               height: 15.h,

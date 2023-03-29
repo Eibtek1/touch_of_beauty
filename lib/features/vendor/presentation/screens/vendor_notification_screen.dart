@@ -1,37 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
+import 'package:touch_of_beauty/features/vendor/buisness_logic/v_reservations_cubit/v_reservation_state.dart';
 
 import '../../../../core/assets_path/font_path.dart';
+import '../../../user/data/models/notification_model.dart';
+import '../../buisness_logic/v_reservations_cubit/v_reservation_cubit.dart';
 
-class VendorNotificationScreen extends StatelessWidget {
+class VendorNotificationScreen extends StatefulWidget {
   const VendorNotificationScreen({Key? key}) : super(key: key);
 
   @override
+  State<VendorNotificationScreen> createState() =>
+      _VendorNotificationScreenState();
+}
+
+class _VendorNotificationScreenState extends State<VendorNotificationScreen> {
+  @override
+  void initState() {
+    VReservationCubit.get(context).getAllNotifications();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        toolbarHeight: 70.h,
-        centerTitle: true,
-        title: Text(
-          'اشعارات الخدمة',
-          style: TextStyle(
-              fontSize: 20.sp,
-              fontFamily: FontPath.almaraiBold,
-              color: const Color(0xff1E2432)),
-        ),
-      ),
-      body: ListView.builder(itemBuilder: (BuildContext context, int index) { return notificationBuilder(); },itemCount: 10,),
+    return BlocConsumer<VReservationCubit, VReservationState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var cubit = VReservationCubit.get(context);
+        return Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            toolbarHeight: 70.h,
+            centerTitle: true,
+            title: Text(
+              'اشعارات الخدمة',
+              style: TextStyle(
+                  fontSize: 20.sp,
+                  fontFamily: FontPath.almaraiBold,
+                  color: const Color(0xff1E2432)),
+            ),
+          ),
+          body: state is! GetNotificationLoading
+              ? ListView.builder(
+                  itemBuilder: (BuildContext context, int index) {
+                    return notificationBuilder(cubit.notificationList[index]);
+                  },
+                  itemCount: cubit.notificationList.length,
+                )
+              : const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                ),
+        );
+      },
     );
   }
 
-  Widget notificationBuilder() {
+  Widget notificationBuilder(NotificationModel notificationModel) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 16.h),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 11.h),
         height: 110.h,
@@ -60,7 +92,9 @@ class VendorNotificationScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(width: 10.w,),
+            SizedBox(
+              width: 10.w,
+            ),
             Expanded(
               child: Column(
                 children: [
@@ -68,28 +102,30 @@ class VendorNotificationScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'طلب خدمة جديدة',
+                        '${notificationModel.title}',
                         style: TextStyle(
                             fontSize: 14.sp,
                             fontFamily: FontPath.almaraiBold,
                             color: const Color(0xffB83561)),
                       ),
                       Text(
-                        '4:35',
+                        Jiffy(notificationModel.createdOn.toString()).Hm,
                         style: TextStyle(
                             fontSize: 12.sp,
-                            fontFamily: FontPath.poppinsRegular,
-                            color: const Color(0xff4A4A4A)),
+                            fontFamily: FontPath.almaraiRegular,
+                            color: const Color(0xff1E2432)),
                       ),
                     ],
                   ),
-                  SizedBox(height: 10.h,),
+                  SizedBox(
+                    height: 10.h,
+                  ),
                   Expanded(
                     child: Text(
-                      'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،لقد تم توليد هذا النص'*2,
+                      '${notificationModel.body}',
                       maxLines: 2,
                       style: TextStyle(
-                        height: 1.3.h,
+                          height: 1.3.h,
                           overflow: TextOverflow.ellipsis,
                           fontSize: 12.sp,
                           fontFamily: FontPath.almaraiRegular,
