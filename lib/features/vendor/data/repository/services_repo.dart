@@ -56,7 +56,6 @@ class VendorServicesRepository {
               ? "data:image/${image.path.split('.').last};base64,${imageToBase64(image)}"
               : null,
         }));
-    print("data:image/${image!.path.split('.').last};base64,${imageToBase64(image)}");
     return response;
   }
 

@@ -179,10 +179,9 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
     required int empNumber,
     required String duration,
   }) async {
-    print(servicesImage!.path);
     emit(AddServicesLoading());
     try {
-      final response = await VendorServicesRepository.addServices(
+      await VendorServicesRepository.addServices(
         titleAr: titleAr,
         titleEn: titleEn,
         description: description,
@@ -196,10 +195,8 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
         inCenter: false,
         isAvailable: isAvailable,
       );
-      print(response);
       emit(AddServicesSuccess());
     } catch (error) {
-      print(error.toString());
       emit(AddServicesError(error: error.toString()));
     }
   }

@@ -357,7 +357,6 @@ class AuthCubit extends Cubit<AuthState> {
       profileImage = null;
       emit(UpdateProfileSuccess());
     } catch (error) {
-      print(error.toString());
       emit(UpdateProfileError(error.toString()));
     }
   }
@@ -417,7 +416,6 @@ class AuthCubit extends Cubit<AuthState> {
       profileImage = null;
       emit(UpdateProfileSuccess());
     } catch (error) {
-      print(error.toString());
       emit(UpdateProfileError(error.toString()));
     }
   }

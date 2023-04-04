@@ -62,7 +62,6 @@ class FreelancerServicesCubit extends Cubit<FreelancerServicesState> {
       await ServicesProvidersRepository.getServicesDetailsById(id: id);
       mainResponse = MainResponse.fromJson(response.data);
       servicesModel = ServicesDetailsModel.fromJson(mainResponse.data);
-      print(servicesModel!.imgUrl!);
       emit(GetServicesDetailsByItsIdSuccess());
     } catch (error) {
       emit(GetServicesDetailsByItsIdError(error: error.toString()));
