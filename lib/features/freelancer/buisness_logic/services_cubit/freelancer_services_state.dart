@@ -13,3 +13,13 @@ class GetServicesByServiceProviderIdError extends FreelancerServicesState {
   GetServicesByServiceProviderIdError({required this.error});
 
 }
+
+
+
+
+class GetServicesDetailsByItsIdLoadingState extends FreelancerServicesState {}
+class GetServicesDetailsByItsIdSuccess extends FreelancerServicesState {}
+class GetServicesDetailsByItsIdError extends FreelancerServicesState {
+  final String error;
+  GetServicesDetailsByItsIdError({required this.error});
+}

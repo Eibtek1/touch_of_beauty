@@ -1,7 +1,5 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/main_cubit/main_state.dart';
 import '../../../authentication/data/models/get_user_data_model.dart';
 import '../../../authentication/data/models/main_response.dart';
@@ -39,8 +37,6 @@ class MainCubit extends Cubit<MainState> {
     if(getUserModel == null){
       getUserDataFunction();
     }
-    print(token);
-    print(await FirebaseMessaging.instance.getToken());
 
   }
   void getUserDataFunction() async{
@@ -53,7 +49,6 @@ class MainCubit extends Cubit<MainState> {
       // await AuthRepository.sendNotification();
       emit(GetUserDataSuccess());
     }catch(error){
-      print(error.toString());
       emit(GetUserDataError(error: error.toString()));
     }
   }

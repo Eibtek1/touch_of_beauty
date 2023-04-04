@@ -20,10 +20,8 @@ class _UserMainLayoutState extends State<UserMainLayout> {
   @override
   void initState() {
     FirebaseMessaging.onMessageOpenedApp.listen((event){
-      print(event);
     });
     FirebaseMessaging.onMessage.listen((event) {
-      print(event);
     });
     super.initState();
   }

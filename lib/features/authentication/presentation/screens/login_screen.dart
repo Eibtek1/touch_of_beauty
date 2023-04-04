@@ -43,47 +43,72 @@ class _LoginScreenState extends State<LoginScreen> {
         body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             var cubit = AuthCubit.get(context);
-            if(state is LoginLoading){
+            if (state is LoginLoading) {
               showProgressIndicator(context);
             }
-            if(state is LoginSuccess){
+            if (state is LoginSuccess) {
               Navigator.pop(context);
               Fluttertoast.showToast(msg: cubit.mainResponse.errorMessage);
-              if(cubit.mainResponse.errorCode ==0 && state.loginModel.userType==1){
-                CacheHelper.saveData(key: CacheKeys.userId, value: state.loginModel.userId).whenComplete(() {
-                  CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
-                    CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
+              if (cubit.mainResponse.errorCode == 0 &&
+                  state.loginModel.userType == 1) {
+                CacheHelper.saveData(
+                        key: CacheKeys.userId, value: state.loginModel.userId)
+                    .whenComplete(() {
+                  CacheHelper.saveData(
+                          key: CacheKeys.token, value: state.loginModel.token)
+                      .whenComplete(() {
+                    CacheHelper.saveData(
+                            key: CacheKeys.userType,
+                            value: state.loginModel.userType.toString())
+                        .whenComplete(() {
                       token = CacheHelper.getData(key: CacheKeys.token);
                       userId = CacheHelper.getData(key: CacheKeys.userId);
-                      Navigator.pushNamedAndRemoveUntil(context, ScreenName.userMainLayout, (route) => false);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, ScreenName.userMainLayout, (route) => false);
                     });
                   });
                 });
-              }
-              else if(cubit.mainResponse.errorCode ==0 && state.loginModel.userType==2){
-                CacheHelper.saveData(key: CacheKeys.userId, value: state.loginModel.userId).whenComplete(() {
-                  CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
-                    CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
+              } else if (cubit.mainResponse.errorCode == 0 &&
+                  state.loginModel.userType == 2) {
+                CacheHelper.saveData(
+                        key: CacheKeys.userId, value: state.loginModel.userId)
+                    .whenComplete(() {
+                  CacheHelper.saveData(
+                          key: CacheKeys.token, value: state.loginModel.token)
+                      .whenComplete(() {
+                    CacheHelper.saveData(
+                            key: CacheKeys.userType,
+                            value: state.loginModel.userType.toString())
+                        .whenComplete(() {
                       token = CacheHelper.getData(key: CacheKeys.token);
                       userId = CacheHelper.getData(key: CacheKeys.userId);
-                      Navigator.pushNamedAndRemoveUntil(context, ScreenName.vendorMainLayout, (route) => false);
+                      Navigator.pushNamedAndRemoveUntil(context,
+                          ScreenName.vendorMainLayout, (route) => false);
                     });
                   });
                 });
-              }
-              else if(cubit.mainResponse.errorCode ==0 && state.loginModel.userType==3){
-                CacheHelper.saveData(key: CacheKeys.userId, value: state.loginModel.userId).whenComplete(() {
-                  CacheHelper.saveData(key: CacheKeys.token, value: state.loginModel.token).whenComplete(() {
-                    CacheHelper.saveData(key: CacheKeys.userType, value: state.loginModel.userType.toString()).whenComplete(() {
+              } else if (cubit.mainResponse.errorCode == 0 &&
+                  state.loginModel.userType == 3) {
+                CacheHelper.saveData(
+                        key: CacheKeys.userId, value: state.loginModel.userId)
+                    .whenComplete(() {
+                  CacheHelper.saveData(
+                          key: CacheKeys.token, value: state.loginModel.token)
+                      .whenComplete(() {
+                    CacheHelper.saveData(
+                            key: CacheKeys.userType,
+                            value: state.loginModel.userType.toString())
+                        .whenComplete(() {
                       token = CacheHelper.getData(key: CacheKeys.token);
                       userId = CacheHelper.getData(key: CacheKeys.userId);
-                      Navigator.pushNamedAndRemoveUntil(context, ScreenName.freelancerMainLayout, (route) => false);
+                      Navigator.pushNamedAndRemoveUntil(context,
+                          ScreenName.freelancerMainLayout, (route) => false);
                     });
                   });
                 });
               }
             }
-            if(state is LoginSuccessButErrorInData){
+            if (state is LoginSuccessButErrorInData) {
               Navigator.pop(context);
               Fluttertoast.showToast(msg: state.errorMessage);
             }
@@ -124,7 +149,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     keyboardType: TextInputType.phone,
                     textDirection: TextDirection.ltr,
                     validate: (value) {
-                      var regex = RegExp(r'^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$');
+                      var regex = RegExp(
+                          r'^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$');
                       if (value!.isEmpty) {
                         return 'ادخل رقم الهاتف';
                       } else if (!regex.hasMatch(value)) {
@@ -163,7 +189,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, ScreenName.forgetPasswordScreen);
+                      Navigator.pushNamed(
+                          context, ScreenName.forgetPasswordScreen);
                     },
                     child: Text(
                       'هل نسيت كلمة المرور؟',
@@ -177,15 +204,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 8.h,
                   ),
-
                   SizedBox(
                     height: 8.h,
                   ),
                   AuthButton(
                       buttonTitle: 'دخول',
                       isTapped: () {
-                        if(formKey.currentState!.validate()){
-                          cubit.login(phone: phone.text, password: password.text);
+                        if (formKey.currentState!.validate()) {
+                          cubit.login(
+                              phone: phone.text, password: password.text);
                         }
                       },
                       width: double.infinity),
@@ -197,7 +224,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, ScreenName.chooseRegisterType);
+                      Navigator.pushNamed(
+                          context, ScreenName.chooseRegisterType);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -212,9 +240,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         Text(
                           'انشاء حساب',
                           style: TextStyle(
-                              color: AppColorsLightTheme.secondaryColor,
-                              fontFamily: FontPath.almaraiRegular,
-                              fontSize: 14.sp),
+                            color: AppColorsLightTheme.secondaryColor,
+                            fontFamily: FontPath.almaraiRegular,
+                            fontSize: 14.sp,
+                          ),
                         )
                       ],
                     ),
