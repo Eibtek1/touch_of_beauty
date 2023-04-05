@@ -84,12 +84,10 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
           cubit.servicesImage = null;
           cubit.getServicesByServiceProviderId();
           Navigator.pop(context);
-          if (widget.type == 1) {
             FreelancerServicesCubit.get(context).servicesPageNumber = 1;
-            cubit.servicesImage = null;
+            // cubit.servicesImage = null;
             FreelancerServicesCubit.get(context)
                 .getServicesByServiceProviderId();
-          }
         } else if (state is AddServicesLoading) {
           showProgressIndicator(context);
         } else if (state is AddServicesError) {
@@ -307,7 +305,8 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                           SizedBox(
                             height: 20.h,
                           ),
-                          Text(
+                          if (widget.servicesModel == null)
+                            Text(
                             'مدة الخدمة',
                             style: TextStyle(
                               fontSize: 14.sp,
@@ -315,11 +314,11 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                               color: const Color(0xff3C475C),
                             ),
                           ),
-                          if (widget.servicesModel != null)
+                          if (widget.servicesModel == null)
                             SizedBox(
                               height: 5.h,
                             ),
-                          if (widget.servicesModel != null)
+                          if (widget.servicesModel == null)
                             CustomTextFormField(
                               keyboardType: TextInputType.phone,
                               height: 44.h,

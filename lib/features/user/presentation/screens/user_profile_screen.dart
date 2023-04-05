@@ -7,10 +7,12 @@ import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/core/network/api_end_points.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
 import '../../../../core/assets_path/font_path.dart';
+import '../widgets/delete_acc_alert_dialog.dart';
 import '../widgets/profile_widgets/form_item_builder.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -21,6 +23,7 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
+  bool isDeleteAcc = false;
   @override
   void didChangeDependencies() {
     if (AuthCubit.get(context).getUserModel == null) {
@@ -181,6 +184,19 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   image: SvgPath.profileFilledColorIcon,
                                   itemTitle: 'رقم الهاتف',
                                   title: cubit.getUserModel!.phoneNumber!),
+                              InkWell(
+                                onTap: (){
+                                  showProgressIndicator(context);
+                                  Future.delayed(const Duration(seconds: 2),(){
+                                    Navigator.pop(context);
+                                    showDialog(context: context, builder: (context) => const DeleteAccAlert());
+                                  });
+                                },
+                                child: const FormItemBuilder(
+                                    image: SvgPath.paperPin,
+                                    itemTitle: 'حذف الحساب',
+                                    title: 'اضعط لحذف الحساب'),
+                              ),
                             ],
                           )
                         : const Center(

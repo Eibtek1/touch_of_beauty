@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:touch_of_beauty/features/vendor/buisness_logic/services_cubit/vendor_services_state.dart';
 import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_center_screens/add_services_screen.dart';
 
 import '../../../../../core/app_router/screens_name.dart';
@@ -9,11 +10,11 @@ import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/images_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
+import '../../../../../core/constants/constants.dart';
 import '../../../../freelancer/presentation/widgets/custom_vendor_button.dart';
 import '../../../../user/presentation/widgets/home_screen_widgets/grid_item_builder.dart';
+import '../../../../vendor/buisness_logic/services_cubit/vendor_services_cubit.dart';
 import '../../../../vendor/presentation/widgets/screen_layout_widget_with_logo.dart';
-import '../../../buisness_logic/services_cubit/freelancer_services_cubit.dart';
-import '../../../buisness_logic/services_cubit/freelancer_services_state.dart';
 
 class FreelancerServicesScreen extends StatelessWidget {
   FreelancerServicesScreen({Key? key}) : super(key: key);
@@ -29,7 +30,6 @@ class FreelancerServicesScreen extends StatelessWidget {
     },
     {'image': ImagePath.selfCare, 'title': "العناية الشخصية"},
     {'image': ImagePath.skinCare, 'title': "العناية بالبشرة"},
-
     {'image': ImagePath.hairCare, 'title': "العناية بالشعر"},
     {'image': ImagePath.makeup, 'title': "قسم المكياج"},
     {'image': ImagePath.naturalTherapy, 'title': "العلاج الطبيعي"},
@@ -65,7 +65,8 @@ class FreelancerServicesScreen extends StatelessWidget {
               SvgPath.notificationBill,
               width: 23.w,
               height: 28.h,
-              colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+              colorFilter:
+                  const ColorFilter.mode(Colors.white, BlendMode.srcIn),
             ),
           ),
           SizedBox(
@@ -77,12 +78,24 @@ class FreelancerServicesScreen extends StatelessWidget {
         firstContainerBackgroundHeight: 60.h,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: BlocConsumer<FreelancerServicesCubit, FreelancerServicesState>(
+          child: BlocConsumer<VendorServicesCubit, VendorServicesState>(
             listener: (context, state) {
-              // TODO: implement listener
+              var cubit = VendorServicesCubit.get(context);
+
+              if(state is GetServicesDetailsByItsIdLoadingState){
+                showProgressIndicator(context);
+              }else if(state is GetServicesDetailsByItsIdSuccess){
+                cubit.inCenter = cubit.servicesModel!.inCenter!;
+                cubit.inHome = cubit.servicesModel!.inHome!;
+                cubit.mainSectionValue = cubit.servicesModel!.mainSection!.title!;
+                cubit.isAvailable = cubit.isAvailable;
+                Navigator.pop(context);
+                Navigator.pushNamed(
+                    context, ScreenName.vendorAddToServicesScreen,arguments: AddToServicesArguments(servicesModel: cubit.servicesModel, type: 1));
+              }
             },
             builder: (context, state) {
-              var cubit = FreelancerServicesCubit.get(context);
+              var cubit = VendorServicesCubit.get(context);
               return Column(
                 children: [
                   SizedBox(
@@ -92,31 +105,35 @@ class FreelancerServicesScreen extends StatelessWidget {
                     height: 400.h,
                     child: state is! GetServicesByServiceProviderIdLoading
                         ? GridView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: cubit.servicesList.length,
-                      gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                        childAspectRatio: 1,
-                      ),
-                      itemBuilder: (context, index) => InkWell(
-                        onTap: () {},
-                        child: GridItemBuilder(
-                          model: cubit.servicesList[index],
-                        ),
-                      ),
-                    )
+                            physics: const BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: cubit.servicesList.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
+                              childAspectRatio: 1,
+                            ),
+                            itemBuilder: (context, index) => InkWell(
+                              onTap: () {
+                                cubit.getServicesDetailsByItsId(id: cubit.servicesList[index].id!);
+                              },
+                              child: GridItemBuilder(
+                                model: cubit.servicesList[index],
+                              ),
+                            ),
+                          )
                         : const Center(
-                      child: CircularProgressIndicator.adaptive(),
-                    ),
+                            child: CircularProgressIndicator.adaptive(),
+                          ),
                   ),
                   const Spacer(),
                   CustomVendorButton(
                       buttonTitle: 'اضافة خدمة جديدة',
                       isTapped: () {
                         Navigator.pushNamed(
-                            context, ScreenName.vendorAddToServicesScreen,arguments: AddToServicesArguments(servicesModel: null, type: 1));
+                            context, ScreenName.vendorAddToServicesScreen,
+                            arguments: AddToServicesArguments(
+                                servicesModel: null, type: 1));
                       },
                       width: double.infinity,
                       paddingVertical: 14.h,

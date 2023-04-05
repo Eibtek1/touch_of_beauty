@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:new_version/new_version.dart';
 import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_centers_screen.dart';
 import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_messages_screen.dart';
 import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_more_screen.dart';
@@ -28,12 +29,18 @@ class _UserMainLayoutState extends State<VendorMainLayout> {
   @override
   void initState() {
     FirebaseMessaging.onMessageOpenedApp.listen((event){
-      print(event);
     });
     FirebaseMessaging.onMessage.listen((event) {
-      print(event);
     });
+    _checkGorUpdates();
     super.initState();
+  }
+  void _checkGorUpdates() async{
+    final checkForNewVersion = NewVersion(
+      androidId: 'com.eibtek.khanetgamal',
+      iOSId: 'com.eibtek.khanetgamal',
+    );
+    checkForNewVersion.showAlertIfNecessary(context: context);
   }
   @override
   Widget build(BuildContext context) {

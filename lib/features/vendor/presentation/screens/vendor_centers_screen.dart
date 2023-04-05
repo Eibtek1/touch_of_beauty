@@ -10,6 +10,7 @@ import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_stat
 import 'package:touch_of_beauty/features/vendor/buisness_logic/services_cubit/vendor_services_cubit.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/svg_path.dart';
+import '../../../user/presentation/widgets/delete_acc_alert_dialog.dart';
 import '../widgets/screen_layout_widget_with_logo.dart';
 
 class VendorCentersScreen extends StatefulWidget {
@@ -114,6 +115,21 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                 onTap: () {
                   Navigator.pushNamed(
                       context, ScreenName.vendorReservationsScreen);
+                },
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              const Divider(),
+              buildItem(
+                svgImage: SvgPath.calender2,
+                title: 'حذف الحساب',
+                onTap: () {
+                  showProgressIndicator(context);
+                  Future.delayed(const Duration(seconds: 2),(){
+                    Navigator.pop(context);
+                    showDialog(context: context, builder: (context) => const DeleteAccAlert());
+                  });
                 },
               ),
               SizedBox(
