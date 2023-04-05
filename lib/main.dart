@@ -80,9 +80,9 @@ class MyApp extends StatelessWidget {
                       createMaterialColor(AppColorsLightTheme.primaryColor),
 
                 ),
-                // onGenerateRoute: AppRouter.generateRoute,
-                // initialRoute: ScreenName.splashscreen,
-                home:  const MainSkipLayout(),
+                onGenerateRoute: AppRouter.generateRoute,
+                initialRoute: ScreenName.splashscreen,
+                // home:  const MainSkipLayout(),
               ),
             );
           },

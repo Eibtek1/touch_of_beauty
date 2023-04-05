@@ -184,6 +184,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   image: SvgPath.profileFilledColorIcon,
                                   itemTitle: 'رقم الهاتف',
                                   title: cubit.getUserModel!.phoneNumber!),
+                              const Divider(),
                               InkWell(
                                 onTap: (){
                                   showProgressIndicator(context);
@@ -193,7 +194,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   });
                                 },
                                 child: const FormItemBuilder(
-                                    image: SvgPath.paperPin,
+                                    image: SvgPath.edit,
                                     itemTitle: 'حذف الحساب',
                                     title: 'اضعط لحذف الحساب'),
                               ),

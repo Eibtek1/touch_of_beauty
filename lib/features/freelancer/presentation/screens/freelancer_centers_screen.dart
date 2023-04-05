@@ -99,7 +99,7 @@ class FreelancerCentersScreen extends StatelessWidget {
               ),
               const Divider(),
               buildItem1(
-                svgImage: SvgPath.bag,
+                svgImage: SvgPath.edit,
                 title: 'حذف الحساب',
                 onTap: () {
                   showProgressIndicator(context);
