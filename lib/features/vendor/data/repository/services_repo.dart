@@ -37,25 +37,26 @@ class VendorServicesRepository {
     required bool isAvailable,
   }) async {
     final response = await DioHelper.postData(
-        url: EndPoints.addService,
-        token: token,
-        data: FormData.fromMap({
-          'Description': description,
-          'Duration': duration,
-          'FinalPrice': finalPrice,
-          'Price': price,
-          'InCenter': inCenter,
-          'InHome': inHome,
-          'IsAvailable': isAvailable,
-          'MainSectionId': mainSectionId,
-          'PriceUnit': 1,
-          'TitleAr': titleAr,
-          'TitleEn': titleEn,
-          'EmployeesNumber': empNumber,
-          'Img': image != null
-              ? "data:image/${image.path.split('.').last};base64,${imageToBase64(image)}"
-              : null,
-        }));
+      url: EndPoints.addService,
+      token: token,
+      data: FormData.fromMap({
+        'Description': description,
+        'Duration': duration,
+        'FinalPrice': finalPrice,
+        'Price': price,
+        'InCenter': inCenter,
+        'InHome': inHome,
+        'IsAvailable': isAvailable,
+        'MainSectionId': mainSectionId,
+        'PriceUnit': 1,
+        'TitleAr': titleAr,
+        'TitleEn': titleEn,
+        'EmployeesNumber': empNumber,
+        'Img': image != null
+            ? "data:image/${image.path.split('.').last};base64,${imageToBase64(image)}"
+            : null,
+      }),
+    );
     return response;
   }
 
@@ -171,24 +172,28 @@ class VendorServicesRepository {
 
   static Future<Response> getOrdersById({required int orderId}) async {
     final response = await DioHelper.getData(
-      url:"${EndPoints.getOrderById}/$orderId",
+      url: "${EndPoints.getOrderById}/$orderId",
       bearerToken: token,
     );
     return response;
   }
+
   static Future<Response> getTodayOrders({required bool inHome}) async {
     final response = await DioHelper.getData(
-      url:EndPoints.getTodayOrders,
-      bearerToken: token,
-      query: {
-        'InHome':inHome,
-        'Start':DateTime.now().subtract(const Duration(days: 1)).toString(),
-        'End':DateTime.now().add(const Duration(days: 1)).toString(),
-      }
-    );
+        url: EndPoints.getTodayOrders,
+        bearerToken: token,
+        query: {
+          'InHome': inHome,
+          'Start': DateTime.now().subtract(const Duration(days: 1)).toString(),
+          'End': DateTime.now().add(const Duration(days: 1)).toString(),
+        });
     return response;
   }
-  static Future<Response> changeOrderStatus({required int orderId,required int orderStatus,}) async {
+
+  static Future<Response> changeOrderStatus({
+    required int orderId,
+    required int orderStatus,
+  }) async {
     final response = await DioHelper.putData(
       url: "${EndPoints.changeOrderStatus}/$orderId/$orderStatus",
       token: token,
@@ -198,46 +203,48 @@ class VendorServicesRepository {
 
   static Future<Response> getWorkHours() async {
     final response = await DioHelper.getData(
-      url:EndPoints.workHours,
+      url: EndPoints.workHours,
       bearerToken: token,
     );
     return response;
   }
 
-  static Future<Response> addWorkHours({required int day, required DateTime from, required DateTime to, }) async {
-    final response = await DioHelper.postData(
-      url:EndPoints.workHours,
-      token: token,
-      data: {
-        "day" : day,
-        'from' :from.toIso8601String(),
-        "to" :to.toIso8601String(),
-        "moreData" : "moreData"
-      }
-    );
+  static Future<Response> addWorkHours({
+    required int day,
+    required DateTime from,
+    required DateTime to,
+  }) async {
+    final response =
+        await DioHelper.postData(url: EndPoints.workHours, token: token, data: {
+      "day": day,
+      'from': from.toIso8601String(),
+      "to": to.toIso8601String(),
+      "moreData": "moreData"
+    });
     return response;
   }
 
-  static Future<Response> updateWorkHours({required int day,required int id, required DateTime from, required DateTime to, }) async {
-    final response = await DioHelper.putData(
-      url:EndPoints.workHours,
-      token: token,
-      data: {
-        "id": id,
-        "day": day,
-        "from": from.toIso8601String(),
-        "to": to.toIso8601String(),
-        "moreData": "moreData"
-      }
-    );
+  static Future<Response> updateWorkHours({
+    required int day,
+    required int id,
+    required DateTime from,
+    required DateTime to,
+  }) async {
+    final response =
+        await DioHelper.putData(url: EndPoints.workHours, token: token, data: {
+      "id": id,
+      "day": day,
+      "from": from.toIso8601String(),
+      "to": to.toIso8601String(),
+      "moreData": "moreData"
+    });
     return response;
   }
-
-
 
   static Future<Response> deleteWorkHours({required int id}) async {
     final response = await DioHelper.deleteData(
-      url: "${EndPoints.workHours}/$id", token: token,
+      url: "${EndPoints.workHours}/$id",
+      token: token,
     );
     return response;
   }

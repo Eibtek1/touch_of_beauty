@@ -202,10 +202,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 8.h,
+                    height: 10.h,
+                  ),
+                  Center(
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.pushNamed(context, ScreenName.mainSkipLayout);
+                      },
+                      child: Text(
+                        'نظرة عامة علي التطبيق',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                            color: const Color(0xffAAADB5),
+                            fontFamily: FontPath.almaraiLight,
+                            fontSize: 13.sp),
+                      ),
+                    ),
                   ),
                   SizedBox(
-                    height: 8.h,
+                    height: 10.h,
                   ),
                   AuthButton(
                       buttonTitle: 'دخول',

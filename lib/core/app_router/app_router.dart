@@ -20,6 +20,7 @@ import '../../features/freelancer/presentation/screens/freelancer_center_screens
 import '../../features/freelancer/presentation/screens/freelancer_center_screens/freelancer_services_screen.dart';
 import '../../features/freelancer/presentation/screens/freelancer_center_screens/freelancer_working_time_screen.dart';
 import '../../features/freelancer/presentation/screens/freelancer_notification_screen.dart';
+import '../../features/skip_layout/main_skip_layout.dart';
 import '../../features/user/presentation/screens/edit_profile_screen.dart';
 import '../../features/user/presentation/screens/help_privacy_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/all_centers_screen.dart';
@@ -99,6 +100,8 @@ class AppRouter {
           return _animateRouteBuilder( const VendorServicesScreen());
         case ScreenName.freelancerServicesScreen:
           return _animateRouteBuilder( FreelancerServicesScreen());
+        case ScreenName.mainSkipLayout:
+          return _animateRouteBuilder( MainSkipLayout());
         case ScreenName.vendorReservationsScreen:
           return _animateRouteBuilder( const VendorReservationsScreen());
         case ScreenName.vendorAddToServicesScreen:

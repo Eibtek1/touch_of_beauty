@@ -11,6 +11,7 @@ import '../../../../core/assets_path/svg_path.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../authentication/buisness_logic/auth_cubit.dart';
 import '../../../authentication/buisness_logic/auth_state.dart';
+import '../../../user/presentation/widgets/delete_acc_alert_dialog.dart';
 import '../../../vendor/presentation/widgets/screen_layout_widget_with_logo.dart';
 
 class FreelancerCentersScreen extends StatelessWidget {
@@ -41,12 +42,14 @@ class FreelancerCentersScreen extends StatelessWidget {
                     ),
                   ),
                   InkWell(
-                    onTap: (){
-                      Navigator.pushNamed(context, ScreenName.freelancerNotificationScreen);
+                    onTap: () {
+                      Navigator.pushNamed(
+                          context, ScreenName.freelancerNotificationScreen);
                     },
                     child: SvgPicture.asset(
                       SvgPath.notificationBill,
-                      colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                       height: 28.h,
                       width: 23.w,
                     ),
@@ -56,49 +59,82 @@ class FreelancerCentersScreen extends StatelessWidget {
               SizedBox(
                 height: 186.h,
               ),
-              buildItem1(svgImage: SvgPath.centersIcon, title: 'بيانات مقدم الخدمة', onTap: (){
-                if (AuthCubit.get(context).getUserModel == null) {
-                  AuthCubit.get(context).getUserData();
-                }
-                Navigator.pushNamed(context, ScreenName.freelancerDetailsScreen);
-              }),
+              buildItem1(
+                  svgImage: SvgPath.centersIcon,
+                  title: 'بيانات مقدم الخدمة',
+                  onTap: () {
+                    if (AuthCubit.get(context).getUserModel == null) {
+                      AuthCubit.get(context).getUserData();
+                    }
+                    Navigator.pushNamed(
+                        context, ScreenName.freelancerDetailsScreen);
+                  }),
               SizedBox(
                 height: 10.h,
               ),
               const Divider(),
-              buildItem1(svgImage: SvgPath.clock, title: 'مواعيد العمل', onTap: (){
-                Navigator.pushNamed(context, ScreenName.freelancerTimeScreen);
-              }),
+              buildItem1(
+                  svgImage: SvgPath.clock,
+                  title: 'مواعيد العمل',
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, ScreenName.freelancerTimeScreen);
+                  }),
               SizedBox(
                 height: 10.h,
               ),
               const Divider(),
-              buildItem1(svgImage: SvgPath.bag, title: 'خدماتي', onTap: (){
-                VendorServicesCubit.get(context).getServicesByServiceProviderId();
-                Navigator.pushNamed(context, ScreenName.freelancerServicesScreen);
-              },),
+              buildItem1(
+                svgImage: SvgPath.bag,
+                title: 'خدماتي',
+                onTap: () {
+                  VendorServicesCubit.get(context)
+                      .getServicesByServiceProviderId();
+                  Navigator.pushNamed(
+                      context, ScreenName.freelancerServicesScreen);
+                },
+              ),
               SizedBox(
                 height: 10.h,
               ),
               const Divider(),
-              buildItem1(svgImage: SvgPath.calender2, title: 'حجوزاتي', onTap: (){
-                Navigator.pushNamed(context, ScreenName.vendorReservationsScreen);
-              }),
+              buildItem1(
+                svgImage: SvgPath.bag,
+                title: 'حذف الحساب',
+                onTap: () {
+                  showProgressIndicator(context);
+                  Future.delayed(const Duration(seconds: 2),(){
+                    Navigator.pop(context);
+                    showDialog(context: context, builder: (context) => const DeleteAccAlert());
+                  });
+                },
+              ),
               SizedBox(
                 height: 10.h,
               ),
-
+              const Divider(),
+              buildItem1(
+                  svgImage: SvgPath.calender2,
+                  title: 'حجوزاتي',
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, ScreenName.vendorReservationsScreen);
+                  }),
+              SizedBox(
+                height: 10.h,
+              ),
               const Divider(),
               BlocConsumer<AuthCubit, AuthState>(
                 listener: (context, state) {
-                  if(state is LogoutLoading){
+                  if (state is LogoutLoading) {
                     showProgressIndicator(context);
                   }
-                  if(state is LogoutError){
+                  if (state is LogoutError) {
                     Navigator.pop(context);
                   }
-                  if(state is LogoutSuccess){
-                    Navigator.pushNamedAndRemoveUntil(context, ScreenName.loginScreen, (route) => false);
+                  if (state is LogoutSuccess) {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, ScreenName.loginScreen, (route) => false);
                   }
                 },
                 builder: (context, state) {
@@ -128,21 +164,24 @@ class FreelancerCentersScreen extends StatelessWidget {
       ),
     );
   }
-  Widget buildItem1({required String svgImage,
-    required String title,
-    Widget? child,
-    required Function onTap}) {
+
+  Widget buildItem1(
+      {required String svgImage,
+      required String title,
+      Widget? child,
+      required Function onTap}) {
     return ListTile(
       onTap: () {
         onTap();
       },
-      leading: child ?? SvgPicture.asset(
-        svgImage,
-        colorFilter: const ColorFilter.mode(
-          AppColorsLightTheme.primaryColor,
-          BlendMode.srcIn,
-        ),
-      ),
+      leading: child ??
+          SvgPicture.asset(
+            svgImage,
+            colorFilter: const ColorFilter.mode(
+              AppColorsLightTheme.primaryColor,
+              BlendMode.srcIn,
+            ),
+          ),
       title: Text(
         title,
         style: TextStyle(

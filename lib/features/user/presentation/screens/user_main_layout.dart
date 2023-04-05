@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:new_version/new_version.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import '../../buisness_logic/main_cubit/main_cubit.dart';
@@ -23,8 +24,18 @@ class _UserMainLayoutState extends State<UserMainLayout> {
     });
     FirebaseMessaging.onMessage.listen((event) {
     });
+    _checkGorUpdates();
     super.initState();
   }
+
+  void _checkGorUpdates() async{
+    final checkForNewVersion = NewVersion(
+      androidId: 'com.eibtek.khanetgamal',
+      iOSId: 'com.eibtek.khanetgamal',
+    );
+    checkForNewVersion.showAlertIfNecessary(context: context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

@@ -1,4 +1,4 @@
-package com.example.touch_of_beauty
+package com.eibtek.khanetgamal
 
 import io.flutter.embedding.android.FlutterActivity
 
