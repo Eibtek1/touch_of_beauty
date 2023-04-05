@@ -201,26 +201,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontSize: 13.sp),
                     ),
                   ),
+
                   SizedBox(
-                    height: 10.h,
-                  ),
-                  Center(
-                    child: InkWell(
-                      onTap: (){
-                        Navigator.pushNamed(context, ScreenName.mainSkipLayout);
-                      },
-                      child: Text(
-                        'نظرة عامة علي التطبيق',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                            color: const Color(0xffAAADB5),
-                            fontFamily: FontPath.almaraiLight,
-                            fontSize: 13.sp),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.h,
+                    height: 16.h,
                   ),
                   AuthButton(
                       buttonTitle: 'دخول',
@@ -233,6 +216,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: double.infinity),
                   SizedBox(
                     height: 15.h,
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Center(
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.pushNamed(context, ScreenName.mainSkipLayout);
+                      },
+                      child: Text(
+                        'نظرة عامة علي التطبيق',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                            color: AppColorsLightTheme.secondaryColor,
+                            fontFamily: FontPath.almaraiLight,
+                            fontSize: 13.sp),
+                      ),
+                    ),
                   ),
                   SizedBox(
                     height: 57.h,

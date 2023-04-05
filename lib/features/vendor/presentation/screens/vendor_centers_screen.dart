@@ -122,7 +122,7 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
               ),
               const Divider(),
               buildItem(
-                svgImage: SvgPath.calender2,
+                svgImage: SvgPath.edit,
                 title: 'حذف الحساب',
                 onTap: () {
                   showProgressIndicator(context);
