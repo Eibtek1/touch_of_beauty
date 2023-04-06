@@ -33,6 +33,7 @@ class EndPoints{
   static const preparedOrders = '/OrderProviders/PreparedOrders';
   static const getOrderById = '/OrderProviders/GetOrderById';
   static const editServices = '/Services/UpdateService/';
+  static const deleteServices = '/Services/DeleteService/';
   static const contactUs = '/ContactUs/ContactUs';
   static const workHours = '/WorkHours';
   static const getTodayOrders = '/OrderProviders/GetAllOrders';
@@ -48,6 +49,7 @@ class EndPoints{
   static const getFavoriteServices = '/Favorites/GetFavoriteServices';
   static const addresses = '/Addresses';
   static const employees = '/Employees';
+  static const applePublish = '/ApplePublish';
   static const addOrder = '/OrderUsers/AddOrder';
   static const getOrdersForUser = '/OrderUsers/GetOrders';
   static const deleteServiceFromFavorite = '/Favorites/DeleteServiceFromFavorite/';

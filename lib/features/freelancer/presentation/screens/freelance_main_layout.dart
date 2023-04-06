@@ -94,7 +94,7 @@ class _UserMainLayoutState extends State<FreelancerMainLayout> {
                       colorFilter: ColorFilter.mode(cIndex == 2
                           ? AppColorsLightTheme.primaryColor
                           : Colors.grey, BlendMode.srcIn)),
-                  label: 'صالوني'),
+                  label: 'بياناتي'),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(SvgPath.moreIcon,
                       colorFilter: ColorFilter.mode(cIndex == 3

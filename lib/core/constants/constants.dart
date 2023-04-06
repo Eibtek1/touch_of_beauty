@@ -22,3 +22,4 @@ void showProgressIndicator(BuildContext context){
 String? token = CacheHelper.getData(key: CacheKeys.token);
 String? userId = CacheHelper.getData(key: CacheKeys.userId);
 String? userType = CacheHelper.getData(key: CacheKeys.userType);
+bool? checkPublish = CacheHelper.getData(key: CacheKeys.checkPublish);

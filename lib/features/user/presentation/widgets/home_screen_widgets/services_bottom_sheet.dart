@@ -277,9 +277,9 @@ class ServicesBottomSheet extends StatelessWidget {
                                 color: const Color(0xff1E2432)),
                           ),
                           SizedBox(
-                            height: 3.h,
+                            height: 8.h,
                           ),
-                          Expanded(
+                          if(servicesModel.serviceProvider!.addresses!=null)Expanded(
                             child: Text(
                               '${servicesModel.serviceProvider!.addresses!.addressDetails}${servicesModel.serviceProvider!.addresses!.city}',
                               maxLines: 2,
@@ -294,6 +294,7 @@ class ServicesBottomSheet extends StatelessWidget {
                           SizedBox(
                             height: 3.h,
                           ),
+                          if(servicesModel.serviceProvider!.addresses==null) const Spacer(),
                           RatingBar.builder(
                             itemSize: 14.r,
                             ignoreGestures: true,

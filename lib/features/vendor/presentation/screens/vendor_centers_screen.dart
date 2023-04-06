@@ -10,6 +10,7 @@ import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_stat
 import 'package:touch_of_beauty/features/vendor/buisness_logic/services_cubit/vendor_services_cubit.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/svg_path.dart';
+import '../../../freelancer/buisness_logic/services_cubit/freelancer_services_cubit.dart';
 import '../../../user/presentation/widgets/delete_acc_alert_dialog.dart';
 import '../widgets/screen_layout_widget_with_logo.dart';
 
@@ -123,6 +124,8 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
               const Divider(),
               buildItem(
                 svgImage: SvgPath.edit,
+                width: 20.w,
+                height: 20.h,
                 title: 'حذف الحساب',
                 onTap: () {
                   showProgressIndicator(context);
@@ -145,6 +148,10 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                     Navigator.pop(context);
                   }
                   if(state is LogoutSuccess){
+
+                    VendorServicesCubit.get(context).servicesList = [];
+                    VendorServicesCubit.get(context).servicesPageNumber = 1;
+                    FreelancerServicesCubit.get(context).servicesPageNumber = 1;
                     Navigator.pushNamedAndRemoveUntil(context, ScreenName.loginScreen, (route) => false);
                   }
                 },
@@ -179,6 +186,8 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
   Widget buildItem({required String svgImage,
     required String title,
     Widget? child,
+    double? width,
+    double? height,
     required Function onTap}) {
     return ListTile(
       onTap: () {
@@ -186,6 +195,8 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
       },
       leading: child ?? SvgPicture.asset(
         svgImage,
+        width: width,
+        height: height,
         colorFilter: const ColorFilter.mode(
           AppColorsLightTheme.primaryColor,
           BlendMode.srcIn,

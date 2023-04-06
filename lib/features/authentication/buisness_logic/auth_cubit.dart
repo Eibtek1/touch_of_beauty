@@ -5,7 +5,9 @@ import 'package:touch_of_beauty/core/cache_manager/cache_keys.dart';
 import 'package:touch_of_beauty/core/cache_manager/shared_preferences.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/authentication/data/repository/auth_repository.dart';
+import '../../../core/network/api_end_points.dart';
 import '../../../core/network/dio_helper.dart';
+import '../../vendor/buisness_logic/services_cubit/vendor_services_cubit.dart';
 import '../../vendor/data/models/pictures_model.dart';
 import '../data/models/cities_model.dart';
 import '../data/models/confirm_register_model.dart';
@@ -40,7 +42,7 @@ class AuthCubit extends Cubit<AuthState> {
   void getCities() async {
     emit(GetCitiesLoading());
     final response = await DioHelper.getData(
-        url: 'http://lightbulbtech-001-site13.etempurl.com/api/Cities',
+        url: '${EndPoints.baseUrl}/Cities',
         bearerToken: token);
     citiesList.clear();
     for (var element in response.data['data']) {

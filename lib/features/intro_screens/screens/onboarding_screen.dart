@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/intro_screens/widgets/boarding_button.dart';
 import '../../../core/assets_path/images_path.dart';
 import '../../../core/cache_manager/cache_keys.dart';
@@ -89,8 +90,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: CustomButton(
               isLast: isLast,
               isLastTap: () {
+                checkPublish = CacheHelper.getBoolean(key: CacheKeys.checkPublish);
                 CacheHelper.saveData(key: CacheKeys.onboarding, value: true).whenComplete((){
-                  Navigator.pushReplacementNamed(context, ScreenName.chooseRegisterType);
+                  if(checkPublish !=null && checkPublish==true){
+                    Navigator.pushReplacementNamed(context, ScreenName.userRegister);
+                  }else if(checkPublish!=null && checkPublish==false){
+                    Navigator.pushReplacementNamed(context, ScreenName.chooseRegisterType);
+                  }
                 });
               },
               isTapped: () {

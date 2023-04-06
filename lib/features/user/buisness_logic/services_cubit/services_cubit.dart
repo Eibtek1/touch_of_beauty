@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:touch_of_beauty/core/network/api_end_points.dart';
 import 'package:touch_of_beauty/features/authentication/data/models/main_response.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_state.dart';
 import 'package:touch_of_beauty/features/user/data/models/paginate_model.dart';
@@ -86,7 +87,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
   void getCities() async {
     emit(GetCitiesLoading());
     final response = await DioHelper.getData(
-        url: 'http://lightbulbtech-001-site13.etempurl.com/api/Cities',
+        url: '${EndPoints.baseUrl}/Cities',
         bearerToken: token);
     citiesList.clear();
     for (var element in response.data['data']) {

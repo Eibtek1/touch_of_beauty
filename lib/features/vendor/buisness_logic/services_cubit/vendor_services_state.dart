@@ -56,3 +56,11 @@ class GetServicesDetailsByItsIdError extends VendorServicesState {
   final String error;
   GetServicesDetailsByItsIdError({required this.error});
 }
+
+
+class DeleteServicesLoadingState extends VendorServicesState {}
+class DeleteServicesSuccess extends VendorServicesState {}
+class DeleteServicesError extends VendorServicesState {
+  final String error;
+  DeleteServicesError({required this.error});
+}

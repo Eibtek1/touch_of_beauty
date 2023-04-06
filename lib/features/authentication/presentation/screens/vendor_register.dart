@@ -290,7 +290,7 @@ class _VendorRegisterScreenState extends State<VendorRegisterScreen> {
                       height: 14.h,
                     ),
                     AuthTextFormField(
-                      hintText: 'الرقم الضريبي',
+                      hintText: vendorSigningType == VendorSigningType.center?'رقم سجل المركز':'رقم وثيقة العمل الحر',
                       keyboardType: TextInputType.phone,
                       validate: (value) {
                         if (value!.isEmpty) {

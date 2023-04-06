@@ -210,9 +210,25 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
       await ServicesProvidersRepository.getServicesDetailsById(id: id);
       mainResponse = MainResponse.fromJson(response.data);
       servicesModel = ServicesDetailsModel.fromJson(mainResponse.data);
+      // print(response);
       emit(GetServicesDetailsByItsIdSuccess());
     } catch (error) {
+      print(error.toString());
       emit(GetServicesDetailsByItsIdError(error: error.toString()));
+    }
+  }
+
+
+  void deleteServices({required int id}) async {
+    emit(DeleteServicesLoadingState());
+    try {
+      final response =
+      await VendorServicesRepository.deleteServices(id: id);
+      mainResponse = MainResponse.fromJson(response.data);
+      print(response);
+      emit(DeleteServicesSuccess());
+    } catch (error) {
+      emit(DeleteServicesError(error: error.toString()));
     }
   }
 

@@ -85,7 +85,7 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        'خلال يومان',
+                        'اليوم',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.grey,
