@@ -16,7 +16,7 @@ class CustomVendorButton extends StatelessWidget {
       {Key? key,
         required this.buttonTitle,
         required this.isTapped,
-        required this.width, this.height, required this.paddingVertical, required this.paddingHorizontal, this.isDeleteAlertDialog = false, })
+        required this.width, this.height, required this.paddingVertical, required this.paddingHorizontal, this.isDeleteAlertDialog = false,  })
       : super(key: key);
 
   @override

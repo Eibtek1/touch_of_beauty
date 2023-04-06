@@ -131,7 +131,7 @@ class AllCentersItemBuilder extends StatelessWidget {
                     height: 10.h,
                   ),
                   Text(
-                    '${servicesProviderModel.addresses![0].city}-${servicesProviderModel.addresses![0].addressDetails}',
+                    '${servicesProviderModel.city}',
                     style: TextStyle(
                       fontSize: 11.sp,
                       fontFamily: FontPath.almaraiRegular,

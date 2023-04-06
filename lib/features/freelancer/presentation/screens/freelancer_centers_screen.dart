@@ -13,6 +13,7 @@ import '../../../authentication/buisness_logic/auth_cubit.dart';
 import '../../../authentication/buisness_logic/auth_state.dart';
 import '../../../user/presentation/widgets/delete_acc_alert_dialog.dart';
 import '../../../vendor/presentation/widgets/screen_layout_widget_with_logo.dart';
+import '../../buisness_logic/services_cubit/freelancer_services_cubit.dart';
 
 class FreelancerCentersScreen extends StatelessWidget {
   const FreelancerCentersScreen({Key? key}) : super(key: key);
@@ -100,6 +101,8 @@ class FreelancerCentersScreen extends StatelessWidget {
               const Divider(),
               buildItem1(
                 svgImage: SvgPath.edit,
+                width: 20.w,
+                height: 20.h,
                 title: 'حذف الحساب',
                 onTap: () {
                   showProgressIndicator(context);
@@ -133,6 +136,10 @@ class FreelancerCentersScreen extends StatelessWidget {
                     Navigator.pop(context);
                   }
                   if (state is LogoutSuccess) {
+
+                    VendorServicesCubit.get(context).servicesList = [];
+                    VendorServicesCubit.get(context).servicesPageNumber = 1;
+                    FreelancerServicesCubit.get(context).servicesPageNumber = 1;
                     Navigator.pushNamedAndRemoveUntil(
                         context, ScreenName.loginScreen, (route) => false);
                   }
@@ -167,6 +174,8 @@ class FreelancerCentersScreen extends StatelessWidget {
 
   Widget buildItem1(
       {required String svgImage,
+        double? width,
+        double? height,
       required String title,
       Widget? child,
       required Function onTap}) {
@@ -177,6 +186,8 @@ class FreelancerCentersScreen extends StatelessWidget {
       leading: child ??
           SvgPicture.asset(
             svgImage,
+            height: height,
+            width: width,
             colorFilter: const ColorFilter.mode(
               AppColorsLightTheme.primaryColor,
               BlendMode.srcIn,

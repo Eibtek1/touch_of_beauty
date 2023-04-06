@@ -19,7 +19,6 @@ class FreelancerHomeScreen extends StatefulWidget {
 }
 
 List<String> itemsList = [
-  'في المركز',
   'في المنزل',
 ];
 
@@ -87,7 +86,7 @@ class _FreelancerHomeScreenState extends State<FreelancerHomeScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        'خلال يومان',
+                        'اليوم',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.grey,

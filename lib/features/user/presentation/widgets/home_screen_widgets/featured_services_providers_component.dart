@@ -6,6 +6,7 @@ import 'package:touch_of_beauty/features/user/presentation/widgets/home_screen_w
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/constants/constants.dart';
+import '../../../buisness_logic/services_cubit/services_cubit.dart';
 import '../../../buisness_logic/services_providers_cubit/services_providers_cubit.dart';
 import '../../../buisness_logic/services_providers_cubit/services_providers_state.dart';
 import 'center_details_bottom_sheet.dart';
@@ -36,6 +37,11 @@ class _FeaturedServicesProvidersComponentState extends State<FeaturedServicesPro
         if (state
         is GetFeaturedServicesProviderDetailsByItsIdSuccess && cubit.servicesProviderModel != null) {
           Navigator.pop(context);
+          UserServicesCubit.get(context).tabBarCIndex = 0;
+          UserServicesCubit.get(context).changeTabBarCurrentIndex(0,
+              servicesProviderId: cubit.servicesProviderModel!.id!,
+              mainSectionId:
+              cubit.servicesProviderModel!.mainSection![0].mainSectionId!);
           showBottomSheet(
             context: context,
             builder: (context) => CenterDetailsBottomSheet(

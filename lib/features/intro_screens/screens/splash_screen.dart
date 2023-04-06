@@ -17,7 +17,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     initFirebaseMessaging();
@@ -25,25 +24,25 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
-  void initFirebaseMessaging()async{
-    FirebaseMessaging.instance.getInitialMessage().then((event) {
-    });
+  void initFirebaseMessaging() async {
+    FirebaseMessaging.instance.getInitialMessage().then((event) {});
   }
-  _loading() async{
+
+  _loading() async {
     bool? onboarding = CacheHelper.getData(key: CacheKeys.onboarding);
     token = CacheHelper.getData(key: CacheKeys.token);
     userType = CacheHelper.getData(key: CacheKeys.userType);
-
+    checkPublish = CacheHelper.getData(key: CacheKeys.checkPublish);
     Timer(
       const Duration(seconds: 2),
       () {
-        if (onboarding == null) {
-          Navigator.pushReplacementNamed(context, ScreenName.onboardingScreen);
-        } else if (token != null&&userType != null) {
-          if(userType == 1.toString()){
-            Navigator.pushReplacementNamed(
-                context, ScreenName.userMainLayout);
-          }else if (userType == 2.toString()) {
+        if (onboarding == null && checkPublish == null) {
+          Navigator.pushReplacementNamed(
+              context, ScreenName.checkPublishScreen);
+        } else if (token != null && userType != null && checkPublish != null) {
+          if (userType == 1.toString()) {
+            Navigator.pushReplacementNamed(context, ScreenName.userMainLayout);
+          } else if (userType == 2.toString()) {
             Navigator.pushReplacementNamed(
                 context, ScreenName.vendorMainLayout);
           } else if (userType == 3.toString()) {
@@ -64,17 +63,21 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: AppColorsLightTheme.primaryColor,
       body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                  Center(
-                    child: Image.asset(
-                      ImagePath.splashLogoImage,
-                      height: 227.h,
-                      width: 320.w,
-                    ),
-                  ),
-                ]),
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Center(
+            child: Hero(
+              tag: "logo",
+              child: Image.asset(
+                ImagePath.splashLogoImage,
+                height: 227.h,
+                width: 320.w,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

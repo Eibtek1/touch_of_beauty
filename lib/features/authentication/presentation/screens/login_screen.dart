@@ -153,9 +153,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           r'^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$');
                       if (value!.isEmpty) {
                         return 'ادخل رقم الهاتف';
-                      } else if (!regex.hasMatch(value)) {
-                        return 'صيغة الهاتف غير صحيحة';
                       }
+                      // else if (!regex.hasMatch(value)) {
+                      //   return 'صيغة الهاتف غير صحيحة';
+                      // }
                       return null;
                     },
                     suffix: Padding(
@@ -223,7 +224,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   Center(
                     child: InkWell(
                       onTap: (){
-                        Navigator.pushNamed(context, ScreenName.mainSkipLayout);
+                        showProgressIndicator(context);
+                        Future.delayed(const Duration(seconds: 2)).whenComplete(() {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, ScreenName.mainSkipLayout);
+                        });
                       },
                       child: Text(
                         'نظرة عامة علي التطبيق',
@@ -240,8 +245,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(
-                          context, ScreenName.chooseRegisterType);
+                      checkPublish = CacheHelper.getBoolean(key: CacheKeys.checkPublish);
+                      if(checkPublish !=null && checkPublish==true){
+                        Navigator.pushReplacementNamed(context, ScreenName.userRegister);
+                      }else if(checkPublish!=null && checkPublish==false){
+                        Navigator.pushReplacementNamed(context, ScreenName.chooseRegisterType);
+                      }
+                      // Navigator.pushNamed(
+                      //     context, ScreenName.chooseRegisterType);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

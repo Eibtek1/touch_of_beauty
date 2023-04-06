@@ -88,11 +88,26 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
             // cubit.servicesImage = null;
             FreelancerServicesCubit.get(context)
                 .getServicesByServiceProviderId();
-        } else if (state is AddServicesLoading) {
+
+        }
+        else if (state is AddServicesLoading) {
           showProgressIndicator(context);
         } else if (state is AddServicesError) {
           Navigator.pop(context);
           Fluttertoast.showToast(msg: 'تأكد من صحة البيانات');
+        }
+        else if(state is DeleteServicesLoadingState){
+          showProgressIndicator(context);
+        }else if(state is DeleteServicesSuccess){
+          Navigator.pop(context);
+          cubit.servicesPageNumber = 1;
+          cubit.servicesImage = null;
+          cubit.getServicesByServiceProviderId();
+          Navigator.pop(context);
+          FreelancerServicesCubit.get(context).servicesPageNumber = 1;
+          // cubit.servicesImage = null;
+          FreelancerServicesCubit.get(context)
+              .getServicesByServiceProviderId();
         }
       },
       builder: (context, state) {
@@ -605,6 +620,18 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                 }
                               },
                               width: double.infinity,
+                              paddingVertical: 12.h,
+                              paddingHorizontal: 45.w),
+                          SizedBox(
+                            height: 15.h,
+                          ),
+                          if(widget.servicesModel!=null)CustomVendorButton(
+                              buttonTitle: "حذف الخدمة",
+                              isTapped: () {
+                                cubit.deleteServices(id: widget.servicesModel!.id!);
+                              },
+                              width: double.infinity,
+                              isDeleteAlertDialog: true,
                               paddingVertical: 12.h,
                               paddingHorizontal: 45.w),
                           SizedBox(

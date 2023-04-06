@@ -106,6 +106,14 @@ class VendorServicesRepository {
     return response;
   }
 
+  static Future<Response> deleteServices({required int id}) async {
+    final response = await DioHelper.deleteData(
+      url: "${EndPoints.deleteServices}$id",
+      token: token,
+    );
+    return response;
+  }
+
   static Future<Response> addEmployee({
     required String name,
     required String email,

@@ -12,6 +12,8 @@ import '../../../../../core/constants/constants.dart';
 import '../../../../../core/network/api_end_points.dart';
 import '../../../../authentication/buisness_logic/auth_cubit.dart';
 import '../../../../authentication/buisness_logic/auth_state.dart';
+import '../../../../freelancer/buisness_logic/services_cubit/freelancer_services_cubit.dart';
+import '../../../../vendor/buisness_logic/services_cubit/vendor_services_cubit.dart';
 import '../../../buisness_logic/main_cubit/main_cubit.dart';
 import '../../../buisness_logic/main_cubit/main_state.dart' as main_state;
 
@@ -251,6 +253,10 @@ class AppDrawer extends StatelessWidget {
                 }
                 if (state is LogoutSuccess) {
                   MainCubit.get(context).onTap(0);
+
+                  VendorServicesCubit.get(context).servicesList = [];
+                  VendorServicesCubit.get(context).servicesPageNumber = 1;
+                  FreelancerServicesCubit.get(context).servicesPageNumber = 1;
                   Navigator.pushNamedAndRemoveUntil(
                       context, ScreenName.loginScreen, (route) => false);
                 }
