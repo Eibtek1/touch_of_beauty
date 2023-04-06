@@ -7,7 +7,6 @@ import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/authentication/data/repository/auth_repository.dart';
 import '../../../core/network/api_end_points.dart';
 import '../../../core/network/dio_helper.dart';
-import '../../vendor/buisness_logic/services_cubit/vendor_services_cubit.dart';
 import '../../vendor/data/models/pictures_model.dart';
 import '../data/models/cities_model.dart';
 import '../data/models/confirm_register_model.dart';

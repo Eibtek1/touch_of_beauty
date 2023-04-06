@@ -86,7 +86,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                 height: 8.h,
               ),
               Text(
-                "${widget.servicesProvidersModel.addresses![0].city}${widget.servicesProvidersModel.addresses![0].addressDetails}",
+                "${widget.servicesProvidersModel.city}",
                 style: TextStyle(
                   fontSize: 11.sp,
                   fontFamily: FontPath.almaraiRegular,
