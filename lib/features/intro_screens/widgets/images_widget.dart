@@ -30,16 +30,16 @@ class ImagesWidget extends StatelessWidget {
                     fontFamily: FontPath.almaraiBold),
               ),
               SizedBox(
-                height: 20.h,
+                height: 10.h,
               ),
               Text(
                 model.bodyTitle,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 15.sp,
+                    fontSize: 16.sp,
                     color: Colors.white,
                     height: 1.5.h,
-                    fontFamily: FontPath.almaraiLight),
+                    fontFamily: FontPath.almaraiRegular),
               ),
             ],
           ),

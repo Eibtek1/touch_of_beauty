@@ -14,7 +14,19 @@ class AuthTextFormField extends StatelessWidget {
   final int maxLength;
   final bool isPassword;
   final bool enable;
-  const AuthTextFormField({Key? key, required this.hintText, this.validate, this.suffix, required this.controller, this.keyboardType = TextInputType.text, this.maxLength = 100, this.isPassword = false, this.textDirection, this.enable = true,}) : super(key: key);
+
+  const AuthTextFormField({
+    Key? key,
+    required this.hintText,
+    this.validate,
+    this.suffix,
+    required this.controller,
+    this.keyboardType = TextInputType.text,
+    this.maxLength = 100,
+    this.isPassword = false,
+    this.textDirection,
+    this.enable = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,26 +41,35 @@ class AuthTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         counter: const SizedBox.shrink(),
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.r),
-            borderSide: const BorderSide(
-                color: AppColorsLightTheme.authTextFieldFillColor)),
+          borderRadius: BorderRadius.circular(20.r),
+          borderSide: const BorderSide(
+            color: AppColorsLightTheme.authTextFieldFillColor,
+          ),
+        ),
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.r),
-            borderSide: const BorderSide(
-                color: AppColorsLightTheme.authTextFieldFillColor)),
+          borderRadius: BorderRadius.circular(20.r),
+          borderSide: const BorderSide(
+            color: AppColorsLightTheme.authTextFieldFillColor,
+          ),
+        ),
         focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.r),
-            borderSide: const BorderSide(
-                color: AppColorsLightTheme.authTextFieldFillColor)),
+          borderRadius: BorderRadius.circular(20.r),
+          borderSide: const BorderSide(
+            color: AppColorsLightTheme.authTextFieldFillColor,
+          ),
+        ),
         filled: true,
         fillColor: AppColorsLightTheme.authTextFieldFillColor,
         hintText: hintText,
         hintStyle: TextStyle(
-            color: Colors.grey,
-            fontSize: 14.sp,
-            fontFamily: FontPath.poppinsBold),
+          color: Colors.grey,
+          fontSize: 14.sp,
+          fontFamily: FontPath.poppinsBold,
+        ),
         suffixIcon: suffix,
-        contentPadding: EdgeInsets.all(10.r),
+        contentPadding: EdgeInsets.all(
+          10.r,
+        ),
       ),
     );
   }
