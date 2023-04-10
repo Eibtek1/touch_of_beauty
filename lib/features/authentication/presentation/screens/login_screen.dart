@@ -154,9 +154,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (value!.isEmpty) {
                         return 'ادخل رقم الهاتف';
                       }
-                      // else if (!regex.hasMatch(value)) {
-                      //   return 'صيغة الهاتف غير صحيحة';
-                      // }
+                      else if (!regex.hasMatch(value)) {
+                        return 'صيغة الهاتف غير صحيحة';
+                      }
                       return null;
                     },
                     suffix: Padding(

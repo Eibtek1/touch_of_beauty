@@ -10,6 +10,7 @@ import '../../../../core/network/dio_helper.dart';
 import '../../../authentication/data/models/cities_model.dart';
 import '../../data/models/address_model.dart';
 import '../../data/models/fav_services_model.dart';
+import '../../data/models/questions_model.dart';
 
 class UserServicesCubit extends Cubit<UserServicesState> {
   UserServicesCubit() : super(UserServicesInitial());
@@ -38,6 +39,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
   ServicesDetailsModel? servicesModel;
 
+  List<QuestionsModel> questionsList = [];
   List<ServicesModel> servicesList = [];
   List<ServicesModel> filteredServicesList = [];
 
@@ -292,6 +294,22 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     } catch (error) {
       getFavoriteServicesLoading = false;
       emit(GetFavoritesServicesError(error: error.toString()));
+    }
+  }
+
+  void getAllQuestions() async {
+    emit(GetAllQuestionsLoadingState());
+    try {
+      final response = await ServicesProvidersRepository.getAllQuestions();
+      mainResponse = MainResponse.fromJson(response.data);
+      for (var element in mainResponse.data) {
+        if (!questionsList.contains(QuestionsModel.fromJson(element))) {
+          questionsList.add(QuestionsModel.fromJson(element));
+        }
+      }
+      emit(GetAllQuestionsSuccess());
+    } catch (error) {
+      emit(GetAllQuestionsError(error: error.toString()));
     }
   }
 

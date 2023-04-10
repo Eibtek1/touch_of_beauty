@@ -213,7 +213,6 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
       // print(response);
       emit(GetServicesDetailsByItsIdSuccess());
     } catch (error) {
-      print(error.toString());
       emit(GetServicesDetailsByItsIdError(error: error.toString()));
     }
   }
@@ -225,7 +224,6 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
       final response =
       await VendorServicesRepository.deleteServices(id: id);
       mainResponse = MainResponse.fromJson(response.data);
-      print(response);
       emit(DeleteServicesSuccess());
     } catch (error) {
       emit(DeleteServicesError(error: error.toString()));

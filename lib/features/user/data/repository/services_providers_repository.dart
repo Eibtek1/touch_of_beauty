@@ -90,6 +90,13 @@ class ServicesProvidersRepository {
     return response;
   }
 
+  static Future<Response> getAllQuestions() async {
+    final response = await DioHelper.getData(
+      url: EndPoints.getQuestions,
+    );
+    return response;
+  }
+
   static Future<Response> getServices({
     int? pageNumber,
     int? pageSize,
@@ -179,8 +186,8 @@ class ServicesProvidersRepository {
     final response =
         await DioHelper.postData(url: EndPoints.addresses, token: token, data: {
       "region": region,
-      "street": street ,
-      "buildingNumber":"مبني رقم $buildingNumber",
+      "street": street,
+      "buildingNumber": "مبني رقم $buildingNumber",
       "flatNumber": "شقة رقم $flatNumber",
       "addressDetails": addressDetails ?? "",
       "cityId": cityId

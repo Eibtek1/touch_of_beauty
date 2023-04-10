@@ -177,6 +177,17 @@ class AppDrawer extends StatelessWidget {
             SizedBox(
               height: 15.h,
             ),
+            buildTitleWidget(
+              onTap: () {
+                UserServicesCubit.get(context).getAllQuestions();
+                Navigator.pop(context);
+                Navigator.pushNamed(context, ScreenName.allQuestionsScreen);
+              },
+              title: 'الاسئلة الشائعة',
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
             const Divider(
               color: Colors.white,
             ),
@@ -213,16 +224,16 @@ class AppDrawer extends StatelessWidget {
             SizedBox(
               height: 15.h,
             ),
-            buildTitleWidget(
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, ScreenName.helpPrivacy);
-              },
-              title: 'مساعدة',
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
+            // buildTitleWidget(
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //     Navigator.pushNamed(context, ScreenName.helpPrivacy);
+            //   },
+            //   title: 'مساعدة',
+            // ),
+            // SizedBox(
+            //   height: 15.h,
+            // ),
             buildTitleWidget(
               onTap: () {
                 Navigator.pop(context);

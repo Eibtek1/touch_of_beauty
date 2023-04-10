@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/app_router/screens_name.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../freelancer/presentation/widgets/custom_vendor_button.dart';
 class DeleteAccAlert extends StatelessWidget {

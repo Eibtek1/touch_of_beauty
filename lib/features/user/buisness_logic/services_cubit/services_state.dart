@@ -48,6 +48,14 @@ class GetFavoritesServicesError extends UserServicesState {
 }
 
 
+class GetAllQuestionsLoadingState extends UserServicesState {}
+class GetAllQuestionsSuccess extends UserServicesState {}
+class GetAllQuestionsError extends UserServicesState {
+  final String error;
+  GetAllQuestionsError({required this.error});
+}
+
+
 class DeleteServiceFromFavLoading extends UserServicesState {}
 class DeleteServiceFromFavSuccess extends UserServicesState {}
 class DeleteServiceFromFavError extends UserServicesState {

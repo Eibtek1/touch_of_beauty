@@ -47,6 +47,7 @@ class EndPoints{
   static const addServiceToFavorite = '/Favorites/AddServiceInFavorite/';
   static const getFavoriteProviders = '/Favorites/GetFavoriteProviders';
   static const getFavoriteServices = '/Favorites/GetFavoriteServices';
+  static const getQuestions = '/QuestionsAndAnswers/GetAll';
   static const addresses = '/Addresses';
   static const employees = '/Employees';
   static const applePublish = '/ApplePublish';
