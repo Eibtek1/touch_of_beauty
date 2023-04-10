@@ -25,15 +25,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     OnboardingModel(
         backGround: ImagePath.onboarding1,
         title: 'تعرف علي تطبيق خانة الجمال',
-        bodyTitle: 'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى من مولد النص العربى'),
+        bodyTitle: 'طبيق بيوتي تاتش وجهتكِ لعالم من خلاله تعيشِ في جنة من الجمال خصص ليكون بين يديك .'),
     OnboardingModel(
         backGround: ImagePath.onboarding2,
         title: 'تعرف علي تطبيق خانة الجمال',
-        bodyTitle: 'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى من مولد النص العربى'),
+        bodyTitle: 'أحصلي على تطبيق متكامل وأبدئي معنا انطلاقتك بالعمل وحققي ربح و دخل أكبر .'),
     OnboardingModel(
         backGround: ImagePath.onboarding3,
         title: 'تعرف علي تطبيق خانة الجمال',
-        bodyTitle: 'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى من مولد النص العربى')
+        bodyTitle: 'تعالي نعرفك على خدماتنا يا اميرة و نبدأ معك برحلة من الجمال .')
   ];
 
   @override
