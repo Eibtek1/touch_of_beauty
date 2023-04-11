@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/network/api_end_points.dart';
 import 'package:touch_of_beauty/features/user/data/models/services_providers_model.dart';
@@ -109,16 +110,17 @@ class SalonItemBuilder extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Text(
-                        '${servicesProviderModel.description}',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          fontFamily: FontPath.almaraiRegular,
-                          color: const Color(0xff666666),
-                        ),
-                      ),
+                      child: HtmlWidget('${servicesProviderModel.description}',),
+                      // Text(
+                      //   '${servicesProviderModel.description}',
+                      //   maxLines: 1,
+                      //   overflow: TextOverflow.ellipsis,
+                      //   style: TextStyle(
+                      //     fontSize: 11.sp,
+                      //     fontFamily: FontPath.almaraiRegular,
+                      //     color: const Color(0xff666666),
+                      //   ),
+                      // ),
                     ),
                   ],
                 ),

@@ -32,8 +32,25 @@ class _CheckPublishScreenState extends State<CheckPublishScreen> {
     _mainResponse = MainResponse.fromJson(response.data);
     _isPublish = _mainResponse!.data['isLive'];
     checkPublish = await CacheHelper.saveData(key: CacheKeys.checkPublish, value: _isPublish);
+    checkPublish = CacheHelper.getData(key: CacheKeys.checkPublish,);
+    bool? onboarding = CacheHelper.getData(key: CacheKeys.onboarding);
     if(mounted){
-      Navigator.pushNamedAndRemoveUntil(context, ScreenName.onboardingScreen, (route) => false);
+      if (onboarding == null ) {
+        Navigator.pushNamedAndRemoveUntil(context, ScreenName.onboardingScreen, (route) => false);
+      } else if (token != null && userType != null && checkPublish != null) {
+        if (userType == 1.toString()) {
+          Navigator.pushReplacementNamed(context, ScreenName.userMainLayout);
+        } else if (userType == 2.toString()) {
+          Navigator.pushReplacementNamed(
+              context, ScreenName.vendorMainLayout);
+        } else if (userType == 3.toString()) {
+          Navigator.pushReplacementNamed(
+              context, ScreenName.freelancerMainLayout);
+        }
+      } else {
+        Navigator.pushReplacementNamed(context, ScreenName.loginScreen);
+      }
+
     }
 }
 

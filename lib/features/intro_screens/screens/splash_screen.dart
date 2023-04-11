@@ -36,10 +36,15 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
       const Duration(seconds: 2),
       () {
-        if (onboarding == null && checkPublish == null) {
+        if (checkPublish == null ) {
+          print(checkPublish);
           Navigator.pushReplacementNamed(
               context, ScreenName.checkPublishScreen);
-        } else if (token != null && userType != null && checkPublish != null) {
+        } else if(checkPublish == true){
+          print(checkPublish);
+          Navigator.pushReplacementNamed(
+              context, ScreenName.checkPublishScreen);
+        }else if (token != null && userType != null && checkPublish != null&&checkPublish!=true) {
           if (userType == 1.toString()) {
             Navigator.pushReplacementNamed(context, ScreenName.userMainLayout);
           } else if (userType == 2.toString()) {
