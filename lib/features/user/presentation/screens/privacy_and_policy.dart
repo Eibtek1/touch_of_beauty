@@ -20,6 +20,7 @@ class _PrivacyAndPolicyState extends State<PrivacyAndPolicy> {
     ServicesProvidersCubit.get(context).getContactUs();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +37,11 @@ class _PrivacyAndPolicyState extends State<PrivacyAndPolicy> {
                 SizedBox(
                   width: 34.w,
                   height: 34.h,
-                  child: IconButton(onPressed: (){Navigator.pop(context);}, icon: const Icon(Icons.arrow_back)),
+                  child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.arrow_back)),
                 ),
                 Expanded(
                   child: Text(
@@ -72,10 +77,20 @@ class _PrivacyAndPolicyState extends State<PrivacyAndPolicy> {
               listener: (context, state) {},
               builder: (context, state) {
                 var cubit = ServicesProvidersCubit.get(context);
-                return state is! GetContactUsLoading&&cubit.contactUsModel!=null?AboutWidget(
-                  title:
-                  '${cubit.contactUsModel!.termsAndConditions}',
-                ):const Center(child: CircularProgressIndicator.adaptive(),);
+                return state is! GetContactUsLoading &&
+                        cubit.contactUsModel != null
+                    ? Expanded(
+                      child: ListView(
+                        children: [
+                          AboutWidget(
+                              title: '${cubit.contactUsModel!.termsAndConditions}',
+                            ),
+                        ],
+                      ),
+                    )
+                    : const Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      );
               },
             )
           ],

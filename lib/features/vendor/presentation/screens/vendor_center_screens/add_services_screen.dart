@@ -320,7 +320,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                           SizedBox(
                             height: 20.h,
                           ),
-                          if (widget.servicesModel == null)
+                          // if (widget.servicesModel == null)
                             Text(
                             'مدة الخدمة',
                             style: TextStyle(
@@ -329,11 +329,11 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                               color: const Color(0xff3C475C),
                             ),
                           ),
-                          if (widget.servicesModel == null)
+                          // if (widget.servicesModel == null)
                             SizedBox(
                               height: 5.h,
                             ),
-                          if (widget.servicesModel == null)
+                          // if (widget.servicesModel == null)
                             CustomTextFormField(
                               keyboardType: TextInputType.phone,
                               height: 44.h,
@@ -602,20 +602,37 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                       );
                                     }
                                   } else if (widget.type == 1) {
-                                    cubit.addServicesOfFreelancer(
-                                      titleAr: aNameController.text,
-                                      titleEn: eNameController.text,
-                                      description: detailsController.text,
-                                      price: double.parse(
-                                          priceController.text.toString()),
-                                      finalPrice: double.parse(
-                                          finalPriceController.text.toString()),
-                                      empNumber: double.parse(emNumberController
-                                              .text
-                                              .toString())
-                                          .round(),
-                                      duration: timeController.text,
-                                    );
+                                    if(widget.servicesModel!=null){
+                                      cubit.updateServicesOfCenter(
+                                        titleAr: aNameController.text,
+                                        titleEn: eNameController.text,
+                                        description: detailsController.text,
+                                        price: double.parse(
+                                            priceController.text.toString()),
+                                        finalPrice: double.parse(
+                                            finalPriceController.text.toString()),
+                                        empNumber: double.parse(emNumberController
+                                            .text
+                                            .toString())
+                                            .round(),
+                                        duration: timeController.text, id: widget.servicesModel!.id!,
+                                      );
+                                    }else{
+                                      cubit.addServicesOfFreelancer(
+                                        titleAr: aNameController.text,
+                                        titleEn: eNameController.text,
+                                        description: detailsController.text,
+                                        price: double.parse(
+                                            priceController.text.toString()),
+                                        finalPrice: double.parse(
+                                            finalPriceController.text.toString()),
+                                        empNumber: double.parse(emNumberController
+                                            .text
+                                            .toString())
+                                            .round(),
+                                        duration: timeController.text,
+                                      );
+                                    }
                                   }
                                 }
                               },

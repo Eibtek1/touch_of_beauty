@@ -7,6 +7,7 @@ import 'package:touch_of_beauty/features/user/data/models/paginate_model.dart';
 import 'package:touch_of_beauty/features/user/data/models/services_model.dart';
 import 'package:touch_of_beauty/features/vendor/buisness_logic/services_cubit/vendor_services_state.dart';
 
+import '../../../../core/constants/constants.dart';
 import '../../../user/data/models/main_sections_model.dart';
 import '../../../user/data/repository/services_providers_repository.dart';
 import '../../data/repository/services_repo.dart';
@@ -146,11 +147,13 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
     required double finalPrice,
     required int empNumber,
     required int id,
-    required String duration,
+    required String? duration,
   }) async {
     emit(AddServicesLoading());
     try {
-      await VendorServicesRepository.updateServices(
+      print(servicesModel!.id);
+      print(token);
+      final response = await VendorServicesRepository.updateServices(
         titleAr: titleAr,
         titleEn: titleEn,
         description: description,
@@ -164,6 +167,8 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
         inCenter: inCenter,
         isAvailable: isAvailable, id: id,
       );
+      print(",,,");
+      print(response);
       emit(AddServicesSuccess());
     } catch (error) {
       emit(AddServicesError(error: error.toString()));

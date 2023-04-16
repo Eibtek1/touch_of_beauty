@@ -12,6 +12,7 @@ import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/svg_path.dart';
 import '../../../freelancer/buisness_logic/services_cubit/freelancer_services_cubit.dart';
 import '../../../user/presentation/widgets/delete_acc_alert_dialog.dart';
+import '../widgets/build_center_item.dart';
 import '../widgets/screen_layout_widget_with_logo.dart';
 
 class VendorCentersScreen extends StatefulWidget {
@@ -71,145 +72,127 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
               SizedBox(
                 height: 186.h,
               ),
-              buildItem(
-                svgImage: SvgPath.centersIcon,
-                title: 'بيانات المركز',
-                onTap: () {
-                  if (AuthCubit.get(context).getUserModel == null) {
-                    AuthCubit.get(context).getUserData();
-                  }
-                  Navigator.pushNamed(context, ScreenName.detailsCenterScreen);
-                },
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Divider(),
-              buildItem(
-                svgImage: SvgPath.clock,
-                title: 'مواعيد العمل',
-                onTap: () {
-                  Navigator.pushNamed(
-                      context, ScreenName.centerWorkingTimeScreen);
-                },
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Divider(),
-              buildItem(
-                svgImage: SvgPath.bag,
-                title: 'خدماتي',
-                onTap: () {
-                  VendorServicesCubit.get(context)
-                      .getServicesByServiceProviderId();
-                  Navigator.pushNamed(context, ScreenName.vendorServicesScreen);
-                },
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Divider(),
-              buildItem(
-                svgImage: SvgPath.calender2,
-                title: 'حجوزاتي',
-                onTap: () {
-                  Navigator.pushNamed(
-                      context, ScreenName.vendorReservationsScreen);
-                },
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Divider(),
-              buildItem(
-                svgImage: SvgPath.edit,
-                width: 20.w,
-                height: 20.h,
-                title: 'حذف الحساب',
-                onTap: () {
-                  showProgressIndicator(context);
-                  Future.delayed(const Duration(seconds: 2),(){
-                    Navigator.pop(context);
-                    showDialog(context: context, builder: (context) => const DeleteAccAlert());
-                  });
-                },
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Divider(),
-              BlocConsumer<AuthCubit, AuthState>(
-                listener: (context, state) {
-                  if(state is LogoutLoading){
-                    showProgressIndicator(context);
-                  }
-                  if(state is LogoutError){
-                    Navigator.pop(context);
-                  }
-                  if(state is LogoutSuccess){
-
-                    VendorServicesCubit.get(context).servicesList = [];
-                    VendorServicesCubit.get(context).servicesPageNumber = 1;
-                    FreelancerServicesCubit.get(context).servicesPageNumber = 1;
-                    Navigator.pushNamedAndRemoveUntil(context, ScreenName.loginScreen, (route) => false);
-                  }
-                },
-                builder: (context, state) {
-                  var cubit = AuthCubit.get(context);
-                  return buildItem(
-                    svgImage: SvgPath.calender2,
-                    child: Icon(
-                      Icons.exit_to_app,
-                      size: 24.r,
-                      color: AppColorsLightTheme.primaryColor,
+              Expanded(
+                child: ListView(
+                  children: [
+                    BuildCenterItem(
+                      svgImage: SvgPath.centersIcon,
+                      title: 'بيانات المركز',
+                      onTap: () {
+                        if (AuthCubit.get(context).getUserModel == null) {
+                          AuthCubit.get(context).getUserData();
+                        }
+                        Navigator.pushNamed(
+                            context, ScreenName.detailsCenterScreen);
+                      },
                     ),
-                    title: 'تسجيل الخروج',
-                    onTap: () {
-                      // print(token);
-                      cubit.logout();
-                    },
-                  );
-                },
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Divider(),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Divider(),
+                    BuildCenterItem(
+                      svgImage: SvgPath.clock,
+                      title: 'مواعيد العمل',
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, ScreenName.centerWorkingTimeScreen);
+                      },
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Divider(),
+                    BuildCenterItem(
+                      svgImage: SvgPath.bag,
+                      title: 'خدماتي',
+                      onTap: () {
+                        VendorServicesCubit.get(context)
+                            .getServicesByServiceProviderId();
+                        Navigator.pushNamed(
+                            context, ScreenName.vendorServicesScreen);
+                      },
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Divider(),
+                    BuildCenterItem(
+                      svgImage: SvgPath.calender2,
+                      title: 'حجوزاتي',
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, ScreenName.vendorReservationsScreen);
+                      },
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Divider(),
+                    BuildCenterItem(
+                      svgImage: SvgPath.edit,
+                      width: 20.w,
+                      height: 20.h,
+                      title: 'حذف الحساب',
+                      onTap: () {
+                        showProgressIndicator(context);
+                        Future.delayed(const Duration(seconds: 2), () {
+                          Navigator.pop(context);
+                          showDialog(
+                              context: context,
+                              builder: (context) => const DeleteAccAlert());
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Divider(),
+                    BlocConsumer<AuthCubit, AuthState>(
+                      listener: (context, state) {
+                        if (state is LogoutLoading) {
+                          showProgressIndicator(context);
+                        }
+                        if (state is LogoutError) {
+                          Navigator.pop(context);
+                        }
+                        if (state is LogoutSuccess) {
+                          VendorServicesCubit.get(context).servicesList = [];
+                          VendorServicesCubit.get(context).servicesPageNumber =
+                              1;
+                          FreelancerServicesCubit.get(context)
+                              .servicesPageNumber = 1;
+                          Navigator.pushNamedAndRemoveUntil(context,
+                              ScreenName.loginScreen, (route) => false);
+                        }
+                      },
+                      builder: (context, state) {
+                        var cubit = AuthCubit.get(context);
+                        return BuildCenterItem(
+                          svgImage: SvgPath.calender2,
+                          title: 'تسجيل الخروج',
+                          onTap: () {
+                            // print(token);
+                            cubit.logout();
+                          },
+                          child: Icon(
+                            Icons.exit_to_app,
+                            size: 24.r,
+                            color: AppColorsLightTheme.primaryColor,
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Divider(),
+                  ],
+                ),
+              )
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget buildItem({required String svgImage,
-    required String title,
-    Widget? child,
-    double? width,
-    double? height,
-    required Function onTap}) {
-    return ListTile(
-      onTap: () {
-        onTap();
-      },
-      leading: child ?? SvgPicture.asset(
-        svgImage,
-        width: width,
-        height: height,
-        colorFilter: const ColorFilter.mode(
-          AppColorsLightTheme.primaryColor,
-          BlendMode.srcIn,
-        ),
-      ),
-      title: Text(
-        title,
-        style: TextStyle(
-            color: const Color(0xff3C475C),
-            fontSize: 14.sp,
-            fontFamily: FontPath.almaraiRegular),
-      ),
-      trailing: const Icon(Icons.arrow_forward_ios),
     );
   }
 }

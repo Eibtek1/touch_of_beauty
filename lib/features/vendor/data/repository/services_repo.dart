@@ -64,7 +64,7 @@ class VendorServicesRepository {
     required String titleAr,
     required String titleEn,
     required String description,
-    required String duration,
+    required String? duration,
     required File? image,
     required double price,
     required double finalPrice,
@@ -75,6 +75,7 @@ class VendorServicesRepository {
     required bool isAvailable,
     required int id,
   }) async {
+    print(image);
     final response = await DioHelper.putData(
         url: "${EndPoints.editServices}$id",
         token: token,
