@@ -14,6 +14,7 @@ import '../../../authentication/buisness_logic/auth_state.dart';
 import '../../../user/presentation/widgets/delete_acc_alert_dialog.dart';
 import '../../../vendor/presentation/widgets/screen_layout_widget_with_logo.dart';
 import '../../buisness_logic/services_cubit/freelancer_services_cubit.dart';
+import '../widgets/build_freelancer_profile_item.dart';
 
 class FreelancerCentersScreen extends StatelessWidget {
   const FreelancerCentersScreen({Key? key}) : super(key: key);
@@ -60,147 +61,130 @@ class FreelancerCentersScreen extends StatelessWidget {
               SizedBox(
                 height: 186.h,
               ),
-              buildItem1(
-                  svgImage: SvgPath.centersIcon,
-                  title: 'بيانات مقدم الخدمة',
-                  onTap: () {
-                    if (AuthCubit.get(context).getUserModel == null) {
-                      AuthCubit.get(context).getUserData();
-                    }
-                    Navigator.pushNamed(
-                        context, ScreenName.freelancerDetailsScreen);
-                  }),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Divider(),
-              buildItem1(
-                  svgImage: SvgPath.clock,
-                  title: 'مواعيد العمل',
-                  onTap: () {
-                    Navigator.pushNamed(
-                        context, ScreenName.freelancerTimeScreen);
-                  }),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Divider(),
-              buildItem1(
-                svgImage: SvgPath.bag,
-                title: 'خدماتي',
-                onTap: () {
-                  VendorServicesCubit.get(context)
-                      .getServicesByServiceProviderId();
-                  Navigator.pushNamed(
-                      context, ScreenName.freelancerServicesScreen);
-                },
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Divider(),
-              buildItem1(
-                svgImage: SvgPath.edit,
-                width: 20.w,
-                height: 20.h,
-                title: 'حذف الحساب',
-                onTap: () {
-                  showProgressIndicator(context);
-                  Future.delayed(const Duration(seconds: 2),(){
-                    Navigator.pop(context);
-                    showDialog(context: context, builder: (context) => const DeleteAccAlert());
-                  });
-                },
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Divider(),
-              buildItem1(
-                  svgImage: SvgPath.calender2,
-                  title: 'حجوزاتي',
-                  onTap: () {
-                    Navigator.pushNamed(
-                        context, ScreenName.vendorReservationsScreen);
-                  }),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Divider(),
-              BlocConsumer<AuthCubit, AuthState>(
-                listener: (context, state) {
-                  if (state is LogoutLoading) {
-                    showProgressIndicator(context);
-                  }
-                  if (state is LogoutError) {
-                    Navigator.pop(context);
-                  }
-                  if (state is LogoutSuccess) {
-
-                    VendorServicesCubit.get(context).servicesList = [];
-                    VendorServicesCubit.get(context).servicesPageNumber = 1;
-                    FreelancerServicesCubit.get(context).servicesPageNumber = 1;
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, ScreenName.loginScreen, (route) => false);
-                  }
-                },
-                builder: (context, state) {
-                  var cubit = AuthCubit.get(context);
-                  return buildItem1(
-                    svgImage: SvgPath.calender2,
-                    child: Icon(
-                      Icons.exit_to_app,
-                      size: 24.r,
-                      color: AppColorsLightTheme.primaryColor,
+              Expanded(
+                child: ListView(
+                  children: [
+                    BuildFreelancerProfileItem(
+                      svgImage: SvgPath.centersIcon,
+                      title: 'بيانات مقدم الخدمة',
+                      onTap: () {
+                        if (AuthCubit.get(context).getUserModel == null) {
+                          AuthCubit.get(context).getUserData();
+                        }
+                        Navigator.pushNamed(
+                            context, ScreenName.freelancerDetailsScreen);
+                      },
                     ),
-                    title: 'تسجيل الخروج',
-                    onTap: () {
-                      // print(token);
-                      cubit.logout();
-                    },
-                  );
-                },
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Divider(),
+                    BuildFreelancerProfileItem(
+                      svgImage: SvgPath.clock,
+                      title: 'مواعيد العمل',
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, ScreenName.freelancerTimeScreen);
+                      },
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Divider(),
+                    BuildFreelancerProfileItem(
+                      svgImage: SvgPath.bag,
+                      title: 'خدماتي',
+                      onTap: () {
+                        VendorServicesCubit.get(context)
+                            .getServicesByServiceProviderId();
+                        Navigator.pushNamed(
+                            context, ScreenName.freelancerServicesScreen);
+                      },
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Divider(),
+                    BuildFreelancerProfileItem(
+                      svgImage: SvgPath.edit,
+                      width: 20.w,
+                      height: 20.h,
+                      title: 'حذف الحساب',
+                      onTap: () {
+                        showProgressIndicator(context);
+                        Future.delayed(
+                          const Duration(seconds: 2),
+                          () {
+                            Navigator.pop(context);
+                            showDialog(
+                                context: context,
+                                builder: (context) => const DeleteAccAlert());
+                          },
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Divider(),
+                    BuildFreelancerProfileItem(
+                      svgImage: SvgPath.calender2,
+                      title: 'حجوزاتي',
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, ScreenName.vendorReservationsScreen);
+                      },
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Divider(),
+                    BlocConsumer<AuthCubit, AuthState>(
+                      listener: (context, state) {
+                        if (state is LogoutLoading) {
+                          showProgressIndicator(context);
+                        }
+                        if (state is LogoutError) {
+                          Navigator.pop(context);
+                        }
+                        if (state is LogoutSuccess) {
+                          VendorServicesCubit.get(context).servicesList = [];
+                          VendorServicesCubit.get(context).servicesPageNumber =
+                              1;
+                          FreelancerServicesCubit.get(context)
+                              .servicesPageNumber = 1;
+                          Navigator.pushNamedAndRemoveUntil(context,
+                              ScreenName.loginScreen, (route) => false);
+                        }
+                      },
+                      builder: (context, state) {
+                        var cubit = AuthCubit.get(context);
+                        return BuildFreelancerProfileItem(
+                          svgImage: SvgPath.calender2,
+                          title: 'تسجيل الخروج',
+                          onTap: () {
+                            // print(token);
+                            cubit.logout();
+                          },
+                          child: Icon(
+                            Icons.exit_to_app,
+                            size: 24.r,
+                            color: AppColorsLightTheme.primaryColor,
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Divider(),
+                  ],
+                ),
               ),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Divider(),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget buildItem1(
-      {required String svgImage,
-        double? width,
-        double? height,
-      required String title,
-      Widget? child,
-      required Function onTap}) {
-    return ListTile(
-      onTap: () {
-        onTap();
-      },
-      leading: child ??
-          SvgPicture.asset(
-            svgImage,
-            height: height,
-            width: width,
-            colorFilter: const ColorFilter.mode(
-              AppColorsLightTheme.primaryColor,
-              BlendMode.srcIn,
-            ),
-          ),
-      title: Text(
-        title,
-        style: TextStyle(
-            color: const Color(0xff3C475C),
-            fontSize: 14.sp,
-            fontFamily: FontPath.almaraiRegular),
-      ),
-      trailing: const Icon(Icons.arrow_forward_ios),
     );
   }
 }
