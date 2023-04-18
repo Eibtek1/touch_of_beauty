@@ -20,10 +20,6 @@ class UserMainLayout extends StatefulWidget {
 class _UserMainLayoutState extends State<UserMainLayout> {
   @override
   void initState() {
-    FirebaseMessaging.onMessageOpenedApp.listen((event){
-    });
-    FirebaseMessaging.onMessage.listen((event) {
-    });
     _checkGorUpdates();
     super.initState();
   }

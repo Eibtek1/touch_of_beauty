@@ -75,7 +75,6 @@ class VendorServicesRepository {
     required bool isAvailable,
     required int id,
   }) async {
-    print(image);
     final response = await DioHelper.putData(
         url: "${EndPoints.editServices}$id",
         token: token,

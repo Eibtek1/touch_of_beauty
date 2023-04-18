@@ -25,11 +25,13 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void initFirebaseMessaging() async {
-    FirebaseMessaging.instance.getInitialMessage().then((event) {});
+    FirebaseMessaging.instance.getInitialMessage().then((event) {
+      print(event);
+      print("event");
+    });
   }
 
   _loading() async {
-    bool? onboarding = CacheHelper.getData(key: CacheKeys.onboarding);
     token = CacheHelper.getData(key: CacheKeys.token);
     userType = CacheHelper.getData(key: CacheKeys.userType);
     checkPublish = CacheHelper.getData(key: CacheKeys.checkPublish);
@@ -37,11 +39,9 @@ class _SplashScreenState extends State<SplashScreen> {
       const Duration(seconds: 2),
       () {
         if (checkPublish == null ) {
-          print(checkPublish);
           Navigator.pushReplacementNamed(
               context, ScreenName.checkPublishScreen);
         } else if(checkPublish == true){
-          print(checkPublish);
           Navigator.pushReplacementNamed(
               context, ScreenName.checkPublishScreen);
         }else if (token != null && userType != null && checkPublish != null&&checkPublish!=true) {
