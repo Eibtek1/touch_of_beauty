@@ -28,10 +28,7 @@ class _UserMainLayoutState extends State<VendorMainLayout> {
 
   @override
   void initState() {
-    FirebaseMessaging.onMessageOpenedApp.listen((event){
-    });
-    FirebaseMessaging.onMessage.listen((event) {
-    });
+
     _checkGorUpdates();
     super.initState();
   }

@@ -182,6 +182,7 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
                                   reservationModel:
                                       cubit.reservationsList[index],
                                   goToPay: () {
+
                                     cubit.confirmOrder(
                                         id: cubit.reservationsList[index].id!);
                                   },

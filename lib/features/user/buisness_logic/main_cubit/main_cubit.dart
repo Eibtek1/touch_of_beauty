@@ -30,7 +30,6 @@ class MainCubit extends Cubit<MainState> {
 
   void onTap(int? index){
     cIndex = index!;
-    // print(token);
     emit(ChangeCurrentIndex());
   }
   void initFunction()async{
