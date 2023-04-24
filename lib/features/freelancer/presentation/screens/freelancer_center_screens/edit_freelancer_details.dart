@@ -243,44 +243,6 @@ class EditFreelancerDetailsScreen extends StatelessWidget {
                         SizedBox(
                           height: 14.h,
                         ),
-                        Row(
-                          children: [
-                            CustomDetailsContainer(
-                              height: 44.h,
-                              width: 280.w,
-                              child: Text(
-                                'عنوان المركز',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontFamily: FontPath.almaraiBold,
-                                  color: const Color(0xff8B8989),
-                                ),
-                              ),
-                            ),
-                            const Spacer(),
-                            Container(
-                              height: 44.h,
-                              width: 45.w,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 12.w, vertical: 12.h),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.r),
-                                color:
-                                    AppColorsLightTheme.authTextFieldFillColor,
-                              ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.location_on,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 14.h,
-                        ),
                         SizedBox(
                           height: 5.h,
                         ),

@@ -7,7 +7,7 @@ class FreelancerMoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('vendor moreScreen'),
+        child: Text('freelancer moreScreen'),
       ),
     );
   }

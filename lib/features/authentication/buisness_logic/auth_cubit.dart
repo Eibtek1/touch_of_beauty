@@ -280,7 +280,7 @@ class AuthCubit extends Cubit<AuthState> {
       getUserModel = GetUserModel.fromJson(mainResponse.data);
       if (picturesList.isEmpty && data == 0) {
         getAllPicturesForProvider();
-        getAllPicturesForProvider();
+        // getAllPicturesForProvider();
       }
       emit(GetUserDataSuccess());
     } catch (error) {

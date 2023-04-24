@@ -135,7 +135,9 @@ class AppRouter {
           OtpArgs arguments = args as OtpArgs;
           return _animateRouteBuilder( OtpScreen(phoneNumber: arguments.phoneNumber, isConfirmPassword: arguments.isConfirmPassword,));
         case ScreenName.addAddressScreen:
-          return _animateRouteBuilder(const AddAddressScreen());
+          final args = settings.arguments ;
+          final AddAddressArgs arg = args as AddAddressArgs;
+          return _animateRouteBuilder(AddAddressScreen(userEqualsZeroVendorEqualsOne: arg.userEqualsZeroVendorEqualsOne!,addressModel: arg.addressModel,));
         case ScreenName.paymentScreen:
           return _animateRouteBuilder(const PaymentScreen());
         case ScreenName.editProfileScreen:

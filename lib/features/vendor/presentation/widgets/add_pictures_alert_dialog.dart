@@ -23,6 +23,8 @@ class AddImageAlertDialog extends StatelessWidget {
         child: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state is AddPictureSuccess) {
+              var cubit = AuthCubit.get(context);
+              cubit.getAllPicturesForProvider();
               Navigator.pop(context);
             }
           },

@@ -102,12 +102,15 @@ class SalonItemBuilder extends StatelessWidget {
                       height: 5.h,
                     ),
                     Text(
-                      '${servicesProviderModel.addresses![0].city}',
+                      servicesProviderModel.addresses!.isNotEmpty?servicesProviderModel.addresses![0].city!:'لم يتم اضافة عنوان',
                       style: TextStyle(
                         fontSize: 11.sp,
                         fontFamily: FontPath.almaraiRegular,
                         color: const Color(0xff666666),
                       ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
                     ),
                     Expanded(
                       child: HtmlWidget('${servicesProviderModel.description}',),

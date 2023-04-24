@@ -195,6 +195,28 @@ class ServicesProvidersRepository {
     return response;
   }
 
+  static Future<Response> updateAddress({
+    required int cityId,
+    required int addressId,
+    required String? region,
+    required String? street,
+    required String? buildingNumber,
+    required String? flatNumber,
+    required String? addressDetails,
+  }) async {
+    final response =
+        await DioHelper.putData(url: EndPoints.addresses, token: token, data: {
+          "id": addressId,
+          "region": region,
+          "street": street,
+          "buildingNumber": "مبني رقم $buildingNumber",
+          "flatNumber": "شقة رقم $flatNumber",
+          "addressDetails": addressDetails ?? "",
+          "cityId": cityId
+    });
+    return response;
+  }
+
   static Future<Response> addOrder({
     required int serviceId,
     required int addressId,

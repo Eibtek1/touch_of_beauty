@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
-import 'main.dart';
+import '../../main.dart';
 import 'notification_strings.dart';
 
 class NotificationService {
@@ -25,9 +25,6 @@ class NotificationService {
       Function(NotificationResponse)? onDidReceiveNotificationResponse,
       ) async {
     if (_isFlutterLocalNotificationsInitialized) return;
-    final token = await _firebaseMessaging.getToken();
-    // ignore: avoid_print
-    print(token);
     await _initFirebaseMessaging();
     await _flutterLocalNotificationsPlugin.initialize(
       InitializationSettings(
@@ -35,9 +32,7 @@ class NotificationService {
         iOS: iosInitializationSettings,
       ),
       onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
-      onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
     );
-    print('init');
     await _requestPermissions();
     await _createNotificationChannels();
     _listenNotificationActionStream();
@@ -47,14 +42,12 @@ class NotificationService {
   static Future<void> displayPushNotification(
       RemoteMessage notification,
       ) async {
-    print('show');
     await _flutterLocalNotificationsPlugin.show(
       createUniqueId,
       notification.data['title'],
       notification.data['body'],
       pushNotificationDetails,
     );
-    print('show');
   }
 
   static Future<void> cancelAllNotifications() async {
@@ -62,10 +55,9 @@ class NotificationService {
   }
 
   static Future<void> _initFirebaseMessaging() async {
-    //* Notificacion cuando la app esta en FOREGROUND
     FirebaseMessaging.onMessage.listen(_handleIncomingForegroundNotification);
-    //* Notificacion al tocar la notificacion y se abre la app
     FirebaseMessaging.onMessageOpenedApp.listen(_handleOpenedAppNotification);
+    FirebaseMessaging.instance.getInitialMessage();
   }
 
   static Future<void> _handleIncomingForegroundNotification(
@@ -75,14 +67,11 @@ class NotificationService {
   }
 
   static void _handleOpenedAppNotification(RemoteMessage remoteMessage) async{
-    print("fffff");
-    print(remoteMessage.data);
     await displayPushNotification(remoteMessage);
   }
 
   static Future<void> _requestPermissions() async {
     if (Platform.isAndroid) {
-      print('per req');
       await _flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>().requestPermission();
     } else {
@@ -120,6 +109,7 @@ class NotificationService {
   }
 
   static Future<void> deleteToken() async => _firebaseMessaging.deleteToken();
+  
 }
 
 int get createUniqueId =>

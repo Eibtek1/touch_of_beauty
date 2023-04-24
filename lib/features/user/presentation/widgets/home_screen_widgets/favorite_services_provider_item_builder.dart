@@ -20,7 +20,7 @@ class FavoriteSalonItemBuilder extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 5.w),
       child: Container(
-        height: 190.h,
+        height: 210.h,
         width: 265.w,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -98,7 +98,7 @@ class FavoriteSalonItemBuilder extends StatelessWidget {
                       height: 5.h,
                     ),
                     Text(
-                      '${servicesProviderModel.addresses![0].city}',
+                      servicesProviderModel.addresses!.isNotEmpty?servicesProviderModel.addresses![0].city!:'لم يتم اضافة عنوان',
                       style: TextStyle(
                         fontSize: 11.sp,
                         fontFamily: FontPath.almaraiRegular,

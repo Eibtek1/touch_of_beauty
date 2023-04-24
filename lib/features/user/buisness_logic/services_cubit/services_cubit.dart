@@ -86,7 +86,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     emit(GetChangedCity());
   }
 
-  void getCities() async {
+  void getCities({int? id}) async {
     emit(GetCitiesLoading());
     final response = await DioHelper.getData(
         url: '${EndPoints.baseUrl}/Cities',
@@ -95,7 +95,11 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     for (var element in response.data['data']) {
       citiesList.add(CitiesModel.fromJson(element));
     }
-    citiesModel = citiesList.first;
+    if(id!=null){
+      citiesModel = citiesList.firstWhere((element) => element.id == id);
+    }else{
+      citiesModel = citiesList.first;
+    }
     emit(GetCitiesSuccess());
   }
 
@@ -486,6 +490,33 @@ class UserServicesCubit extends Cubit<UserServicesState> {
     }
   }
 
+  void updateAddress({
+    required String region,
+    required String street,
+    required String buildingNumber,
+    required String flatNumber,
+    required String addressDetails,
+    required int addressId
+  }) async {
+    try {
+      emit(UpdateAddressLoading());
+      final response = await ServicesProvidersRepository.updateAddress(
+        cityId: citiesModel!.id!,
+        region: region,
+        street: street,
+        buildingNumber: buildingNumber,
+        flatNumber: flatNumber,
+        addressDetails: addressDetails, addressId: addressId,
+      );
+      mainResponse = MainResponse.fromJson(response.data);
+      if (mainResponse.errorCode == 0) {
+        emit(UpdateAddressSuccess());
+      }
+    } catch (error) {
+      emit(UpdateAddressError(error: error.toString()));
+    }
+  }
+
   void deleteAddress({
     required int id,
   }) async {
@@ -503,7 +534,7 @@ class UserServicesCubit extends Cubit<UserServicesState> {
 
   List<AddressModel> addressList = [];
 
-  void getAddress() async {
+  Future<void> getAddress() async {
     try {
       emit(GetAddressLoading());
       final response = await ServicesProvidersRepository.getAddress();
@@ -520,4 +551,5 @@ class UserServicesCubit extends Cubit<UserServicesState> {
       emit(GetAddressError(error: error.toString()));
     }
   }
+
 }

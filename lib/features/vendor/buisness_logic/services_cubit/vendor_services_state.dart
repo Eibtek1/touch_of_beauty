@@ -64,3 +64,10 @@ class DeleteServicesError extends VendorServicesState {
   final String error;
   DeleteServicesError({required this.error});
 }
+
+class GetAddressLoading extends VendorServicesState {}
+class GetAddressSuccess extends VendorServicesState {}
+class GetAddressError extends VendorServicesState {
+  final String error;
+  GetAddressError({required this.error});
+}

@@ -47,7 +47,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
   final TextEditingController finalPriceController = TextEditingController();
   final TextEditingController emNumberController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-
+  bool? isServicesAvailable;
   @override
   void dispose() {
     aNameController.dispose();
@@ -70,6 +70,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
         widget.servicesModel?.finalPrice.toString() ?? '';
     emNumberController.text =
         widget.servicesModel?.employeesNumber.toString() ?? '';
+    isServicesAvailable = widget.servicesModel?.isAvailable??false;
     super.initState();
   }
 
@@ -520,47 +521,47 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                             height: 5.h,
                           ),
                           const MainSectionDropdownButton(),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Text(
-                            'هل الخدمة متاحة',
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontFamily: FontPath.almaraiBold,
-                              color: const Color(0xff3C475C),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5.h,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              cubit.changeButtonState(onPressed: () {
-                                cubit.isAvailable = !cubit.isAvailable;
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                                foregroundColor: cubit.isAvailable
-                                    ? Colors.white
-                                    : AppColorsLightTheme.primaryColor,
-                                backgroundColor: cubit.isAvailable
-                                    ? AppColorsLightTheme.primaryColor
-                                    : AppColorsLightTheme
-                                        .authTextFieldFillColor,
-                                shape: const StadiumBorder()),
-                            child: Text(
-                              cubit.isAvailable
-                                  ? 'الخدمة متاحة'
-                                  : 'الخدمة لبست متاحة',
-                              style: TextStyle(
-                                  color: cubit.isAvailable
-                                      ? Colors.white
-                                      : Colors.grey,
-                                  fontFamily: FontPath.almaraiRegular,
-                                  fontSize: 12.sp),
-                            ),
-                          ),
+                          // SizedBox(
+                          //   height: 20.h,
+                          // ),
+                          // Text(
+                          //   'هل الخدمة متاحة',
+                          //   style: TextStyle(
+                          //     fontSize: 14.sp,
+                          //     fontFamily: FontPath.almaraiBold,
+                          //     color: const Color(0xff3C475C),
+                          //   ),
+                          // ),
+                          // SizedBox(
+                          //   height: 5.h,
+                          // ),
+                          // ElevatedButton(
+                          //   onPressed: () {
+                          //     cubit.changeButtonState(onPressed: () {
+                          //       isServicesAvailable = !isServicesAvailable!;
+                          //     });
+                          //   },
+                          //   style: ElevatedButton.styleFrom(
+                          //       foregroundColor: cubit.isAvailable
+                          //           ? Colors.white
+                          //           : AppColorsLightTheme.primaryColor,
+                          //       backgroundColor: cubit.isAvailable
+                          //           ? AppColorsLightTheme.primaryColor
+                          //           : AppColorsLightTheme
+                          //               .authTextFieldFillColor,
+                          //       shape: const StadiumBorder()),
+                          //   child: Text(
+                          //     isServicesAvailable!
+                          //         ? 'الخدمة متاحة'
+                          //         : 'الخدمة لبست متاحة',
+                          //     style: TextStyle(
+                          //         color: isServicesAvailable!
+                          //             ? Colors.white
+                          //             : Colors.grey,
+                          //         fontFamily: FontPath.almaraiRegular,
+                          //         fontSize: 12.sp),
+                          //   ),
+                          // ),
                           SizedBox(
                             height: 20.h,
                           ),

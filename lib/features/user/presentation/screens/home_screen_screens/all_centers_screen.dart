@@ -19,16 +19,19 @@ class AllCentersScreen extends StatefulWidget {
 class _AllCentersScreenState extends State<AllCentersScreen> {
   // final TextEditingController searchController = TextEditingController();
   ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
     // ServicesProvidersCubit.get(context).getAllServicesProviders();
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent ==
           scrollController.offset) {
-        if(BlocProvider.of<ServicesProvidersCubit>(context).servicesProvidersList.isEmpty){
+        if (BlocProvider.of<ServicesProvidersCubit>(context)
+            .servicesProvidersList
+            .isEmpty) {
           BlocProvider.of<ServicesProvidersCubit>(context)
               .getAllServicesProviders();
-        }else{
+        } else {
           BlocProvider.of<ServicesProvidersCubit>(context)
               .getAllServicesProviders();
         }
@@ -59,12 +62,15 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
           var cubit = ServicesProvidersCubit.get(context);
           if (state is GetServicesProviderDetailsByItsIdSuccess &&
               cubit.servicesProviderModel != null) {
+            print(cubit.servicesProviderModel!.mainSection);
             Navigator.pop(context);
             UserServicesCubit.get(context).tabBarCIndex = 0;
-            UserServicesCubit.get(context).changeTabBarCurrentIndex(0,
-                servicesProviderId: cubit.servicesProviderModel!.id!,
-                mainSectionId: cubit
-                    .servicesProviderModel!.mainSection![0].mainSectionId!);
+            UserServicesCubit.get(context).changeTabBarCurrentIndex(
+              0,
+              servicesProviderId: cubit.servicesProviderModel!.id!,
+              mainSectionId:
+              cubit.servicesProviderModel!.mainSection!.isNotEmpty?cubit.servicesProviderModel!.mainSection![0].mainSectionId!:0,
+            );
             showBottomSheet(
               context: context,
               builder: (context) => CenterDetailsBottomSheet(
@@ -127,7 +133,7 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
               Expanded(
                 child: !cubit.searchForServicesProviderLoading
                     ? ListView.builder(
-                  controller: scrollController,
+                        controller: scrollController,
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
                             onTap: () {

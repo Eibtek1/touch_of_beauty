@@ -86,7 +86,18 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                 height: 8.h,
               ),
               Text(
-                "${widget.servicesProvidersModel.city}",
+                widget.servicesProvidersModel.addresses!.isNotEmpty?widget.servicesProvidersModel.addresses![0].city!:'لم يتم اضافة عنوان',
+                style: TextStyle(
+                  fontSize: 11.sp,
+                  fontFamily: FontPath.almaraiRegular,
+                  color: const Color(0xff666666),
+                ),
+              ),
+              if(widget.servicesProvidersModel.addresses!=null&&widget.servicesProvidersModel.addresses!.isNotEmpty)SizedBox(
+                height: 8.h,
+              ),
+              if(widget.servicesProvidersModel.addresses!=null&&widget.servicesProvidersModel.addresses!.isNotEmpty)Text(
+                widget.servicesProvidersModel.addresses!.isNotEmpty?widget.servicesProvidersModel.addresses![0].addressDetails!:'لم يتم اضافة عنوان',
                 style: TextStyle(
                   fontSize: 11.sp,
                   fontFamily: FontPath.almaraiRegular,
@@ -264,17 +275,17 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
               SizedBox(
                 height: 22.h,
               ),
-              Text(
+              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)Text(
                 'بعض الخدمات',
                 style: TextStyle(
                     color: const Color(0xff263238),
                     fontFamily: FontPath.almaraiBold,
                     fontSize: 18.sp),
               ),
-              SizedBox(
+              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)SizedBox(
                 height: 10.h,
               ),
-              BlocConsumer<UserServicesCubit, UserServicesState>(
+              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)BlocConsumer<UserServicesCubit, UserServicesState>(
                 listener: (context, state) {
                   // TODO: implement listener
                 },
@@ -324,10 +335,10 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                   );
                 },
               ),
-              SizedBox(
+              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)SizedBox(
                 height: 10.h,
               ),
-              BlocConsumer<UserServicesCubit, UserServicesState>(
+              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)BlocConsumer<UserServicesCubit, UserServicesState>(
                 listener: (context, state) {
                   var cubit = UserServicesCubit.get(context);
                   if(state is GetServicesDetailsInCentersBottomSheetByItsIdSuccess&&cubit.servicesModel!=null){
@@ -367,14 +378,14 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                         );
                 },
               ),
-              SizedBox(
+              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)SizedBox(
                 height: 22.h,
               ),
-              const Divider(),
-              SizedBox(
+              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)const Divider(),
+              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)SizedBox(
                 height: 22.h,
               ),
-              OutlinedButton(
+              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)OutlinedButton(
                 onPressed: () {
                   UserServicesCubit.get(context).servicesPageNumber = 1;
                   UserServicesCubit.get(context).getServicesByServiceProviderId(

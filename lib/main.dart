@@ -31,8 +31,6 @@ import 'features/vendor/buisness_logic/work_hours_cubit/work_hours_cubit.dart';
 import 'firebase_options.dart';
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print(message.data['title']);
-  print(message.data['title']);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -63,17 +61,6 @@ void main() async{
       _onDidReceiveNotificationResponse);
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-  // FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-  // await FirebaseMessaging.instance.setAutoInitEnabled(true);
-  // await FirebaseMessaging.instance.requestPermission(
-  //   alert: true,
-  //   announcement: false,
-  //   badge: true,
-  //   carPlay: false,
-  //   criticalAlert: false,
-  //   provisional: false,
-  //   sound: true,
-  // );
   if(token !=null){
     AuthRepository.sendNotification();
   }

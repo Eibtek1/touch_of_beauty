@@ -10,6 +10,7 @@ import '../../../../buisness_logic/services_cubit/services_cubit.dart';
 import '../../../../buisness_logic/services_cubit/services_state.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/home_screen_widgets/search_check_button_item.dart';
+import 'add_address_screen.dart';
 
 class ChooseAddressScreen extends StatefulWidget {
   const ChooseAddressScreen({Key? key}) : super(key: key);
@@ -114,7 +115,7 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                     ),
                     child: InkWell(
                       onTap: (){
-                        Navigator.pushNamed(context, ScreenName.addAddressScreen);
+                        Navigator.pushNamed(context, ScreenName.addAddressScreen,arguments: AddAddressArgs(addressModel: null, userEqualsZeroVendorEqualsOne: 1));
                       },
                       borderRadius: BorderRadius.circular(50.r),
                       child: Row(

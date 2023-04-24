@@ -7,8 +7,9 @@ import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/serv
 import '../../../../core/app_theme/light_theme.dart';
 
 class CityDropDownButton extends StatefulWidget {
+  final int? userEqualsZeroVendorEqualsOne;
   const CityDropDownButton({
-    Key? key,
+    Key? key, this.userEqualsZeroVendorEqualsOne,
   }) : super(key: key);
 
   @override
@@ -18,7 +19,7 @@ class CityDropDownButton extends StatefulWidget {
 class _CityDropDownButtonState extends State<CityDropDownButton> {
   @override
   void initState() {
-    UserServicesCubit.get(context).getCities();
+    UserServicesCubit.get(context).getCities(id: widget.userEqualsZeroVendorEqualsOne);
     super.initState();
   }
 

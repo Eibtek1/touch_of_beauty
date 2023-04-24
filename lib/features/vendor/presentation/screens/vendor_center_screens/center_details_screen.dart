@@ -11,6 +11,9 @@ import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubi
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/network/api_end_points.dart';
+import '../../../../user/buisness_logic/services_cubit/services_cubit.dart';
+import '../../../../user/buisness_logic/services_cubit/services_state.dart';
+import '../../../../user/presentation/screens/home_screen_screens/order_screens/add_address_screen.dart';
 import '../../widgets/add_pictures_alert_dialog.dart';
 import '../../widgets/center_details/custom_container.dart';
 import '../../widgets/center_details/employees_component_builder.dart';
@@ -143,115 +146,177 @@ class CenterDetailsScreen extends StatelessWidget {
                                         child: ListView.builder(
                                           padding: EdgeInsets.symmetric(
                                               vertical: 4.5.h),
-                                          itemCount: cubit.picturesList.length,
+                                          itemCount: cubit.picturesList.isEmpty
+                                              ? 1
+                                              : cubit.picturesList.length,
                                           scrollDirection: Axis.horizontal,
                                           itemBuilder: (BuildContext context,
                                               int index) {
-                                            return Row(
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 5.w),
-                                                  child: Stack(
+                                            return cubit.picturesList.isNotEmpty
+                                                ? Row(
                                                     children: [
-                                                      Container(
-                                                        height: 70.h,
-                                                        width: 70.w,
-                                                        clipBehavior: Clip
-                                                            .antiAliasWithSaveLayer,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          border: Border.all(
-                                                              color: AppColorsLightTheme
-                                                                  .primaryColor),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      2.r),
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                                offset:
-                                                                    const Offset(
-                                                                        0, 0),
-                                                                color: Colors
-                                                                    .black
-                                                                    .withOpacity(
-                                                                        0.28),
-                                                                blurRadius: 8.r)
-                                                          ],
-                                                        ),
-                                                        child:
-                                                            CachedNetworkImage(
-                                                          fit: BoxFit.cover,
-                                                          imageUrl:
-                                                              '${EndPoints.imageBaseUrl}${cubit.picturesList[index].imgUrl}',
-                                                          placeholder: (context,
-                                                                  url) =>
-                                                              Shimmer
-                                                                  .fromColors(
-                                                            baseColor: Colors
-                                                                .grey[400]!,
-                                                            highlightColor:
-                                                                Colors
-                                                                    .grey[300]!,
-                                                            child: Container(
-                                                              height: double
-                                                                  .infinity,
-                                                              width: double
-                                                                  .infinity,
+                                                      Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    5.w),
+                                                        child: Stack(
+                                                          children: [
+                                                            Container(
+                                                              height: 70.h,
+                                                              width: 70.w,
+                                                              clipBehavior: Clip
+                                                                  .antiAliasWithSaveLayer,
                                                               decoration:
                                                                   BoxDecoration(
-                                                                color: Colors
-                                                                    .black,
+                                                                border: Border.all(
+                                                                    color: AppColorsLightTheme
+                                                                        .primaryColor),
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                            8.0),
+                                                                            2.r),
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                      offset:
+                                                                          const Offset(
+                                                                              0,
+                                                                              0),
+                                                                      color: Colors
+                                                                          .black
+                                                                          .withOpacity(
+                                                                              0.28),
+                                                                      blurRadius:
+                                                                          8.r)
+                                                                ],
+                                                              ),
+                                                              child:
+                                                                  CachedNetworkImage(
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                imageUrl:
+                                                                    '${EndPoints.imageBaseUrl}${cubit.picturesList[index].imgUrl}',
+                                                                placeholder: (context,
+                                                                        url) =>
+                                                                    Shimmer
+                                                                        .fromColors(
+                                                                  baseColor:
+                                                                      Colors.grey[
+                                                                          400]!,
+                                                                  highlightColor:
+                                                                      Colors.grey[
+                                                                          300]!,
+                                                                  child:
+                                                                      Container(
+                                                                    height: double
+                                                                        .infinity,
+                                                                    width: double
+                                                                        .infinity,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              8.0),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    const Icon(Icons
+                                                                        .error),
+                                                              ),
+                                                            ),
+                                                            Positioned(
+                                                              top: 0,
+                                                              left: 0,
+                                                              child: IconButton(
+                                                                onPressed: () {
+                                                                  showDialog(
+                                                                      context:
+                                                                          context,
+                                                                      builder: (context) =>
+                                                                          DeleteImageAlertDialog(
+                                                                            id: cubit.picturesList[index].id!,
+                                                                          ));
+                                                                },
+                                                                icon: Icon(
+                                                                  Icons.delete,
+                                                                  size: 25.r,
+                                                                  color: Colors
+                                                                      .red,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      if (index ==
+                                                          cubit.picturesList
+                                                                  .length -
+                                                              1)
+                                                        Padding(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  horizontal:
+                                                                      5.w),
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              cubit
+                                                                  .getPictureLibraryImagePick();
+                                                            },
+                                                            child: Container(
+                                                              height: 46.h,
+                                                              width: 46.w,
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(
+                                                                          10.r),
+                                                              clipBehavior: Clip
+                                                                  .antiAliasWithSaveLayer,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                      border: Border.all(
+                                                                          color: AppColorsLightTheme
+                                                                              .primaryColor),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(2
+                                                                              .r),
+                                                                      boxShadow: [
+                                                                        BoxShadow(
+                                                                            offset: const Offset(0,
+                                                                                0),
+                                                                            color:
+                                                                                Colors.black.withOpacity(0.28),
+                                                                            blurRadius: 8.r)
+                                                                      ],
+                                                                      color: Colors
+                                                                          .white),
+                                                              child: Center(
+                                                                child:
+                                                                    SvgPicture
+                                                                        .asset(
+                                                                  SvgPath
+                                                                      .cameraPicture,
+                                                                  width: 30.w,
+                                                                  height: 30.h,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
-                                                          errorWidget: (context,
-                                                                  url, error) =>
-                                                              const Icon(
-                                                                  Icons.error),
-                                                        ),
-                                                      ),
-                                                      Positioned(
-                                                        top: 0,
-                                                        left: 0,
-                                                        child: IconButton(
-                                                          onPressed: () {
-                                                            showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (context) =>
-                                                                        DeleteImageAlertDialog(
-                                                                          id: cubit
-                                                                              .picturesList[index]
-                                                                              .id!,
-                                                                        ));
-                                                          },
-                                                          icon: Icon(
-                                                            Icons.delete,
-                                                            size: 25.r,
-                                                            color: Colors.red,
-                                                          ),
-                                                        ),
-                                                      ),
+                                                        )
                                                     ],
-                                                  ),
-                                                ),
-                                                if (index ==
-                                                    cubit.picturesList.length -
-                                                        1)
-                                                  Padding(
+                                                  )
+                                                : Padding(
                                                     padding:
                                                         EdgeInsets.symmetric(
                                                             horizontal: 5.w),
                                                     child: InkWell(
                                                       onTap: () {
-                                                        cubit.getPictureLibraryImagePick();
+                                                        cubit
+                                                            .getPictureLibraryImagePick();
                                                       },
                                                       child: Container(
                                                         height: 46.h,
@@ -295,9 +360,7 @@ class CenterDetailsScreen extends StatelessWidget {
                                                         ),
                                                       ),
                                                     ),
-                                                  )
-                                              ],
-                                            );
+                                                  );
                                           },
                                         ),
                                       ),
@@ -423,6 +486,57 @@ class CenterDetailsScreen extends StatelessWidget {
                                             )
                                           ],
                                         ),
+                                      ),
+                                      SizedBox(
+                                        height: 14.h,
+                                      ),
+                                      BlocBuilder<UserServicesCubit,
+                                          UserServicesState>(
+                                        builder: (context, state) {
+                                          var cubit = UserServicesCubit.get(context);
+                                          return InkWell(
+                                            onTap: (){
+                                              if(state is ! GetAddressLoading)Navigator.pushNamed(context, ScreenName.addAddressScreen,arguments: AddAddressArgs(addressModel: cubit.addressList[0], userEqualsZeroVendorEqualsOne: 1));
+                                            },
+                                            child: CustomDetailsContainer(
+                                              height: 64.h,
+                                              width: double.infinity,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'العنوان',
+                                                    textAlign: TextAlign.start,
+                                                    style: TextStyle(
+                                                      fontSize: 12.sp,
+                                                      fontFamily:
+                                                      FontPath.almaraiBold,
+                                                      color:
+                                                      const Color(0xff8B8989),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5.h,
+                                                  ),
+                                                  Expanded(
+                                                    child: Text(
+                                                      cubit.addressList.isNotEmpty?cubit.addressList[0].cityName!:"اضف عنوان",
+                                                      textAlign: TextAlign.start,
+                                                      style: TextStyle(
+                                                        fontSize: 14.sp,
+                                                        fontFamily:
+                                                        FontPath.almaraiBold,
+                                                        color: const Color(
+                                                            0xff8B8989),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
                                       SizedBox(
                                         height: 14.h,
