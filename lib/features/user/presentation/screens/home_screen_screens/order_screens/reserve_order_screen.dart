@@ -137,18 +137,6 @@ class ReserveOrderScreen extends StatelessWidget {
                         fontFamily: FontPath.almaraiBold,
                         color: const Color(0xff1E2432)),
                   ),
-                  // InkWell(
-                  //   onTap: () {
-                  //     Navigator.pushNamed(context, ScreenName.allCentersScreen);
-                  //   },
-                  //   child: Text(
-                  //     'اضافة المزيد',
-                  //     style: TextStyle(
-                  //         fontSize: 16.sp,
-                  //         fontFamily: FontPath.almaraiBold,
-                  //         color: AppColorsLightTheme.secondaryColor),
-                  //   ),
-                  // ),
                 ],
               ),
               OrderItemWidget(

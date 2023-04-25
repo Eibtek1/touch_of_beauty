@@ -17,28 +17,7 @@ import '../../../../vendor/buisness_logic/services_cubit/vendor_services_cubit.d
 import '../../../../vendor/presentation/widgets/screen_layout_widget_with_logo.dart';
 
 class FreelancerServicesScreen extends StatelessWidget {
-  FreelancerServicesScreen({Key? key}) : super(key: key);
-  final List<Map<String, dynamic>> itemsList = [
-    {'image': ImagePath.babyCare, 'title': "العناية بالطفل"},
-    {'image': ImagePath.beautyCenter, 'title': "قسم التجميل"},
-    {'image': ImagePath.hairCare, 'title': "العناية بالشعر"},
-    {'image': ImagePath.makeup, 'title': "قسم المكياج"},
-    {'image': ImagePath.naturalTherapy, 'title': "العلاج الطبيعي"},
-    {
-      'image': ImagePath.photography,
-      'title': "التصــــــــــــوير الفوتوغرافي"
-    },
-    {'image': ImagePath.selfCare, 'title': "العناية الشخصية"},
-    {'image': ImagePath.skinCare, 'title': "العناية بالبشرة"},
-    {'image': ImagePath.hairCare, 'title': "العناية بالشعر"},
-    {'image': ImagePath.makeup, 'title': "قسم المكياج"},
-    {'image': ImagePath.naturalTherapy, 'title': "العلاج الطبيعي"},
-    {
-      'image': ImagePath.photography,
-      'title': "التصــــــــــــوير الفوتوغرافي"
-    },
-  ];
-
+  const FreelancerServicesScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +60,6 @@ class FreelancerServicesScreen extends StatelessWidget {
           child: BlocConsumer<VendorServicesCubit, VendorServicesState>(
             listener: (context, state) {
               var cubit = VendorServicesCubit.get(context);
-
               if(state is GetServicesDetailsByItsIdLoadingState){
                 showProgressIndicator(context);
               }else if(state is GetServicesDetailsByItsIdSuccess){

@@ -54,17 +54,18 @@ class EditFreelancerDetailsScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.pushNamed(
-                    context, ScreenName.freelancerNotificationScreen);
-              },
-              icon: SvgPicture.asset(
-                SvgPath.notificationBill,
-                width: 23.w,
-                height: 28.h,
-                colorFilter:
-                    const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-              )),
+            onPressed: () {
+              Navigator.pushNamed(
+                  context, ScreenName.freelancerNotificationScreen);
+            },
+            icon: SvgPicture.asset(
+              SvgPath.notificationBill,
+              width: 23.w,
+              height: 28.h,
+              colorFilter:
+                  const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+            ),
+          ),
           SizedBox(
             width: 12.w,
           ),
@@ -273,18 +274,19 @@ class EditFreelancerDetailsScreen extends StatelessWidget {
                           height: 20.h,
                         ),
                         CustomVendorButton(
-                            buttonTitle: 'تعديل',
-                            isTapped: () {
-                              cubit.freelancerUpdateProfile(
-                                userName: centerNameController.text,
-                                email: centerEmailController.text,
-                                description: centerDetailsController.text,
-                                phone: centerPhoneController.text,
-                              );
-                            },
-                            width: double.infinity,
-                            paddingVertical: 12.h,
-                            paddingHorizontal: 45.w),
+                          buttonTitle: 'تعديل',
+                          isTapped: () {
+                            cubit.freelancerUpdateProfile(
+                              userName: centerNameController.text,
+                              email: centerEmailController.text,
+                              description: centerDetailsController.text,
+                              phone: centerPhoneController.text,
+                            );
+                          },
+                          width: double.infinity,
+                          paddingVertical: 12.h,
+                          paddingHorizontal: 45.w,
+                        ),
                         SizedBox(
                           height: 20.h,
                         ),

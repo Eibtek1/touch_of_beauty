@@ -34,11 +34,9 @@ class AddAddressScreen extends StatefulWidget {
 class _AddAddressScreenState extends State<AddAddressScreen> {
   final TextEditingController regionController = TextEditingController();
   final TextEditingController streetController = TextEditingController();
-  final TextEditingController buildingNumberController =
-      TextEditingController();
+  final TextEditingController buildingNumberController = TextEditingController();
   final TextEditingController flatNumberController = TextEditingController();
-  final TextEditingController addressDetailsController =
-      TextEditingController();
+  final TextEditingController addressDetailsController = TextEditingController();
   var formKey = GlobalKey<FormState>();
 
   @override
@@ -46,12 +44,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     if (widget.userEqualsZeroVendorEqualsOne == 1) {
       regionController.text = widget.addressModel?.region ?? '';
       streetController.text = widget.addressModel?.street ?? '';
-      buildingNumberController.text = widget.addressModel?.buildingNumber
-              ?.replaceAll(RegExp(r'[^0-9]'), '') ??
-          "";
-      flatNumberController.text =
-          widget.addressModel?.flatNumber?.replaceAll(RegExp(r'[^0-9]'), '') ??
-              '';
+      buildingNumberController.text = widget.addressModel?.buildingNumber?.replaceAll(RegExp(r'[^0-9]'), '') ?? "";
+      flatNumberController.text = widget.addressModel?.flatNumber?.replaceAll(RegExp(r'[^0-9]'), '') ?? '';
       addressDetailsController.text = widget.addressModel?.addressDetails ?? "";
     }
     super.initState();

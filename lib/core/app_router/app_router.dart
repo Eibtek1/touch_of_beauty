@@ -15,7 +15,6 @@ import '../../features/authentication/presentation/screens/vendor_register.dart'
 import '../../features/chat/presentation/screens/chat_screen.dart';
 import '../../features/freelancer/presentation/screens/freelance_main_layout.dart';
 import '../../features/freelancer/presentation/screens/freelancer_center_screens/edit_freelancer_details.dart';
-import '../../features/freelancer/presentation/screens/freelancer_center_screens/freelancer_add_services_screen.dart';
 import '../../features/freelancer/presentation/screens/freelancer_center_screens/freelancer_details_screen.dart';
 import '../../features/freelancer/presentation/screens/freelancer_center_screens/freelancer_services_screen.dart';
 import '../../features/freelancer/presentation/screens/freelancer_center_screens/freelancer_working_time_screen.dart';
@@ -105,7 +104,7 @@ class AppRouter {
         case ScreenName.vendorServicesScreen:
           return _animateRouteBuilder( const VendorServicesScreen());
         case ScreenName.freelancerServicesScreen:
-          return _animateRouteBuilder( FreelancerServicesScreen());
+          return _animateRouteBuilder( const FreelancerServicesScreen());
         case ScreenName.mainSkipLayout:
           return _animateRouteBuilder( const MainSkipLayout());
         case ScreenName.vendorReservationsScreen:
@@ -113,9 +112,7 @@ class AppRouter {
         case ScreenName.vendorAddToServicesScreen:
           final args = settings.arguments;
           AddToServicesArguments arguments = args as AddToServicesArguments;
-          return _animateRouteBuilder(  AddServicesScreen(type: arguments.type,servicesModel: arguments.servicesModel,));
-        case ScreenName.freelancerAddToServicesScreen:
-          return _animateRouteBuilder( const FreelancerAddServicesScreen());
+          return _animateRouteBuilder(AddServicesScreen(type: arguments.type,servicesModel: arguments.servicesModel,));
         case ScreenName.centerWorkingTimeScreen:
           return _animateRouteBuilder( const CenterWorkingTimeScreen());
         case ScreenName.detailsCenterScreen:

@@ -1,6 +1,6 @@
 class EndPoints{
-  static const baseUrl = 'http://eibtek2-001-site5.atempurl.com/api';
-  static const imageBaseUrl = 'http://eibtek2-001-site5.atempurl.com';
+  static const baseUrl = 'http://eibtekone-001-site16.atempurl.com/api';
+  static const imageBaseUrl = 'http://eibtekone-001-site16.atempurl.com';
   static const userRegister = '/Users/UserRegister';
   static const centerRegister = '/Users/CenterRegister';
   static const updateCenterProfile = '/Users/UpdateCenterProfile';

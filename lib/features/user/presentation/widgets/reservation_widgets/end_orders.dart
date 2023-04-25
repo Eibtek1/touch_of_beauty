@@ -97,7 +97,7 @@ class EndOrdersWidgetBuilder extends StatelessWidget {
             const Spacer(),
             IconButton(onPressed: (){
               ChatCubit.get(context).getMessages(receiverId: reservationModel.provider!.id, senderId: userId);
-              Navigator.pushNamed(context, ScreenName.chatScreen,arguments: ChatScreenArgs(title: '${reservationModel.provider!.fullName}', receiverId: '${reservationModel.provider!.id}', receiverName: '', receiverImg: ''));
+              Navigator.pushNamed(context, ScreenName.chatScreen,arguments: ChatScreenArgs(title: '${reservationModel.provider!.fullName}', receiverId: '${reservationModel.provider!.id}', receiverName: '', receiverImg: '', orderId: ''));
             }, icon: SvgPicture.asset(SvgPath.chatIcon,width: 50.w,height: 50.h,))
           ],
         ),

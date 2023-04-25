@@ -169,11 +169,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   image: SvgPath.profileFilledColorIcon,
                                   itemTitle: 'اسم المستخدم',
                                   title: cubit.getUserModel!.fullName!),
-                              const Divider(),
-                              const FormItemBuilder(
-                                  image: SvgPath.location,
-                                  itemTitle: 'العنوان',
-                                  title: 'الرياض'),
+                              // const Divider(),
+                              // const FormItemBuilder(
+                              //     image: SvgPath.location,
+                              //     itemTitle: 'العنوان',
+                              //     title: cubit.getUserModel!.),
                               const Divider(),
                               FormItemBuilder(
                                   image: SvgPath.email,

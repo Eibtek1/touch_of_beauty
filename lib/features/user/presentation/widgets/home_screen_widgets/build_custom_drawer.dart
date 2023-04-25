@@ -224,16 +224,6 @@ class AppDrawer extends StatelessWidget {
             SizedBox(
               height: 15.h,
             ),
-            // buildTitleWidget(
-            //   onTap: () {
-            //     Navigator.pop(context);
-            //     Navigator.pushNamed(context, ScreenName.helpPrivacy);
-            //   },
-            //   title: 'مساعدة',
-            // ),
-            // SizedBox(
-            //   height: 15.h,
-            // ),
             buildTitleWidget(
               onTap: () {
                 Navigator.pop(context);

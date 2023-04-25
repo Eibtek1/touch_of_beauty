@@ -57,7 +57,7 @@ class VendorMessagesScreen extends StatelessWidget {
                         (value) {
                       Navigator.pushNamed(
                           context, ScreenName.chatScreen,
-                          arguments: ChatScreenArgs(title: chatItemsList[index]['name'], receiverId: chatItemsList[index]['id'], receiverName: '', receiverImg: ''));
+                          arguments: ChatScreenArgs(title: chatItemsList[index]['name'], receiverId: chatItemsList[index]['id'], receiverName: chatItemsList[index]['receiverName'], receiverImg:chatItemsList[index]['receiverImg'], orderId: chatItemsList[index]['orderId']));
                     },
                   );
                 },
@@ -115,7 +115,7 @@ class VendorMessagesScreen extends StatelessWidget {
                       fontSize: 13.sp),
                 ),
                 Text(
-                  'سلام عليكم',
+                  'ادخل للدردشة',
                   style: TextStyle(
                       color: const Color(0xff939FB5),
                       fontFamily: FontPath.almaraiRegular,
@@ -123,21 +123,6 @@ class VendorMessagesScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const Spacer(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  '22:30',
-                  style: TextStyle(
-                      color: const Color(0xff939FB5),
-                      fontFamily: FontPath.almaraiRegular,
-                      fontSize: 13.sp),
-                ),
-                const Icon(Icons.done_all)
-              ],
-            )
           ],
         ),
       ),

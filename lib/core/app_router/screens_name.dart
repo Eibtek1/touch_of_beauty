@@ -45,7 +45,6 @@ class ScreenName{
   static const freelancerEditDetailsScreen = 'freelancer_Edit_details_screen.dart';
   static const vendorReservationsScreen = 'vendor_reservations_screen.dart';
   static const vendorAddToServicesScreen = 'add_to_services_screen.dart';
-  static const freelancerAddToServicesScreen = 'freelancer_add_to_services_screen.dart';
   static const helpPrivacy = 'help_privacy_screen.dart';
   static const privacyScreen = 'privacy_screen.dart';
 
