@@ -163,4 +163,18 @@
   "no_fav_items": "لا يوجد عناصر مميزة الان",
   "no_fav_centers": "لا يوجد صالونات مفضلة",
   "no_feat_centers": "لا يوجد صالونات مميزة",
+  "services_provide": "مقدم الخدمة",
+  "watch_details": "عرض المزيد",
+  "Order service": "اطلب الخدمة",
+  "show": "عرض",
+  "order_status_zero": "حالة الطلب : بأنتظار الدفع",
+  "order_status_one": "حالة الطلب : بأنتظار التأكيد مع المقدم",
+  "order_status_2": "حالة الطلب : تمت موافقة المقدم",
+  "order_status_3": "حالة الطلب : قيد الوصول",
+  "order_status_4": "حالة الطلب : انتهت الخدمة",
+  "order_status_canceled": "حالة الطلب : تم الالغاء",
+  "cancel_order": "الغاء الطلب",
+  "go_pay": "أذهب للدفع",
+  "delete_account_request": "تم ارسال طلبك لحذف الحساب وسيتم الرد خلال بعض الوقت",
+  "ok": "تم"
 }

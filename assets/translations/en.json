@@ -163,4 +163,18 @@
   "no_fav_items": "There are no favorite items",
   "no_fav_centers": "There are no favorite Centers",
   "no_feat_centers": "There are no featured Centers",
+  "services_provide": "Services provider",
+  "watch_details": "Watch details",
+  "Order service": "Order service",
+  "show": "Show",
+  "order_status_zero": "Order status: awaiting payment",
+  "order_status_one": "Application status: pending confirmation with the applicant",
+  "order_status_2": "Application status: The applicant has been approved",
+  "order_status_3": "Order status: In progress",
+  "order_status_4": "Request Status: Service Expired",
+  "order_status_canceled": "Order status: Canceled",
+  "cancel_order": "Cancelling order",
+  "go_pay": "Go pay",
+  "delete_account_request": "Your request to delete the account has been sent and will be answered within some time",
+  "ok": "Ok"
 }
