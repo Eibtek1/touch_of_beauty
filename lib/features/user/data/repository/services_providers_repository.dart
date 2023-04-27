@@ -206,13 +206,13 @@ class ServicesProvidersRepository {
   }) async {
     final response =
         await DioHelper.putData(url: EndPoints.addresses, token: token, data: {
-          "id": addressId,
-          "region": region,
-          "street": street,
-          "buildingNumber": "مبني رقم $buildingNumber",
-          "flatNumber": "شقة رقم $flatNumber",
-          "addressDetails": addressDetails ?? "",
-          "cityId": cityId
+      "id": addressId,
+      "region": region,
+      "street": street,
+      "buildingNumber": "مبني رقم $buildingNumber",
+      "flatNumber": "شقة رقم $flatNumber",
+      "addressDetails": addressDetails ?? "",
+      "cityId": cityId
     });
     return response;
   }
@@ -233,6 +233,38 @@ class ServicesProvidersRepository {
     return response;
   }
 
+  static Future<Response> addServiceRating({
+    required int rating,
+    required int serviceId,
+  }) async {
+    final response = await DioHelper.postData(
+      url: EndPoints.addServiceEvaluations,
+      token: token,
+      data: {
+        "numberOfStars": rating,
+        "comment": "string",
+        "serviceId": serviceId
+      },
+    );
+    return response;
+  }
+
+  static Future<Response> addServiceProviderRating({
+    required int rating,
+    required String serviceProviderId,
+  }) async {
+    final response = await DioHelper.postData(
+      url: EndPoints.addServiceProviderEvaluations,
+      token: token,
+      data: {
+        "numberOfStars": rating,
+        "comment": "string",
+        "providerId": serviceProviderId
+      },
+    );
+    return response;
+  }
+
   static Future<Response> getAddress() async {
     final response =
         await DioHelper.getData(url: EndPoints.addresses, bearerToken: token);
@@ -246,6 +278,7 @@ class ServicesProvidersRepository {
       url: "${EndPoints.getServiceDetailsById}$id",
       bearerToken: token,
     );
+    print(response);
     return response;
   }
 

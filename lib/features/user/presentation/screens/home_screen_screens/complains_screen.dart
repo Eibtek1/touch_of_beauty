@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/home_screen_widgets/complain_text_field.dart';
 
@@ -33,7 +35,7 @@ class _ComplainsScreenState extends State<ComplainsScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          'تقديم شكوى',
+          LocaleKeys.make_complaint.tr(),
           style: TextStyle(
               color: const Color(0xff263238),
               fontFamily: FontPath.almaraiBold,
@@ -50,7 +52,7 @@ class _ComplainsScreenState extends State<ComplainsScreen> {
             showProgressIndicator(context);
           }if(state is SendCompSuccess){
             Navigator.pop(context);
-            Fluttertoast.showToast(msg: 'تم ارسال الشكوي وسيتم مراجعتها');
+            Fluttertoast.showToast(msg: LocaleKeys.complaint_added.tr());
             Navigator.pop(context);
           }
         },
@@ -69,7 +71,7 @@ class _ComplainsScreenState extends State<ComplainsScreen> {
                     height: 30.h,
                   ),
                   CustomUserTextField(
-                    hintText: 'عنوان الشكوي',
+                    hintText: LocaleKeys.complaint_title.tr(),
                     height: 44.h,
                     controller: titleController,
                   ),
@@ -78,7 +80,7 @@ class _ComplainsScreenState extends State<ComplainsScreen> {
                   ),
                   CustomUserTextField(
                     isComplaints: true,
-                    hintText: 'نص الشكوى',
+                    hintText: LocaleKeys.complaint_body.tr(),
                     height: 150.h,
                     controller: textController,
                   ),
@@ -86,13 +88,13 @@ class _ComplainsScreenState extends State<ComplainsScreen> {
                     height: 60.h,
                   ),
                   CustomUserButton(
-                    buttonTitle: 'ارسال',
+                    buttonTitle: LocaleKeys.add.tr(),
                     isTapped: () {
                       if(titleController.text == ''&&titleController.text.isEmpty){
-                        Fluttertoast.showToast(msg: 'يجب ادخال عنوان الشكوي');
+                        Fluttertoast.showToast(msg: LocaleKeys.comp_title_val.tr());
                       }
                       else if(textController.text == ''&&textController.text.isEmpty){
-                        Fluttertoast.showToast(msg: 'يجب نص عنوان الشكوي');
+                        Fluttertoast.showToast(msg: LocaleKeys.comp_body_val.tr());
                       }
                       else{
                         cubit.sendComplaint(title: titleController.text, data: textController.text);

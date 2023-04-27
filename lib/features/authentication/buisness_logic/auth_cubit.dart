@@ -282,7 +282,6 @@ class AuthCubit extends Cubit<AuthState> {
         getAllPicturesForProvider();
         // getAllPicturesForProvider();
       }
-      print(response);
       emit(GetUserDataSuccess());
     } catch (error) {
       emit(GetUserDataError(error.toString()));
@@ -304,7 +303,6 @@ class AuthCubit extends Cubit<AuthState> {
       } else {
         data = mainResponse.errorCode;
       }
-      print(response);
       emit(GetPicturesForProviderSuccess());
     } catch (error) {
       emit(GetPicturesForProviderError(error.toString()));
@@ -321,8 +319,6 @@ class AuthCubit extends Cubit<AuthState> {
         profileImage = null;
         getAllPicturesForProvider();
       }
-      print(response);
-      print(token);
       emit(AddPictureSuccess());
     } catch (error) {
       emit(AddPictureError(error.toString()));

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_state.dart';
 import '../../../../core/assets_path/font_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../widgets/about_widget.dart';
 
 class PrivacyAndPolicy extends StatefulWidget {
@@ -45,7 +47,7 @@ class _PrivacyAndPolicyState extends State<PrivacyAndPolicy> {
                 ),
                 Expanded(
                   child: Text(
-                    'سياسة الخصوصية',
+                    LocaleKeys.priv_policy.tr(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16.sp,

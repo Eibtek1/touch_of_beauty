@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/serv
 import 'package:touch_of_beauty/features/user/data/models/address_model.dart';
 import '../../../../../../core/assets_path/font_path.dart';
 import '../../../../../../core/constants/constants.dart';
+import '../../../../../../translations/locale_keys.g.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/dropdown_button.dart';
 import '../../../widgets/home_screen_widgets/complain_text_field.dart';
@@ -87,7 +89,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             title: Text(
-              'اضافة عنوان',
+              LocaleKeys.add_address.tr(),
               style: TextStyle(
                   color: const Color(0xff263238),
                   fontFamily: FontPath.almaraiBold,
@@ -114,7 +116,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       height: 30.h,
                     ),
                     Text(
-                      'المنطقة',
+                      LocaleKeys.region.tr(),
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         fontSize: 12.sp,
@@ -126,14 +128,14 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       height: 10.h,
                     ),
                     CustomUserTextField(
-                      hintText: 'المنطقة',
+                      hintText: LocaleKeys.region.tr(),
                       height: 44.h,
                       controller: regionController,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'لا يمكن ان تكون المنطقة فارغة';
+                          return LocaleKeys.region_validation.tr();
                         } else if (value.length < 5) {
-                          return 'وصف المنطقة قصير';
+                          return LocaleKeys.region_validation2.tr();
                         }
                         return null;
                       },
@@ -142,7 +144,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       height: 18.h,
                     ),
                     Text(
-                      'الطريق',
+                      LocaleKeys.road.tr(),
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         fontSize: 12.sp,
@@ -154,14 +156,14 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       height: 10.h,
                     ),
                     CustomUserTextField(
-                      hintText: 'الطريق',
+                      hintText: LocaleKeys.road.tr(),
                       height: 44.h,
                       controller: streetController,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'لا يمكن ان يكون وصف الطريق فارغ';
+                          return LocaleKeys.road_val.tr();
                         } else if (value.length < 5) {
-                          return 'وصف الطريق قصير';
+                          return LocaleKeys.road_val2.tr();
                         }
                         return null;
                       },
@@ -170,7 +172,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       height: 18.h,
                     ),
                     Text(
-                      'رقم المبني',
+                      LocaleKeys.building_number.tr(),
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         fontSize: 12.sp,
@@ -182,13 +184,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       height: 10.h,
                     ),
                     CustomUserTextField(
-                      hintText: 'رقم المبني',
+                      hintText: LocaleKeys.road_val.tr(),
                       keyboardType: TextInputType.phone,
                       height: 44.h,
                       controller: buildingNumberController,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'لا يمكن ان يكون وصف رقم المبني فارغ';
+                          return LocaleKeys.building_num_val.tr();
                         }
                         return null;
                       },
@@ -197,7 +199,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       height: 18.h,
                     ),
                     Text(
-                      'رقم الشقة',
+                      LocaleKeys.road_val.tr(),
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         fontSize: 12.sp,
@@ -209,13 +211,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       height: 10.h,
                     ),
                     CustomUserTextField(
-                      hintText: 'رقم الشقة',
+                      hintText: LocaleKeys.flat_number.tr(),
                       height: 44.h,
                       controller: flatNumberController,
                       keyboardType: TextInputType.phone,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'لا يمكن ان يكون وصف رقم الشقة فارغ';
+                          return LocaleKeys.flat_number_val.tr();
                         }
                         return null;
                       },
@@ -224,7 +226,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       height: 18.h,
                     ),
                     Text(
-                      'وصف العنوان',
+                      LocaleKeys.title_des.tr(),
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         fontSize: 12.sp,
@@ -236,14 +238,14 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       height: 10.h,
                     ),
                     CustomUserTextField(
-                      hintText: 'وصف العنوان',
+                      hintText: LocaleKeys.title_des.tr(),
                       height: 44.h,
                       controller: addressDetailsController,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'لا يمكن ان يكون وصف العنوان فارغ';
+                          return LocaleKeys.title_desc_val.tr();
                         } else if (value.length < 5) {
-                          return 'وصف العنوان قصير';
+                          return LocaleKeys.title_desc_val2.tr();
                         }
                         return null;
                       },
@@ -252,7 +254,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       height: 18.h,
                     ),
                     Text(
-                      'المدينة',
+                      LocaleKeys.city.tr(),
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         fontSize: 12.sp,
@@ -270,7 +272,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       height: 60.h,
                     ),
                     CustomUserButton(
-                      buttonTitle: widget.addressModel!=null?"تعديل":'اضافة',
+                      buttonTitle: widget.addressModel!=null?LocaleKeys.edit.tr():LocaleKeys.add.tr(),
                       isTapped: () {
                         if (formKey.currentState!.validate()) {
                           if (widget.addressModel == null) {

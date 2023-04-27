@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -12,6 +13,7 @@ import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_
 import 'package:touch_of_beauty/features/user/presentation/widgets/custom_button.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/network/api_end_points.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../data/models/services_model.dart';
 import '../../screens/home_screen_screens/order_screens/reserve_order_screen.dart';
 
@@ -138,7 +140,7 @@ class ServicesBottomSheet extends StatelessWidget {
                 height: 15.h,
               ),
               Text(
-                'وصف الخدمة',
+                LocaleKeys.services_discription.tr(),
                 style: TextStyle(
                     color: const Color(0xff263238),
                     fontFamily: FontPath.almaraiBold,
@@ -162,13 +164,44 @@ class ServicesBottomSheet extends StatelessWidget {
               ),
               const Divider(),
               SizedBox(
+                height: 10.h,
+              ),
+              Text(
+                LocaleKeys.service_rating.tr(),
+                style: TextStyle(
+                    color: const Color(0xff263238),
+                    fontFamily: FontPath.almaraiBold,
+                    fontSize: 18.sp),
+              ),
+
+              SizedBox(
+                height: 20.h,
+              ),
+              RatingBar.builder(
+                itemSize: 20.r,
+                ignoreGestures: true,
+                initialRating: servicesModel.numberOfStar!,
+                minRating: 1,
+                unratedColor: Colors.grey,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                // itemPadding: EdgeInsets.symmetric(horizontal: 4.0.w),
+                itemBuilder: (context, _) => const Icon(
+                  Icons.star,
+                  color: AppColorsLightTheme.secondaryColor,
+                ),
+                onRatingUpdate: (rating) {},
+              ),
+              const Divider(),
+              SizedBox(
                 height: 20.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'مقدم الخدمة',
+                    LocaleKeys.services_provide.tr(),
                     style: TextStyle(
                         fontSize: 16.sp,
                         fontFamily: FontPath.almaraiBold,
@@ -179,7 +212,7 @@ class ServicesBottomSheet extends StatelessWidget {
                       Navigator.pushNamed(context, ScreenName.allCentersScreen);
                     },
                     child: Text(
-                      'عرض المزيد',
+                      LocaleKeys.watch_details.tr(),
                       style: TextStyle(
                           fontSize: 16.sp,
                           fontFamily: FontPath.almaraiBold,
@@ -324,7 +357,7 @@ class ServicesBottomSheet extends StatelessWidget {
                 height: 30.h,
               ),
               CustomUserButton(
-                  buttonTitle: 'اطلب الخدمة',
+                  buttonTitle: LocaleKeys.order_service.tr(),
                   isTapped: () {
                     Navigator.pushNamed(context, ScreenName.reserveOrderScreen,arguments: ReserveOrderScreenArguments(servicesModel: servicesModel,isBottomSheet: true));
                   },

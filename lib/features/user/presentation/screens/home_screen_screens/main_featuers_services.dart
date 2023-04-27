@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +11,7 @@ import 'package:touch_of_beauty/features/user/buisness_logic/main_features_cubit
 import 'package:touch_of_beauty/features/user/buisness_logic/main_features_cubit/main_features_state.dart';
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/home_screen_widgets/center_categories_details_item.dart';
 import '../../widgets/home_screen_widgets/services_bottom_sheet.dart';
@@ -63,7 +65,7 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                 searchController.text.isNotEmpty) {
               searchController.clear();
               Fluttertoast.showToast(
-                msg: 'لا تتوفر عناصر البحث',
+                msg: LocaleKeys.search_not_available.tr(),
                 gravity: ToastGravity.CENTER,
               );
             }

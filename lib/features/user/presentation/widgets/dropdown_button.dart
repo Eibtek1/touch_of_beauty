@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/serv
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_state.dart';
 
 import '../../../../core/app_theme/light_theme.dart';
+import '../../../../translations/locale_keys.g.dart';
 
 class CityDropDownButton extends StatefulWidget {
   final int? userEqualsZeroVendorEqualsOne;
@@ -41,7 +43,7 @@ class _CityDropDownButtonState extends State<CityDropDownButton> {
           ),
           child: state is! GetCitiesLoading
               ? DropdownButton(
-                  hint: const Text('المدينة'),
+                  hint: Text(LocaleKeys.city.tr()),
                   elevation: 0,
                   underline: const SizedBox.shrink(),
                   value: cubit.citiesModel,

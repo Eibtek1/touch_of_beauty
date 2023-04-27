@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'api_end_points.dart';
 
 class DioHelper {
@@ -25,6 +26,10 @@ class DioHelper {
       if (bearerToken != null) "Authorization": "Bearer $bearerToken",
       'Accept': 'text/plain',
     };
+    Map<String, dynamic> langMap = {
+      "lang":initialLocale,
+    };
+    query =  query?..addAll(langMap);
     return await dio.get(url, queryParameters: query);
   }
 

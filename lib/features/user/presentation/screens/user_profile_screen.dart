@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +13,7 @@ import 'package:touch_of_beauty/core/network/api_end_points.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
 import '../../../../core/assets_path/font_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../widgets/delete_acc_alert_dialog.dart';
 import '../widgets/profile_widgets/form_item_builder.dart';
 
@@ -70,7 +72,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           ),
                             Expanded(
                               child: Text(
-                                'الملف الشخصي',
+                                LocaleKeys.profile.tr(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: Colors.white,
@@ -167,7 +169,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             children: [
                               FormItemBuilder(
                                   image: SvgPath.profileFilledColorIcon,
-                                  itemTitle: 'اسم المستخدم',
+                                  itemTitle: LocaleKeys.user_name.tr(),
                                   title: cubit.getUserModel!.fullName!),
                               // const Divider(),
                               // const FormItemBuilder(
@@ -177,12 +179,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               const Divider(),
                               FormItemBuilder(
                                   image: SvgPath.email,
-                                  itemTitle: 'البريد الالكتروني',
+                                  itemTitle: LocaleKeys.email.tr(),
                                   title: cubit.getUserModel!.email!),
                               const Divider(),
                               FormItemBuilder(
                                   image: SvgPath.profileFilledColorIcon,
-                                  itemTitle: 'رقم الهاتف',
+                                  itemTitle: LocaleKeys.phone_number.tr(),
                                   title: cubit.getUserModel!.phoneNumber!),
                               const Divider(),
                               InkWell(
@@ -193,10 +195,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                     showDialog(context: context, builder: (context) => const DeleteAccAlert());
                                   });
                                 },
-                                child: const FormItemBuilder(
+                                child: FormItemBuilder(
                                     image: SvgPath.edit,
-                                    itemTitle: 'حذف الحساب',
-                                    title: 'اضعط لحذف الحساب'),
+                                    itemTitle: LocaleKeys.delete_account.tr(),
+                                    title: LocaleKeys.click_to_delete_account.tr()),
                               ),
                             ],
                           )

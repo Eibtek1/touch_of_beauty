@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 
 import '../../../../core/assets_path/font_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../../../user/data/models/notification_model.dart';
 import '../../../vendor/buisness_logic/v_reservations_cubit/v_reservation_cubit.dart';
 import '../../../vendor/buisness_logic/v_reservations_cubit/v_reservation_state.dart';
@@ -37,7 +39,7 @@ class _FreelancerNotificationScreenState extends State<FreelancerNotificationScr
             toolbarHeight: 70.h,
             centerTitle: true,
             title: Text(
-              'اشعارات الخدمة',
+              LocaleKeys.notification.tr(),
               style: TextStyle(
                   fontSize: 20.sp,
                   fontFamily: FontPath.almaraiBold,

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:touch_of_beauty/features/vendor/presentation/widgets/screen_layout_widget_with_logo.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../buisness_logic/work_hours_cubit/work_hours_cubit.dart';
 import '../../../buisness_logic/work_hours_cubit/work_hours_state.dart';
 import '../../widgets/add_or_update_working_hours_dialog.dart';
@@ -25,7 +27,7 @@ class CenterWorkingTimeScreen extends StatelessWidget {
         toolbarHeight: 60.h,
         centerTitle: true,
         title: Text(
-          'تعديل بيانات المركز',
+          LocaleKeys.edit_center_details.tr(),
           style: TextStyle(
             fontSize: 17.sp,
             fontFamily: FontPath.almaraiBold,
@@ -52,7 +54,7 @@ class CenterWorkingTimeScreen extends StatelessWidget {
                           children: [
                             Center(
                               child: Text(
-                                'قم بالضغط مطولا لحذف التوقيت',
+                                LocaleKeys.long_press_delete_time.tr(),
                                 style: TextStyle(
                                     color: const Color(0xff3C475C),
                                     fontSize: 14.sp,
@@ -74,10 +76,10 @@ class CenterWorkingTimeScreen extends StatelessWidget {
                                     ),
                                   );
                                 }else{
-                                  Fluttertoast.showToast(msg: 'لا يوجد توقيت للحذف',gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
+                                  Fluttertoast.showToast(msg: LocaleKeys.no_time_to_delete.tr(),gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
                                 }
                               },
-                              title: 'السبت',
+                              title: LocaleKeys.saturday.tr(),
                               onPressed: () {
                                 showDialog(
                                   context: context,
@@ -126,10 +128,10 @@ class CenterWorkingTimeScreen extends StatelessWidget {
                                       ),
                                     );
                                   }else{
-                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت للحذف',gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
+                                    Fluttertoast.showToast(msg: LocaleKeys.no_time_to_delete.tr(),gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
                                   }
                                 },
-                                title: 'الاحد',
+                                title: LocaleKeys.sunday.tr(),
                                 onPressed: () {
                                   showDialog(
                                     context: context,
@@ -179,10 +181,10 @@ class CenterWorkingTimeScreen extends StatelessWidget {
                                       ),
                                     );
                                   }else{
-                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت للحذف',gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
+                                    Fluttertoast.showToast(msg: LocaleKeys.no_time_to_delete.tr(),gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
                                   }
                                 },
-                                title: 'الاثنين',
+                                title: LocaleKeys.monday.tr(),
                                 onPressed: () {
                                   showDialog(
                                     context: context,
@@ -232,10 +234,10 @@ class CenterWorkingTimeScreen extends StatelessWidget {
                                       ),
                                     );
                                   }else{
-                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت للحذف',gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
+                                    Fluttertoast.showToast(msg: LocaleKeys.no_time_to_delete.tr(),gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
                                   }
                                 },
-                                title: 'الثلثاء',
+                                title:LocaleKeys.tuesday.tr(),
                                 onPressed: () {
                                   showDialog(
                                     context: context,
@@ -285,10 +287,10 @@ class CenterWorkingTimeScreen extends StatelessWidget {
                                       ),
                                     );
                                   }else{
-                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت للحذف',gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
+                                    Fluttertoast.showToast(msg: LocaleKeys.no_time_to_delete.tr(),gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
                                   }
                                 },
-                                title: 'الاربعاء',
+                                title: LocaleKeys.wednesday.tr(),
                                 onPressed: () {
                                   showDialog(
                                     context: context,
@@ -338,10 +340,10 @@ class CenterWorkingTimeScreen extends StatelessWidget {
                                       ),
                                     );
                                   }else{
-                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت للحذف',gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
+                                    Fluttertoast.showToast(msg: LocaleKeys.no_time_to_delete.tr(),gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
                                   }
                                 },
-                                title: 'الخميس',
+                                title: LocaleKeys.thuresday.tr(),
                                 onPressed: () {
                                   showDialog(
                                     context: context,
@@ -391,10 +393,10 @@ class CenterWorkingTimeScreen extends StatelessWidget {
                                       ),
                                     );
                                   }else{
-                                    Fluttertoast.showToast(msg: 'لا يوجد توقيت للحذف',gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
+                                    Fluttertoast.showToast(msg: LocaleKeys.no_time_to_delete.tr(),gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
                                   }
                                 },
-                                title: 'الجمعه',
+                                title: LocaleKeys.friday.tr(),
                                 onPressed: () {
                                   showDialog(
                                     context: context,

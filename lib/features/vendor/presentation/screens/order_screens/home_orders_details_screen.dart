@@ -1,11 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import 'package:touch_of_beauty/features/freelancer/presentation/widgets/custom_vendor_button.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../core/network/api_end_points.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../../freelancer/presentation/widgets/screen_layout_widget.dart';
 import '../../../buisness_logic/v_reservations_cubit/v_reservation_cubit.dart';
 import '../../../buisness_logic/v_reservations_cubit/v_reservation_state.dart';
@@ -46,7 +51,7 @@ class HomeOrderDetailsScreen extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        'تفاصيل الطلب',
+                        LocaleKeys.order_details.tr(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white,
@@ -78,7 +83,7 @@ class HomeOrderDetailsScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'طلب خدمة',
+                                      LocaleKeys.order_request.tr(),
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontFamily: FontPath.almaraiRegular,
@@ -107,9 +112,25 @@ class HomeOrderDetailsScreen extends StatelessWidget {
                                       clipBehavior: Clip.antiAlias,
                                       decoration: const BoxDecoration(
                                           shape: BoxShape.circle),
-                                      child: Image.asset(
-                                        ImagePath.onboarding3,
+                                      child: CachedNetworkImage(
                                         fit: BoxFit.cover,
+                                        imageUrl:
+                                        "${EndPoints.imageBaseUrl}${cubit.reserveModel!.user!.userImgUrl}",
+                                        placeholder: (context, url) =>
+                                            Shimmer.fromColors(
+                                              baseColor: Colors.grey[400]!,
+                                              highlightColor: Colors.grey[300]!,
+                                              child: Container(
+                                                height: double.infinity,
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.black,
+                                                  borderRadius: BorderRadius.circular(8.0),
+                                                ),
+                                              ),
+                                            ),
+                                        errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
                                       ),
                                     ),
                                     Column(
@@ -128,7 +149,7 @@ class HomeOrderDetailsScreen extends StatelessWidget {
                                           height: 10.h,
                                         ),
                                         Text(
-                                          'رقم الطلب  ${cubit.reserveModel!.id}',
+                                          '${LocaleKeys.order_number.tr()}  ${cubit.reserveModel!.id}',
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontFamily:
@@ -172,7 +193,7 @@ class HomeOrderDetailsScreen extends StatelessWidget {
                                                 .secondaryColor,
                                           ),
                                           Text(
-                                            'عنوان العميل',
+                                            LocaleKeys.client_address.tr(),
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontFamily:
@@ -184,31 +205,31 @@ class HomeOrderDetailsScreen extends StatelessWidget {
                                       SizedBox(
                                         height: 14.h,
                                       ),
-                                      const AddressDetailsItemBuilder(
-                                          title: 'المدينة', subTitle: 'الرياض'),
+                                       AddressDetailsItemBuilder(
+                                          title: LocaleKeys.city.tr(), subTitle: 'الرياض'),
                                       const DividerBuilder(),
                                       AddressDetailsItemBuilder(
-                                          title: 'المنطقة',
+                                          title: LocaleKeys.region.tr(),
                                           subTitle: cubit.reserveModel!
                                               .addressData!.region!),
                                       const DividerBuilder(),
                                       AddressDetailsItemBuilder(
-                                          title: 'اسم الشارع',
+                                          title: LocaleKeys.road.tr(),
                                           subTitle: cubit.reserveModel!
                                               .addressData!.street!),
                                       const DividerBuilder(),
                                       AddressDetailsItemBuilder(
-                                          title: 'رقم المبني',
+                                          title: LocaleKeys.building_number.tr(),
                                           subTitle: cubit.reserveModel!
                                               .addressData!.buildingNumber!),
                                       const DividerBuilder(),
                                       AddressDetailsItemBuilder(
-                                          title: 'الطابق',
+                                          title: LocaleKeys.flat_number.tr(),
                                           subTitle: cubit.reserveModel!
                                               .addressData!.flatNumber!),
                                       const DividerBuilder(),
                                       AddressDetailsItemBuilder(
-                                          title: 'رقم الهاتف',
+                                          title: LocaleKeys.phone_number.tr(),
                                           subTitle: cubit.reserveModel!.user!
                                               .phoneNumber!),
                                       SizedBox(

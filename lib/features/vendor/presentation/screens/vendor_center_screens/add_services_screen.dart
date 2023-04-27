@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +16,7 @@ import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
 import '../../../../../core/network/api_end_points.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../../freelancer/presentation/widgets/custom_vendor_button.dart';
 import '../../widgets/center_details/custo_text_form_field.dart';
 import '../../widgets/main_section_drop_down.dart';
@@ -95,7 +97,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
           showProgressIndicator(context);
         } else if (state is AddServicesError) {
           Navigator.pop(context);
-          Fluttertoast.showToast(msg: 'تأكد من صحة البيانات');
+          Fluttertoast.showToast(msg: LocaleKeys.data_validation.tr());
         }
         else if(state is DeleteServicesLoadingState){
           showProgressIndicator(context);
@@ -121,7 +123,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
             toolbarHeight: 60.h,
             centerTitle: true,
             title: Text(
-              'اضافة خدمة جديدة',
+              LocaleKeys.add_new_services.tr(),
               style: TextStyle(
                 fontSize: 17.sp,
                 fontFamily: FontPath.almaraiBold,
@@ -162,7 +164,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                       child: ListView(
                         children: [
                           Text(
-                            'صورة لللخدمة المقدمة',
+                            LocaleKeys.service_picture.tr(),
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontFamily: FontPath.almaraiBold,
@@ -237,7 +239,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                             height: 20.h,
                           ),
                           Text(
-                            'اسم الخدمة بالعربية',
+                            LocaleKeys.arabic_title.tr(),
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontFamily: FontPath.almaraiBold,
@@ -253,9 +255,9 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                             controller: aNameController,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'يجب ادخال الاسم بالعربية';
+                                return LocaleKeys.arabic_title_val1.tr();
                               } else if (value.length < 5) {
-                                return 'يجب ادخال اكثر من 5 احرف';
+                                return LocaleKeys.arabic_title_val2.tr();
                               }
                               return null;
                             },
@@ -264,7 +266,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                             height: 20.h,
                           ),
                           Text(
-                            'اسم الخدمة بالانجليزية',
+                            LocaleKeys.english_title.tr(),
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontFamily: FontPath.almaraiBold,
@@ -274,27 +276,24 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                           SizedBox(
                             height: 5.h,
                           ),
-                          Directionality(
-                            textDirection: TextDirection.ltr,
-                            child: CustomTextFormField(
-                              height: 44.h,
-                              width: double.infinity,
-                              controller: eNameController,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'يجب ادخال الاسم بالانجليزية';
-                                } else if (value.length < 5) {
-                                  return 'يجب ادخال اكثر من 5 احرف';
-                                }
-                                return null;
-                              },
-                            ),
+                          CustomTextFormField(
+                            height: 44.h,
+                            width: double.infinity,
+                            controller: eNameController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return LocaleKeys.english_title_val1.tr();
+                              } else if (value.length < 5) {
+                                return LocaleKeys.english_title_val2.tr();
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(
                             height: 20.h,
                           ),
                           Text(
-                            'وصف الخدمة',
+                            LocaleKeys.services_discription.tr(),
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontFamily: FontPath.almaraiBold,
@@ -311,9 +310,9 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                             controller: detailsController,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'يجب ادخال الوصف';
+                                return LocaleKeys.service_details_val1.tr();
                               } else if (value.length < 5) {
-                                return 'يجب ادخال اكثر من 5 احرف';
+                                return LocaleKeys.service_details_val2.tr();
                               }
                               return null;
                             },
@@ -323,7 +322,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                           ),
                           // if (widget.servicesModel == null)
                             Text(
-                            'مدة الخدمة',
+                              LocaleKeys.service_duration.tr(),
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontFamily: FontPath.almaraiBold,
@@ -342,7 +341,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                               controller: timeController,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'يجب ادخال التوقيت';
+                                  return LocaleKeys.enter_the_duration.tr();
                                 }
                                 return null;
                               },
@@ -351,7 +350,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                             height: 20.h,
                           ),
                           Text(
-                            'تكلفة الخدمة',
+                            LocaleKeys.service_cost.tr(),
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontFamily: FontPath.almaraiBold,
@@ -368,7 +367,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                             controller: priceController,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'يجب ادخال السعر';
+                                return LocaleKeys.service_cost_val.tr();
                               }
                               return null;
                             },
@@ -377,7 +376,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                             height: 20.h,
                           ),
                           Text(
-                            'التكلفة النهائية',
+                            LocaleKeys.final_price.tr(),
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontFamily: FontPath.almaraiBold,
@@ -394,12 +393,12 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                             controller: finalPriceController,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'ائا لم يكن هناك خصم ادخل نفس العسر';
+                                return LocaleKeys.final_cost_val1.tr();
                               } else if (double.parse(
                                       priceController.text.toString()) <
                                   double.parse(
                                       finalPriceController.text.toString())) {
-                                return 'السعر النهائي لا يجب ان يكون اكبر من السعر';
+                                return LocaleKeys.final_price_val2.tr();
                               }
                               return null;
                             },
@@ -408,7 +407,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                             height: 20.h,
                           ),
                           Text(
-                            'عدد العاملين علي الخدمة',
+                            LocaleKeys.emp_number.tr(),
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontFamily: FontPath.almaraiBold,
@@ -425,7 +424,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                             controller: emNumberController,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'يجب ادخال عدد العاملين علي هذه الخدمة';
+                                return LocaleKeys.emp_number_val1.tr();
                               }
                               return null;
                             },
@@ -435,7 +434,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                           ),
                           if (widget.type == 0)
                             Text(
-                              'نوع الخدمة',
+                              LocaleKeys.services_type.tr(),
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontFamily: FontPath.almaraiBold,
@@ -469,7 +468,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                                 .authTextFieldFillColor,
                                         shape: const StadiumBorder()),
                                     child: Text(
-                                      'الخدمة المنزلية',
+                                      LocaleKeys.service_in_home.tr(),
                                       style: TextStyle(
                                           color: cubit.inHome
                                               ? Colors.white
@@ -494,7 +493,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                                 .authTextFieldFillColor,
                                         shape: const StadiumBorder()),
                                     child: Text(
-                                      'الخدمة بالمركز',
+                                      LocaleKeys.services_in_center.tr(),
                                       style: TextStyle(
                                           color: cubit.inCenter
                                               ? Colors.white
@@ -510,7 +509,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                             height: 20.h,
                           ),
                           Text(
-                            'القسم العام',
+                            LocaleKeys.main_section.tr(),
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontFamily: FontPath.almaraiBold,
@@ -525,11 +524,12 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                             height: 20.h,
                           ),
                           CustomVendorButton(
-                              buttonTitle: widget.servicesModel!=null?"تعديل":'اضافة',
+                              buttonTitle: widget.servicesModel!=null?LocaleKeys.edit.tr():LocaleKeys.add.tr(),
                               isTapped: () {
                                 if (formKey.currentState!.validate()) {
                                   if (widget.type == 0) {
                                     if(widget.servicesModel!=null){
+                                      print("upcenter");
                                       cubit.updateServicesOfCenter(
                                         titleAr: aNameController.text,
                                         titleEn: eNameController.text,
@@ -563,6 +563,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                     }
                                   } else if (widget.type == 1) {
                                     if(widget.servicesModel!=null){
+                                      print("upf");
                                       cubit.updateServicesOfCenter(
                                         titleAr: aNameController.text,
                                         titleEn: eNameController.text,
@@ -577,7 +578,9 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                             .round(),
                                         duration: timeController.text, id: widget.servicesModel!.id!,
                                       );
-                                    }else{
+                                    }
+                                    else{
+                                      print("addcenter");
                                       cubit.addServicesOfFreelancer(
                                         titleAr: aNameController.text,
                                         titleEn: eNameController.text,
@@ -603,7 +606,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                             height: 15.h,
                           ),
                           if(widget.servicesModel!=null)CustomVendorButton(
-                              buttonTitle: "حذف الخدمة",
+                              buttonTitle: LocaleKeys.delete.tr(),
                               isTapped: () {
                                 cubit.deleteServices(id: widget.servicesModel!.id!);
                               },

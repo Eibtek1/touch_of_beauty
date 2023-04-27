@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 
 import '../../../../../../core/assets_path/font_path.dart';
 import '../../../../../../core/assets_path/images_path.dart';
+import '../../../../../../translations/locale_keys.g.dart';
 import '../../../../buisness_logic/services_cubit/services_cubit.dart';
 import '../../../../buisness_logic/services_cubit/services_state.dart';
 import '../../../widgets/custom_button.dart';
@@ -52,7 +54,7 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                         width: 5.w,
                       ),
                       Text(
-                        'قم بأختيار عنوانك',
+                        LocaleKeys.choose_address.tr(),
                         style: TextStyle(
                             color: const Color(0xff263238),
                             fontFamily: FontPath.almaraiBold,
@@ -130,7 +132,7 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                             width: 5.w,
                           ),
                           Text(
-                            'قم بأضافة عنوان جديد',
+                            LocaleKeys.add_new_address.tr(),
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: FontPath.almaraiBold,
@@ -144,7 +146,7 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
                     height: 10.h,
                   ),
                   CustomUserButton(
-                      buttonTitle: 'اختيار',
+                      buttonTitle: LocaleKeys.choose.tr(),
                       isTapped: () {
                         Navigator.pop(context);
                       },

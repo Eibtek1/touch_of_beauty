@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +10,7 @@ import '../../../../core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/svg_path.dart';
 import '../../../../core/constants/constants.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../../../authentication/buisness_logic/auth_cubit.dart';
 import '../../../authentication/buisness_logic/auth_state.dart';
 import '../../../user/presentation/widgets/delete_acc_alert_dialog.dart';
@@ -35,7 +37,7 @@ class FreelancerCentersScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      'المركز',
+                      LocaleKeys.center.tr(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
@@ -66,7 +68,7 @@ class FreelancerCentersScreen extends StatelessWidget {
                   children: [
                     BuildFreelancerProfileItem(
                       svgImage: SvgPath.centersIcon,
-                      title: 'بيانات مقدم الخدمة',
+                      title: LocaleKeys.services_provider_data.tr(),
                       onTap: () {
                         if (AuthCubit.get(context).getUserModel == null) {
                           AuthCubit.get(context).getUserData();
@@ -81,7 +83,7 @@ class FreelancerCentersScreen extends StatelessWidget {
                     const Divider(),
                     BuildFreelancerProfileItem(
                       svgImage: SvgPath.clock,
-                      title: 'مواعيد العمل',
+                      title: LocaleKeys.working_hours.tr(),
                       onTap: () {
                         Navigator.pushNamed(
                             context, ScreenName.freelancerTimeScreen);
@@ -93,7 +95,7 @@ class FreelancerCentersScreen extends StatelessWidget {
                     const Divider(),
                     BuildFreelancerProfileItem(
                       svgImage: SvgPath.bag,
-                      title: 'خدماتي',
+                      title: LocaleKeys.my_services.tr(),
                       onTap: () {
                         VendorServicesCubit.get(context)
                             .getServicesByServiceProviderId();
@@ -109,7 +111,7 @@ class FreelancerCentersScreen extends StatelessWidget {
                       svgImage: SvgPath.edit,
                       width: 20.w,
                       height: 20.h,
-                      title: 'حذف الحساب',
+                      title: LocaleKeys.delete_account.tr(),
                       onTap: () {
                         showProgressIndicator(context);
                         Future.delayed(
@@ -129,7 +131,7 @@ class FreelancerCentersScreen extends StatelessWidget {
                     const Divider(),
                     BuildFreelancerProfileItem(
                       svgImage: SvgPath.calender2,
-                      title: 'حجوزاتي',
+                      title: LocaleKeys.my_reservations.tr(),
                       onTap: () {
                         Navigator.pushNamed(
                             context, ScreenName.vendorReservationsScreen);
@@ -161,7 +163,7 @@ class FreelancerCentersScreen extends StatelessWidget {
                         var cubit = AuthCubit.get(context);
                         return BuildFreelancerProfileItem(
                           svgImage: SvgPath.calender2,
-                          title: 'تسجيل الخروج',
+                          title: LocaleKeys.logout.tr(),
                           onTap: () {
                             // print(token);
                             cubit.logout();

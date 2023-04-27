@@ -47,10 +47,12 @@ class EmployeesCubit extends Cubit<EmployeesState> {
     required int id,
   })async{
     try{
+      employeesList.removeWhere((element) => element.id == id);
       emit(DeleteEmployeeLoading());
       final response = await VendorServicesRepository.deleteEmployee(id: id);
       mainResponse = MainResponse.fromJson(response.data);
       if(mainResponse.errorCode == 0){
+        getEmployee();
         emit(DeleteEmployeeSuccess());
       }
     }catch(error){

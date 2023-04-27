@@ -14,6 +14,7 @@ import 'package:touch_of_beauty/features/authentication/data/repository/auth_rep
 import 'package:touch_of_beauty/features/chat/buisness_logic/chat_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/reservation_cubit/reservation_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
+import 'package:touch_of_beauty/translations/codegen_loader.g.dart';
 import 'bloc_observer.dart';
 import 'core/app_router/app_router.dart';
 import 'core/app_router/screens_name.dart';
@@ -53,8 +54,9 @@ void main() async {
         Locale('en',),
         Locale('ar',),
       ],
+      startLocale: Locale.fromSubtags(languageCode: initialLocale),
       path: 'assets/translations',
-      fallbackLocale: const Locale('ar'),
+      assetLoader: const CodegenLoader(),
       child: const MyApp(),
     ),
   );
@@ -89,7 +91,7 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (context) => EmployeesCubit()..init(),),
               ],
               child: MaterialApp(
-                title: 'لمسة جمال',
+                title: 'Beauty touch',
                 localizationsDelegates: context.localizationDelegates,
                 supportedLocales: context.supportedLocales,
                 locale: context.locale,

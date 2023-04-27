@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +14,7 @@ import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
 import '../../../../../core/constants/constants.dart';
 import '../../../../../core/network/api_end_points.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../data/models/services_providers_model.dart';
 import 'center_services_item.dart';
 
@@ -86,7 +88,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                 height: 8.h,
               ),
               Text(
-                widget.servicesProvidersModel.addresses!.isNotEmpty?widget.servicesProvidersModel.addresses![0].city!:'لم يتم اضافة عنوان',
+                widget.servicesProvidersModel.addresses!.isNotEmpty?widget.servicesProvidersModel.addresses![0].city!:LocaleKeys.no_address_added.tr(),
                 style: TextStyle(
                   fontSize: 11.sp,
                   fontFamily: FontPath.almaraiRegular,
@@ -97,7 +99,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                 height: 8.h,
               ),
               if(widget.servicesProvidersModel.addresses!=null&&widget.servicesProvidersModel.addresses!.isNotEmpty)Text(
-                widget.servicesProvidersModel.addresses!.isNotEmpty?widget.servicesProvidersModel.addresses![0].addressDetails!:'لم يتم اضافة عنوان',
+                widget.servicesProvidersModel.addresses!.isNotEmpty?widget.servicesProvidersModel.addresses![0].addressDetails!:LocaleKeys.no_address_added.tr(),
                 style: TextStyle(
                   fontSize: 11.sp,
                   fontFamily: FontPath.almaraiRegular,
@@ -121,7 +123,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                         width: 5.w,
                       ),
                       Text(
-                        'فاتح اليوم',
+                        LocaleKeys.open_today.tr(),
                         style: TextStyle(
                           fontSize: 12.sp,
                           fontFamily: FontPath.almaraiBold,
@@ -141,7 +143,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                         width: 5.w,
                       ),
                       Text(
-                        '10k مشاهدة',
+                        '10k ${LocaleKeys.view.tr()}',
                         style: TextStyle(
                           fontSize: 12.sp,
                           fontFamily: FontPath.almaraiBold,
@@ -180,7 +182,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                 height: 15.h,
               ),
               Text(
-                'وصف الخدمة',
+                LocaleKeys.services_discription.tr(),
                 style: TextStyle(
                     color: const Color(0xff263238),
                     fontFamily: FontPath.almaraiBold,
@@ -210,7 +212,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'اوقات العمل',
+                    LocaleKeys.working_hours.tr(),
                     style: TextStyle(
                         color: const Color(0xff263238),
                         fontFamily: FontPath.almaraiBold,
@@ -237,18 +239,18 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                           padding: EdgeInsets.symmetric(vertical: 10.h),
                           child: availableTimeWidget(
                             title: day == 0
-                                ? 'السبت'
+                                ? LocaleKeys.saturday.tr()
                                 : day == 1
-                                    ? 'الاحد'
+                                    ? LocaleKeys.sunday.tr()
                                     : day == 2
-                                        ? 'الاثنبن'
+                                        ? LocaleKeys.monday.tr()
                                         : day == 3
-                                            ? 'الثلثاء'
+                                            ? LocaleKeys.tuesday.tr()
                                             : day == 4
-                                                ? 'الاربعاء'
+                                                ? LocaleKeys.wednesday.tr()
                                                 : day == 5
-                                                    ? 'الخميس'
-                                                    : 'الجمعه',
+                                                    ? LocaleKeys.thuresday.tr()
+                                                    : LocaleKeys.friday.tr(),
                             from: widget
                                 .servicesProvidersModel.workDays![index].from!
                                 .substring(0, 4),
@@ -261,7 +263,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                     )
                   : Center(
                       child: Text(
-                        'لم تحدد مواعيد العمل',
+                        LocaleKeys.working_hours_not_yet.tr(),
                         style: TextStyle(
                             color: AppColorsLightTheme.primaryColor,
                             fontFamily: FontPath.almaraiBold,
@@ -276,7 +278,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                 height: 22.h,
               ),
               if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)Text(
-                'بعض الخدمات',
+                LocaleKeys.our_services.tr(),
                 style: TextStyle(
                     color: const Color(0xff263238),
                     fontFamily: FontPath.almaraiBold,
@@ -399,7 +401,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                     side: BorderSide(
                         width: 1.5.w, color: AppColorsLightTheme.primaryColor)),
                 child: Text(
-                  'شاهد خدماتنا',
+                  LocaleKeys.watch_our_services.tr(),
                   style: TextStyle(
                       color: AppColorsLightTheme.primaryColor,
                       fontFamily: FontPath.almaraiBold,
@@ -413,7 +415,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'المعرض',
+                    LocaleKeys.gallery.tr(),
                     style: TextStyle(
                         fontSize: 16.sp,
                         fontFamily: FontPath.almaraiBold,
@@ -426,7 +428,7 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                               widget.servicesProvidersModel.picturesLibrary!);
                     },
                     child: Text(
-                      'شاهد الكل',
+                      LocaleKeys.watch_all.tr(),
                       style: TextStyle(
                           fontSize: 16.sp,
                           fontFamily: FontPath.almaraiBold,

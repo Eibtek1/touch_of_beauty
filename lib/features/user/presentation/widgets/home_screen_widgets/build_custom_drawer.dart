@@ -1,15 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
+import 'package:touch_of_beauty/core/cache_manager/cache_keys.dart';
+import 'package:touch_of_beauty/core/cache_manager/shared_preferences.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
 
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/constants/constants.dart';
 import '../../../../../core/network/api_end_points.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../../authentication/buisness_logic/auth_cubit.dart';
 import '../../../../authentication/buisness_logic/auth_state.dart';
 import '../../../../freelancer/buisness_logic/services_cubit/freelancer_services_cubit.dart';
@@ -17,11 +21,16 @@ import '../../../../vendor/buisness_logic/services_cubit/vendor_services_cubit.d
 import '../../../buisness_logic/main_cubit/main_cubit.dart';
 import '../../../buisness_logic/main_cubit/main_state.dart' as main_state;
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends StatefulWidget {
   final Function closeDrawer;
 
   const AppDrawer({Key? key, required this.closeDrawer}) : super(key: key);
 
+  @override
+  State<AppDrawer> createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -38,7 +47,7 @@ class AppDrawer extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    closeDrawer();
+                    widget.closeDrawer();
                   },
                   child: Container(
                     height: 35.h,
@@ -151,7 +160,7 @@ class AppDrawer extends StatelessWidget {
                 Navigator.pop(context);
                 MainCubit.get(context).onTap(0);
               },
-              title: 'الصفحة الرئيسية',
+              title: LocaleKeys.home.tr(),
             ),
             SizedBox(
               height: 15.h,
@@ -161,7 +170,7 @@ class AppDrawer extends StatelessWidget {
                 Navigator.pop(context);
                 MainCubit.get(context).onTap(1);
               },
-              title: 'الحجوزات',
+              title: LocaleKeys.my_reservations.tr(),
             ),
             SizedBox(
               height: 15.h,
@@ -172,7 +181,7 @@ class AppDrawer extends StatelessWidget {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, ScreenName.favoritesServicesScreen);
               },
-              title: 'المفضلة',
+              title: LocaleKeys.fav.tr(),
             ),
             SizedBox(
               height: 15.h,
@@ -183,7 +192,7 @@ class AppDrawer extends StatelessWidget {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, ScreenName.allQuestionsScreen);
               },
-              title: 'الاسئلة الشائعة',
+              title: LocaleKeys.common_questions.tr(),
             ),
             SizedBox(
               height: 15.h,
@@ -206,14 +215,50 @@ class AppDrawer extends StatelessWidget {
                 Navigator.pop(context);
                 MainCubit.get(context).onTap(3);
               },
-              title: 'حساب',
+              title: LocaleKeys.profile.tr(),
             ),
             SizedBox(
               height: 15.h,
             ),
             buildTitleWidget(
-              onTap: () {},
-              title: 'اللغات',
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => SimpleDialog(
+                    children: [
+                      SimpleDialogOption(
+                        onPressed: () async {
+                          await context.setLocale(const Locale("en")).then((value) {
+                            CacheHelper.saveData(key: CacheKeys.initialLocale, value: "en").whenComplete(() {
+                              initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale);
+                              Navigator.pushNamedAndRemoveUntil(context, ScreenName.splashscreen, (route) => false);
+                            });
+                          });
+
+                        },
+                        child: const Text(
+                          'English',
+                        ),
+                      ),
+                      SimpleDialogOption(
+                        onPressed: () async {
+                          await context.setLocale(const Locale("ar")).then((value) {
+                            CacheHelper.saveData(key: CacheKeys.initialLocale, value: "ar").whenComplete(() {
+                              initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale);
+                              Navigator.pushNamedAndRemoveUntil(context, ScreenName.splashscreen, (route) => false);
+                            });
+
+                          });
+                        },
+                        child: const Text(
+                          'Arabic',
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+              title: LocaleKeys.lang.tr(),
             ),
             SizedBox(
               height: 14.5.h,
@@ -229,7 +274,7 @@ class AppDrawer extends StatelessWidget {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, ScreenName.privacyScreen);
               },
-              title: 'سياسة خصوصية',
+              title: LocaleKeys.priv_policy.tr(),
             ),
             SizedBox(
               height: 15.h,
@@ -239,7 +284,7 @@ class AppDrawer extends StatelessWidget {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, ScreenName.complainsScreen);
               },
-              title: 'الشكاوي',
+              title: LocaleKeys.complaints.tr(),
             ),
             SizedBox(
               height: 100.h,
@@ -280,7 +325,7 @@ class AppDrawer extends StatelessWidget {
                         width: 5.w,
                       ),
                       Text(
-                        'تسجيل خروج',
+                        LocaleKeys.logout.tr(),
                         style: TextStyle(
                             fontSize: 14.sp,
                             fontFamily: FontPath.almaraiLight,

@@ -31,13 +31,10 @@ import '../../features/user/presentation/screens/home_screen_screens/complains_s
 import '../../features/user/presentation/screens/home_screen_screens/gallery_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/add_address_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/choose_address_screen.dart';
-import '../../features/user/presentation/screens/home_screen_screens/order_screens/order_details_screen.dart';
-import '../../features/user/presentation/screens/home_screen_screens/order_screens/payment_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/payment_web_view.dart';
 import '../../features/user/presentation/screens/home_screen_screens/order_screens/reserve_order_screen.dart';
 import '../../features/user/presentation/screens/home_screen_screens/our_services_screen.dart';
 import '../../features/user/presentation/screens/privacy_and_policy.dart';
-import '../../features/vendor/presentation/screens/order_screens/center_orders_details_screen.dart';
 import '../../features/vendor/presentation/screens/order_screens/home_orders_details_screen.dart';
 import '../../features/vendor/presentation/screens/vendor_center_screens/add_services_screen.dart';
 import '../../features/vendor/presentation/screens/vendor_center_screens/center_details_screen.dart';
@@ -68,8 +65,6 @@ class AppRouter {
           return MaterialPageRoute(builder: (BuildContext context) { return const OnboardingScreen(); });
         case ScreenName.chooseRegisterType:
           return _animateRouteBuilder(const ChooseTypeScreen());
-        case ScreenName.orderInCenterDetailsScreen:
-          return _animateRouteBuilder(const CenterOrderDetailsScreen());
         case ScreenName.orderInHomeDetailsScreen:
           return _animateRouteBuilder(const HomeOrderDetailsScreen());
         case ScreenName.vendorNotificationScreen:
@@ -78,8 +73,6 @@ class AppRouter {
           return _animateRouteBuilder(const AllQuestionsScreen());
         case ScreenName.freelancerNotificationScreen:
           return _animateRouteBuilder(const FreelancerNotificationScreen());
-        case ScreenName.orderDetailsScreen:
-          return _animateRouteBuilder(const OrderDetailsScreen());
         case ScreenName.userCategoryDetailsScreen:
           final arg = settings.arguments;
           MainFeatureServicesArgs arguments = arg as MainFeatureServicesArgs;
@@ -135,8 +128,6 @@ class AppRouter {
           final args = settings.arguments ;
           final AddAddressArgs arg = args as AddAddressArgs;
           return _animateRouteBuilder(AddAddressScreen(userEqualsZeroVendorEqualsOne: arg.userEqualsZeroVendorEqualsOne!,addressModel: arg.addressModel,));
-        case ScreenName.paymentScreen:
-          return _animateRouteBuilder(const PaymentScreen());
         case ScreenName.editProfileScreen:
           return _animateRouteBuilder(const EditProfileScreen());
         case ScreenName.chooseAddressScreen:

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_state.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../buisness_logic/services_cubit/services_cubit.dart';
 import '../../widgets/home_screen_widgets/all_centers_item.dart';
 import '../../widgets/home_screen_widgets/center_details_bottom_sheet.dart';
@@ -46,7 +48,7 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          'مراكز الخدمة',
+          LocaleKeys.services_centers.tr(),
           style: TextStyle(
               color: const Color(0xff263238),
               fontFamily: FontPath.almaraiBold,
@@ -62,7 +64,6 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
           var cubit = ServicesProvidersCubit.get(context);
           if (state is GetServicesProviderDetailsByItsIdSuccess &&
               cubit.servicesProviderModel != null) {
-            print(cubit.servicesProviderModel!.mainSection);
             Navigator.pop(context);
             UserServicesCubit.get(context).tabBarCIndex = 0;
             UserServicesCubit.get(context).changeTabBarCurrentIndex(

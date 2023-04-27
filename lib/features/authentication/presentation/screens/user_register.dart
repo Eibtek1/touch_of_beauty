@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +12,7 @@ import 'package:touch_of_beauty/features/authentication/presentation/screens/otp
 import '../../../../core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/constants/constants.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../widgets/auht_text_form_field.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/citeis_dropdown_button.dart';
@@ -111,7 +113,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                     height: 10.h,
                   ),
                   Text(
-                    'مستخدم جديد',
+                    LocaleKeys.new_user.tr(),
                     style: TextStyle(
                         color: const Color(0xff262626),
                         fontFamily: FontPath.almaraiBold,
@@ -121,7 +123,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                     height: 10.h,
                   ),
                   Text(
-                    'قم بالتسجيل كمستخدم جديد',
+                    LocaleKeys.register_as_new_user.tr(),
                     style: TextStyle(
                         color: const Color(0xffABABAB),
                         fontFamily: FontPath.almaraiRegular,
@@ -148,7 +150,7 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'اختر صورة',
+                                    LocaleKeys.choose_image.tr(),
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: FontPath.almaraiRegular,
@@ -175,13 +177,13 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                     height: 35.h,
                   ),
                   AuthTextFormField(
-                    hintText: 'اسم المستخدم',
+                    hintText: LocaleKeys.user_name.tr(),
                     controller: name,
                     validate: (value) {
                       if (value!.isEmpty) {
-                        return 'ادخل اسم المستحدم';
+                        return LocaleKeys.enter_user_name.tr();
                       } else if (value.length < 5) {
-                        return 'لا يحب ان يكون الاسم اقل من خمسة احرف';
+                        return LocaleKeys.short_name.tr();
                       }
                       return null;
                     },
@@ -190,15 +192,15 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                     height: 14.h,
                   ),
                   AuthTextFormField(
-                    hintText: 'البريد الالكتروني',
+                    hintText: LocaleKeys.email.tr(),
                     controller: email,
                     validate: (value) {
                       if (value!.isEmpty) {
-                        return 'ادخل البريد الالكتروني';
+                        return LocaleKeys.enter_email.tr();
                       } else if (!RegExp(
                               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                           .hasMatch(value)) {
-                        return 'صيعة البريد غير صحيحة';
+                        return LocaleKeys.incorrect_email.tr();
                       }
                       return null;
                     },
@@ -211,9 +213,9 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                     height: 14.h,
                   ),
                   AuthTextFormField(
-                    hintText: 'رقم الهاتف',
+                    hintText: LocaleKeys.phone_number.tr(),
                     keyboardType: TextInputType.phone,
-                    textDirection: TextDirection.ltr,
+                    // textDirection: TextDirection.ltr,
                     suffix: Padding(
                       padding: EdgeInsets.only(left: 10.w),
                       child: SvgPicture.asset(
@@ -225,9 +227,9 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                     validate: (value) {
                       var regex = RegExp(r'^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$');
                       if (value!.isEmpty) {
-                        return 'ادخل رقم الهاتف';
+                        return LocaleKeys.enter_your_phone.tr();
                       } else if (!regex.hasMatch(value)) {
-                        return 'صيغة الهاتف غير صحيحة';
+                        return LocaleKeys.incorrect_phone_format.tr();
                       }
                       return null;
                     },
@@ -237,14 +239,14 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                     height: 14.h,
                   ),
                   AuthTextFormField(
-                    hintText: 'كلمة المرور',
+                    hintText: LocaleKeys.password.tr(),
                     controller: password,
                     isPassword: true,
                     validate: (value) {
                       if (value!.isEmpty) {
-                        return 'ادخل كلمة المرور';
+                        return LocaleKeys.enter_password.tr();
                       } else if (value.length < 8) {
-                        return 'كلمة المرور ضعيفة';
+                        return LocaleKeys.weak_password.tr();
                       }
                       return null;
                     },
@@ -253,12 +255,12 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                     height: 14.h,
                   ),
                   AuthTextFormField(
-                    hintText: 'اعد كتابة كلمة المرور',
+                    hintText: LocaleKeys.password_reenter.tr(),
                     controller: confirmPassword,
                     isPassword: true,
                     validate: (value) {
                       if (confirmPassword.text != password.text) {
-                        return 'كلمة المرور غير متشابهة';
+                        return LocaleKeys.password_is_different.tr();
                       }
                       return null;
                     },
@@ -285,14 +287,14 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                         },
                         child: RichText(
                           text: TextSpan(
-                            text: 'الموافقة علي شروط الخصوصية  ',
+                            text: '${LocaleKeys.agree_privacy_terms.tr()}  ',
                             style: TextStyle(
                                 color: AppColorsLightTheme.secondaryColor,
                                 fontFamily: FontPath.almaraiRegular,
                                 fontSize: 10.sp),
                             children: [
                               TextSpan(
-                                text: 'شروط الخصوصية',
+                                text: LocaleKeys.privacy_terms.tr(),
                                 style: TextStyle(
                                     color: AppColorsLightTheme.secondaryColor,
                                     fontWeight: FontWeight.bold,
@@ -309,11 +311,11 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                     height: 15.h,
                   ),
                   AuthButton(
-                      buttonTitle: 'تسجيل',
+                      buttonTitle: LocaleKeys.register.tr(),
                       isTapped: chosen?() {
                         if (cubit.profileImage == null) {
                           Fluttertoast.showToast(
-                              msg: 'برجال اختيار صورة شخصية',
+                              msg: LocaleKeys.please_choose_image.tr(),
                               gravity: ToastGravity.CENTER,
                               backgroundColor: Colors.red,
                               textColor: Colors.white);
@@ -334,14 +336,14 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'هل لديك حساب ؟  ',
+                          '${LocaleKeys.have_account.tr()}  ',
                           style: TextStyle(
                               color: const Color(0xff262626),
                               fontFamily: FontPath.almaraiRegular,
                               fontSize: 10.sp),
                         ),
                         Text(
-                          'تسجيل الدخول',
+                          LocaleKeys.login.tr(),
                           style: TextStyle(
                               color: AppColorsLightTheme.secondaryColor,
                               fontFamily: FontPath.almaraiBold,

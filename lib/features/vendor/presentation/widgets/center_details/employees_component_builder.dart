@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +8,7 @@ import 'package:shimmer/shimmer.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/network/api_end_points.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../buisness_logic/employees_cubit/employees_cubit.dart';
 import '../../../buisness_logic/employees_cubit/employees_state.dart';
 import 'employee_alert_dialog.dart';
@@ -36,46 +38,63 @@ class EmployeesComponentBuilder extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 10.w),
                           child: Column(
                             children: [
-                              Container(
-                                height: 71.h,
-                                width: 71.w,
-                                clipBehavior: Clip.antiAlias,
-                                padding: EdgeInsets.all(3.r),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: AppColorsLightTheme.primaryColor,
-                                        width: 0.9.w),
-                                    shape: BoxShape.circle),
-                                child: Container(
-                                  height: 61.h,
-                                  width: 61.w,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration:
-                                      const BoxDecoration(shape: BoxShape.circle),
-                                  child: CachedNetworkImage(
-                                    fit: BoxFit.cover,
-                                    imageUrl:
-                                        '${EndPoints.imageBaseUrl}${cubit.employeesList[index].imgUrl}',
-                                    placeholder: (context, url) =>
-                                        Shimmer.fromColors(
-                                      baseColor: Colors.grey[400]!,
-                                      highlightColor: Colors.grey[300]!,
-                                      child: Container(
-                                        height: double.infinity,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: Colors.black,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
+                              Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Container(
+                                    height: 71.h,
+                                    width: 71.w,
+                                    clipBehavior: Clip.antiAlias,
+                                    padding: EdgeInsets.all(3.r),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: AppColorsLightTheme
+                                                .primaryColor,
+                                            width: 0.9.w),
+                                        shape: BoxShape.circle),
+                                    child: Container(
+                                      height: 61.h,
+                                      width: 61.w,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle),
+                                      child: CachedNetworkImage(
+                                        fit: BoxFit.cover,
+                                        imageUrl:
+                                            '${EndPoints.imageBaseUrl}${cubit.employeesList[index].imgUrl}',
+                                        placeholder: (context, url) =>
+                                            Shimmer.fromColors(
+                                          baseColor: Colors.grey[400]!,
+                                          highlightColor: Colors.grey[300]!,
+                                          child: Container(
+                                            height: double.infinity,
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color: Colors.black,
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                          ),
                                         ),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
                                       ),
                                     ),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(Icons.error),
+                                    // Image.network(
+                                    //     cubit.employeesList[index].),
                                   ),
-                                ),
-                                // Image.network(
-                                //     cubit.employeesList[index].),
+                                  Container(
+                                    height: 71.h,
+                                    width: 71.w,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.black.withOpacity(0.2),
+                                    ),
+                                  ),
+                                  IconButton(onPressed: (){
+                                    cubit.deleteEmployee(id: cubit.employeesList[index].id!);
+                                  }, icon: Icon(Icons.delete,color: Colors.white,size: 25.r,)),
+                                ],
                               ),
                               Expanded(
                                 child: Text(
@@ -153,7 +172,7 @@ class EmployeesComponentBuilder extends StatelessWidget {
             height: 5.h,
           ),
           Text(
-            'اضافة عامل',
+            LocaleKeys.add_emp.tr(),
             style: TextStyle(
               fontSize: 16.sp,
               fontFamily: FontPath.almaraiBold,

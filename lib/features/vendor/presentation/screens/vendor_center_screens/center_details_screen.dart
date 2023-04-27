@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +12,7 @@ import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubi
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/network/api_end_points.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../../user/buisness_logic/services_cubit/services_cubit.dart';
 import '../../../../user/buisness_logic/services_cubit/services_state.dart';
 import '../../../../user/presentation/screens/home_screen_screens/order_screens/add_address_screen.dart';
@@ -33,7 +35,7 @@ class CenterDetailsScreen extends StatelessWidget {
         toolbarHeight: 60.h,
         centerTitle: true,
         title: Text(
-          'بيانات المركز',
+          LocaleKeys.center_data.tr(),
           style: TextStyle(
             fontSize: 17.sp,
             fontFamily: FontPath.almaraiBold,
@@ -89,7 +91,7 @@ class CenterDetailsScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'صور للصالون أو الخدمات المقدمة',
+                                        LocaleKeys.images_of_services.tr(),
                                         style: TextStyle(
                                           fontSize: 14.sp,
                                           fontFamily: FontPath.almaraiBold,
@@ -430,7 +432,7 @@ class CenterDetailsScreen extends StatelessWidget {
                                               child: Text(
                                                 cubit.getUserModel!
                                                         .description ??
-                                                    'قم بإضافة وصف للمركز',
+                                                    LocaleKeys.add_center_details.tr(),
                                                 textAlign: TextAlign.start,
                                                 maxLines: 5,
                                                 style: TextStyle(
@@ -459,7 +461,7 @@ class CenterDetailsScreen extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'الرقم الضريبي',
+                                              LocaleKeys.tax_number.tr(),
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
                                                 fontSize: 12.sp,
@@ -506,7 +508,7 @@ class CenterDetailsScreen extends StatelessWidget {
                                                 CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    'العنوان',
+                                                    LocaleKeys.address.tr(),
                                                     textAlign: TextAlign.start,
                                                     style: TextStyle(
                                                       fontSize: 12.sp,
@@ -521,7 +523,7 @@ class CenterDetailsScreen extends StatelessWidget {
                                                   ),
                                                   Expanded(
                                                     child: Text(
-                                                      cubit.addressList.isNotEmpty?cubit.addressList[0].cityName!:"اضف عنوان",
+                                                      cubit.addressList.isNotEmpty?cubit.addressList[0].cityName!:LocaleKeys.add_address.tr(),
                                                       textAlign: TextAlign.start,
                                                       style: TextStyle(
                                                         fontSize: 14.sp,
@@ -549,7 +551,7 @@ class CenterDetailsScreen extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'رقم الهاتف',
+                                              LocaleKeys.phone_number.tr(),
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
                                                 fontSize: 12.sp,
@@ -565,7 +567,7 @@ class CenterDetailsScreen extends StatelessWidget {
                                               child: Text(
                                                 cubit.getUserModel!
                                                         .phoneNumber ??
-                                                    'قم بإضافة رقم هاتف للمركز',
+                                                    LocaleKeys.add_center_phone_number.tr(),
                                                 textAlign: TextAlign.start,
                                                 style: TextStyle(
                                                   fontSize: 14.sp,
@@ -590,7 +592,7 @@ class CenterDetailsScreen extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'البريد الاليكتروني',
+                                              LocaleKeys.email.tr(),
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
                                                 fontSize: 12.sp,
@@ -605,7 +607,7 @@ class CenterDetailsScreen extends StatelessWidget {
                                             Expanded(
                                               child: Text(
                                                 cubit.getUserModel!.email ??
-                                                    'قم بإضافة رقم هاتف للمركز',
+                                                    LocaleKeys.add_center_email.tr(),
                                                 textAlign: TextAlign.start,
                                                 style: TextStyle(
                                                   fontSize: 14.sp,
@@ -623,7 +625,7 @@ class CenterDetailsScreen extends StatelessWidget {
                                         height: 14.h,
                                       ),
                                       Text(
-                                        'العاملين بالمركز',
+                                        LocaleKeys.center_employees.tr(),
                                         style: TextStyle(
                                           fontSize: 14.sp,
                                           fontFamily: FontPath.almaraiBold,
@@ -642,7 +644,7 @@ class CenterDetailsScreen extends StatelessWidget {
                                             height: 44.h,
                                             width: 280.w,
                                             child: Text(
-                                              'عنوان المركز',
+                                              LocaleKeys.center_address.tr(),
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
                                                 fontSize: 14.sp,
@@ -685,7 +687,7 @@ class CenterDetailsScreen extends StatelessWidget {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              'شهادة سجل المركز',
+                                              LocaleKeys.registeration_certificate.tr(),
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
                                                 fontSize: 14.sp,

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,6 +7,7 @@ import 'package:touch_of_beauty/core/assets_path/font_path.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 
 import '../../../../../core/assets_path/svg_path.dart';
+import '../../../../../translations/locale_keys.g.dart';
 
 class CenterEmployeesWidget extends StatelessWidget {
   const CenterEmployeesWidget({Key? key}) : super(key: key);
@@ -58,7 +60,7 @@ class CenterEmployeesWidget extends StatelessWidget {
           child: TextField(
 
             decoration: InputDecoration(
-              hintText: 'الاسم',
+              hintText: LocaleKeys.name.tr(),
               hintStyle: TextStyle(
                 color: Colors.grey,
                 fontSize: 8.sp,

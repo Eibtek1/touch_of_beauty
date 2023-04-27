@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/features/vendor/presentation/widgets/screen_layout_widget_with_logo.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../../vendor/buisness_logic/work_hours_cubit/work_hours_cubit.dart';
 import '../../../../vendor/buisness_logic/work_hours_cubit/work_hours_state.dart';
 import '../../../../vendor/presentation/widgets/add_or_update_working_hours_dialog.dart';
@@ -49,7 +51,7 @@ class FreelancerWorkingTimeScreen extends StatelessWidget {
                         horizontal: 24.w, vertical: 16.w),
                     children: [
                       TimeContainerWidget(
-                        title: 'السبت',
+                        title: LocaleKeys.saturday.tr(),
                         onPressed: () {
                           showDialog(
                             context: context,
@@ -85,7 +87,7 @@ class FreelancerWorkingTimeScreen extends StatelessWidget {
                         height: 20.h,
                       ),
                       TimeContainerWidget(
-                          title: 'الاحد',
+                          title: LocaleKeys.sunday.tr(),
                           onPressed: () {
                             showDialog(
                               context: context,
@@ -122,7 +124,7 @@ class FreelancerWorkingTimeScreen extends StatelessWidget {
                         height: 20.h,
                       ),
                       TimeContainerWidget(
-                          title: 'الاثنين',
+                          title: LocaleKeys.monday.tr(),
                           onPressed: () {
                             showDialog(
                               context: context,
@@ -159,7 +161,7 @@ class FreelancerWorkingTimeScreen extends StatelessWidget {
                         height: 20.h,
                       ),
                       TimeContainerWidget(
-                          title: 'الثلثاء',
+                          title: LocaleKeys.tuesday.tr(),
                           onPressed: () {
                             showDialog(
                               context: context,
@@ -196,7 +198,7 @@ class FreelancerWorkingTimeScreen extends StatelessWidget {
                         height: 20.h,
                       ),
                       TimeContainerWidget(
-                          title: 'الاربعاء',
+                          title: LocaleKeys.wednesday.tr(),
                           onPressed: () {
                             showDialog(
                               context: context,
@@ -233,7 +235,7 @@ class FreelancerWorkingTimeScreen extends StatelessWidget {
                         height: 20.h,
                       ),
                       TimeContainerWidget(
-                          title: 'الخميس',
+                          title: LocaleKeys.thuresday.tr(),
                           onPressed: () {
                             showDialog(
                               context: context,
@@ -270,7 +272,7 @@ class FreelancerWorkingTimeScreen extends StatelessWidget {
                         height: 20.h,
                       ),
                       TimeContainerWidget(
-                          title: 'الجمعه',
+                          title: LocaleKeys.friday.tr(),
                           onPressed: () {
                             showDialog(
                               context: context,

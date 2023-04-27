@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +10,7 @@ import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubi
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
 import 'package:touch_of_beauty/features/authentication/presentation/widgets/auht_text_form_field.dart';
 import '../../../../core/assets_path/font_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../widgets/auth_button.dart';
 
 class ChangeForgetPasswordScreen extends StatefulWidget {
@@ -22,7 +24,6 @@ class _ChangeForgetPasswordScreenState extends State<ChangeForgetPasswordScreen>
   TextEditingController confirmPassword = TextEditingController();
   TextEditingController password = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   @override
   void dispose() {
     confirmPassword.dispose();
@@ -68,7 +69,7 @@ class _ChangeForgetPasswordScreenState extends State<ChangeForgetPasswordScreen>
                     height: 67.h,
                   ),
                   Text(
-                    'تغيير كلمة السر',
+                    LocaleKeys.change_password.tr(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: const Color(0xff262626),
@@ -79,14 +80,14 @@ class _ChangeForgetPasswordScreenState extends State<ChangeForgetPasswordScreen>
                     height: 24.h,
                   ),
                   AuthTextFormField(
-                    hintText: 'كلمة المرور',
+                    hintText: LocaleKeys.password.tr(),
                     controller: password,
                     isPassword: true,
                     validate: (value) {
                       if (value!.isEmpty) {
-                        return 'ادخل كلمة المرور';
+                        return LocaleKeys.enter_password.tr();
                       } else if (value.length < 6) {
-                        return 'كلمة المرور ضعيفة';
+                        return LocaleKeys.weak_password.tr();
                       }
                       return null;
                     },
@@ -95,12 +96,12 @@ class _ChangeForgetPasswordScreenState extends State<ChangeForgetPasswordScreen>
                     height: 10.h,
                   ),
                   AuthTextFormField(
-                    hintText: 'اعد كتابة كلمة المرور',
+                    hintText: LocaleKeys.password_reenter.tr(),
                     controller: confirmPassword,
                     isPassword: true,
                     validate: (value) {
                       if (confirmPassword.text != password.text) {
-                        return 'كلمة المرور غير متشابهة';
+                        return LocaleKeys.password_is_different.tr();
                       }
                       return null;
                     },
@@ -116,7 +117,7 @@ class _ChangeForgetPasswordScreenState extends State<ChangeForgetPasswordScreen>
                     height: 8.h,
                   ),
                   AuthButton(
-                      buttonTitle: 'تغيير',
+                      buttonTitle: LocaleKeys.change.tr(),
                       isTapped: () {
                         if(formKey.currentState!.validate()){
                           cubit.changeConfirmPassword(password: password.text);

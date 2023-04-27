@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +11,11 @@ import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../core/cache_manager/cache_keys.dart';
+import '../../../../../core/cache_manager/shared_preferences.dart';
+import '../../../../../core/constants/constants.dart';
 import '../../../../../core/network/api_end_points.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../../user/buisness_logic/services_cubit/services_cubit.dart';
 import '../../../../user/buisness_logic/services_cubit/services_state.dart';
 import '../../../../user/presentation/screens/home_screen_screens/order_screens/add_address_screen.dart';
@@ -18,6 +23,7 @@ import '../../../../vendor/presentation/widgets/add_pictures_alert_dialog.dart';
 import '../../../../vendor/presentation/widgets/center_details/custom_container.dart';
 import '../../../../vendor/presentation/widgets/delete_picture_alert_dialog.dart';
 import '../../../../vendor/presentation/widgets/screen_layout_widget_with_logo.dart';
+import '../../widgets/build_freelancer_profile_item.dart';
 
 class FreelancerDetailsScreen extends StatelessWidget {
   const FreelancerDetailsScreen({Key? key}) : super(key: key);
@@ -32,7 +38,7 @@ class FreelancerDetailsScreen extends StatelessWidget {
         toolbarHeight: 60.h,
         centerTitle: true,
         title: Text(
-          'بيانات مقدم الخدمة',
+          LocaleKeys.services_provider_data.tr(),
           style: TextStyle(
             fontSize: 17.sp,
             fontFamily: FontPath.almaraiBold,
@@ -83,7 +89,7 @@ class FreelancerDetailsScreen extends StatelessWidget {
                         ? ListView(
                             children: [
                               Text(
-                                'صور متجر مقدم الخدمة',
+                                LocaleKeys.picture_of_services_store.tr(),
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   fontFamily: FontPath.almaraiBold,
@@ -338,7 +344,7 @@ class FreelancerDetailsScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'اسم مقدم الخدمة',
+                                      LocaleKeys.services_provider_name.tr(),
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         fontSize: 10.sp,
@@ -373,7 +379,7 @@ class FreelancerDetailsScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'وصف الخدمات المقدمة',
+                                      LocaleKeys.discreption_of_services_provided.tr(),
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         fontSize: 10.sp,
@@ -387,7 +393,7 @@ class FreelancerDetailsScreen extends StatelessWidget {
                                     Expanded(
                                       child: Text(
                                         cubit.getUserModel!.description ??
-                                            'قم بإضافة وصف للمركز',
+                                            LocaleKeys.add_center_details.tr(),
                                         textAlign: TextAlign.start,
                                         maxLines: 5,
                                         style: TextStyle(
@@ -412,7 +418,7 @@ class FreelancerDetailsScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'رقم الهاتف',
+                                      LocaleKeys.phone_number.tr(),
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         fontSize: 10.sp,
@@ -426,7 +432,7 @@ class FreelancerDetailsScreen extends StatelessWidget {
                                     Expanded(
                                       child: Text(
                                         cubit.getUserModel!.phoneNumber ??
-                                            'قم بإضافة رقم هاتف للمركز',
+                                            LocaleKeys.add_center_phone_number.tr(),
                                         textAlign: TextAlign.start,
                                         style: TextStyle(
                                           fontSize: 14.sp,
@@ -471,7 +477,7 @@ class FreelancerDetailsScreen extends StatelessWidget {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'العنوان',
+                                                LocaleKeys.address.tr(),
                                                 textAlign: TextAlign.start,
                                                 style: TextStyle(
                                                   fontSize: 12.sp,
@@ -489,7 +495,7 @@ class FreelancerDetailsScreen extends StatelessWidget {
                                                   cubit.addressList.isNotEmpty
                                                       ? cubit.addressList[0]
                                                           .cityName!
-                                                      : "اضف عنوان",
+                                                      : LocaleKeys.add_address.tr(),
                                                   textAlign: TextAlign.start,
                                                   style: TextStyle(
                                                     fontSize: 14.sp,
@@ -538,7 +544,7 @@ class FreelancerDetailsScreen extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'شهادة سجل المركز',
+                                      LocaleKeys.registeration_certificate.tr(),
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         fontSize: 14.sp,
@@ -553,6 +559,51 @@ class FreelancerDetailsScreen extends StatelessWidget {
                                     ),
                                   ],
                                 ),
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              const Divider(),
+                              BuildFreelancerProfileItem(
+                                svgImage: SvgPath.bulb,
+                                title: LocaleKeys.lang.tr(),
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => SimpleDialog(
+                                      children: [
+                                        SimpleDialogOption(
+                                          onPressed: () async {
+                                            await context.setLocale(const Locale("en")).then((value) {
+                                              CacheHelper.saveData(key: CacheKeys.initialLocale, value: "en").whenComplete(() {
+                                                initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale);
+                                                Navigator.pushNamedAndRemoveUntil(context, ScreenName.splashscreen, (route) => false);
+                                              });
+                                            });
+
+                                          },
+                                          child: const Text(
+                                            'English',
+                                          ),
+                                        ),
+                                        SimpleDialogOption(
+                                          onPressed: () async {
+                                            await context.setLocale(const Locale("ar")).then((value) {
+                                              CacheHelper.saveData(key: CacheKeys.initialLocale, value: "ar").whenComplete(() {
+                                                initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale);
+                                                Navigator.pushNamedAndRemoveUntil(context, ScreenName.splashscreen, (route) => false);
+                                              });
+
+                                            });
+                                          },
+                                          child: const Text(
+                                            'Arabic',
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
                               ),
                               SizedBox(
                                 height: 20.h,

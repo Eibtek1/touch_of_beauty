@@ -1,4 +1,4 @@
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,6 +6,7 @@ import 'package:new_version/new_version.dart';
 
 import '../../../../core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/svg_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 import 'freelancer_centers_screen.dart';
 import 'freelancer_home_screen.dart';
 import 'freelancer_messages_screen.dart';
@@ -20,7 +21,7 @@ class FreelancerMainLayout extends StatefulWidget {
 
 class _UserMainLayoutState extends State<FreelancerMainLayout> {
   int cIndex = 0;
-  List<Widget> screens= [
+  List<Widget> screens = [
     const FreelancerHomeScreen(),
     const FreelancerMessagesScreen(),
     const FreelancerCentersScreen(),
@@ -29,19 +30,18 @@ class _UserMainLayoutState extends State<FreelancerMainLayout> {
 
   @override
   void initState() {
-
     _checkGorUpdates();
     super.initState();
   }
 
-
-  void _checkGorUpdates() async{
+  void _checkGorUpdates() async {
     final checkForNewVersion = NewVersion(
       androidId: 'com.eibtek.khanetgamal',
       iOSId: 'com.eibtek.khanetgamal',
     );
     checkForNewVersion.showAlertIfNecessary(context: context);
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -55,6 +55,7 @@ class _UserMainLayoutState extends State<FreelancerMainLayout> {
             unselectedFontSize: 12.sp,
             showSelectedLabels: true,
             showUnselectedLabels: true,
+            type: BottomNavigationBarType.fixed,
             selectedItemColor: AppColorsLightTheme.primaryColor,
             unselectedItemColor: Colors.grey,
             currentIndex: cIndex,
@@ -73,34 +74,43 @@ class _UserMainLayoutState extends State<FreelancerMainLayout> {
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   SvgPath.homeIcon,
-                  colorFilter: ColorFilter.mode(cIndex == 0
-                      ? AppColorsLightTheme.primaryColor
-                      : Colors.grey, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(
+                      cIndex == 0
+                          ? AppColorsLightTheme.primaryColor
+                          : Colors.grey,
+                      BlendMode.srcIn),
                 ),
-                label: 'الرئيسية',
+                label: LocaleKeys.home.tr(),
               ),
               BottomNavigationBarItem(
-                  icon: SvgPicture.asset(SvgPath.messagesIcon,
-                      colorFilter: ColorFilter.mode(cIndex == 1
-                          ? AppColorsLightTheme.primaryColor
-                          : Colors.grey, BlendMode.srcIn)),
-                  label: 'محادثاتي'),
+                icon: SvgPicture.asset(SvgPath.messagesIcon,
+                    colorFilter: ColorFilter.mode(
+                        cIndex == 1
+                            ? AppColorsLightTheme.primaryColor
+                            : Colors.grey,
+                        BlendMode.srcIn)),
+                label: LocaleKeys.chats.tr(),
+              ),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(SvgPath.centersIcon,
-                      colorFilter: ColorFilter.mode(cIndex == 2
-                          ? AppColorsLightTheme.primaryColor
-                          : Colors.grey, BlendMode.srcIn)),
-                  label: 'بياناتي'),
+                      colorFilter: ColorFilter.mode(
+                          cIndex == 2
+                              ? AppColorsLightTheme.primaryColor
+                              : Colors.grey,
+                          BlendMode.srcIn)),
+                  label: LocaleKeys.about.tr()),
               BottomNavigationBarItem(
-                  icon: SvgPicture.asset(SvgPath.moreIcon,
-                      colorFilter: ColorFilter.mode(cIndex == 3
-                          ? AppColorsLightTheme.primaryColor
-                          : Colors.grey, BlendMode.srcIn)),
-                  label: 'المزيد'),
+                icon: SvgPicture.asset(SvgPath.moreIcon,
+                    colorFilter: ColorFilter.mode(
+                        cIndex == 3
+                            ? AppColorsLightTheme.primaryColor
+                            : Colors.grey,
+                        BlendMode.srcIn)),
+                label: LocaleKeys.more.tr(),
+              ),
             ],
           ),
         ),
-
       ),
     );
   }

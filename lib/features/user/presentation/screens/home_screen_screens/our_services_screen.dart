@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +12,7 @@ import 'package:touch_of_beauty/features/user/presentation/widgets/home_screen_w
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/constants/constants.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/home_screen_widgets/center_services_item.dart';
 
@@ -52,7 +54,7 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(
-            'خدماتنا',
+            LocaleKeys.our_services.tr(),
             style: TextStyle(
                 color: const Color(0xff263238),
                 fontFamily: FontPath.almaraiBold,
@@ -68,7 +70,7 @@ class _OurServicesScreenState extends State<OurServicesScreen> {
             var cubit = UserServicesCubit.get(context);
             if(state is GetServicesByServiceProviderIdSuccess && cubit.searchList.isEmpty&& cubit.servicesList.isNotEmpty&&searchController.text.isNotEmpty){
               searchController.clear();
-              Fluttertoast.showToast(msg: 'لا تتوفر عناصر البحث',gravity: ToastGravity.CENTER);
+              Fluttertoast.showToast(msg: LocaleKeys.search_not_available.tr(),gravity: ToastGravity.CENTER);
             }
             if(state is GetServicesDetailsByItsIdSuccess&&cubit.servicesModel!=null){
               Navigator.pop(context);

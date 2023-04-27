@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/constants/constants.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../buisness_logic/services_cubit/services_cubit.dart';
 import '../../../buisness_logic/services_providers_cubit/services_providers_cubit.dart';
 import '../../../buisness_logic/services_providers_cubit/services_providers_state.dart';
@@ -93,7 +95,7 @@ class _FavoritesServicesProvidersComponentState
                     )
                   : Center(
                       child: Text(
-                        'لا يوجد صالونات مفضلة',
+                        LocaleKeys.no_fav_centers.tr(),
                         style: TextStyle(
                             color: AppColorsLightTheme.primaryColor,
                             fontFamily: FontPath.almaraiBold,

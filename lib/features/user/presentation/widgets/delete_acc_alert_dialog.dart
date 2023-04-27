@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/assets_path/font_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../../../freelancer/presentation/widgets/custom_vendor_button.dart';
 class DeleteAccAlert extends StatelessWidget {
   const DeleteAccAlert({Key? key, }) : super(key: key);
@@ -19,7 +21,7 @@ class DeleteAccAlert extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
-              child: Text('تم ارسال طلبك لحذف الحساب وسيتم الرد خلال بعض الوقت',style: TextStyle(color: Colors.black,fontSize: 16.sp,fontFamily: FontPath.poppinsRegular),),
+              child: Text(LocaleKeys.delete_account_request.tr(),style: TextStyle(color: Colors.black,fontSize: 16.sp,fontFamily: FontPath.poppinsRegular),),
             ),
             SizedBox(height: 30.h,),
             CustomVendorButton(

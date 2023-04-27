@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,6 +10,7 @@ import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_more
 import 'package:touch_of_beauty/features/vendor/presentation/screens/vendors_home_screen.dart';
 import '../../../../core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/svg_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 
 class VendorMainLayout extends StatefulWidget {
   const VendorMainLayout({Key? key}) : super(key: key);
@@ -51,6 +54,7 @@ class _UserMainLayoutState extends State<VendorMainLayout> {
             unselectedFontSize: 12.sp,
             showSelectedLabels: true,
             showUnselectedLabels: true,
+            type: BottomNavigationBarType.fixed,
             selectedItemColor: AppColorsLightTheme.primaryColor,
             unselectedItemColor: Colors.grey,
             currentIndex: cIndex,
@@ -60,7 +64,10 @@ class _UserMainLayoutState extends State<VendorMainLayout> {
             unselectedLabelStyle: const TextStyle(
               color: Colors.grey,
             ),
-            onTap: (index) {
+            onTap: (index) async{
+              FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+              String? deviceToken = await firebaseMessaging.getToken();
+              print(deviceToken);
               setState(() {
                 cIndex = index;
               });
@@ -77,7 +84,7 @@ class _UserMainLayoutState extends State<VendorMainLayout> {
                     BlendMode.srcIn,
                   ),
                 ),
-                label: 'الرئيسية',
+                label: LocaleKeys.home.tr(),
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -89,7 +96,7 @@ class _UserMainLayoutState extends State<VendorMainLayout> {
                     BlendMode.srcIn,
                   ),
                 ),
-                label: 'محادثاتي',
+                label: LocaleKeys.chats.tr(),
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -101,7 +108,7 @@ class _UserMainLayoutState extends State<VendorMainLayout> {
                     BlendMode.srcIn,
                   ),
                 ),
-                label: 'صالوني',
+                label: LocaleKeys.my_center.tr(),
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -113,7 +120,7 @@ class _UserMainLayoutState extends State<VendorMainLayout> {
                     BlendMode.srcIn,
                   ),
                 ),
-                label: 'المزيد',
+                label: LocaleKeys.more.tr(),
               ),
             ],
           ),

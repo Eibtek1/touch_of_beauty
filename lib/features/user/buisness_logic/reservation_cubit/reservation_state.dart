@@ -37,6 +37,31 @@ class ConfirmOrderErrorState extends ReservationState{
 
 
 
+class AddServiceRatingLoadingState extends ReservationState{}
+class AddServiceRatingSuccessState extends ReservationState{
+  final MainResponse mainResponse;
+
+  AddServiceRatingSuccessState({required this.mainResponse});
+}
+class AddServiceRatingErrorState extends ReservationState{
+  final String error;
+  AddServiceRatingErrorState(this.error);
+}
+
+
+
+
+class AddServiceProviderRatingLoadingState extends ReservationState{}
+class AddServiceProviderRatingSuccessState extends ReservationState{
+  final MainResponse mainResponse;
+
+  AddServiceProviderRatingSuccessState({required this.mainResponse});
+}
+class AddServiceProviderRatingErrorState extends ReservationState{
+  final String error;
+  AddServiceProviderRatingErrorState(this.error);
+}
+
 class RemoveOrderLoadingState extends ReservationState{}
 class RemoveOrderSuccessState extends ReservationState{
   final MainResponse mainResponse;

@@ -189,6 +189,7 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
     }
   }
 
+  int errorCodeOfGettingTheServices = 0;
 
   void getServicesDetailsByItsId({required int id}) async {
     servicesModel = null;
@@ -197,9 +198,15 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
       final response =
       await ServicesProvidersRepository.getServicesDetailsById(id: id);
       mainResponse = MainResponse.fromJson(response.data);
-      servicesModel = ServicesDetailsModel.fromJson(mainResponse.data);
-      // print(response);
-      emit(GetServicesDetailsByItsIdSuccess());
+      if(mainResponse.errorCode == 0){
+        servicesModel = ServicesDetailsModel.fromJson(mainResponse.data);
+        errorCodeOfGettingTheServices = 0;
+        emit(GetServicesDetailsByItsIdSuccess());
+      }else{
+        errorCodeOfGettingTheServices = mainResponse.errorCode;
+        emit(GetServicesDetailsByItsIdSuccess());
+      }
+
     } catch (error) {
       emit(GetServicesDetailsByItsIdError(error: error.toString()));
     }

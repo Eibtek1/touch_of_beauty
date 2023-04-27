@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../translations/locale_keys.g.dart';
 class TimeContainerWidget extends StatelessWidget {
   final String title;
   final bool isThereWorkingTime;
@@ -54,7 +56,7 @@ class TimeContainerWidget extends StatelessWidget {
               width: 12.w,
             ),
             Text(
-              'من',
+              LocaleKeys.from.tr(),
               style: TextStyle(
                   color: const Color(0xff3C475C),
                   fontSize: 10.sp,
@@ -88,7 +90,7 @@ class TimeContainerWidget extends StatelessWidget {
               width: 10.w,
             ),
             Text(
-              'الي',
+              LocaleKeys.to.tr(),
               style: TextStyle(
                   color: const Color(0xff3C475C),
                   fontSize: 10.sp,
@@ -125,7 +127,7 @@ class TimeContainerWidget extends StatelessWidget {
             TextButton(
               onPressed: onPressed,
               child: Text(
-                isThereWorkingTime ? "تعديل" : "اضافة",
+                isThereWorkingTime ?LocaleKeys.edit.tr() : LocaleKeys.add.tr(),
                 style: TextStyle(
                   fontSize: 10.sp,
                   fontFamily: FontPath.almaraiBold,

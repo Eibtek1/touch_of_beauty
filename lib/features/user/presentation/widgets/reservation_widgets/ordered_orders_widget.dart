@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,6 +12,7 @@ import 'package:touch_of_beauty/features/chat/presentation/screens/chat_screen.d
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/network/api_end_points.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../data/models/reservation_model.dart';
 
 class OrderedOrdersWidgetBuilder extends StatelessWidget {
@@ -23,7 +25,7 @@ class OrderedOrdersWidgetBuilder extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 10.h),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 12.w),
-        height: 90.h,
+        height: 95.h,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.r),
@@ -62,68 +64,90 @@ class OrderedOrdersWidgetBuilder extends StatelessWidget {
             SizedBox(
               width: 10.w,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 10.h,
-                ),
-                Text(
-                  '${reservationModel.service!.title}',
-                  style: TextStyle(
-                      fontSize: 12.sp,
-                      fontFamily: FontPath.almaraiBold,
-                      color: const Color(0xff1E2432)),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Text(
-                  reservationModel.addressData!.region!,
-                  style: TextStyle(
-                      fontSize: 10.sp,
-                      fontFamily: FontPath.almaraiRegular,
-                      color: const Color(0xff1E2432)),
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                if(reservationModel.orderStatus==1)Text(
-                  'حالة الطلب : بأنتظار التأكيد مع المقدم',
-                  style: TextStyle(
-                      fontSize: 10.sp,
-                      fontFamily: FontPath.almaraiRegular,
-                      color: const Color(0xff1E2432)),
-                ),
-                if(reservationModel.orderStatus==2)Text(
-                  'حالة الطلب : تمت موافقة المقدم',
-                  style: TextStyle(
-                      fontSize: 10.sp,
-                      fontFamily: FontPath.almaraiRegular,
-                      color: const Color(0xff1E2432)),
-                ),
-                if(reservationModel.orderStatus==3)Text(
-                  'حالة الطلب : قيد الوصول',
-                  style: TextStyle(
-                      fontSize: 10.sp,
-                      fontFamily: FontPath.almaraiRegular,
-                      color: const Color(0xff1E2432)),
-                ),
-                if(reservationModel.orderStatus==4)Text(
-                  'حالة الطلب : انتهت الخدمة',
-                  style: TextStyle(
-                      fontSize: 10.sp,
-                      fontFamily: FontPath.almaraiRegular,
-                      color: const Color(0xff1E2432)),
-                ),
-                if(reservationModel.orderStatus==5)Text(
-                  'حالة الطلب : تم الالغاء',
-                  style: TextStyle(
-                      fontSize: 10.sp,
-                      fontFamily: FontPath.almaraiRegular,
-                      color: const Color(0xff1E2432)),
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Text(
+                    '${reservationModel.service!.title}',
+                    style: TextStyle(
+                        fontSize: 12.sp,
+                        fontFamily: FontPath.almaraiBold,
+                        color: const Color(0xff1E2432)),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Text(
+                    reservationModel.addressData!.region!,
+                    style: TextStyle(
+                        fontSize: 10.sp,
+                        fontFamily: FontPath.almaraiRegular,
+                        color: const Color(0xff1E2432)),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  if(reservationModel.orderStatus==1)Expanded(
+                    child: Text(
+                      LocaleKeys.order_status_one.tr(),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: TextStyle(
+                          fontSize: 10.sp,
+                          fontFamily: FontPath.almaraiRegular,
+                          color: const Color(0xff1E2432)),
+                    ),
+                  ),
+                  if(reservationModel.orderStatus==2)Expanded(
+                    child: Text(
+                      LocaleKeys.order_status_2.tr(),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      style: TextStyle(
+                          fontSize: 10.sp,
+                          fontFamily: FontPath.almaraiRegular,
+                          color: const Color(0xff1E2432)),
+                    ),
+                  ),
+                  if(reservationModel.orderStatus==3)Expanded(
+                    child: Text(
+                      LocaleKeys.order_status_3.tr(),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      style: TextStyle(
+                          fontSize: 10.sp,
+                          fontFamily: FontPath.almaraiRegular,
+                          color: const Color(0xff1E2432)),
+                    ),
+                  ),
+                  if(reservationModel.orderStatus==4)Expanded(
+                    child: Text(
+                      LocaleKeys.order_status_4.tr(),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      style: TextStyle(
+                          fontSize: 10.sp,
+                          fontFamily: FontPath.almaraiRegular,
+                          color: const Color(0xff1E2432)),
+                    ),
+                  ),
+                  if(reservationModel.orderStatus==5)Expanded(
+                    child: Text(
+                      LocaleKeys.order_status_canceled.tr(),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      style: TextStyle(
+                          fontSize: 10.sp,
+                          fontFamily: FontPath.almaraiRegular,
+                          color: const Color(0xff1E2432)),
+                    ),
+                  ),
+                ],
+              ),
             ),
             const Spacer(),
             IconButton(onPressed: (){

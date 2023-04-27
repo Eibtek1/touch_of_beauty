@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubi
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
 
 import '../../../../core/assets_path/font_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../../../freelancer/presentation/widgets/custom_vendor_button.dart';
 
 class DeleteImageAlertDialog extends StatelessWidget {
@@ -43,7 +45,7 @@ class DeleteImageAlertDialog extends StatelessWidget {
                   height: 20.h,
                 ),
                 Text(
-                  'هل انت متأكد من مسح الصورة',
+                  LocaleKeys.delete_photo_validation.tr(),
                   style: TextStyle(
                       color: const Color(0xffABABAB),
                       fontFamily: FontPath.almaraiRegular,
@@ -55,7 +57,7 @@ class DeleteImageAlertDialog extends StatelessWidget {
                 state is! DeletePictureLoading
                     ? CustomVendorButton(
                         isDeleteAlertDialog: true,
-                        buttonTitle: 'مسح الصورة',
+                        buttonTitle: LocaleKeys.delete.tr(),
                         isTapped: () {
                           cubit.deletePictureToLibrary(id: id);
                         },

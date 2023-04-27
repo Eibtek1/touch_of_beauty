@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,8 @@ import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import '../../../../core/assets_path/font_path.dart';
+import '../../../../core/constants/dumy_data.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../../../vendor/buisness_logic/v_reservations_cubit/v_reservation_cubit.dart';
 import '../../../vendor/buisness_logic/v_reservations_cubit/v_reservation_state.dart';
 import '../../../vendor/presentation/widgets/order_item_builder.dart';
@@ -18,12 +21,10 @@ class FreelancerHomeScreen extends StatefulWidget {
   State<FreelancerHomeScreen> createState() => _FreelancerHomeScreenState();
 }
 
-List<String> itemsList = [
-  'في المنزل',
-];
+
 
 class _FreelancerHomeScreenState extends State<FreelancerHomeScreen> {
-  String value = itemsList.first;
+  String value = DummyData.freelancerItemsList.first;
   int homeZeroOrCenterOne = 0;
 
   @override
@@ -48,7 +49,7 @@ class _FreelancerHomeScreenState extends State<FreelancerHomeScreen> {
                 children: [
                   Expanded(
                     child: Text(
-                      'الرئيسية',
+                      LocaleKeys.home.tr(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
@@ -86,7 +87,7 @@ class _FreelancerHomeScreenState extends State<FreelancerHomeScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        'اليوم',
+                        LocaleKeys.today.tr(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.grey,
@@ -108,7 +109,7 @@ class _FreelancerHomeScreenState extends State<FreelancerHomeScreen> {
                     child: DropdownButton(
                       isExpanded: true,
                       underline: const SizedBox.shrink(),
-                      items: itemsList
+                      items: DummyData.freelancerItemsList
                           .map((e) => DropdownMenuItem(
                                 value: e,
                                 child: Text(
@@ -123,7 +124,7 @@ class _FreelancerHomeScreenState extends State<FreelancerHomeScreen> {
                       onChanged: (val) {
                         setState(() {
                           value = val!;
-                          if (value == 'في المركز') {
+                          if (value == LocaleKeys.in_center.tr()) {
                             homeZeroOrCenterOne = 0;
                             VReservationCubit.get(context)
                                 .getTodayOrders(inHome: false);
@@ -167,7 +168,7 @@ class _FreelancerHomeScreenState extends State<FreelancerHomeScreen> {
                                 itemCount: cubit.getTodayOrdersList.length,
                               )
                             : Text(
-                                'لا يوجد خدمات بعد',
+                                LocaleKeys.no_services_yet.tr(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: AppColorsLightTheme.primaryColor,

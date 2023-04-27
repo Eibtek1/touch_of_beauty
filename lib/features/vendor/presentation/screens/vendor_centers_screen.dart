@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +12,11 @@ import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_stat
 import 'package:touch_of_beauty/features/vendor/buisness_logic/services_cubit/vendor_services_cubit.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/svg_path.dart';
+import '../../../../core/cache_manager/cache_keys.dart';
+import '../../../../core/cache_manager/shared_preferences.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../../../freelancer/buisness_logic/services_cubit/freelancer_services_cubit.dart';
+import '../../../freelancer/presentation/widgets/build_freelancer_profile_item.dart';
 import '../../../user/presentation/widgets/delete_acc_alert_dialog.dart';
 import '../widgets/build_center_item.dart';
 import '../widgets/screen_layout_widget_with_logo.dart';
@@ -44,7 +50,7 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                 children: [
                   Expanded(
                     child: Text(
-                      'المركز',
+                      LocaleKeys.center.tr(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
@@ -77,11 +83,12 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                   children: [
                     BuildCenterItem(
                       svgImage: SvgPath.centersIcon,
-                      title: 'بيانات المركز',
+                      title: LocaleKeys.center_data.tr(),
                       onTap: () {
                         if (AuthCubit.get(context).getUserModel == null) {
                           AuthCubit.get(context).getUserData();
                         }
+                        print(token);
                         Navigator.pushNamed(
                             context, ScreenName.detailsCenterScreen);
                       },
@@ -92,7 +99,7 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                     const Divider(),
                     BuildCenterItem(
                       svgImage: SvgPath.clock,
-                      title: 'مواعيد العمل',
+                      title: LocaleKeys.working_hours.tr(),
                       onTap: () {
                         Navigator.pushNamed(
                             context, ScreenName.centerWorkingTimeScreen);
@@ -104,7 +111,7 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                     const Divider(),
                     BuildCenterItem(
                       svgImage: SvgPath.bag,
-                      title: 'خدماتي',
+                      title: LocaleKeys.my_services.tr(),
                       onTap: () {
                         VendorServicesCubit.get(context)
                             .getServicesByServiceProviderId();
@@ -118,7 +125,7 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                     const Divider(),
                     BuildCenterItem(
                       svgImage: SvgPath.calender2,
-                      title: 'حجوزاتي',
+                      title: LocaleKeys.my_reservations.tr(),
                       onTap: () {
                         Navigator.pushNamed(
                             context, ScreenName.vendorReservationsScreen);
@@ -132,7 +139,7 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                       svgImage: SvgPath.edit,
                       width: 20.w,
                       height: 20.h,
-                      title: 'حذف الحساب',
+                      title: LocaleKeys.delete_account.tr(),
                       onTap: () {
                         showProgressIndicator(context);
                         Future.delayed(const Duration(seconds: 2), () {
@@ -141,6 +148,51 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                               context: context,
                               builder: (context) => const DeleteAccAlert());
                         });
+                      },
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Divider(),
+                    BuildFreelancerProfileItem(
+                      svgImage: SvgPath.bulb,
+                      title: LocaleKeys.lang.tr(),
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => SimpleDialog(
+                            children: [
+                              SimpleDialogOption(
+                                onPressed: () async {
+                                  await context.setLocale(const Locale("en")).then((value) {
+                                    CacheHelper.saveData(key: CacheKeys.initialLocale, value: "en").whenComplete(() {
+                                      initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale);
+                                      Navigator.pushNamedAndRemoveUntil(context, ScreenName.splashscreen, (route) => false);
+                                    });
+                                  });
+
+                                },
+                                child: const Text(
+                                  'English',
+                                ),
+                              ),
+                              SimpleDialogOption(
+                                onPressed: () async {
+                                  await context.setLocale(const Locale("ar")).then((value) {
+                                    CacheHelper.saveData(key: CacheKeys.initialLocale, value: "ar").whenComplete(() {
+                                      initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale);
+                                      Navigator.pushNamedAndRemoveUntil(context, ScreenName.splashscreen, (route) => false);
+                                    });
+
+                                  });
+                                },
+                                child: const Text(
+                                  'Arabic',
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
                       },
                     ),
                     SizedBox(
@@ -169,7 +221,7 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                         var cubit = AuthCubit.get(context);
                         return BuildCenterItem(
                           svgImage: SvgPath.calender2,
-                          title: 'تسجيل الخروج',
+                          title: LocaleKeys.logout.tr(),
                           onTap: () {
                             // print(token);
                             cubit.logout();
