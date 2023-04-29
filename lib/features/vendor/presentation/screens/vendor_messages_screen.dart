@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
+import 'package:touch_of_beauty/core/network/api_end_points.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/images_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../../../chat/buisness_logic/chat_cubit.dart';
 import '../../../chat/presentation/screens/chat_screen.dart';
 
@@ -22,7 +25,7 @@ class VendorMessagesScreen extends StatelessWidget {
         toolbarHeight: 70.h,
         centerTitle: true,
         title: Text(
-          'المحادثة',
+          LocaleKeys.chats.tr(),
           style: TextStyle(
               fontSize: 20.sp,
               fontFamily: FontPath.almaraiBold,
@@ -57,7 +60,7 @@ class VendorMessagesScreen extends StatelessWidget {
                         (value) {
                       Navigator.pushNamed(
                           context, ScreenName.chatScreen,
-                          arguments: ChatScreenArgs(title: chatItemsList[index]['name'], receiverId: chatItemsList[index]['id'], receiverName: '', receiverImg: ''));
+                          arguments: ChatScreenArgs(title: chatItemsList[index]['name'], receiverId: chatItemsList[index]['id'], receiverName: '', receiverImg:'', orderId: chatItemsList[index]['orderId']));
                     },
                   );
                 },
@@ -96,7 +99,7 @@ class VendorMessagesScreen extends StatelessWidget {
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(10.r)),
               child:image!=null? Image.network(
-                image,
+                "${EndPoints.imageBaseUrl}$image",
                 fit: BoxFit.cover,
               ):Image.asset(ImagePath.beautyCenter,fit: BoxFit.cover,),
             ),
@@ -115,7 +118,7 @@ class VendorMessagesScreen extends StatelessWidget {
                       fontSize: 13.sp),
                 ),
                 Text(
-                  'سلام عليكم',
+                  'ادخل للدردشة',
                   style: TextStyle(
                       color: const Color(0xff939FB5),
                       fontFamily: FontPath.almaraiRegular,
@@ -123,21 +126,6 @@ class VendorMessagesScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const Spacer(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  '22:30',
-                  style: TextStyle(
-                      color: const Color(0xff939FB5),
-                      fontFamily: FontPath.almaraiRegular,
-                      fontSize: 13.sp),
-                ),
-                const Icon(Icons.done_all)
-              ],
-            )
           ],
         ),
       ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -7,20 +8,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/core/network/dio_helper.dart';
 import 'package:touch_of_beauty/features/authentication/data/repository/auth_repository.dart';
 import 'package:touch_of_beauty/features/chat/buisness_logic/chat_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/reservation_cubit/reservation_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
+import 'package:touch_of_beauty/translations/codegen_loader.g.dart';
 import 'bloc_observer.dart';
 import 'core/app_router/app_router.dart';
 import 'core/app_router/screens_name.dart';
 import 'core/cache_manager/shared_preferences.dart';
+import 'core/notification/notification_services.dart';
 import 'features/authentication/buisness_logic/auth_cubit.dart';
 import 'features/freelancer/buisness_logic/services_cubit/freelancer_services_cubit.dart';
-import 'features/notification/notification_services.dart';
 import 'features/user/buisness_logic/main_cubit/main_cubit.dart';
 import 'features/user/buisness_logic/main_features_cubit/main_features_cubit.dart';
 import 'features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
@@ -29,58 +30,37 @@ import 'features/vendor/buisness_logic/services_cubit/vendor_services_cubit.dart
 import 'features/vendor/buisness_logic/v_reservations_cubit/v_reservation_cubit.dart';
 import 'features/vendor/buisness_logic/work_hours_cubit/work_hours_cubit.dart';
 import 'firebase_options.dart';
-@pragma('vm:entry-point')
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print(message.data['title']);
-  print(message.data['title']);
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  await NotificationService.displayPushNotification(message);
-}
 
-@pragma('vm:entry-point')
-void notificationTapBackground(NotificationResponse notificationResponse) {
-  // handle action
-}
-
-void _onDidReceiveNotificationResponse(
-    NotificationResponse details,
-    ) {
-  selectNotificationStream.add(details);
-}
-
-
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DioHelper.init();
   await CacheHelper.init();
+  await EasyLocalization.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await NotificationService.initializeNotificationService(
-      _onDidReceiveNotificationResponse);
+    _onDidReceiveNotificationResponse,
+  );
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-  // FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-  // await FirebaseMessaging.instance.setAutoInitEnabled(true);
-  // await FirebaseMessaging.instance.requestPermission(
-  //   alert: true,
-  //   announcement: false,
-  //   badge: true,
-  //   carPlay: false,
-  //   criticalAlert: false,
-  //   provisional: false,
-  //   sound: true,
-  // );
-  if(token !=null){
+  if (token != null) {
     AuthRepository.sendNotification();
   }
-  runApp(const MyApp());
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [
+        Locale('en',),
+        Locale('ar',),
+      ],
+      startLocale: Locale.fromSubtags(languageCode: initialLocale),
+      path: 'assets/translations',
+      assetLoader: const CodegenLoader(),
+      child: const MyApp(),
+    ),
+  );
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -88,10 +68,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (context , constraints ) {
+      builder: (context, constraints) {
         return ScreenUtilInit(
           designSize: const Size(375, 812),
-          minTextAdapt: constraints.maxWidth>600?true:false,
+          minTextAdapt: constraints.maxWidth > 600 ? true : false,
           splitScreenMode: true,
           builder: (BuildContext context, Widget? child) {
             return MultiBlocProvider(
@@ -111,19 +91,13 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (context) => EmployeesCubit()..init(),),
               ],
               child: MaterialApp(
-                title: 'لمسة جمال',
-                localizationsDelegates: const [
-                  GlobalCupertinoLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                ],
-                supportedLocales: const [
-                  Locale("ar", "AE"), // OR Locale('ar', 'AE') OR Other RTL locales
-                ],
+                title: 'Beauty touch',
+                localizationsDelegates: context.localizationDelegates,
+                supportedLocales: context.supportedLocales,
+                locale: context.locale,
                 theme: ThemeData(
                   primarySwatch:
                       createMaterialColor(AppColorsLightTheme.primaryColor),
-
                 ),
                 onGenerateRoute: AppRouter.generateRoute,
                 initialRoute: ScreenName.splashscreen,
@@ -133,11 +107,28 @@ class MyApp extends StatelessWidget {
           },
         );
       },
-
     );
   }
 }
 
-
 final StreamController<NotificationResponse?> selectNotificationStream =
-StreamController<NotificationResponse?>.broadcast();
+    StreamController<NotificationResponse?>.broadcast();
+
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await NotificationService.displayPushNotification(message);
+}
+
+@pragma('vm:entry-point')
+void notificationTapBackground(NotificationResponse notificationResponse) {
+  // handle action
+}
+
+void _onDidReceiveNotificationResponse(
+  NotificationResponse details,
+) {
+  selectNotificationStream.add(details);
+}

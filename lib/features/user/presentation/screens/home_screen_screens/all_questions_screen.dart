@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +8,7 @@ import 'package:touch_of_beauty/features/user/presentation/widgets/home_screen_w
 
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/images_path.dart';
+import '../../../../../translations/locale_keys.g.dart';
 
 class AllQuestionsScreen extends StatelessWidget {
   const AllQuestionsScreen({Key? key}) : super(key: key);
@@ -35,7 +37,7 @@ class AllQuestionsScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    'الاسئلة الشائعة',
+                    LocaleKeys.common_questions.tr(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16.sp,

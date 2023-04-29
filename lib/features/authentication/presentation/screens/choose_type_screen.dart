@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -5,6 +6,7 @@ import 'package:touch_of_beauty/core/assets_path/font_path.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import '../../../../core/app_router/screens_name.dart';
 import '../../../../core/app_theme/light_theme.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../widgets/auth_button.dart';
 
 class ChooseTypeScreen extends StatelessWidget {
@@ -37,7 +39,7 @@ class ChooseTypeScreen extends StatelessWidget {
             ),
             SizedBox(height: 25.h,),
             Text(
-              'تسجيل الدخول ك',
+              LocaleKeys.register_as.tr(),
               style: TextStyle(
                   color: const Color(0xff262626),
                   fontFamily: FontPath.almaraiBold,
@@ -45,7 +47,7 @@ class ChooseTypeScreen extends StatelessWidget {
             ),
             SizedBox(height: 12.h,),
             Text(
-              'قم يتحديد اذا كنت طالب خدمة أو مقدم خدمة',
+    LocaleKeys.services_provider_or_user.tr(),
               style: TextStyle(
                   color: const Color(0xff696969),
                   fontFamily: FontPath.almaraiRegular,
@@ -86,7 +88,7 @@ class ChooseTypeScreen extends StatelessWidget {
                             ),
                             Expanded(
                               child: Text(
-                                'طالب خدمة',
+                                LocaleKeys.user.tr(),
                                 textAlign:TextAlign.center,
                                 style: TextStyle(
                                     color: const Color(0xff666666),
@@ -127,7 +129,7 @@ class ChooseTypeScreen extends StatelessWidget {
                             ),
                             Expanded(
                               child: Text(
-                                'مقدمة خدمة' ,
+                                LocaleKeys.services_provide.tr() ,
                                 textAlign:TextAlign.center,
                                 style: TextStyle(
                                     color: const Color(0xff666666),
@@ -145,7 +147,7 @@ class ChooseTypeScreen extends StatelessWidget {
             ),
             SizedBox(height: 30.h,),
             AuthButton(
-              buttonTitle: 'استمرار',
+              buttonTitle: LocaleKeys.continue_text.tr(),
               isTapped: () {
                 if(type)Navigator.pushNamed(context, ScreenName.userRegister);
                 if(!type)Navigator.pushNamed(context, ScreenName.vendorRegister);

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,8 @@ import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import '../../../../core/assets_path/font_path.dart';
+import '../../../../core/constants/dumy_data.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../../buisness_logic/v_reservations_cubit/v_reservation_cubit.dart';
 import '../../buisness_logic/v_reservations_cubit/v_reservation_state.dart';
 import '../widgets/order_item_builder.dart';
@@ -18,13 +21,9 @@ class VendorHomeScreen extends StatefulWidget {
   State<VendorHomeScreen> createState() => _VendorHomeScreenState();
 }
 
-List<String> itemsList = [
-  'في المركز',
-  'في المنزل',
-];
 
 class _VendorHomeScreenState extends State<VendorHomeScreen> {
-  String value = itemsList.first;
+  String value = DummyData.vendorItemsList.first;
   int homeZeroOrCenterOne = 0;
   @override
   void initState() {
@@ -47,7 +46,7 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                 children: [
                   Expanded(
                     child: Text(
-                      'الرئيسية',
+                      LocaleKeys.home.tr(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
@@ -85,7 +84,7 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        'اليوم',
+                        LocaleKeys.today.tr(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.grey,
@@ -107,7 +106,7 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                     child: DropdownButton(
                       isExpanded: true,
                       underline: const SizedBox.shrink(),
-                      items: itemsList
+                      items: DummyData.vendorItemsList
                           .map((e) => DropdownMenuItem(
                                 value: e,
                                 child: Text(
@@ -122,7 +121,7 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                       onChanged: (val) {
                         setState(() {
                           value = val!;
-                          if (value == 'في المركز') {
+                          if (value == LocaleKeys.in_center.tr()) {
                             homeZeroOrCenterOne = 0;
                             VReservationCubit.get(context)
                                 .getTodayOrders(inHome: false);
@@ -162,7 +161,7 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                             },
                             itemCount: cubit.getTodayOrdersList.length,
                           ):Text(
-                      'لا يوجد خدمات بعد',
+                      LocaleKeys.no_services_yet.tr(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: AppColorsLightTheme.primaryColor,

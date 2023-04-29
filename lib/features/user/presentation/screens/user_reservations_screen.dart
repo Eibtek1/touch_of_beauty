@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +9,9 @@ import 'package:touch_of_beauty/features/user/buisness_logic/reservation_cubit/r
 import 'package:touch_of_beauty/features/user/buisness_logic/reservation_cubit/reservation_state.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/images_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../widgets/reservation_widgets/all_orders_widget.dart';
+import '../widgets/reservation_widgets/choose_rating_type_dialog.dart';
 import '../widgets/reservation_widgets/end_orders.dart';
 import '../widgets/reservation_widgets/ordered_orders_widget.dart';
 
@@ -36,9 +39,9 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
   ];
 
   List<String> titles = [
-    'كل الطلبات',
-    'المطلوبة',
-    'المنتهية',
+    LocaleKeys.all_orders.tr(),
+    LocaleKeys.ordered_orders.tr(),
+    LocaleKeys.finished.tr(),
   ];
 
   TabController? tabController;
@@ -76,7 +79,7 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            title: Text('حجوزاتي',
+            title: Text(LocaleKeys.my_reservations.tr(),
                 style: TextStyle(
                     fontSize: 18.sp,
                     fontFamily: FontPath.almaraiBold,
@@ -109,7 +112,7 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
                           cubit.changeTabBarCurrentIndex(0);
                         },
                         child: Text(
-                          'كل الطلبات',
+                          LocaleKeys.all_orders.tr(),
                           style: TextStyle(
                               color: cubit.tabBarCIndex == 0
                                   ? Colors.pink
@@ -134,7 +137,7 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
                           cubit.changeTabBarCurrentIndex(1);
                         },
                         child: Text(
-                          'المطلوبة',
+                          LocaleKeys.ordered_orders.tr(),
                           style: TextStyle(
                               color: cubit.tabBarCIndex == 1
                                   ? Colors.pink
@@ -159,7 +162,7 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
                           cubit.changeTabBarCurrentIndex(2);
                         },
                         child: Text(
-                          "المنتهية",
+                          LocaleKeys.finished.tr(),
                           style: TextStyle(
                               color: cubit.tabBarCIndex == 2
                                   ? Colors.pink
@@ -171,6 +174,15 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
                     ],
                   ),
                 ),
+                if (cubit.tabBarCIndex == 2)
+                  Text(
+                    LocaleKeys.long_tap_to_rate.tr(),
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: 10.sp,
+                        fontFamily: FontPath.almaraiRegular,
+                        color: const Color(0xff1E2432)),
+                  ),
                 const Divider(),
                 Expanded(
                   child: state is! GetReservationsLoadingState
@@ -182,7 +194,6 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
                                   reservationModel:
                                       cubit.reservationsList[index],
                                   goToPay: () {
-
                                     cubit.confirmOrder(
                                         id: cubit.reservationsList[index].id!);
                                   },
@@ -227,6 +238,31 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return EndOrdersWidgetBuilder(
+                                      tapToRate: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => ChooseRateTypeDialog(
+                                                serviceId: cubit
+                                                    .reservationsList
+                                                    .where((element) =>
+                                                        element.orderStatus ==
+                                                            5 ||
+                                                        element.orderStatus ==
+                                                            4)
+                                                    .toList()[index]
+                                                    .service!
+                                                    .id!,
+                                                serviceProviderId: cubit
+                                                    .reservationsList
+                                                    .where((element) =>
+                                                        element.orderStatus ==
+                                                            5 ||
+                                                        element.orderStatus ==
+                                                            4)
+                                                    .toList()[index]
+                                                    .provider!
+                                                    .id!));
+                                      },
                                       reservationModel: cubit.reservationsList
                                           .where((element) =>
                                               element.orderStatus == 5 ||
@@ -246,5 +282,4 @@ class _UserReservationsScreenState extends State<UserReservationsScreen>
       },
     );
   }
-
 }

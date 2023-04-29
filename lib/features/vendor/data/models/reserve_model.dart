@@ -120,8 +120,9 @@ class User extends Equatable {
   final String? fullName;
   final String? phoneNumber;
   final String? email;
+  final String? userImgUrl;
 
-  const User({this.id, this.fullName, this.phoneNumber, this.email});
+  const User({this.id, this.fullName, this.phoneNumber, this.email, this.userImgUrl});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -129,6 +130,7 @@ class User extends Equatable {
       fullName: json['fullName'],
       phoneNumber: json['phoneNumber'],
       email: json['email'],
+      userImgUrl: json['userImgUrl'],
     );
   }
 

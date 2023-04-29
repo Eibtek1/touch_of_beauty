@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/app_router/screens_name.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/constants/constants.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../../../chat/buisness_logic/chat_cubit.dart';
 import '../../../chat/presentation/screens/chat_screen.dart';
 
@@ -20,7 +22,7 @@ class FreelancerMessagesScreen extends StatelessWidget {
         toolbarHeight: 70.h,
         centerTitle: true,
         title: Text(
-          'المحادثة',
+          LocaleKeys.chats.tr(),
           style: TextStyle(
               fontSize: 20.sp,
               fontFamily: FontPath.almaraiBold,
@@ -55,7 +57,7 @@ class FreelancerMessagesScreen extends StatelessWidget {
                         (value) {
                       Navigator.pushNamed(
                           context, ScreenName.chatScreen,
-                          arguments: ChatScreenArgs(title: chatItemsList[index]['name'], receiverId: chatItemsList[index]['id'], receiverName: '', receiverImg: ''));
+                          arguments: ChatScreenArgs(title: chatItemsList[index]['name'], receiverId: chatItemsList[index]['id'], receiverName: chatItemsList[index]['receiverName'], receiverImg:chatItemsList[index]['receiverImg'], orderId: chatItemsList[index]['orderId']));
                     },
                   );
                 },
@@ -111,7 +113,7 @@ class FreelancerMessagesScreen extends StatelessWidget {
                       fontSize: 13.sp),
                 ),
                 Text(
-                  'سلام عليكم',
+                  LocaleKeys.enter_to_chat.tr(),
                   style: TextStyle(
                       color: const Color(0xff939FB5),
                       fontFamily: FontPath.almaraiRegular,
@@ -119,21 +121,6 @@ class FreelancerMessagesScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const Spacer(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  '22:30',
-                  style: TextStyle(
-                      color: const Color(0xff939FB5),
-                      fontFamily: FontPath.almaraiRegular,
-                      fontSize: 13.sp),
-                ),
-                const Icon(Icons.done_all)
-              ],
-            )
           ],
         ),
       ),

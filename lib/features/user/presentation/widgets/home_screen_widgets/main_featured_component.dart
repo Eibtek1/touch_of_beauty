@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../buisness_logic/main_features_cubit/main_features_cubit.dart';
 import '../../../buisness_logic/main_features_cubit/main_features_state.dart';
 import '../../screens/home_screen_screens/main_featuers_services.dart';
@@ -66,7 +68,7 @@ class _MainFeaturedComponentState extends State<MainFeaturedComponent> {
                       )
                     : Center(
                         child: Text(
-                          'لا يوجد عناصر مميزة الان',
+                          LocaleKeys.no_fav_items.tr(),
                           style: TextStyle(
                               fontSize: 16.sp,
                               fontFamily: FontPath.almaraiBold,

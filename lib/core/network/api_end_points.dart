@@ -1,6 +1,6 @@
 class EndPoints{
-  static const baseUrl = 'http://eibtek2-001-site5.atempurl.com/api';
-  static const imageBaseUrl = 'http://eibtek2-001-site5.atempurl.com';
+  static const baseUrl = 'https://eibtek2-001-site5.atempurl.com/api';
+  static const imageBaseUrl = 'https://eibtek2-001-site5.atempurl.com';
   static const userRegister = '/Users/UserRegister';
   static const centerRegister = '/Users/CenterRegister';
   static const updateCenterProfile = '/Users/UpdateCenterProfile';
@@ -59,6 +59,8 @@ class EndPoints{
   static const getAllNotifications = '/Notification/GetAllNotifications';
   static const sendNotification = '/Notification/SendNotification';
   static const getServicesByServiceProviderId = '/Services/ServicesByProvider/';
+  static const addServiceEvaluations = '/Evaluations/AddServiceEvaluations';
+  static const addServiceProviderEvaluations = '/Evaluations/AddProviderEvaluations';
   static String getServicesInHomeOrInCenter({
   required bool inHome,
 }){

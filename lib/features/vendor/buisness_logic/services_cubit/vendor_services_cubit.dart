@@ -7,6 +7,7 @@ import 'package:touch_of_beauty/features/user/data/models/paginate_model.dart';
 import 'package:touch_of_beauty/features/user/data/models/services_model.dart';
 import 'package:touch_of_beauty/features/vendor/buisness_logic/services_cubit/vendor_services_state.dart';
 
+import '../../../user/data/models/address_model.dart';
 import '../../../user/data/models/main_sections_model.dart';
 import '../../../user/data/repository/services_providers_repository.dart';
 import '../../data/repository/services_repo.dart';
@@ -23,6 +24,7 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
   int servicesPageNumber = 1;
   String errorMessage = '';
   List<ServicesModel> servicesList = [];
+  List<AddressModel> addressList = [];
   File? servicesImage;
   ImagePicker picker = ImagePicker();
   List<MainSectionsModel> mainSectionsFeaturedList = [];
@@ -187,6 +189,7 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
     }
   }
 
+  int errorCodeOfGettingTheServices = 0;
 
   void getServicesDetailsByItsId({required int id}) async {
     servicesModel = null;
@@ -195,9 +198,15 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
       final response =
       await ServicesProvidersRepository.getServicesDetailsById(id: id);
       mainResponse = MainResponse.fromJson(response.data);
-      servicesModel = ServicesDetailsModel.fromJson(mainResponse.data);
-      // print(response);
-      emit(GetServicesDetailsByItsIdSuccess());
+      if(mainResponse.errorCode == 0){
+        servicesModel = ServicesDetailsModel.fromJson(mainResponse.data);
+        errorCodeOfGettingTheServices = 0;
+        emit(GetServicesDetailsByItsIdSuccess());
+      }else{
+        errorCodeOfGettingTheServices = mainResponse.errorCode;
+        emit(GetServicesDetailsByItsIdSuccess());
+      }
+
     } catch (error) {
       emit(GetServicesDetailsByItsIdError(error: error.toString()));
     }
@@ -210,10 +219,12 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
       final response =
       await VendorServicesRepository.deleteServices(id: id);
       mainResponse = MainResponse.fromJson(response.data);
+      servicesList.removeWhere((element) => element.id == id);
       emit(DeleteServicesSuccess());
     } catch (error) {
       emit(DeleteServicesError(error: error.toString()));
     }
   }
+
 
 }

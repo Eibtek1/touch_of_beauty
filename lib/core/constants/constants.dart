@@ -20,6 +20,7 @@ void showProgressIndicator(BuildContext context){
   showDialog(context: context, builder: (context)=>alertDialog,barrierDismissible: false,);
 }
 String? token = CacheHelper.getData(key: CacheKeys.token);
+String initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale)??"ar";
 String? userId = CacheHelper.getData(key: CacheKeys.userId);
 String? userType = CacheHelper.getData(key: CacheKeys.userType);
 bool? checkPublish = CacheHelper.getData(key: CacheKeys.checkPublish);

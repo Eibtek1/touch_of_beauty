@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +13,7 @@ import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/svg_path.dart';
 import '../../../../core/cache_manager/cache_keys.dart';
 import '../../../../core/cache_manager/shared_preferences.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../widgets/auht_text_form_field.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/pin_field_builder.dart';
@@ -128,7 +130,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     height: 55.h,
                   ),
                   Text(
-                    'تأكيد رقم الهاتف',
+                    LocaleKeys.valid_phone_number.tr(),
                     style: TextStyle(
                         color: const Color(0xff262626),
                         fontFamily: FontPath.almaraiBold,
@@ -140,7 +142,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   Padding(
                     padding: EdgeInsets.only(left: 120.w),
                     child: Text(
-                      'لقد أرسلنا كود تفعيلي من رقم 4 ارقام على الهاتف الخاص بك',
+                      LocaleKeys.send_otp.tr(),
                       style: TextStyle(
                           height: 1.8.h,
                           color: const Color(0xffABABAB),
@@ -152,10 +154,10 @@ class _OtpScreenState extends State<OtpScreen> {
                     height: 30.h,
                   ),
                   AuthTextFormField(
-                    hintText: 'رقم الهاتف',
+                    hintText: LocaleKeys.phone_number.tr(),
                     enable: false,
                     keyboardType: TextInputType.phone,
-                    textDirection: TextDirection.ltr,
+                    // textDirection: TextDirection.ltr,
                     validate: (value) {
                       var regex = RegExp(r'^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$');
                       if (value!.isEmpty) {
@@ -178,17 +180,14 @@ class _OtpScreenState extends State<OtpScreen> {
                   SizedBox(
                     height: 20.h,
                   ),
-                  Directionality(
-                    textDirection: TextDirection.ltr,
-                    child: PinFieldBuilder(
-                      controller: pinController,
-                    ),
+                  PinFieldBuilder(
+                    controller: pinController,
                   ),
                   SizedBox(
                     height: 20.h,
                   ),
                   AuthButton(
-                      buttonTitle: 'تأكيد الرقم',
+                      buttonTitle: LocaleKeys.valid_phone_number.tr(),
                       isTapped: () {
                         if (!widget.isConfirmPassword) {
                           cubit.confirmRegister(

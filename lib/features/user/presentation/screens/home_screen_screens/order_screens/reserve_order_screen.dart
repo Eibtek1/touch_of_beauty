@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +11,7 @@ import '../../../../../../core/app_router/screens_name.dart';
 import '../../../../../../core/app_theme/light_theme.dart';
 import '../../../../../../core/assets_path/font_path.dart';
 import '../../../../../../core/assets_path/images_path.dart';
+import '../../../../../../translations/locale_keys.g.dart';
 import '../../../../buisness_logic/services_cubit/services_cubit.dart';
 import '../../../../buisness_logic/services_cubit/services_state.dart';
 import '../../../widgets/home_screen_widgets/order_item_widget.dart';
@@ -43,7 +45,7 @@ class ReserveOrderScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          'حجز الخدمة',
+          LocaleKeys.service_reservation.tr(),
           style: TextStyle(
               color: const Color(0xff263238),
               fontFamily: FontPath.almaraiBold,
@@ -61,7 +63,7 @@ class ReserveOrderScreen extends StatelessWidget {
             Navigator.pop(context);
             Navigator.pop(context);
             Fluttertoast.showToast(
-              msg: 'تمت اضافة طلبك',
+              msg: LocaleKeys.your_request_added.tr(),
               gravity: ToastGravity.CENTER,
               backgroundColor: AppColorsLightTheme.primaryColor,
               textColor: Colors.white,
@@ -100,8 +102,8 @@ class ReserveOrderScreen extends StatelessWidget {
                     ),
                     Text(
                       cubit.addressModel == null
-                          ? 'الرجاء اختيار عنوانك'
-                          : 'تغيير عنوانك',
+                          ? LocaleKeys.please_select_address.tr()
+                          : LocaleKeys.change_address.tr(),
                       style: TextStyle(
                           color: const Color(0xff263238),
                           fontFamily: FontPath.almaraiBold,
@@ -131,24 +133,12 @@ class ReserveOrderScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'طلب خدمتك',
+                    LocaleKeys.your_reservation.tr(),
                     style: TextStyle(
                         fontSize: 16.sp,
                         fontFamily: FontPath.almaraiBold,
                         color: const Color(0xff1E2432)),
                   ),
-                  // InkWell(
-                  //   onTap: () {
-                  //     Navigator.pushNamed(context, ScreenName.allCentersScreen);
-                  //   },
-                  //   child: Text(
-                  //     'اضافة المزيد',
-                  //     style: TextStyle(
-                  //         fontSize: 16.sp,
-                  //         fontFamily: FontPath.almaraiBold,
-                  //         color: AppColorsLightTheme.secondaryColor),
-                  //   ),
-                  // ),
                 ],
               ),
               OrderItemWidget(
@@ -228,8 +218,8 @@ class ReserveOrderScreen extends StatelessWidget {
                     ),
                     Text(
                       cubit.dateTime == null
-                          ? 'الرجاء اختيار التوقيت'
-                          : 'تغيير التوقيت',
+                          ? LocaleKeys.please_select_time.tr()
+                          : LocaleKeys.change_time.tr(),
                       style: TextStyle(
                           color: const Color(0xff263238),
                           fontFamily: FontPath.almaraiBold,
@@ -253,7 +243,7 @@ class ReserveOrderScreen extends StatelessWidget {
               ),
               const Divider(),
               Text(
-                'نوع الخدمة',
+                LocaleKeys.services_type.tr(),
                 style: TextStyle(
                     fontSize: 16.sp,
                     fontFamily: FontPath.almaraiBold,
@@ -284,8 +274,8 @@ class ReserveOrderScreen extends StatelessWidget {
                         shape: const StadiumBorder()),
                     child: Text(
                       cubit.reserveOrderStatusInHome
-                          ? 'الخدمة بالمنزل'
-                          : 'الخدمة بالمركز',
+                          ? LocaleKeys.services_in_home.tr()
+                          : LocaleKeys.services_in_center.tr(),
                       style: TextStyle(
                           color: cubit.reserveOrderStatusInHome
                               ? Colors.white
@@ -303,7 +293,7 @@ class ReserveOrderScreen extends StatelessWidget {
                 height: 26.h,
               ),
               Text(
-                'عاملين المركز',
+                LocaleKeys.center_employees.tr(),
                 style: TextStyle(
                     fontSize: 16.sp,
                     fontFamily: FontPath.almaraiBold,
@@ -345,7 +335,7 @@ class ReserveOrderScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                'حجز الموعد',
+                LocaleKeys.reserve_time.tr(),
                 style: TextStyle(
                     fontSize: 16.sp,
                     fontFamily: FontPath.almaraiBold,
@@ -365,7 +355,7 @@ class ReserveOrderScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          'تكلفة الخدمة',
+                          LocaleKeys.service_cost.tr(),
                           style: TextStyle(
                               fontSize: 16.sp,
                               fontFamily: FontPath.almaraiBold,
@@ -384,18 +374,18 @@ class ReserveOrderScreen extends StatelessWidget {
                     SizedBox(
                       height: 45.h,
                       child: CustomUserButton(
-                        buttonTitle: 'اطلب الان',
+                        buttonTitle: LocaleKeys.order_now.tr(),
                         isTapped: () {
                           if (cubit.dateTime == null) {
                             Fluttertoast.showToast(
-                              msg: 'برجاء اختيار التاريخ',
+                              msg: LocaleKeys.please_select_date.tr(),
                               gravity: ToastGravity.CENTER,
                               backgroundColor: Colors.red,
                               textColor: Colors.white,
                             );
                           } else if (cubit.addressModel == null) {
                             Fluttertoast.showToast(
-                              msg: 'برجاء اختيار العنوان',
+                              msg: LocaleKeys.please_select_address.tr(),
                               gravity: ToastGravity.CENTER,
                               backgroundColor: Colors.red,
                               textColor: Colors.white,

@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_state.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../widgets/home_screen_widgets/center_services_item.dart';
 
 class FilteredServicesScreen extends StatefulWidget {
@@ -31,7 +33,7 @@ class _FilteredServicesScreenState extends State<FilteredServicesScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(
-            'الخدمات',
+            LocaleKeys.services.tr(),
             style: TextStyle(
                 color: const Color(0xff263238),
                 fontFamily: FontPath.almaraiBold,

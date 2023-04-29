@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:jiffy/jiffy.dart';
 import 'package:touch_of_beauty/features/freelancer/presentation/widgets/custom_vendor_button.dart';
 
 import '../../../../core/assets_path/font_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../../buisness_logic/work_hours_cubit/work_hours_cubit.dart';
 import '../../buisness_logic/work_hours_cubit/work_hours_state.dart';
 
@@ -68,7 +70,7 @@ class AddOrUpdateWorkingHoursDialog extends StatelessWidget {
                           width: 10.w,
                         ),
                         Text(
-                          'من',
+                          LocaleKeys.from.tr(),
                           style: TextStyle(
                               color: const Color(0xff3C475C),
                               fontSize: 10.sp,
@@ -124,7 +126,7 @@ class AddOrUpdateWorkingHoursDialog extends StatelessWidget {
                           width: 10.w,
                         ),
                         Text(
-                          'الي',
+                          LocaleKeys.to.tr(),
                           style: TextStyle(
                               color: const Color(0xff3C475C),
                               fontSize: 10.sp,
@@ -185,11 +187,11 @@ class AddOrUpdateWorkingHoursDialog extends StatelessWidget {
                   ),
                   !cubit.isUpdateOrAdd
                       ? CustomVendorButton(
-                          buttonTitle: 'اضافة',
+                          buttonTitle: LocaleKeys.add.tr(),
                           isTapped: () {
                             if (cubit.from == null || cubit.to == null) {
                               Fluttertoast.showToast(
-                                  msg: 'برجاء اختيار التوقيتات',
+                                  msg: LocaleKeys.please_select_time.tr(),
                                   gravity: ToastGravity.CENTER,
                                   backgroundColor: Colors.red);
                             } else if (id != null) {

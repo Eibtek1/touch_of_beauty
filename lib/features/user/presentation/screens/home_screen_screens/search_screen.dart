@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../buisness_logic/services_cubit/services_cubit.dart';
 import '../../../buisness_logic/services_cubit/services_state.dart';
 import '../../widgets/custom_button.dart';
@@ -39,7 +41,7 @@ class _SearchScreenState extends State<SearchScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(
-            'خصائص البحث',
+            LocaleKeys.search_prober.tr(),
             style: TextStyle(
                 color: const Color(0xff263238),
                 fontFamily: FontPath.almaraiBold,
@@ -63,7 +65,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       height: 30.h,
                     ),
                     Text(
-                      'السعر',
+                      LocaleKeys.price.tr(),
                       style: TextStyle(
                         color: AppColorsLightTheme.searchScreenTextColor,
                         fontFamily: FontPath.almaraiRegular,
@@ -151,7 +153,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                               .authTextFieldFillColor,
                                       shape: const StadiumBorder()),
                                   child: Text(
-                                    'الخدمات المنزلية',
+                                    LocaleKeys.home_serv.tr(),
                                     style: TextStyle(
                                         color: cubit.inHome
                                             ? Colors.white
@@ -174,7 +176,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                               .authTextFieldFillColor,
                                       shape: const StadiumBorder()),
                                   child: Text(
-                                    'الخدمات بالمركز',
+                                    LocaleKeys.center_serv.tr(),
                                     style: TextStyle(
                                         color: cubit.inCenter
                                             ? Colors.white
@@ -189,7 +191,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           SizedBox(
                             height: 23.h,
                           ),
-                          Text('نوع الخدمة',
+                          Text(LocaleKeys.services_type.tr(),
                               style: TextStyle(
                                   color:
                                       AppColorsLightTheme.searchScreenTextColor,
@@ -220,7 +222,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           SizedBox(
                             height: 22.h,
                           ),
-                          Text('المدينة',
+                          Text(LocaleKeys.city.tr(),
                               style: TextStyle(
                                   color:
                                       AppColorsLightTheme.searchScreenTextColor,
@@ -253,7 +255,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           SizedBox(
                             height: 22.h,
                           ),
-                          Text('الترتيب',
+                          Text(LocaleKeys.arrangement.tr(),
                               style: TextStyle(
                                   color:
                                       AppColorsLightTheme.searchScreenTextColor,
@@ -285,7 +287,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             height: 22.h,
                           ),
                           CustomUserButton(
-                              buttonTitle: 'بحث',
+                              buttonTitle: LocaleKeys.search.tr(),
                               isTapped: () {
                                 cubit.filteredServicesPageNumber = 1;
                                 cubit.getFilteredServices(

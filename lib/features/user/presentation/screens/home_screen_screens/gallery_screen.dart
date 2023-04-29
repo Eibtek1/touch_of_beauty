@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/network/api_end_points.dart';
+import '../../../../../translations/locale_keys.g.dart';
 
 class GalleryScreen extends StatelessWidget {
   const GalleryScreen({Key? key, required this.galleryList}) : super(key: key);
@@ -15,7 +17,7 @@ class GalleryScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          'معرض الاعمال',
+          LocaleKeys.gallery.tr(),
           style: TextStyle(
               color: const Color(0xff263238),
               fontFamily: FontPath.almaraiBold,

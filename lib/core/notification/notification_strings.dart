@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 
 //* Channel PUSH notifications
 const channelId = 'example_channel_id';

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +13,7 @@ import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
 import '../../../../../core/constants/constants.dart';
 import '../../../../../core/network/api_end_points.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../../authentication/buisness_logic/auth_cubit.dart';
 import '../../../../vendor/presentation/widgets/center_details/custo_text_form_field.dart';
 import '../../../../vendor/presentation/widgets/center_details/custom_container.dart';
@@ -45,7 +47,7 @@ class EditFreelancerDetailsScreen extends StatelessWidget {
         toolbarHeight: 60.h,
         centerTitle: true,
         title: Text(
-          'تعديل بيانات المركز',
+          LocaleKeys.edit_center_details.tr(),
           style: TextStyle(
             fontSize: 17.sp,
             fontFamily: FontPath.almaraiBold,
@@ -54,17 +56,18 @@ class EditFreelancerDetailsScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.pushNamed(
-                    context, ScreenName.freelancerNotificationScreen);
-              },
-              icon: SvgPicture.asset(
-                SvgPath.notificationBill,
-                width: 23.w,
-                height: 28.h,
-                colorFilter:
-                    const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-              )),
+            onPressed: () {
+              Navigator.pushNamed(
+                  context, ScreenName.freelancerNotificationScreen);
+            },
+            icon: SvgPicture.asset(
+              SvgPath.notificationBill,
+              width: 23.w,
+              height: 28.h,
+              colorFilter:
+                  const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+            ),
+          ),
           SizedBox(
             width: 12.w,
           ),
@@ -97,7 +100,7 @@ class EditFreelancerDetailsScreen extends StatelessWidget {
                     child: ListView(
                       children: [
                         Text(
-                          'صور للصالون أو الخدمات المقدمة',
+                          LocaleKeys.images_of_services.tr(),
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontFamily: FontPath.almaraiBold,
@@ -170,7 +173,7 @@ class EditFreelancerDetailsScreen extends StatelessWidget {
                           height: 10.h,
                         ),
                         Text(
-                          'اسم المركز',
+                          LocaleKeys.center_name.tr(),
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontFamily: FontPath.almaraiBold,
@@ -186,7 +189,7 @@ class EditFreelancerDetailsScreen extends StatelessWidget {
                           controller: centerNameController,
                         ),
                         Text(
-                          'البريد الاليكتروني',
+                          LocaleKeys.email.tr(),
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontFamily: FontPath.almaraiBold,
@@ -205,7 +208,7 @@ class EditFreelancerDetailsScreen extends StatelessWidget {
                           height: 14.h,
                         ),
                         Text(
-                          'وصف المركز',
+                          LocaleKeys.center_details.tr(),
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontFamily: FontPath.almaraiBold,
@@ -225,7 +228,7 @@ class EditFreelancerDetailsScreen extends StatelessWidget {
                           height: 14.h,
                         ),
                         Text(
-                          'رقم الهاتف',
+                          LocaleKeys.phone_number.tr(),
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontFamily: FontPath.almaraiBold,
@@ -243,44 +246,6 @@ class EditFreelancerDetailsScreen extends StatelessWidget {
                         SizedBox(
                           height: 14.h,
                         ),
-                        Row(
-                          children: [
-                            CustomDetailsContainer(
-                              height: 44.h,
-                              width: 280.w,
-                              child: Text(
-                                'عنوان المركز',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontFamily: FontPath.almaraiBold,
-                                  color: const Color(0xff8B8989),
-                                ),
-                              ),
-                            ),
-                            const Spacer(),
-                            Container(
-                              height: 44.h,
-                              width: 45.w,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 12.w, vertical: 12.h),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.r),
-                                color:
-                                    AppColorsLightTheme.authTextFieldFillColor,
-                              ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.location_on,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 14.h,
-                        ),
                         SizedBox(
                           height: 5.h,
                         ),
@@ -291,7 +256,7 @@ class EditFreelancerDetailsScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'شهادة سجل المركز',
+                                LocaleKeys.registeration_certificate.tr(),
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                   fontSize: 14.sp,
@@ -311,18 +276,19 @@ class EditFreelancerDetailsScreen extends StatelessWidget {
                           height: 20.h,
                         ),
                         CustomVendorButton(
-                            buttonTitle: 'تعديل',
-                            isTapped: () {
-                              cubit.freelancerUpdateProfile(
-                                userName: centerNameController.text,
-                                email: centerEmailController.text,
-                                description: centerDetailsController.text,
-                                phone: centerPhoneController.text,
-                              );
-                            },
-                            width: double.infinity,
-                            paddingVertical: 12.h,
-                            paddingHorizontal: 45.w),
+                          buttonTitle: LocaleKeys.edit.tr(),
+                          isTapped: () {
+                            cubit.freelancerUpdateProfile(
+                              userName: centerNameController.text,
+                              email: centerEmailController.text,
+                              description: centerDetailsController.text,
+                              phone: centerPhoneController.text,
+                            );
+                          },
+                          width: double.infinity,
+                          paddingVertical: 12.h,
+                          paddingHorizontal: 45.w,
+                        ),
                         SizedBox(
                           height: 20.h,
                         ),

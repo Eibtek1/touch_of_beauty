@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,6 +6,7 @@ import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
+import '../../../../../translations/locale_keys.g.dart';
 
 class CustomAppbar extends StatelessWidget {
   final Function openDrawer;
@@ -36,14 +38,14 @@ class CustomAppbar extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'مرحبا , $titleName',
+              '${LocaleKeys.hello.tr()} , $titleName',
               style: TextStyle(
                   fontSize: 18.sp,
                   fontFamily: FontPath.almaraiBold,
                   color: const Color(0xff1E2432)),
             ),
             Text(
-              'ابحث عن الخدمات التي تريدها',
+              LocaleKeys.find_services_you_want.tr(),
               style: TextStyle(
                   fontSize: 12.sp,
                   fontFamily: FontPath.almaraiBold,

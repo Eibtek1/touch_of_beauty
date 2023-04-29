@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../buisness_logic/v_reservations_cubit/v_reservation_cubit.dart';
 import '../../../buisness_logic/v_reservations_cubit/v_reservation_state.dart';
 import '../../widgets/reservations_components/canceled_order_component.dart';
@@ -42,7 +44,7 @@ class _VendorReservationsScreenState extends State<VendorReservationsScreen> {
           toolbarHeight: 60.h,
           centerTitle: true,
           title: Text(
-            'حجزاتي',
+            LocaleKeys.my_reservations.tr(),
             style: TextStyle(
               fontSize: 17.sp,
               fontFamily: FontPath.almaraiBold,
@@ -77,7 +79,7 @@ class _VendorReservationsScreenState extends State<VendorReservationsScreen> {
                   tabs: [
                     Tab(
                       child: Text(
-                        'لم تؤكد',
+                        LocaleKeys.not_confirmed.tr(),
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 10.sp,
@@ -85,28 +87,28 @@ class _VendorReservationsScreenState extends State<VendorReservationsScreen> {
                       ),
                     ),
                     Tab(
-                      child: Text('تحت التجهيز',
+                      child: Text(LocaleKeys.under_preparing.tr(),
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 10.sp,
                               fontFamily: FontPath.almaraiRegular)),
                     ),
                     Tab(
-                      child: Text('قيد الوصول',
+                      child: Text(LocaleKeys.in_progress.tr(),
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 10.sp,
                               fontFamily: FontPath.almaraiRegular)),
                     ),
                     Tab(
-                      child: Text('منتهية',
+                      child: Text(LocaleKeys.finished_orders.tr(),
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 10.sp,
                               fontFamily: FontPath.almaraiRegular)),
                     ),
                     Tab(
-                      child: Text('ملغاه',
+                      child: Text(LocaleKeys.deleted_orders.tr(),
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 10.sp,

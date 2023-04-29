@@ -22,11 +22,13 @@ class ChatScreenArgs {
   final String receiverId;
   final String receiverName;
   final String receiverImg;
+  final String orderId;
 
-  ChatScreenArgs({
+  ChatScreenArgs( {
     required this.title,
     required this.receiverId,
     required this.receiverName,
+    required this.orderId,
     required this.receiverImg,
   });
 }
@@ -36,12 +38,13 @@ class ChatScreen extends StatefulWidget {
   final dynamic receiverId;
   final dynamic receiverName;
   final dynamic receiverImg;
+  final dynamic orderId;
 
   const ChatScreen({Key? key,
     required this.title,
     required this.receiverId,
     this.receiverName,
-    this.receiverImg})
+    this.receiverImg, this.orderId})
       : super(key: key);
 
   @override
@@ -161,13 +164,13 @@ class _ChatScreenState extends State<ChatScreen> {
                             cubit.sendMessage(
                                 receiverId: widget.receiverId,
                                 senderId: userId,
-                                receiverName: "receiverName",
+                                receiverName: "${widget.receiverName}",
                                 senderName: AuthCubit
                                     .get(context)
                                     .getUserModel!
                                     .fullName ??
                                     '',
-                                receiverImg: null,
+                                receiverImg: widget.receiverImg,
                                 senderImg: AuthCubit
                                     .get(context)
                                     .getUserModel!
@@ -175,7 +178,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                     '',
                                 text: chatController.text,
                                 dateTime: DateTime.now().toString(),
-                                orderId: "1",
+                                orderId: "${widget.orderId}",
                                 image: null,
                                 messageType: "text",
                                 file: null,

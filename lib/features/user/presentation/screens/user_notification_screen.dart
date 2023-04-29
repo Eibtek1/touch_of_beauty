@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:touch_of_beauty/features/user/buisness_logic/main_cubit/main_cub
 import 'package:touch_of_beauty/features/user/buisness_logic/main_cubit/main_state.dart';
 
 import '../../../../core/assets_path/font_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../widgets/notification_widget/notification_item_builder.dart';
 
 class UserNotificationScreen extends StatefulWidget {
@@ -36,7 +38,7 @@ class _UserNotificationScreenState extends State<UserNotificationScreen> {
             toolbarHeight: 70.h,
             centerTitle: true,
             title: Text(
-              'الاشعارات',
+              LocaleKeys.notification.tr(),
               style: TextStyle(
                   fontSize: 20.sp,
                   fontFamily: FontPath.almaraiBold,

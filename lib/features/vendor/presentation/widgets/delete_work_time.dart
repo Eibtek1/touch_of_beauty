@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 
 import '../../../../core/assets_path/font_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../../../freelancer/presentation/widgets/custom_vendor_button.dart';
 import '../../buisness_logic/work_hours_cubit/work_hours_cubit.dart';
 import '../../buisness_logic/work_hours_cubit/work_hours_state.dart';
@@ -47,7 +49,7 @@ class DeleteWorkTimeDialog extends StatelessWidget {
                   height: 20.h,
                 ),
                 Text(
-                  'هل انت متأكد من حذف التوقيت',
+                  LocaleKeys.delete_time_validation.tr(),
                   style: TextStyle(
                       color: const Color(0xffABABAB),
                       fontFamily: FontPath.almaraiRegular,
@@ -59,7 +61,7 @@ class DeleteWorkTimeDialog extends StatelessWidget {
                 state is! DeleteWorkHoursLoading
                     ? CustomVendorButton(
                         isDeleteAlertDialog: true,
-                        buttonTitle: 'حذف التوقيت',
+                        buttonTitle: LocaleKeys.delete.tr(),
                         isTapped: () {
                           cubit.deleteWorkHours(id: id);
                         },

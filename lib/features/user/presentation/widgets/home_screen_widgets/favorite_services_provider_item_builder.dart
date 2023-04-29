@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -6,6 +7,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/network/api_end_points.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../data/models/favorites_services_provider_model.dart';
 
 class FavoriteSalonItemBuilder extends StatelessWidget {
@@ -20,7 +22,7 @@ class FavoriteSalonItemBuilder extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 5.w),
       child: Container(
-        height: 190.h,
+        height: 210.h,
         width: 265.w,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -98,7 +100,7 @@ class FavoriteSalonItemBuilder extends StatelessWidget {
                       height: 5.h,
                     ),
                     Text(
-                      '${servicesProviderModel.addresses![0].city}',
+                      servicesProviderModel.addresses!.isNotEmpty?servicesProviderModel.addresses![0].city!:LocaleKeys.no_address_added.tr(),
                       style: TextStyle(
                         fontSize: 11.sp,
                         fontFamily: FontPath.almaraiRegular,

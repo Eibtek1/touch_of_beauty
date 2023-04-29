@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../buisness_logic/v_reservations_cubit/v_reservation_cubit.dart';
 import '../../../buisness_logic/v_reservations_cubit/v_reservation_state.dart';
 import '../order_item_builder.dart';
@@ -54,7 +56,7 @@ class _PreparedOrdersComponentState extends State<PreparedOrdersComponent> {
                   )
                 : Center(
                     child: Text(
-                      'لا يوجد خدمات بعد',
+                      LocaleKeys.no_services_yet.tr(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: AppColorsLightTheme.primaryColor,

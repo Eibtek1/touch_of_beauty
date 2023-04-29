@@ -1,4 +1,4 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:new_version/new_version.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../../buisness_logic/main_cubit/main_cubit.dart';
 import '../../buisness_logic/main_cubit/main_state.dart';
 import '../widgets/home_screen_widgets/build_custom_drawer.dart';
@@ -78,7 +79,7 @@ class _UserMainLayoutState extends State<UserMainLayout> {
                         BlendMode.srcIn,
                       ),
                     ),
-                    label: 'الرئيسية',
+                    label: LocaleKeys.home.tr(),
                   ),
                   BottomNavigationBarItem(
                       icon: SvgPicture.asset(
@@ -90,7 +91,7 @@ class _UserMainLayoutState extends State<UserMainLayout> {
                           BlendMode.srcIn,
                         ),
                       ),
-                      label: 'حجوزاتي'),
+                      label: LocaleKeys.my_reservations.tr()),
                   BottomNavigationBarItem(
                       icon: SvgPicture.asset(
                         SvgPath.notificationIcon,
@@ -101,7 +102,7 @@ class _UserMainLayoutState extends State<UserMainLayout> {
                           BlendMode.srcIn,
                         ),
                       ),
-                      label: 'اشعارات'),
+                      label: LocaleKeys.notification.tr()),
                   BottomNavigationBarItem(
                       icon: SvgPicture.asset(
                         SvgPath.profileIcon,
@@ -112,7 +113,7 @@ class _UserMainLayoutState extends State<UserMainLayout> {
                           BlendMode.srcIn,
                         ),
                       ),
-                      label: 'الملف الشخصي'),
+                      label: LocaleKeys.profile.tr()),
                 ],
               ),
             ),

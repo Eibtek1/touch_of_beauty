@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,37 +9,16 @@ import 'package:touch_of_beauty/features/vendor/presentation/screens/vendor_cent
 import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
-import '../../../../../core/assets_path/images_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
 import '../../../../../core/constants/constants.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../../freelancer/presentation/widgets/custom_vendor_button.dart';
 import '../../../../user/presentation/widgets/home_screen_widgets/grid_item_builder.dart';
 import '../../../../vendor/buisness_logic/services_cubit/vendor_services_cubit.dart';
 import '../../../../vendor/presentation/widgets/screen_layout_widget_with_logo.dart';
 
 class FreelancerServicesScreen extends StatelessWidget {
-  FreelancerServicesScreen({Key? key}) : super(key: key);
-  final List<Map<String, dynamic>> itemsList = [
-    {'image': ImagePath.babyCare, 'title': "العناية بالطفل"},
-    {'image': ImagePath.beautyCenter, 'title': "قسم التجميل"},
-    {'image': ImagePath.hairCare, 'title': "العناية بالشعر"},
-    {'image': ImagePath.makeup, 'title': "قسم المكياج"},
-    {'image': ImagePath.naturalTherapy, 'title': "العلاج الطبيعي"},
-    {
-      'image': ImagePath.photography,
-      'title': "التصــــــــــــوير الفوتوغرافي"
-    },
-    {'image': ImagePath.selfCare, 'title': "العناية الشخصية"},
-    {'image': ImagePath.skinCare, 'title': "العناية بالبشرة"},
-    {'image': ImagePath.hairCare, 'title': "العناية بالشعر"},
-    {'image': ImagePath.makeup, 'title': "قسم المكياج"},
-    {'image': ImagePath.naturalTherapy, 'title': "العلاج الطبيعي"},
-    {
-      'image': ImagePath.photography,
-      'title': "التصــــــــــــوير الفوتوغرافي"
-    },
-  ];
-
+  const FreelancerServicesScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +61,6 @@ class FreelancerServicesScreen extends StatelessWidget {
           child: BlocConsumer<VendorServicesCubit, VendorServicesState>(
             listener: (context, state) {
               var cubit = VendorServicesCubit.get(context);
-
               if(state is GetServicesDetailsByItsIdLoadingState){
                 showProgressIndicator(context);
               }else if(state is GetServicesDetailsByItsIdSuccess){
@@ -128,7 +107,7 @@ class FreelancerServicesScreen extends StatelessWidget {
                   ),
                   const Spacer(),
                   CustomVendorButton(
-                      buttonTitle: 'اضافة خدمة جديدة',
+                      buttonTitle: LocaleKeys.add_new_services.tr(),
                       isTapped: () {
                         Navigator.pushNamed(
                             context, ScreenName.vendorAddToServicesScreen,

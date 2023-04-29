@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 import '../../../../../../core/assets_path/font_path.dart';
+import '../../../../../../translations/locale_keys.g.dart';
 import '../../../../buisness_logic/reservation_cubit/reservation_cubit.dart';
 
 class PaymentWebView extends StatefulWidget {
@@ -91,7 +93,7 @@ Page resource error:
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'الدفع',
+            LocaleKeys.pay.tr(),
             style: TextStyle(
               fontSize: 14.sp,
               color: Colors.white,

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +10,7 @@ import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_state.dart';
 import 'package:touch_of_beauty/features/user/presentation/widgets/home_screen_widgets/custom_appbar.dart';
 import '../../../../core/assets_path/font_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../widgets/home_screen_widgets/cursol_slider_widget.dart';
 import '../widgets/home_screen_widgets/favorites_services_providers_component.dart';
 import '../widgets/home_screen_widgets/featured_services_providers_component.dart';
@@ -80,7 +82,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     height: 24.h,
                   ),
                   Text(
-                    'ما الذي تريد أن تفعل؟',
+                    LocaleKeys.what_do_you_want.tr(),
                     style: TextStyle(
                         fontSize: 16.sp,
                         fontFamily: FontPath.almaraiBold,
@@ -97,7 +99,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'صالون مميز',
+                        LocaleKeys.featured_center.tr(),
                         style: TextStyle(
                             fontSize: 16.sp,
                             fontFamily: FontPath.almaraiBold,
@@ -109,7 +111,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                               context, ScreenName.allCentersScreen);
                         },
                         child: Text(
-                          'شاهد كل الصالونات',
+                          LocaleKeys.watch_all_centers.tr(),
                           style: TextStyle(
                               fontSize: 16.sp,
                               fontFamily: FontPath.almaraiBold,
@@ -126,7 +128,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     height: 15.h,
                   ),
                   Text(
-                    'الصالونات المفضلة',
+                    LocaleKeys.fav_centers.tr(),
                     style: TextStyle(
                         fontSize: 16.sp,
                         fontFamily: FontPath.almaraiBold,

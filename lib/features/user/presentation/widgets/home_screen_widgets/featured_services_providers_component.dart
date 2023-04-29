@@ -41,7 +41,8 @@ class _FeaturedServicesProvidersComponentState extends State<FeaturedServicesPro
           UserServicesCubit.get(context).changeTabBarCurrentIndex(0,
               servicesProviderId: cubit.servicesProviderModel!.id!,
               mainSectionId:
-              cubit.servicesProviderModel!.mainSection![0].mainSectionId!);
+              cubit.servicesProviderModel!.mainSection!.isNotEmpty?cubit.servicesProviderModel!.mainSection![0].mainSectionId!:0,
+          );
           showBottomSheet(
             context: context,
             builder: (context) => CenterDetailsBottomSheet(

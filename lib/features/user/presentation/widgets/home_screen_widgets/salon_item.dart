@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +9,7 @@ import 'package:touch_of_beauty/core/network/api_end_points.dart';
 import 'package:touch_of_beauty/features/user/data/models/services_providers_model.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../translations/locale_keys.g.dart';
 
 class SalonItemBuilder extends StatelessWidget {
   final ServicesProviderModel servicesProviderModel;
@@ -102,12 +104,15 @@ class SalonItemBuilder extends StatelessWidget {
                       height: 5.h,
                     ),
                     Text(
-                      '${servicesProviderModel.addresses![0].city}',
+                      servicesProviderModel.addresses!.isNotEmpty?servicesProviderModel.addresses![0].city!:LocaleKeys.no_address_added.tr(),
                       style: TextStyle(
                         fontSize: 11.sp,
                         fontFamily: FontPath.almaraiRegular,
                         color: const Color(0xff666666),
                       ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
                     ),
                     Expanded(
                       child: HtmlWidget('${servicesProviderModel.description}',),

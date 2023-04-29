@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../../core/app_theme/light_theme.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../../freelancer/presentation/widgets/custom_vendor_button.dart';
 import '../../../buisness_logic/employees_cubit/employees_cubit.dart';
 import '../../../buisness_logic/employees_cubit/employees_state.dart';
@@ -86,10 +88,10 @@ class _EmployeeAlertDialogState extends State<EmployeeAlertDialog> {
                     height: 44.h,
                     width: double.infinity,
                     controller: nameController,
-                    hintText: 'الاسم',
+                    hintText: LocaleKeys.name.tr(),
                     validator: (value){
                       if(value!.isEmpty){
-                        return 'يجب ادخال الاسم';
+                        return LocaleKeys.short_name.tr();
                       }
                       return null;
                     },
@@ -100,10 +102,10 @@ class _EmployeeAlertDialogState extends State<EmployeeAlertDialog> {
                     width: double.infinity,
                     controller: phoneController,
                     keyboardType: TextInputType.phone,
-                    hintText: 'رقم الهاتف',
+                    hintText: LocaleKeys.phone_number.tr(),
                     validator: (value){
                       if(value!.isEmpty){
-                        return 'يجب ادخال رقم الهاتف';
+                        return LocaleKeys.valid_phone_number.tr();
                       }
                       return null;
                     },
@@ -113,14 +115,14 @@ class _EmployeeAlertDialogState extends State<EmployeeAlertDialog> {
                     height: 44.h,
                     width: double.infinity,
                     controller: emailController,
-                    hintText: 'البريد',
+                    hintText: LocaleKeys.email.tr(),
                     validator: (value){
                       if(value!.isEmpty){
-                        return 'يجب ادخال البريد';
+                        return LocaleKeys.enter_email.tr();
                       }else if(!RegExp(
                           r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                           .hasMatch(value)){
-                        return 'صيغة بريد غير صحيحة';
+                        return LocaleKeys.incorrect_email.tr();
                       }
                       return null;
                     },
@@ -128,10 +130,10 @@ class _EmployeeAlertDialogState extends State<EmployeeAlertDialog> {
                   SizedBox(height: 20.h,),
                   state is! AddEmployeeLoading
                       ? CustomVendorButton(
-                      buttonTitle: 'اضافة',
+                      buttonTitle: LocaleKeys.add.tr(),
                       isTapped: () {
                         if(cubit.profileImage == null){
-                          Fluttertoast.showToast(msg: 'يجب اختيار صورة');
+                          Fluttertoast.showToast(msg: LocaleKeys.please_choose_image.tr());
                         }else if(formKey.currentState!.validate()){
                           cubit.addEmployee(name: nameController.text, email: emailController.text, phoneNumber: phoneController.text,);
                         }

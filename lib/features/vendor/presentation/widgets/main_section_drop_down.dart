@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:touch_of_beauty/core/assets_path/font_path.dart';
 import 'package:touch_of_beauty/features/vendor/buisness_logic/services_cubit/vendor_services_cubit.dart';
 import 'package:touch_of_beauty/features/vendor/buisness_logic/services_cubit/vendor_services_state.dart';
 import '../../../../core/app_theme/light_theme.dart';
+import '../../../../translations/locale_keys.g.dart';
 
 class MainSectionDropdownButton extends StatefulWidget {
   const MainSectionDropdownButton({
@@ -42,7 +44,7 @@ class _MainSectionDropdownButtonState extends State<MainSectionDropdownButton> {
           ),
           child: state is! GetMainSectionsLoadingState
               ? DropdownButton(
-                  hint: const Text('القسم'),
+                  hint: Text(LocaleKeys.section.tr()),
                   elevation: 0,
                   underline: const SizedBox.shrink(),
                   value: cubit.mainSectionValue,

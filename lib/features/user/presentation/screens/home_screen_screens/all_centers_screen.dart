@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_providers_cubit/services_providers_state.dart';
 import '../../../../../core/assets_path/font_path.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../buisness_logic/services_cubit/services_cubit.dart';
 import '../../widgets/home_screen_widgets/all_centers_item.dart';
 import '../../widgets/home_screen_widgets/center_details_bottom_sheet.dart';
@@ -19,16 +21,19 @@ class AllCentersScreen extends StatefulWidget {
 class _AllCentersScreenState extends State<AllCentersScreen> {
   // final TextEditingController searchController = TextEditingController();
   ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
     // ServicesProvidersCubit.get(context).getAllServicesProviders();
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent ==
           scrollController.offset) {
-        if(BlocProvider.of<ServicesProvidersCubit>(context).servicesProvidersList.isEmpty){
+        if (BlocProvider.of<ServicesProvidersCubit>(context)
+            .servicesProvidersList
+            .isEmpty) {
           BlocProvider.of<ServicesProvidersCubit>(context)
               .getAllServicesProviders();
-        }else{
+        } else {
           BlocProvider.of<ServicesProvidersCubit>(context)
               .getAllServicesProviders();
         }
@@ -43,7 +48,7 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          'مراكز الخدمة',
+          LocaleKeys.services_centers.tr(),
           style: TextStyle(
               color: const Color(0xff263238),
               fontFamily: FontPath.almaraiBold,
@@ -61,10 +66,12 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
               cubit.servicesProviderModel != null) {
             Navigator.pop(context);
             UserServicesCubit.get(context).tabBarCIndex = 0;
-            UserServicesCubit.get(context).changeTabBarCurrentIndex(0,
-                servicesProviderId: cubit.servicesProviderModel!.id!,
-                mainSectionId: cubit
-                    .servicesProviderModel!.mainSection![0].mainSectionId!);
+            UserServicesCubit.get(context).changeTabBarCurrentIndex(
+              0,
+              servicesProviderId: cubit.servicesProviderModel!.id!,
+              mainSectionId:
+              cubit.servicesProviderModel!.mainSection!.isNotEmpty?cubit.servicesProviderModel!.mainSection![0].mainSectionId!:0,
+            );
             showBottomSheet(
               context: context,
               builder: (context) => CenterDetailsBottomSheet(
@@ -127,7 +134,7 @@ class _AllCentersScreenState extends State<AllCentersScreen> {
               Expanded(
                 child: !cubit.searchForServicesProviderLoading
                     ? ListView.builder(
-                  controller: scrollController,
+                        controller: scrollController,
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
                             onTap: () {

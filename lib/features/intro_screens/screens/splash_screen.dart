@@ -26,8 +26,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void initFirebaseMessaging() async {
     FirebaseMessaging.instance.getInitialMessage().then((event) {
-      print(event);
-      print("event");
     });
   }
 

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +15,7 @@ import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubi
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
 import 'package:touch_of_beauty/features/authentication/presentation/widgets/auht_text_form_field.dart';
 import '../../../../core/assets_path/font_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../widgets/auth_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -134,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 67.h,
                   ),
                   Text(
-                    'تسجيل الدخول',
+                    LocaleKeys.login.tr(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: const Color(0xff262626),
@@ -145,17 +147,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 24.h,
                   ),
                   AuthTextFormField(
-                    hintText: 'رقم الهاتف',
+                    hintText: LocaleKeys.phone_number.tr(),
                     keyboardType: TextInputType.phone,
-                    textDirection: TextDirection.ltr,
+                    // textDirection: TextDirection.ltr,
                     validate: (value) {
-                      var regex = RegExp(r'^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$');
-                      if (value!.isEmpty) {
-                        return 'ادخل رقم الهاتف';
-                      }
-                      else if (!regex.hasMatch(value)) {
-                        return 'صيغة الهاتف غير صحيحة';
-                      }
+                      // var regex = RegExp(r'^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$');
+                      // if (value!.isEmpty) {
+                      //   return LocaleKeys.enter_your_phone.tr();
+                      // }
+                      // else if (!regex.hasMatch(value)) {
+                      //   return LocaleKeys.valid_phone_number.tr();
+                      // }
                       return null;
                     },
                     suffix: Padding(
@@ -172,14 +174,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 10.h,
                   ),
                   AuthTextFormField(
-                    hintText: 'كلمة المرور',
+                    hintText: LocaleKeys.password.tr(),
                     controller: password,
                     isPassword: true,
                     validate: (value) {
                       if (value!.isEmpty) {
-                        return 'ادخل كلمة المرور';
+                        return LocaleKeys.enter_password.tr();
                       } else if (value.length < 6) {
-                        return 'كلمة المرور ضعيفة';
+                        return LocaleKeys.weak_password.tr();
                       }
                       return null;
                     },
@@ -193,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           context, ScreenName.forgetPasswordScreen);
                     },
                     child: Text(
-                      'هل نسيت كلمة المرور؟',
+                      LocaleKeys.forget_your_password.tr(),
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           color: const Color(0xffAAADB5),
@@ -206,7 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 16.h,
                   ),
                   AuthButton(
-                      buttonTitle: 'دخول',
+                      buttonTitle: LocaleKeys.login.tr(),
                       isTapped: () {
                         if (formKey.currentState!.validate()) {
                           cubit.login(
@@ -230,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         });
                       },
                       child: Text(
-                        'نظرة عامة علي التطبيق',
+                        LocaleKeys.app_overview.tr(),
                         textAlign: TextAlign.start,
                         style: TextStyle(
                             color: AppColorsLightTheme.secondaryColor,
@@ -257,14 +259,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'ليس لديك حساب ؟  ',
+                          '${LocaleKeys.have_account.tr()}  ',
                           style: TextStyle(
                               color: const Color(0xff262626),
                               fontFamily: FontPath.almaraiRegular,
                               fontSize: 10.sp),
                         ),
                         Text(
-                          'انشاء حساب',
+                          LocaleKeys.create_account.tr(),
                           style: TextStyle(
                             color: AppColorsLightTheme.secondaryColor,
                             fontFamily: FontPath.almaraiRegular,

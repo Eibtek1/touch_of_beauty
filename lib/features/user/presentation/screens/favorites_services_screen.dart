@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/constants/constants.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../../buisness_logic/services_cubit/services_cubit.dart';
 import '../../buisness_logic/services_cubit/services_state.dart';
 import '../widgets/home_screen_widgets/fav_services_builder.dart';
@@ -37,7 +39,7 @@ class _FavoritesServicesScreenState extends State<FavoritesServicesScreen> {
                   ),
                   Expanded(
                     child: Text(
-                      'الخدمات المفضلة',
+                      LocaleKeys.fav_serv.tr(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.black,
@@ -105,7 +107,7 @@ class _FavoritesServicesScreenState extends State<FavoritesServicesScreen> {
                                 )
                               : Center(
                                   child: Text(
-                                    'لا توجد خدمات مفضلة',
+                                    LocaleKeys.no_fav_items.tr(),
                                     style: TextStyle(
                                         color: AppColorsLightTheme.primaryColor,
                                         fontFamily: FontPath.almaraiBold,

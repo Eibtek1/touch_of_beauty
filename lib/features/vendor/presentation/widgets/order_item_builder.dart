@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jiffy/jiffy.dart';
@@ -5,6 +6,7 @@ import 'package:jiffy/jiffy.dart';
 import '../../../../core/app_router/screens_name.dart';
 import '../../../../core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/font_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../../../freelancer/presentation/widgets/custom_vendor_button.dart';
 import '../../buisness_logic/v_reservations_cubit/v_reservation_cubit.dart';
 import '../../data/models/reserve_model.dart';
@@ -45,8 +47,8 @@ class OrderItemBuilder extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              customContainer(title: 'اسم العميل', bodyTitle: '${reserveModel.user!.fullName}'),
-              customContainer(title: 'رقم الطلب', bodyTitle: '${reserveModel.id}'),
+              customContainer(title: LocaleKeys.client_name.tr(), bodyTitle: '${reserveModel.user!.fullName}'),
+              customContainer(title: LocaleKeys.order_number.tr(), bodyTitle: '${reserveModel.id}'),
             ],
           ),
           SizedBox(
@@ -56,7 +58,7 @@ class OrderItemBuilder extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               customContainer(
-                  title: 'اجمالي سعر الخدمة', bodyTitle: '${reserveModel.total} ريال سعودي',),
+                  title: LocaleKeys.total_services_budget.tr(), bodyTitle: '${reserveModel.total} ريال سعودي',),
               // customContainer(title: 'عدد الخدمات', bodyTitle: '1 خدمات',),
             ],
           ),
@@ -64,8 +66,9 @@ class OrderItemBuilder extends StatelessWidget {
             height: 17.h,
           ),
           CustomVendorButton(
-              buttonTitle: 'عرض تفاصيل الطلب',
+              buttonTitle: LocaleKeys.watch_order_details.tr(),
               isTapped: () {
+                print(reserveModel.id!);
                 VReservationCubit.get(context).getOrdersById(orderId:reserveModel.id!);
                   Navigator.pushNamed(context, ScreenName.orderInHomeDetailsScreen);
               },

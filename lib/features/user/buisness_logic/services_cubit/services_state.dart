@@ -70,6 +70,13 @@ class AddAddressError extends UserServicesState {
   AddAddressError({required this.error});
 }
 
+class UpdateAddressLoading extends UserServicesState {}
+class UpdateAddressSuccess extends UserServicesState {}
+class UpdateAddressError extends UserServicesState {
+  final String error;
+  UpdateAddressError({required this.error});
+}
+
 class DeleteAddressLoading extends UserServicesState {}
 class DeleteAddressSuccess extends UserServicesState {}
 class DeleteAddressError extends UserServicesState {

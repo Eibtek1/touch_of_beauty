@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,9 +11,13 @@ import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
+import '../../../../../core/cache_manager/cache_keys.dart';
+import '../../../../../core/cache_manager/shared_preferences.dart';
 import '../../../../../core/network/api_end_points.dart';
+import '../../../../../translations/locale_keys.g.dart';
 import '../../../../authentication/buisness_logic/auth_cubit.dart';
 import '../../../../authentication/buisness_logic/auth_state.dart';
+import '../../../../freelancer/presentation/widgets/build_freelancer_profile_item.dart';
 import '../../widgets/center_details/custo_text_form_field.dart';
 import '../../widgets/center_details/custom_container.dart';
 import '../../widgets/screen_layout_widget_with_logo.dart';
@@ -58,7 +63,7 @@ class _EditCenterDetailsScreenState extends State<EditCenterDetailsScreen> {
         toolbarHeight: 60.h,
         centerTitle: true,
         title: Text(
-          'تعديل بيانات المركز',
+          LocaleKeys.edit_center_details.tr(),
           style: TextStyle(
             fontSize: 17.sp,
             fontFamily: FontPath.almaraiBold,
@@ -110,7 +115,7 @@ class _EditCenterDetailsScreenState extends State<EditCenterDetailsScreen> {
                     child: ListView(
                       children: [
                         Text(
-                          'صور للصالون أو الخدمات المقدمة',
+                          LocaleKeys.images_of_services.tr(),
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontFamily: FontPath.almaraiBold,
@@ -183,7 +188,7 @@ class _EditCenterDetailsScreenState extends State<EditCenterDetailsScreen> {
                           height: 10.h,
                         ),
                         Text(
-                          'اسم المركز',
+                          LocaleKeys.center_name.tr(),
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontFamily: FontPath.almaraiBold,
@@ -202,7 +207,7 @@ class _EditCenterDetailsScreenState extends State<EditCenterDetailsScreen> {
                           height: 14.h,
                         ),
                         Text(
-                          'وصف المركز',
+                          LocaleKeys.center_details.tr(),
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontFamily: FontPath.almaraiBold,
@@ -221,7 +226,7 @@ class _EditCenterDetailsScreenState extends State<EditCenterDetailsScreen> {
                           height: 14.h,
                         ),
                         Text(
-                          'رقم الهاتف',
+                          LocaleKeys.phone_number.tr(),
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontFamily: FontPath.almaraiBold,
@@ -240,7 +245,7 @@ class _EditCenterDetailsScreenState extends State<EditCenterDetailsScreen> {
                           height: 14.h,
                         ),
                         Text(
-                          'البريد الاليكتروني',
+                          LocaleKeys.email.tr(),
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontFamily: FontPath.almaraiBold,
@@ -259,7 +264,7 @@ class _EditCenterDetailsScreenState extends State<EditCenterDetailsScreen> {
                           height: 14.h,
                         ),
                         Text(
-                          'الرقم الضريبي',
+                          LocaleKeys.tax_number.tr(),
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontFamily: FontPath.almaraiBold,
@@ -283,7 +288,7 @@ class _EditCenterDetailsScreenState extends State<EditCenterDetailsScreen> {
                               height: 44.h,
                               width: 280.w,
                               child: Text(
-                                'عنوان المركز',
+                                LocaleKeys.center_address.tr(),
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                   fontSize: 14.sp,
@@ -316,7 +321,7 @@ class _EditCenterDetailsScreenState extends State<EditCenterDetailsScreen> {
                           height: 14.h,
                         ),
                         Text(
-                          'رقم الهاتف',
+                          LocaleKeys.phone_number.tr(),
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontFamily: FontPath.almaraiBold,
@@ -333,7 +338,7 @@ class _EditCenterDetailsScreenState extends State<EditCenterDetailsScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'شهادة سجل المركز',
+                                LocaleKeys.registeration_certificate.tr(),
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                   fontSize: 14.sp,
@@ -353,7 +358,7 @@ class _EditCenterDetailsScreenState extends State<EditCenterDetailsScreen> {
                           height: 20.h,
                         ),
                         CustomVendorButton(
-                            buttonTitle: 'تعديل',
+                            buttonTitle:LocaleKeys.edit.tr(),
                             isTapped: () {
                               // if(centerDetailsController.text.length>=5&&centerNameController.text.isNotEmpty&&centerEmailController.text.isNotEmpty&&centerPhoneController.text.isNotEmpty){
                                 cubit.vendorUpdateProfile(
@@ -367,6 +372,8 @@ class _EditCenterDetailsScreenState extends State<EditCenterDetailsScreen> {
                             width: double.infinity,
                             paddingVertical: 12.h,
                             paddingHorizontal: 45.w),
+
+
                         SizedBox(
                           height: 20.h,
                         ),
