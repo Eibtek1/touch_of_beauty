@@ -493,57 +493,6 @@ class CenterDetailsScreen extends StatelessWidget {
                                       SizedBox(
                                         height: 14.h,
                                       ),
-                                      BlocBuilder<UserServicesCubit,
-                                          UserServicesState>(
-                                        builder: (context, state) {
-                                          var cubit = UserServicesCubit.get(context);
-                                          return InkWell(
-                                            onTap: (){
-                                              if(state is ! GetAddressLoading)Navigator.pushNamed(context, ScreenName.addAddressScreen,arguments: AddAddressArgs(addressModel: cubit.addressList[0], userEqualsZeroVendorEqualsOne: 1));
-                                            },
-                                            child: CustomDetailsContainer(
-                                              height: 64.h,
-                                              width: double.infinity,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    LocaleKeys.address.tr(),
-                                                    textAlign: TextAlign.start,
-                                                    style: TextStyle(
-                                                      fontSize: 12.sp,
-                                                      fontFamily:
-                                                      FontPath.almaraiBold,
-                                                      color:
-                                                      const Color(0xff8B8989),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5.h,
-                                                  ),
-                                                  Expanded(
-                                                    child: Text(
-                                                      cubit.addressList.isNotEmpty?cubit.addressList[0].cityName!:LocaleKeys.add_address.tr(),
-                                                      textAlign: TextAlign.start,
-                                                      style: TextStyle(
-                                                        fontSize: 14.sp,
-                                                        fontFamily:
-                                                        FontPath.almaraiBold,
-                                                        color: const Color(
-                                                            0xff8B8989),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                      SizedBox(
-                                        height: 14.h,
-                                      ),
                                       CustomDetailsContainer(
                                         height: 64.h,
                                         width: double.infinity,
@@ -763,6 +712,9 @@ class CenterDetailsScreen extends StatelessWidget {
                             fontFamily: FontPath.almaraiBold,
                             color: const Color(0xff3C475C),
                           ),
+                        ),
+                        SizedBox(
+                          height: 14.h,
                         ),
                         const EmployeesComponentBuilder(),
                       ],

@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/assets_path/images_path.dart';
@@ -10,12 +9,11 @@ import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
 import '../../../../core/assets_path/font_path.dart';
-import '../../../../core/assets_path/svg_path.dart';
 import '../../../../core/cache_manager/cache_keys.dart';
 import '../../../../core/cache_manager/shared_preferences.dart';
 import '../../../../translations/locale_keys.g.dart';
-import '../widgets/auht_text_form_field.dart';
 import '../widgets/auth_button.dart';
+import '../widgets/phone_auth_field.dart';
 import '../widgets/pin_field_builder.dart';
 
 class OtpArgs {
@@ -153,30 +151,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   SizedBox(
                     height: 30.h,
                   ),
-                  AuthTextFormField(
-                    hintText: LocaleKeys.phone_number.tr(),
-                    enable: false,
-                    keyboardType: TextInputType.phone,
-                    // textDirection: TextDirection.ltr,
-                    validate: (value) {
-                      var regex = RegExp(r'^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$');
-                      if (value!.isEmpty) {
-                        return 'ادخل رقم الهاتف';
-                      } else if (!regex.hasMatch(value)) {
-                        return 'صيغة الهاتف غير صحيحة';
-                      }
-                      return null;
-                    },
-                    suffix: Padding(
-                      padding: EdgeInsets.only(left: 10.w),
-                      child: SvgPicture.asset(
-                        SvgPath.saudiPhoneFieldIcon,
-                        width: 52.w,
-                        height: 15.h,
-                      ),
-                    ),
-                    controller: phone,
-                  ),
+                  PhoneAuthFormField(controller: phone,),
                   SizedBox(
                     height: 20.h,
                   ),

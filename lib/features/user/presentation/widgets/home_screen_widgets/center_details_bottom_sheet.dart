@@ -7,6 +7,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
+import 'package:touch_of_beauty/core/cache_manager/cache_keys.dart';
+import 'package:touch_of_beauty/core/cache_manager/shared_preferences.dart';
 import 'package:touch_of_beauty/features/chat/buisness_logic/chat_state.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_state.dart';
@@ -96,8 +98,9 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                                   receiverImg: '',
                                   orderId: ''));
                         } else {
+                          initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale);
                           Fluttertoast.showToast(
-                              msg: 'لا يمكن الدخول للدردشة الا بعد طلب هدمة',backgroundColor: Colors.red);
+                              msg:initialLocale == "ar"? 'لا يمكن الدخول للدردشة الا بعد طلب خدمة':"It is not possible to enter the chat except after requesting a service",backgroundColor: Colors.red);
                         }
                       }
                     },
