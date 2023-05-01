@@ -14,8 +14,6 @@ class ChooseRateTypeDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(serviceId);
-    print(serviceProviderId);
     return AlertDialog(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(25.r))),

@@ -7,7 +7,7 @@ import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import '../../../../core/assets_path/font_path.dart';
-import '../../../../core/constants/dumy_data.dart';
+import '../../../../core/constants/constants.dart';
 import '../../../../translations/locale_keys.g.dart';
 import '../../../vendor/buisness_logic/v_reservations_cubit/v_reservation_cubit.dart';
 import '../../../vendor/buisness_logic/v_reservations_cubit/v_reservation_state.dart';
@@ -24,7 +24,7 @@ class FreelancerHomeScreen extends StatefulWidget {
 
 
 class _FreelancerHomeScreenState extends State<FreelancerHomeScreen> {
-  String value = DummyData.freelancerItemsList.first;
+  String value = freelancerItemsList.first;
   int homeZeroOrCenterOne = 0;
 
   @override
@@ -109,7 +109,7 @@ class _FreelancerHomeScreenState extends State<FreelancerHomeScreen> {
                     child: DropdownButton(
                       isExpanded: true,
                       underline: const SizedBox.shrink(),
-                      items: DummyData.freelancerItemsList
+                      items: freelancerItemsList
                           .map((e) => DropdownMenuItem(
                                 value: e,
                                 child: Text(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/main_cubit/main_state.dart';
 import '../../../authentication/data/models/get_user_data_model.dart';
 import '../../../authentication/data/models/main_response.dart';
@@ -30,7 +29,6 @@ class MainCubit extends Cubit<MainState> {
   ];
 
   void onTap(int? index){
-    print(token);
     cIndex = index!;
     emit(ChangeCurrentIndex());
   }

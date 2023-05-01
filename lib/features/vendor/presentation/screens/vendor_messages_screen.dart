@@ -1,12 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/core/network/api_end_points.dart';
 import '../../../../core/assets_path/font_path.dart';
-import '../../../../core/assets_path/images_path.dart';
 import '../../../../translations/locale_keys.g.dart';
 import '../../../chat/buisness_logic/chat_cubit.dart';
 import '../../../chat/presentation/screens/chat_screen.dart';
@@ -60,11 +61,11 @@ class VendorMessagesScreen extends StatelessWidget {
                         (value) {
                       Navigator.pushNamed(
                           context, ScreenName.chatScreen,
-                          arguments: ChatScreenArgs(title: chatItemsList[index]['name'], receiverId: chatItemsList[index]['id'], receiverName: '', receiverImg:'', orderId: chatItemsList[index]['orderId']));
+                          arguments: ChatScreenArgs(title: chatItemsList[index]['name'], receiverId: chatItemsList[index]['id'], receiverName: '', receiverImg:chatItemsList[index]['receiverImg']??"", orderId: chatItemsList[index]['orderId']??''));
                     },
                   );
                 },
-                child: buildChatItem(image: chatItemsList[index]['profileImage'], name: chatItemsList[index]['name']),
+                child: buildChatItem(image: "${EndPoints.imageBaseUrl}${chatItemsList[index]['profileImage']}", name: chatItemsList[index]['name']),
               );
             },
           );
@@ -97,11 +98,27 @@ class VendorMessagesScreen extends StatelessWidget {
               width: 48.w,
               clipBehavior: Clip.antiAlias,
               decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(10.r)),
-              child:image!=null? Image.network(
-                "${EndPoints.imageBaseUrl}$image",
+              BoxDecoration(borderRadius: BorderRadius.circular(10.r)),
+              child:CachedNetworkImage(
                 fit: BoxFit.cover,
-              ):Image.asset(ImagePath.beautyCenter,fit: BoxFit.cover,),
+                imageUrl:
+                "${EndPoints.imageBaseUrl}$image",
+                placeholder: (context, url) =>
+                    Shimmer.fromColors(
+                      baseColor: Colors.grey[400]!,
+                      highlightColor: Colors.grey[300]!,
+                      child: Container(
+                        height: double.infinity,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ),
+                errorWidget: (context, url, error) =>
+                const Icon(Icons.error),
+              ),
             ),
             SizedBox(
               width: 10.w,

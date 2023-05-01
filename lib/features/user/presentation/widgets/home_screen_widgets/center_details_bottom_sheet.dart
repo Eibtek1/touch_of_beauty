@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
+import 'package:touch_of_beauty/features/chat/buisness_logic/chat_state.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_cubit.dart';
 import 'package:touch_of_beauty/features/user/buisness_logic/services_cubit/services_state.dart';
 import 'package:touch_of_beauty/features/user/presentation/widgets/home_screen_widgets/services_bottom_sheet.dart';
@@ -15,6 +17,8 @@ import '../../../../../core/assets_path/svg_path.dart';
 import '../../../../../core/constants/constants.dart';
 import '../../../../../core/network/api_end_points.dart';
 import '../../../../../translations/locale_keys.g.dart';
+import '../../../../chat/buisness_logic/chat_cubit.dart';
+import '../../../../chat/presentation/screens/chat_screen.dart';
 import '../../../data/models/services_providers_model.dart';
 import 'center_services_item.dart';
 
@@ -77,10 +81,39 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                         fontFamily: FontPath.almaraiBold,
                         fontSize: 18.sp),
                   ),
-                  SvgPicture.asset(
-                    SvgPath.chatIcon,
-                    width: 40.w,
-                    height: 40.h,
+                  BlocConsumer<ChatCubit, ChatState>(
+                    listener: (context, state) {
+                      if (state is GetMessageSuccess) {
+                        if (ChatCubit.get(context).messagesList.isNotEmpty) {
+                          Navigator.pushNamed(context, ScreenName.chatScreen,
+                              arguments: ChatScreenArgs(
+                                  title:
+                                      '${widget.servicesProvidersModel.title}',
+                                  receiverId:
+                                      '${widget.servicesProvidersModel.id}',
+                                  receiverName:
+                                      '${widget.servicesProvidersModel.title}',
+                                  receiverImg: '',
+                                  orderId: ''));
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: 'لا يمكن الدخول للدردشة الا بعد طلب هدمة',backgroundColor: Colors.red);
+                        }
+                      }
+                    },
+                    builder: (context, state) {
+                      return IconButton(
+                          onPressed: () {
+                            ChatCubit.get(context).getMessages(
+                                receiverId: widget.servicesProvidersModel.id,
+                                senderId: userId);
+                          },
+                          icon: SvgPicture.asset(
+                            SvgPath.chatIcon,
+                            width: 50.w,
+                            height: 50.h,
+                          ));
+                    },
                   ),
                 ],
               ),
@@ -88,24 +121,33 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                 height: 8.h,
               ),
               Text(
-                widget.servicesProvidersModel.addresses!.isNotEmpty?widget.servicesProvidersModel.addresses![0].city!:LocaleKeys.no_address_added.tr(),
+                widget.servicesProvidersModel.addresses!.isNotEmpty
+                    ? widget.servicesProvidersModel.addresses![0].city!
+                    : LocaleKeys.no_address_added.tr(),
                 style: TextStyle(
                   fontSize: 11.sp,
                   fontFamily: FontPath.almaraiRegular,
                   color: const Color(0xff666666),
                 ),
               ),
-              if(widget.servicesProvidersModel.addresses!=null&&widget.servicesProvidersModel.addresses!.isNotEmpty)SizedBox(
-                height: 8.h,
-              ),
-              if(widget.servicesProvidersModel.addresses!=null&&widget.servicesProvidersModel.addresses!.isNotEmpty)Text(
-                widget.servicesProvidersModel.addresses!.isNotEmpty?widget.servicesProvidersModel.addresses![0].addressDetails!:LocaleKeys.no_address_added.tr(),
-                style: TextStyle(
-                  fontSize: 11.sp,
-                  fontFamily: FontPath.almaraiRegular,
-                  color: const Color(0xff666666),
+              if (widget.servicesProvidersModel.addresses != null &&
+                  widget.servicesProvidersModel.addresses!.isNotEmpty)
+                SizedBox(
+                  height: 8.h,
                 ),
-              ),
+              if (widget.servicesProvidersModel.addresses != null &&
+                  widget.servicesProvidersModel.addresses!.isNotEmpty)
+                Text(
+                  widget.servicesProvidersModel.addresses!.isNotEmpty
+                      ? widget
+                          .servicesProvidersModel.addresses![0].addressDetails!
+                      : LocaleKeys.no_address_added.tr(),
+                  style: TextStyle(
+                    fontSize: 11.sp,
+                    fontFamily: FontPath.almaraiRegular,
+                    color: const Color(0xff666666),
+                  ),
+                ),
               SizedBox(
                 height: 17.h,
               ),
@@ -277,137 +319,170 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
               SizedBox(
                 height: 22.h,
               ),
-              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)Text(
-                LocaleKeys.our_services.tr(),
-                style: TextStyle(
-                    color: const Color(0xff263238),
-                    fontFamily: FontPath.almaraiBold,
-                    fontSize: 18.sp),
-              ),
-              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)SizedBox(
-                height: 10.h,
-              ),
-              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)BlocConsumer<UserServicesCubit, UserServicesState>(
-                listener: (context, state) {
-                  // TODO: implement listener
-                },
-                builder: (context, state) {
-                  var cubit = UserServicesCubit.get(context);
-                  return SizedBox(
-                    height: 30.h,
-                    width: double.infinity,
-                    child: ListView.builder(
-                      itemCount:
-                          widget.servicesProvidersModel.mainSection!.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            backgroundColor: cubit.tabBarCIndex == index
-                                ? AppColorsLightTheme.secondaryColor
-                                    .withOpacity(0.2)
-                                : AppColorsLightTheme.authTextFieldFillColor,
-                            shape: const StadiumBorder(),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 19.w, vertical: 1.h),
-                          ),
-                          onPressed: () {
-                            if (index != cubit.tabBarCIndex) {
-                              cubit.changeTabBarCurrentIndex(index,
-                                  servicesProviderId:
-                                      widget.servicesProvidersModel.id!,
-                                  mainSectionId: widget.servicesProvidersModel
-                                      .mainSection![index].mainSectionId!);
-                            }
-                          },
-                          child: Text(
-                            widget.servicesProvidersModel.mainSection![index]
-                                .titele!,
-                            style: TextStyle(
-                                color: cubit.tabBarCIndex == index
-                                    ? Colors.pink
-                                    : Colors.grey,
-                                fontFamily: FontPath.almaraiBold,
-                                fontSize: 12.sp),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                },
-              ),
-              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)SizedBox(
-                height: 10.h,
-              ),
-              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)BlocConsumer<UserServicesCubit, UserServicesState>(
-                listener: (context, state) {
-                  var cubit = UserServicesCubit.get(context);
-                  if(state is GetServicesDetailsInCentersBottomSheetByItsIdSuccess&&cubit.servicesModel!=null){
-                    Navigator.pop(context);
-                    showBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return ServicesBottomSheet(
-                            servicesModel: cubit.servicesModel!);
-                      },
-                    );
-                  }
-                  if(state is GetServicesDetailsInCentersBottomSheetByItsIdLoadingState){
-                    showProgressIndicator(context);
-                  }
-                },
-                builder: (context, state) {
-                  var cubit = UserServicesCubit.get(context);
-                  return !cubit.getServicesByMainSectionAndServicesProvidersIdLoading
-                      ? ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemBuilder: (BuildContext context, int index) {
-                            return InkWell(
-                              onTap: (){
-                                cubit.getServicesDetailsInCentersBottomSheetByItsId(id: cubit.servicesByMainSectionAndServicesProviderList[index].id!);
-                              },
-                              child: CenterServicesCategoryItem(
-                                servicesModel: cubit.servicesByMainSectionAndServicesProviderList[index],
-                              ),
-                            );
-                          },
-                          itemCount: cubit.servicesByMainSectionAndServicesProviderList.length,
-                        )
-                      : const Center(
-                          child: CircularProgressIndicator.adaptive(),
-                        );
-                },
-              ),
-              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)SizedBox(
-                height: 22.h,
-              ),
-              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)const Divider(),
-              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)SizedBox(
-                height: 22.h,
-              ),
-              if(widget.servicesProvidersModel.mainSection!=null&&widget.servicesProvidersModel.mainSection!.isNotEmpty)OutlinedButton(
-                onPressed: () {
-                  UserServicesCubit.get(context).servicesPageNumber = 1;
-                  UserServicesCubit.get(context).getServicesByServiceProviderId(
-                      servicesProviderId: widget.servicesProvidersModel.id);
-                  Navigator.pushNamed(context, ScreenName.ourServicesScreen,
-                      arguments: widget.servicesProvidersModel.id);
-                },
-                style: OutlinedButton.styleFrom(
-                    shape: const StadiumBorder(),
-                    padding: EdgeInsets.symmetric(vertical: 15.h),
-                    side: BorderSide(
-                        width: 1.5.w, color: AppColorsLightTheme.primaryColor)),
-                child: Text(
-                  LocaleKeys.watch_our_services.tr(),
+              if (widget.servicesProvidersModel.mainSection != null &&
+                  widget.servicesProvidersModel.mainSection!.isNotEmpty)
+                Text(
+                  LocaleKeys.our_services.tr(),
                   style: TextStyle(
-                      color: AppColorsLightTheme.primaryColor,
+                      color: const Color(0xff263238),
                       fontFamily: FontPath.almaraiBold,
-                      fontSize: 16.sp),
+                      fontSize: 18.sp),
                 ),
-              ),
+              if (widget.servicesProvidersModel.mainSection != null &&
+                  widget.servicesProvidersModel.mainSection!.isNotEmpty)
+                SizedBox(
+                  height: 10.h,
+                ),
+              if (widget.servicesProvidersModel.mainSection != null &&
+                  widget.servicesProvidersModel.mainSection!.isNotEmpty)
+                BlocConsumer<UserServicesCubit, UserServicesState>(
+                  listener: (context, state) {
+                    // TODO: implement listener
+                  },
+                  builder: (context, state) {
+                    var cubit = UserServicesCubit.get(context);
+                    return SizedBox(
+                      height: 30.h,
+                      width: double.infinity,
+                      child: ListView.builder(
+                        itemCount:
+                            widget.servicesProvidersModel.mainSection!.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              backgroundColor: cubit.tabBarCIndex == index
+                                  ? AppColorsLightTheme.secondaryColor
+                                      .withOpacity(0.2)
+                                  : AppColorsLightTheme.authTextFieldFillColor,
+                              shape: const StadiumBorder(),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 19.w, vertical: 1.h),
+                            ),
+                            onPressed: () {
+                              if (index != cubit.tabBarCIndex) {
+                                cubit.changeTabBarCurrentIndex(index,
+                                    servicesProviderId:
+                                        widget.servicesProvidersModel.id!,
+                                    mainSectionId: widget.servicesProvidersModel
+                                        .mainSection![index].mainSectionId!);
+                              }
+                            },
+                            child: Text(
+                              widget.servicesProvidersModel.mainSection![index]
+                                  .titele!,
+                              style: TextStyle(
+                                  color: cubit.tabBarCIndex == index
+                                      ? Colors.pink
+                                      : Colors.grey,
+                                  fontFamily: FontPath.almaraiBold,
+                                  fontSize: 12.sp),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              if (widget.servicesProvidersModel.mainSection != null &&
+                  widget.servicesProvidersModel.mainSection!.isNotEmpty)
+                SizedBox(
+                  height: 10.h,
+                ),
+              if (widget.servicesProvidersModel.mainSection != null &&
+                  widget.servicesProvidersModel.mainSection!.isNotEmpty)
+                BlocConsumer<UserServicesCubit, UserServicesState>(
+                  listener: (context, state) {
+                    var cubit = UserServicesCubit.get(context);
+                    if (state
+                            is GetServicesDetailsInCentersBottomSheetByItsIdSuccess &&
+                        cubit.servicesModel != null) {
+                      Navigator.pop(context);
+                      showBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return ServicesBottomSheet(
+                              servicesModel: cubit.servicesModel!);
+                        },
+                      );
+                    }
+                    if (state
+                        is GetServicesDetailsInCentersBottomSheetByItsIdLoadingState) {
+                      showProgressIndicator(context);
+                    }
+                  },
+                  builder: (context, state) {
+                    var cubit = UserServicesCubit.get(context);
+                    return !cubit
+                            .getServicesByMainSectionAndServicesProvidersIdLoading
+                        ? ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              return InkWell(
+                                onTap: () {
+                                  cubit.getServicesDetailsInCentersBottomSheetByItsId(
+                                      id: cubit
+                                          .servicesByMainSectionAndServicesProviderList[
+                                              index]
+                                          .id!);
+                                },
+                                child: CenterServicesCategoryItem(
+                                  servicesModel: cubit
+                                          .servicesByMainSectionAndServicesProviderList[
+                                      index],
+                                ),
+                              );
+                            },
+                            itemCount: cubit
+                                .servicesByMainSectionAndServicesProviderList
+                                .length,
+                          )
+                        : const Center(
+                            child: CircularProgressIndicator.adaptive(),
+                          );
+                  },
+                ),
+              if (widget.servicesProvidersModel.mainSection != null &&
+                  widget.servicesProvidersModel.mainSection!.isNotEmpty)
+                SizedBox(
+                  height: 22.h,
+                ),
+              if (widget.servicesProvidersModel.mainSection != null &&
+                  widget.servicesProvidersModel.mainSection!.isNotEmpty)
+                const Divider(),
+              if (widget.servicesProvidersModel.mainSection != null &&
+                  widget.servicesProvidersModel.mainSection!.isNotEmpty)
+                SizedBox(
+                  height: 22.h,
+                ),
+              if (widget.servicesProvidersModel.mainSection != null &&
+                  widget.servicesProvidersModel.mainSection!.isNotEmpty)
+                OutlinedButton(
+                  onPressed: () {
+                    UserServicesCubit.get(context).servicesPageNumber = 1;
+                    UserServicesCubit.get(context)
+                        .getServicesByServiceProviderId(
+                            servicesProviderId:
+                                widget.servicesProvidersModel.id);
+                    Navigator.pushNamed(context, ScreenName.ourServicesScreen,
+                        arguments: widget.servicesProvidersModel.id);
+                  },
+                  style: OutlinedButton.styleFrom(
+                      shape: const StadiumBorder(),
+                      padding: EdgeInsets.symmetric(vertical: 15.h),
+                      side: BorderSide(
+                          width: 1.5.w,
+                          color: AppColorsLightTheme.primaryColor)),
+                  child: Text(
+                    LocaleKeys.watch_our_services.tr(),
+                    style: TextStyle(
+                        color: AppColorsLightTheme.primaryColor,
+                        fontFamily: FontPath.almaraiBold,
+                        fontSize: 16.sp),
+                  ),
+                ),
               SizedBox(
                 height: 22.h,
               ),

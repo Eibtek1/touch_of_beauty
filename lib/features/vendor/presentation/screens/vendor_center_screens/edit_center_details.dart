@@ -11,13 +11,11 @@ import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
-import '../../../../../core/cache_manager/cache_keys.dart';
-import '../../../../../core/cache_manager/shared_preferences.dart';
 import '../../../../../core/network/api_end_points.dart';
 import '../../../../../translations/locale_keys.g.dart';
 import '../../../../authentication/buisness_logic/auth_cubit.dart';
 import '../../../../authentication/buisness_logic/auth_state.dart';
-import '../../../../freelancer/presentation/widgets/build_freelancer_profile_item.dart';
+import '../../../../freelancer/presentation/screens/freelancer_center_screens/freelancer_image_screen.dart';
 import '../../widgets/center_details/custo_text_form_field.dart';
 import '../../widgets/center_details/custom_container.dart';
 import '../../widgets/screen_layout_widget_with_logo.dart';
@@ -331,27 +329,36 @@ class _EditCenterDetailsScreenState extends State<EditCenterDetailsScreen> {
                         SizedBox(
                           height: 5.h,
                         ),
-                        CustomDetailsContainer(
-                          height: 44.h,
-                          width: double.infinity,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                LocaleKeys.registeration_certificate.tr(),
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontFamily: FontPath.almaraiBold,
-                                  color: const Color(0xff8B8989),
+                        InkWell(
+                          onTap: () {
+                            if(cubit.getUserModel!.freelanceFormUrl!=null) {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => FreelancerImageScreen(imageUrl: cubit.getUserModel!.freelanceFormUrl!,)));
+                            }
+                          },
+                          child: CustomDetailsContainer(
+                            height: 44.h,
+                            width: double.infinity,
+                            child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  LocaleKeys.registeration_certificate.tr(),
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontFamily: FontPath.almaraiBold,
+                                    color: const Color(0xff8B8989),
+                                  ),
                                 ),
-                              ),
-                              SvgPicture.asset(
-                                SvgPath.paperPin,
-                                height: 22.h,
-                                width: 21.w,
-                              ),
-                            ],
+                                SvgPicture.asset(
+                                  SvgPath.paperPin,
+                                  height: 22.h,
+                                  width: 21.w,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(

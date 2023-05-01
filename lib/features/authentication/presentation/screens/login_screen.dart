@@ -151,13 +151,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     keyboardType: TextInputType.phone,
                     // textDirection: TextDirection.ltr,
                     validate: (value) {
-                      // var regex = RegExp(r'^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$');
-                      // if (value!.isEmpty) {
-                      //   return LocaleKeys.enter_your_phone.tr();
-                      // }
-                      // else if (!regex.hasMatch(value)) {
-                      //   return LocaleKeys.valid_phone_number.tr();
-                      // }
+                      var regex = RegExp(r'^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$');
+                      if (value!.isEmpty) {
+                        return LocaleKeys.enter_your_phone.tr();
+                      }
+                      else if (!regex.hasMatch(value)) {
+                        return LocaleKeys.valid_phone_number.tr();
+                      }
                       return null;
                     },
                     suffix: Padding(

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:touch_of_beauty/core/cache_manager/cache_keys.dart';
+import 'package:touch_of_beauty/core/cache_manager/shared_preferences.dart';
+import 'package:touch_of_beauty/core/constants/constants.dart';
 
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../translations/locale_keys.g.dart';
@@ -90,8 +93,11 @@ class _EmployeeAlertDialogState extends State<EmployeeAlertDialog> {
                     controller: nameController,
                     hintText: LocaleKeys.name.tr(),
                     validator: (value){
+                      initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale);
                       if(value!.isEmpty){
                         return LocaleKeys.short_name.tr();
+                      }else if(value.length<5){
+                        return initialLocale == 'ar'?"يجب ان يكون الاسم اكبر من خمسة احرف":"Name should be more than five characters";
                       }
                       return null;
                     },

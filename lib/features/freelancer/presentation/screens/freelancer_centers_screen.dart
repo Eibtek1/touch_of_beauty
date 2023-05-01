@@ -9,6 +9,8 @@ import '../../../../core/app_router/screens_name.dart';
 import '../../../../core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../core/assets_path/svg_path.dart';
+import '../../../../core/cache_manager/cache_keys.dart';
+import '../../../../core/cache_manager/shared_preferences.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../translations/locale_keys.g.dart';
 import '../../../authentication/buisness_logic/auth_cubit.dart';
@@ -135,6 +137,62 @@ class FreelancerCentersScreen extends StatelessWidget {
                       onTap: () {
                         Navigator.pushNamed(
                             context, ScreenName.vendorReservationsScreen);
+                      },
+                    ),
+
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Divider(),
+                    BuildFreelancerProfileItem(
+                      svgImage: SvgPath.bulb,
+                      title: LocaleKeys.lang.tr(),
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => SimpleDialog(
+                            children: [
+                              SimpleDialogOption(
+                                onPressed: () async {
+                                  VendorServicesCubit.get(context).servicesPageNumber = 1;
+                                  VendorServicesCubit.get(context).servicesList = [];
+                                  await context.setLocale(const Locale("en")).then((value) {
+                                    CacheHelper.saveData(key: CacheKeys.initialLocale, value: "en").whenComplete(() {
+                                      freelancerItemsList = [
+                                        LocaleKeys.in_home.tr(),
+                                      ];
+                                      initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale);
+                                      Navigator.pushNamedAndRemoveUntil(context, ScreenName.splashscreen, (route) => false);
+                                    });
+                                  });
+
+                                },
+                                child: const Text(
+                                  'English',
+                                ),
+                              ),
+                              SimpleDialogOption(
+                                onPressed: () async {
+                                  VendorServicesCubit.get(context).servicesPageNumber = 1;
+                                  VendorServicesCubit.get(context).servicesList = [];
+                                  await context.setLocale(const Locale("ar")).then((value) {
+                                    CacheHelper.saveData(key: CacheKeys.initialLocale, value: "ar").whenComplete(() {
+                                      freelancerItemsList = [
+                                        LocaleKeys.in_home.tr(),
+                                      ];
+                                      initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale);
+                                      Navigator.pushNamedAndRemoveUntil(context, ScreenName.splashscreen, (route) => false);
+                                    });
+
+                                  });
+                                },
+                                child: const Text(
+                                  'Arabic',
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
                       },
                     ),
                     SizedBox(

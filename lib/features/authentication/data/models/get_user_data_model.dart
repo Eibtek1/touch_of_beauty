@@ -1,20 +1,22 @@
-class GetUserModel {
-  String? email;
-  String? fullName;
-  String? phoneNumber;
-  List<String>? role;
-  int? userType;
-  bool? isApproved;
-  bool? phoneVerify;
-  double? lat;
-  double? lng;
-  String? taxNumber;
-  String? freelanceFormUrl;
-  bool? status;
-  String? userImgUrl;
-  String? description;
+import 'package:equatable/equatable.dart';
 
-  GetUserModel({
+class GetUserModel extends Equatable{
+  final String? email;
+  final String? fullName;
+  final String? phoneNumber;
+  final List<String>? role;
+  final int? userType;
+  final bool? isApproved;
+  final bool? phoneVerify;
+  final double? lat;
+  final double? lng;
+  final String? taxNumber;
+  final String? freelanceFormUrl;
+  final bool? status;
+  final String? userImgUrl;
+  final String? description;
+
+  const GetUserModel({
     this.email,
     this.fullName,
     this.phoneNumber,
@@ -49,4 +51,23 @@ class GetUserModel {
       description: json['description'],
     );
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+    email,
+    fullName,
+    phoneNumber,
+    role,
+    userType,
+    isApproved,
+    phoneVerify,
+    lat,
+    lng,
+    taxNumber,
+    freelanceFormUrl,
+    status,
+    userImgUrl,
+    description,
+  ];
 }
