@@ -13,6 +13,7 @@ import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_stat
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/network/api_end_points.dart';
 import '../../../../../translations/locale_keys.g.dart';
+import '../../../../freelancer/presentation/screens/freelancer_center_screens/freelancer_image_screen.dart';
 import '../../../../user/buisness_logic/services_cubit/services_cubit.dart';
 import '../../../../user/buisness_logic/services_cubit/services_state.dart';
 import '../../../../user/presentation/screens/home_screen_screens/order_screens/add_address_screen.dart';
@@ -624,84 +625,122 @@ class CenterDetailsScreen extends StatelessWidget {
                                       SizedBox(
                                         height: 14.h,
                                       ),
-                                      Text(
-                                        LocaleKeys.center_employees.tr(),
-                                        style: TextStyle(
-                                          fontSize: 14.sp,
-                                          fontFamily: FontPath.almaraiBold,
-                                          color: const Color(0xff3C475C),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 14.h,
-                                      ),
-                                      SizedBox(
-                                        height: 14.h,
-                                      ),
-                                      Row(
-                                        children: [
-                                          CustomDetailsContainer(
-                                            height: 44.h,
-                                            width: 280.w,
-                                            child: Text(
-                                              LocaleKeys.center_address.tr(),
-                                              textAlign: TextAlign.start,
-                                              style: TextStyle(
-                                                fontSize: 14.sp,
-                                                fontFamily:
-                                                    FontPath.almaraiBold,
-                                                color: const Color(0xff8B8989),
-                                              ),
+                                      BlocBuilder<UserServicesCubit, UserServicesState>(
+                                        builder: (context, state) {
+                                          var cubit = UserServicesCubit.get(context);
+                                          return InkWell(
+                                            onTap: () {
+                                              if (state is! GetAddressLoading) {
+                                                Navigator.pushNamed(context,
+                                                    ScreenName.addAddressScreen,
+                                                    arguments: AddAddressArgs(
+                                                        addressModel:
+                                                        cubit.addressList.isNotEmpty
+                                                            ? cubit.addressList[0]
+                                                            : null,
+                                                        userEqualsZeroVendorEqualsOne:
+                                                        1));
+                                              }
+                                            },
+                                            child: Row(
+                                              children: [
+                                                CustomDetailsContainer(
+                                                  height: 64.h,
+                                                  width: 280.w,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        LocaleKeys.address.tr(),
+                                                        textAlign: TextAlign.start,
+                                                        style: TextStyle(
+                                                          fontSize: 12.sp,
+                                                          fontFamily:
+                                                          FontPath.almaraiBold,
+                                                          color:
+                                                          const Color(0xff8B8989),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 5.h,
+                                                      ),
+                                                      Expanded(
+                                                        child: Text(
+                                                          cubit.addressList.isNotEmpty
+                                                              ? cubit.addressList[0]
+                                                              .cityName!
+                                                              : LocaleKeys.add_address.tr(),
+                                                          textAlign: TextAlign.start,
+                                                          style: TextStyle(
+                                                            fontSize: 14.sp,
+                                                            fontFamily:
+                                                            FontPath.almaraiBold,
+                                                            color:
+                                                            const Color(0xff8B8989),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                                const Spacer(),
+                                                Container(
+                                                  height: 64.h,
+                                                  width: 45.w,
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 12.w, vertical: 12.h),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                    BorderRadius.circular(8.r),
+                                                    color: AppColorsLightTheme
+                                                        .authTextFieldFillColor,
+                                                  ),
+                                                  child: const Center(
+                                                    child: Icon(
+                                                      Icons.location_on,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
+                                          );
+                                        },
+                                      ),
+                                      SizedBox(
+                                        height: 14.h,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          if(cubit.getUserModel!.freelanceFormUrl!=null) {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(builder: (context) => FreelancerImageScreen(imageUrl: cubit.getUserModel!.freelanceFormUrl!,)));
+                                          }
+                                        },
+                                        child: CustomDetailsContainer(
+                                          height: 44.h,
+                                          width: double.infinity,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                LocaleKeys.registeration_certificate.tr(),
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                  fontSize: 14.sp,
+                                                  fontFamily: FontPath.almaraiBold,
+                                                  color: const Color(0xff8B8989),
+                                                ),
+                                              ),
+                                              SvgPicture.asset(
+                                                SvgPath.paperPin,
+                                                height: 22.h,
+                                                width: 21.w,
+                                              ),
+                                            ],
                                           ),
-                                          const Spacer(),
-                                          Container(
-                                            height: 44.h,
-                                            width: 45.w,
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 12.w,
-                                                vertical: 12.h),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.r),
-                                              color: AppColorsLightTheme
-                                                  .authTextFieldFillColor,
-                                            ),
-                                            child: const Center(
-                                              child: Icon(
-                                                Icons.location_on,
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 14.h,
-                                      ),
-                                      CustomDetailsContainer(
-                                        height: 44.h,
-                                        width: double.infinity,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              LocaleKeys.registeration_certificate.tr(),
-                                              textAlign: TextAlign.start,
-                                              style: TextStyle(
-                                                fontSize: 14.sp,
-                                                fontFamily:
-                                                    FontPath.almaraiBold,
-                                                color: const Color(0xff8B8989),
-                                              ),
-                                            ),
-                                            SvgPicture.asset(
-                                              SvgPath.paperPin,
-                                              height: 22.h,
-                                              width: 21.w,
-                                            ),
-                                          ],
                                         ),
                                       ),
                                       SizedBox(
@@ -713,6 +752,17 @@ class CenterDetailsScreen extends StatelessWidget {
                                     child: CircularProgressIndicator.adaptive(),
                                   );
                           },
+                        ),
+                        SizedBox(
+                          height: 14.h,
+                        ),
+                        Text(
+                          LocaleKeys.center_employees.tr(),
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontFamily: FontPath.almaraiBold,
+                            color: const Color(0xff3C475C),
+                          ),
                         ),
                         const EmployeesComponentBuilder(),
                       ],

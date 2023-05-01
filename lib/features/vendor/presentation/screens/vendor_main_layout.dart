@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -65,9 +64,6 @@ class _UserMainLayoutState extends State<VendorMainLayout> {
               color: Colors.grey,
             ),
             onTap: (index) async{
-              FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-              String? deviceToken = await firebaseMessaging.getToken();
-              print(deviceToken);
               setState(() {
                 cIndex = index;
               });

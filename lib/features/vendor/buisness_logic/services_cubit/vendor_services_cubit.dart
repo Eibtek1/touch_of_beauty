@@ -146,12 +146,26 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
     required String description,
     required double price,
     required double finalPrice,
-    required int empNumber,
+    required int? empNumber,
     required int id,
     required String? duration,
   }) async {
     emit(AddServicesLoading());
     try {
+       await VendorServicesRepository.updateServices(
+        titleAr: titleAr,
+        titleEn: titleEn,
+        description: description,
+        image: servicesImage,
+        price: price,
+        finalPrice: finalPrice,
+        empNumber: empNumber,
+        duration: duration,
+        mainSectionId: mainSectionId,
+        inHome: true,
+        inCenter: false,
+        isAvailable: isAvailable, id: id,
+      );
       emit(AddServicesSuccess());
     } catch (error) {
       emit(AddServicesError(error: error.toString()));
@@ -164,7 +178,7 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
     required String description,
     required double price,
     required double finalPrice,
-    required int empNumber,
+    required int? empNumber,
     required String duration,
   }) async {
     emit(AddServicesLoading());

@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -88,7 +87,6 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                         if (AuthCubit.get(context).getUserModel == null) {
                           AuthCubit.get(context).getUserData();
                         }
-                        print(token);
                         Navigator.pushNamed(
                             context, ScreenName.detailsCenterScreen);
                       },
@@ -164,8 +162,14 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                             children: [
                               SimpleDialogOption(
                                 onPressed: () async {
+                                  VendorServicesCubit.get(context).servicesPageNumber = 1;
+                                  VendorServicesCubit.get(context).servicesList = [];
                                   await context.setLocale(const Locale("en")).then((value) {
                                     CacheHelper.saveData(key: CacheKeys.initialLocale, value: "en").whenComplete(() {
+                                      vendorItemsList = [
+                                        LocaleKeys.in_center.tr(),
+                                        LocaleKeys.in_home.tr(),
+                                      ];
                                       initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale);
                                       Navigator.pushNamedAndRemoveUntil(context, ScreenName.splashscreen, (route) => false);
                                     });
@@ -178,8 +182,14 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                               ),
                               SimpleDialogOption(
                                 onPressed: () async {
+                                  VendorServicesCubit.get(context).servicesPageNumber = 1;
+                                  VendorServicesCubit.get(context).servicesList = [];
                                   await context.setLocale(const Locale("ar")).then((value) {
                                     CacheHelper.saveData(key: CacheKeys.initialLocale, value: "ar").whenComplete(() {
+                                      vendorItemsList = [
+                                        LocaleKeys.in_center.tr(),
+                                        LocaleKeys.in_home.tr(),
+                                      ];
                                       initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale);
                                       Navigator.pushNamedAndRemoveUntil(context, ScreenName.splashscreen, (route) => false);
                                     });

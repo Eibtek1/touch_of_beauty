@@ -18,6 +18,7 @@ import '../../../../authentication/buisness_logic/auth_cubit.dart';
 import '../../../../vendor/presentation/widgets/center_details/custo_text_form_field.dart';
 import '../../../../vendor/presentation/widgets/center_details/custom_container.dart';
 import '../../../../vendor/presentation/widgets/screen_layout_widget_with_logo.dart';
+import 'freelancer_image_screen.dart';
 
 class EditFreelancerDetailsScreen extends StatelessWidget {
   EditFreelancerDetailsScreen({Key? key}) : super(key: key);
@@ -249,27 +250,36 @@ class EditFreelancerDetailsScreen extends StatelessWidget {
                         SizedBox(
                           height: 5.h,
                         ),
-                        CustomDetailsContainer(
-                          height: 44.h,
-                          width: double.infinity,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                LocaleKeys.registeration_certificate.tr(),
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontFamily: FontPath.almaraiBold,
-                                  color: const Color(0xff8B8989),
+                        InkWell(
+                          onTap: () {
+                           if(cubit.getUserModel!.freelanceFormUrl!=null) {
+                             Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => FreelancerImageScreen(imageUrl: cubit.getUserModel!.freelanceFormUrl!,)));
+                           }
+                          },
+                          child: CustomDetailsContainer(
+                            height: 44.h,
+                            width: double.infinity,
+                            child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  LocaleKeys.registeration_certificate.tr(),
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontFamily: FontPath.almaraiBold,
+                                    color: const Color(0xff8B8989),
+                                  ),
                                 ),
-                              ),
-                              SvgPicture.asset(
-                                SvgPath.paperPin,
-                                height: 22.h,
-                                width: 21.w,
-                              ),
-                            ],
+                                SvgPicture.asset(
+                                  SvgPath.paperPin,
+                                  height: 22.h,
+                                  width: 21.w,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(

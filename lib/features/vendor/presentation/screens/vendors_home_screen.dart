@@ -7,7 +7,7 @@ import 'package:touch_of_beauty/core/app_router/screens_name.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import '../../../../core/assets_path/font_path.dart';
-import '../../../../core/constants/dumy_data.dart';
+import '../../../../core/constants/constants.dart';
 import '../../../../translations/locale_keys.g.dart';
 import '../../buisness_logic/v_reservations_cubit/v_reservation_cubit.dart';
 import '../../buisness_logic/v_reservations_cubit/v_reservation_state.dart';
@@ -23,7 +23,7 @@ class VendorHomeScreen extends StatefulWidget {
 
 
 class _VendorHomeScreenState extends State<VendorHomeScreen> {
-  String value = DummyData.vendorItemsList.first;
+  String value = vendorItemsList.first;
   int homeZeroOrCenterOne = 0;
   @override
   void initState() {
@@ -106,7 +106,7 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                     child: DropdownButton(
                       isExpanded: true,
                       underline: const SizedBox.shrink(),
-                      items: DummyData.vendorItemsList
+                      items: vendorItemsList
                           .map((e) => DropdownMenuItem(
                                 value: e,
                                 child: Text(

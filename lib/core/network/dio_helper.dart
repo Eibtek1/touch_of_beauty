@@ -22,14 +22,11 @@ class DioHelper {
   }) async {
     dio.options.headers = {
       'Content-Type': 'application/json',
-      'lang': '',
+      'lang': initialLocale,
       if (bearerToken != null) "Authorization": "Bearer $bearerToken",
       'Accept': 'text/plain',
     };
-    Map<String, dynamic> langMap = {
-      "lang":initialLocale,
-    };
-    query =  query?..addAll(langMap);
+
     return await dio.get(url, queryParameters: query);
   }
 
@@ -42,7 +39,7 @@ class DioHelper {
   }) async {
     dio.options.headers = {
       'Content-Type': 'application/json',
-      'lang': '',
+      'lang':initialLocale,
       if (token != null) "Authorization": "Bearer $token",
       'Accept': 'text/plain',
     };

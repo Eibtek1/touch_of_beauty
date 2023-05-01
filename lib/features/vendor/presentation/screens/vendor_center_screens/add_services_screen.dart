@@ -406,7 +406,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                           SizedBox(
                             height: 20.h,
                           ),
-                          Text(
+                          if (widget.type == 0)Text(
                             LocaleKeys.emp_number.tr(),
                             style: TextStyle(
                               fontSize: 14.sp,
@@ -414,10 +414,10 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                               color: const Color(0xff3C475C),
                             ),
                           ),
-                          SizedBox(
+                          if (widget.type == 0)SizedBox(
                             height: 5.h,
                           ),
-                          CustomTextFormField(
+                          if (widget.type == 0)CustomTextFormField(
                             keyboardType: TextInputType.phone,
                             height: 44.h,
                             width: double.infinity,
@@ -429,7 +429,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                               return null;
                             },
                           ),
-                          SizedBox(
+                          if (widget.type == 0)SizedBox(
                             height: 20.h,
                           ),
                           if (widget.type == 0)
@@ -529,7 +529,6 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                 if (formKey.currentState!.validate()) {
                                   if (widget.type == 0) {
                                     if(widget.servicesModel!=null){
-                                      print("upcenter");
                                       cubit.updateServicesOfCenter(
                                         titleAr: aNameController.text,
                                         titleEn: eNameController.text,
@@ -563,7 +562,6 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                     }
                                   } else if (widget.type == 1) {
                                     if(widget.servicesModel!=null){
-                                      print("upf");
                                       cubit.updateServicesOfCenter(
                                         titleAr: aNameController.text,
                                         titleEn: eNameController.text,
@@ -580,7 +578,6 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                       );
                                     }
                                     else{
-                                      print("addcenter");
                                       cubit.addServicesOfFreelancer(
                                         titleAr: aNameController.text,
                                         titleEn: eNameController.text,
@@ -589,10 +586,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                             priceController.text.toString()),
                                         finalPrice: double.parse(
                                             finalPriceController.text.toString()),
-                                        empNumber: double.parse(emNumberController
-                                            .text
-                                            .toString())
-                                            .round(),
+                                        empNumber: null,
                                         duration: timeController.text,
                                       );
                                     }

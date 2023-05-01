@@ -278,7 +278,6 @@ class ServicesProvidersRepository {
       url: "${EndPoints.getServiceDetailsById}$id",
       bearerToken: token,
     );
-    print(response);
     return response;
   }
 

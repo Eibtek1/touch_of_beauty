@@ -184,7 +184,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       height: 10.h,
                     ),
                     CustomUserTextField(
-                      hintText: LocaleKeys.road_val.tr(),
+                      hintText: LocaleKeys.building_num_val.tr(),
                       keyboardType: TextInputType.phone,
                       height: 44.h,
                       controller: buildingNumberController,
@@ -199,7 +199,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       height: 18.h,
                     ),
                     Text(
-                      LocaleKeys.road_val.tr(),
+                      LocaleKeys.flat_number.tr(),
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         fontSize: 12.sp,
