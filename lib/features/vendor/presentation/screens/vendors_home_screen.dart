@@ -23,10 +23,12 @@ class VendorHomeScreen extends StatefulWidget {
 
 
 class _VendorHomeScreenState extends State<VendorHomeScreen> {
-  String value = vendorItemsList.first;
-  int homeZeroOrCenterOne = 0;
+  late String value;
+  late int homeZeroOrCenterOne;
   @override
   void initState() {
+    value = vendorItemsList.first;
+    homeZeroOrCenterOne = 0;
     VReservationCubit.get(context).getTodayOrders(inHome: false);
     super.initState();
   }

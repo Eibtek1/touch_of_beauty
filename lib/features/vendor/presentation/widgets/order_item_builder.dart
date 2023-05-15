@@ -20,7 +20,7 @@ class OrderItemBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 10.w),
-      height: 340.h,
+      height: 345.h,
       width: double.infinity,
       decoration: BoxDecoration(
           color: Colors.white,

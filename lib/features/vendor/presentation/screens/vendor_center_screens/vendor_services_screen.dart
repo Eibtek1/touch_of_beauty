@@ -71,6 +71,7 @@ class VendorServicesScreen extends StatelessWidget {
                   cubit.inHome = cubit.servicesModel!.inHome!;
                   cubit.mainSectionValue =
                   cubit.servicesModel!.mainSection!.title!;
+                  cubit.mainSectionId = cubit.servicesModel!.mainSection!.id!;
                   cubit.isAvailable = cubit.isAvailable;
                   Navigator.pop(context);
                   Navigator.pushNamed(
