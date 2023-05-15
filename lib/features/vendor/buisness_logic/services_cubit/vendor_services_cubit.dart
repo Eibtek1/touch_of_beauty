@@ -92,7 +92,7 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
       for (var element in mainResponse.data) {
         mainSectionsFeaturedList.add(MainSectionsModel.fromJson(element));
       }
-      mainSectionValue = mainSectionsFeaturedList.first.title!;
+      mainSectionValue = servicesModel==null?mainSectionsFeaturedList.first.title!:servicesModel!.mainSection!.title!;
       emit(GetMainSectionsSuccess());
     } catch (error) {
       emit(GetMainSectionsError(error: error.toString()));
@@ -149,10 +149,11 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
     required int? empNumber,
     required int id,
     required String? duration,
+    required bool icCenter,
   }) async {
     emit(AddServicesLoading());
     try {
-       await VendorServicesRepository.updateServices(
+       final response =await VendorServicesRepository.updateServices(
         titleAr: titleAr,
         titleEn: titleEn,
         description: description,
@@ -162,10 +163,11 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
         empNumber: empNumber,
         duration: duration,
         mainSectionId: mainSectionId,
-        inHome: true,
-        inCenter: false,
+        inHome: icCenter?inHome:true,
+        inCenter: icCenter?inCenter:false,
         isAvailable: isAvailable, id: id,
       );
+       print(response);
       emit(AddServicesSuccess());
     } catch (error) {
       emit(AddServicesError(error: error.toString()));
@@ -215,12 +217,14 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
       if(mainResponse.errorCode == 0){
         servicesModel = ServicesDetailsModel.fromJson(mainResponse.data);
         errorCodeOfGettingTheServices = 0;
+        print(servicesModel!.mainSection!.title);
         emit(GetServicesDetailsByItsIdSuccess());
       }else{
         errorCodeOfGettingTheServices = mainResponse.errorCode;
         emit(GetServicesDetailsByItsIdSuccess());
       }
 
+      print(response);
     } catch (error) {
       emit(GetServicesDetailsByItsIdError(error: error.toString()));
     }

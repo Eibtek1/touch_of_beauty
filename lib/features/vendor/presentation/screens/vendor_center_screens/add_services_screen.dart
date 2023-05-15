@@ -68,6 +68,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
     eNameController.text = widget.servicesModel?.titleEn ?? '';
     detailsController.text = widget.servicesModel?.description ?? '';
     priceController.text = widget.servicesModel?.price.toString() ?? '';
+    timeController.text = widget.servicesModel?.duration.toString() ?? '';
     finalPriceController.text =
         widget.servicesModel?.finalPrice.toString() ?? '';
     emNumberController.text =
@@ -529,6 +530,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                 if (formKey.currentState!.validate()) {
                                   if (widget.type == 0) {
                                     if(widget.servicesModel!=null){
+                                      print(token);
                                       cubit.updateServicesOfCenter(
                                         titleAr: aNameController.text,
                                         titleEn: eNameController.text,
@@ -541,7 +543,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                             .text
                                             .toString())
                                             .round(),
-                                        duration: timeController.text, id: widget.servicesModel!.id!,
+                                        duration: timeController.text, id: widget.servicesModel!.id!, icCenter: true,
                                       );
                                     }
                                     else{
@@ -574,7 +576,7 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                             .text
                                             .toString())
                                             .round(),
-                                        duration: timeController.text, id: widget.servicesModel!.id!,
+                                        duration: timeController.text, id: widget.servicesModel!.id!, icCenter: false,
                                       );
                                     }
                                     else{

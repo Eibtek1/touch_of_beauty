@@ -36,9 +36,11 @@ class VReservationCubit extends Cubit<VReservationState> {
           }
         }
       }
+
       else{
         message = mainResponse.errorMessage;
       }
+      print(response);
       emit(GetPreparedOrdersSuccess());
     }catch(error){
       emit(GetPreparedOrdersError(error: error.toString()));
@@ -69,8 +71,8 @@ class VReservationCubit extends Cubit<VReservationState> {
       emit(GetTodayOrdersLoading());
       final response = await VendorServicesRepository.getTodayOrders(inHome: inHome);
       mainResponse = MainResponse.fromJson(response.data);
+      getTodayOrdersList.clear();
       if(mainResponse.errorCode == 0){
-        getTodayOrdersList.clear();
         for(var element in mainResponse.data){
             getTodayOrdersList.add(ReserveModel.fromJson(element));
         }
@@ -78,6 +80,7 @@ class VReservationCubit extends Cubit<VReservationState> {
       else{
         message = mainResponse.errorMessage;
       }
+      print(response);
       emit(GetTodayOrdersSuccess());
     }catch(error){
       emit(GetTodayOrdersError(error: error.toString()));

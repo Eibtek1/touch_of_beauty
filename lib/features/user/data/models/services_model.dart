@@ -211,7 +211,7 @@ class ServicesDetailsModel extends Equatable {
   final bool? isFavourite;
   final ServiceProvider? serviceProvider;
   final MainSection? mainSection;
-
+  final String? duration;
   const ServicesDetailsModel(
       {this.id,
       this.titleAr,
@@ -219,7 +219,8 @@ class ServicesDetailsModel extends Equatable {
       this.forCenter,
       this.isAvailable,
       this.description,
-      this.imgUrl,
+        this.duration,
+        this.imgUrl,
       this.isFeatured,
       this.priceUnit,
       this.price,
@@ -250,6 +251,7 @@ class ServicesDetailsModel extends Equatable {
       inCenter: json['inCenter'],
       inHome: json['inHome'],
       employeesNumber: json['employeesNumber'],
+      duration: json['duration'],
       numberOfStar: json['numberOfStar'],
       isFavourite: json['isFavourite'],
       serviceProvider: json['serviceProvider'] != null

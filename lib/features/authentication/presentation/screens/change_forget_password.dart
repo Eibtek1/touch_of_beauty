@@ -8,22 +8,25 @@ import 'package:touch_of_beauty/core/assets_path/images_path.dart';
 import 'package:touch_of_beauty/core/constants/constants.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
-import 'package:touch_of_beauty/features/authentication/presentation/widgets/auht_text_form_field.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../translations/locale_keys.g.dart';
 import '../widgets/auth_button.dart';
+import '../widgets/password_auth_field.dart';
 
 class ChangeForgetPasswordScreen extends StatefulWidget {
   const ChangeForgetPasswordScreen({Key? key}) : super(key: key);
 
   @override
-  State<ChangeForgetPasswordScreen> createState() => _ChangeForgetPasswordScreenState();
+  State<ChangeForgetPasswordScreen> createState() =>
+      _ChangeForgetPasswordScreenState();
 }
 
-class _ChangeForgetPasswordScreenState extends State<ChangeForgetPasswordScreen> {
+class _ChangeForgetPasswordScreenState
+    extends State<ChangeForgetPasswordScreen> {
   TextEditingController confirmPassword = TextEditingController();
   TextEditingController password = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   void dispose() {
     confirmPassword.dispose();
@@ -38,15 +41,16 @@ class _ChangeForgetPasswordScreenState extends State<ChangeForgetPasswordScreen>
         backgroundColor: Colors.white,
         body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
-            if(state is ChangeConfirmForgetPasswordLoading){
+            if (state is ChangeConfirmForgetPasswordLoading) {
               showProgressIndicator(context);
             }
-            if(state is ChangeConfirmForgetPasswordSuccess){
+            if (state is ChangeConfirmForgetPasswordSuccess) {
               Navigator.pop(context);
-              Fluttertoast.showToast(msg: state.confirmForgetPasswordModel.errorMessage);
-              Navigator.pushNamedAndRemoveUntil(context, ScreenName.loginScreen, (route) => false);
+              Fluttertoast.showToast(
+                  msg: state.confirmForgetPasswordModel.errorMessage);
+              Navigator.pushNamedAndRemoveUntil(
+                  context, ScreenName.loginScreen, (route) => false);
             }
-
           },
           builder: (context, state) {
             var cubit = AuthCubit.get(context);
@@ -79,32 +83,18 @@ class _ChangeForgetPasswordScreenState extends State<ChangeForgetPasswordScreen>
                   SizedBox(
                     height: 24.h,
                   ),
-                  AuthTextFormField(
-                    hintText: LocaleKeys.password.tr(),
+                  PasswordAuthField(
                     controller: password,
-                    isPassword: true,
-                    validate: (value) {
-                      if (value!.isEmpty) {
-                        return LocaleKeys.enter_password.tr();
-                      } else if (value.length < 6) {
-                        return LocaleKeys.weak_password.tr();
-                      }
-                      return null;
-                    },
+                    hintText: LocaleKeys.password.tr(),
                   ),
                   SizedBox(
-                    height: 10.h,
+                    height: 14.h,
                   ),
-                  AuthTextFormField(
-                    hintText: LocaleKeys.password_reenter.tr(),
+                  PasswordAuthField(
                     controller: confirmPassword,
-                    isPassword: true,
-                    validate: (value) {
-                      if (confirmPassword.text != password.text) {
-                        return LocaleKeys.password_is_different.tr();
-                      }
-                      return null;
-                    },
+                    isConfirmPassword: true,
+                    confirmController: password,
+                    hintText: LocaleKeys.password_reenter.tr(),
                   ),
                   SizedBox(
                     height: 8.h,
@@ -112,14 +102,13 @@ class _ChangeForgetPasswordScreenState extends State<ChangeForgetPasswordScreen>
                   SizedBox(
                     height: 8.h,
                   ),
-
                   SizedBox(
                     height: 8.h,
                   ),
                   AuthButton(
                       buttonTitle: LocaleKeys.change.tr(),
                       isTapped: () {
-                        if(formKey.currentState!.validate()){
+                        if (formKey.currentState!.validate()) {
                           cubit.changeConfirmPassword(password: password.text);
                         }
                       },
@@ -127,7 +116,6 @@ class _ChangeForgetPasswordScreenState extends State<ChangeForgetPasswordScreen>
                   SizedBox(
                     height: 15.h,
                   ),
-
                 ],
               ),
             );

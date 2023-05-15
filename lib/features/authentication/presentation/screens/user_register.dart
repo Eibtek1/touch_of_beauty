@@ -2,10 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:touch_of_beauty/core/app_router/screens_name.dart';
-import 'package:touch_of_beauty/core/assets_path/svg_path.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_cubit.dart';
 import 'package:touch_of_beauty/features/authentication/buisness_logic/auth_state.dart';
 import 'package:touch_of_beauty/features/authentication/presentation/screens/otp_screen.dart';
@@ -16,6 +14,8 @@ import '../../../../translations/locale_keys.g.dart';
 import '../widgets/auht_text_form_field.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/citeis_dropdown_button.dart';
+import '../widgets/password_auth_field.dart';
+import '../widgets/phone_auth_field.dart';
 
 class UserRegisterScreen extends StatefulWidget {
   const UserRegisterScreen({Key? key}) : super(key: key);
@@ -212,59 +212,15 @@ class _UserRegisterScreenState extends State<UserRegisterScreen> {
                   SizedBox(
                     height: 14.h,
                   ),
-                  AuthTextFormField(
-                    hintText: LocaleKeys.phone_number.tr(),
-                    keyboardType: TextInputType.phone,
-                    // textDirection: TextDirection.ltr,
-                    suffix: Padding(
-                      padding: EdgeInsets.only(left: 10.w),
-                      child: SvgPicture.asset(
-                        SvgPath.saudiPhoneFieldIcon,
-                        width: 52.w,
-                        height: 15.h,
-                      ),
-                    ),
-                    validate: (value) {
-                      var regex = RegExp(r'^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$');
-                      if (value!.isEmpty) {
-                        return LocaleKeys.enter_your_phone.tr();
-                      } else if (!regex.hasMatch(value)) {
-                        return LocaleKeys.incorrect_phone_format.tr();
-                      }
-                      return null;
-                    },
-                    controller: phone,
-                  ),
+                  PhoneAuthFormField(controller: phone,),
                   SizedBox(
                     height: 14.h,
                   ),
-                  AuthTextFormField(
-                    hintText: LocaleKeys.password.tr(),
-                    controller: password,
-                    isPassword: true,
-                    validate: (value) {
-                      if (value!.isEmpty) {
-                        return LocaleKeys.enter_password.tr();
-                      } else if (value.length < 8) {
-                        return LocaleKeys.weak_password.tr();
-                      }
-                      return null;
-                    },
-                  ),
+                  PasswordAuthField(controller: password,hintText: LocaleKeys.password.tr()),
                   SizedBox(
                     height: 14.h,
                   ),
-                  AuthTextFormField(
-                    hintText: LocaleKeys.password_reenter.tr(),
-                    controller: confirmPassword,
-                    isPassword: true,
-                    validate: (value) {
-                      if (confirmPassword.text != password.text) {
-                        return LocaleKeys.password_is_different.tr();
-                      }
-                      return null;
-                    },
-                  ),
+                  PasswordAuthField(controller: confirmPassword,isConfirmPassword: true,confirmController: password, hintText: LocaleKeys.password_reenter.tr(),),
                   SizedBox(
                     height: 25.h,
                   ),

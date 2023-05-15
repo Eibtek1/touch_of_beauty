@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/features/user/presentation/widgets/home_screen_widgets/salon_item.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../translations/locale_keys.g.dart';
 
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
@@ -90,7 +92,7 @@ class _FeaturedServicesProvidersComponentState extends State<FeaturedServicesPro
           )
               : Center(
             child: Text(
-              'لا يوجد صالونات مميزة',
+              LocaleKeys.no_feat_centers.tr(),
               style: TextStyle(
                   color:
                   AppColorsLightTheme.primaryColor,

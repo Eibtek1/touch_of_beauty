@@ -248,6 +248,19 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                       height: 10.h,
                     ),
                     const Divider(),
+                    BuildCenterItem(
+                      svgImage: SvgPath.edit,
+                      width: 20.w,
+                      height: 20.h,
+                      title: LocaleKeys.complaints.tr(),
+                      onTap: () {
+                        Navigator.pushNamed(context, ScreenName.complainsScreen);
+                      },
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Divider(),
                   ],
                 ),
               )
