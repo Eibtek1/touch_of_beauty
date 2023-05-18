@@ -63,10 +63,12 @@ class NotificationService {
   static Future<void> _handleIncomingForegroundNotification(
       RemoteMessage remoteMessage,
       ) async {
+    print(remoteMessage);
     await displayPushNotification(remoteMessage);
   }
 
   static void _handleOpenedAppNotification(RemoteMessage remoteMessage) async{
+    print(remoteMessage);
     await displayPushNotification(remoteMessage);
   }
 
