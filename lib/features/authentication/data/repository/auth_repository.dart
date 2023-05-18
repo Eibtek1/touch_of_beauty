@@ -217,6 +217,14 @@ class AuthRepository {
     return response;
   }
 
+  static Future<Response> deleteUserAccount() async {
+    final response = await DioHelper.getData(
+      url: EndPoints.deleteUserAccount,
+      bearerToken: token,
+    );
+    return response;
+  }
+
   static Future<Response> changePassword({
     required String oldPassword,
     required String newPassword,

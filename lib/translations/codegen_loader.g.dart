@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-// ignore_for_file: prefer_single_quotes, avoid_renaming_method_parameters
+// ignore_for_file: prefer_single_quotes
 
 import 'dart:ui';
 
@@ -258,7 +258,8 @@ class CodegenLoader extends AssetLoader{
   "rate_ser_prov": "مقدم الخدمة",
   "serviceRating": "تقييم الخدمة",
   "serviceProviderRating": "تقييم مقدم الخدمة",
-  "sendRate": "ارسال"
+  "sendRate": "ارسال",
+  "done": "تم"
 };
 static const Map<String,dynamic> en = {
   "dczdc": "xczzxc",
@@ -502,7 +503,8 @@ static const Map<String,dynamic> en = {
   "choose_rate_type": "Choose to rate service or service provider",
   "rate_serv": "Service rating",
   "rate_ser_prov": "Service provider rating",
-  "sendRate": "Send"
+  "sendRate": "Send",
+  "done": "Ok"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

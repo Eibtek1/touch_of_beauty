@@ -109,20 +109,29 @@ class FreelancerCentersScreen extends StatelessWidget {
                       height: 10.h,
                     ),
                     const Divider(),
-                    BuildFreelancerProfileItem(
-                      svgImage: SvgPath.edit,
-                      width: 20.w,
-                      height: 20.h,
-                      title: LocaleKeys.delete_account.tr(),
-                      onTap: () {
-                        showProgressIndicator(context);
-                        Future.delayed(
-                          const Duration(seconds: 2),
-                          () {
-                            Navigator.pop(context);
-                            showDialog(
-                                context: context,
-                                builder: (context) => const DeleteAccAlert());
+                    BlocConsumer<AuthCubit, AuthState>(
+                      listener: (context, state) {
+                        if (state is DeleteAccountLoading) {
+                          showProgressIndicator(context);
+                        }
+                        if (state is DeleteAccountSuccess) {
+                          Navigator.pop(context);
+                          showDialog(
+                              context: context,
+                              builder: (context) => DeleteAccAlert(
+                                    text: state.message,
+                                  ));
+                        }
+                      },
+                      builder: (context, state) {
+                        var cubit = AuthCubit.get(context);
+                        return BuildFreelancerProfileItem(
+                          svgImage: SvgPath.edit,
+                          width: 20.w,
+                          height: 20.h,
+                          title: LocaleKeys.delete_account.tr(),
+                          onTap: () {
+                            cubit.deleteUserAccount();
                           },
                         );
                       },
@@ -139,7 +148,6 @@ class FreelancerCentersScreen extends StatelessWidget {
                             context, ScreenName.vendorReservationsScreen);
                       },
                     ),
-
                     SizedBox(
                       height: 10.h,
                     ),
@@ -154,18 +162,28 @@ class FreelancerCentersScreen extends StatelessWidget {
                             children: [
                               SimpleDialogOption(
                                 onPressed: () async {
-                                  VendorServicesCubit.get(context).servicesPageNumber = 1;
-                                  VendorServicesCubit.get(context).servicesList = [];
-                                  await context.setLocale(const Locale("en")).then((value) {
-                                    CacheHelper.saveData(key: CacheKeys.initialLocale, value: "en").whenComplete(() {
+                                  VendorServicesCubit.get(context)
+                                      .servicesPageNumber = 1;
+                                  VendorServicesCubit.get(context)
+                                      .servicesList = [];
+                                  await context
+                                      .setLocale(const Locale("en"))
+                                      .then((value) {
+                                    CacheHelper.saveData(
+                                            key: CacheKeys.initialLocale,
+                                            value: "en")
+                                        .whenComplete(() {
                                       freelancerItemsList = [
                                         LocaleKeys.in_home.tr(),
                                       ];
-                                      initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale);
-                                      Navigator.pushNamedAndRemoveUntil(context, ScreenName.splashscreen, (route) => false);
+                                      initialLocale = CacheHelper.getData(
+                                          key: CacheKeys.initialLocale);
+                                      Navigator.pushNamedAndRemoveUntil(
+                                          context,
+                                          ScreenName.splashscreen,
+                                          (route) => false);
                                     });
                                   });
-
                                 },
                                 child: const Text(
                                   'English',
@@ -173,17 +191,27 @@ class FreelancerCentersScreen extends StatelessWidget {
                               ),
                               SimpleDialogOption(
                                 onPressed: () async {
-                                  VendorServicesCubit.get(context).servicesPageNumber = 1;
-                                  VendorServicesCubit.get(context).servicesList = [];
-                                  await context.setLocale(const Locale("ar")).then((value) {
-                                    CacheHelper.saveData(key: CacheKeys.initialLocale, value: "ar").whenComplete(() {
+                                  VendorServicesCubit.get(context)
+                                      .servicesPageNumber = 1;
+                                  VendorServicesCubit.get(context)
+                                      .servicesList = [];
+                                  await context
+                                      .setLocale(const Locale("ar"))
+                                      .then((value) {
+                                    CacheHelper.saveData(
+                                            key: CacheKeys.initialLocale,
+                                            value: "ar")
+                                        .whenComplete(() {
                                       freelancerItemsList = [
                                         LocaleKeys.in_home.tr(),
                                       ];
-                                      initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale);
-                                      Navigator.pushNamedAndRemoveUntil(context, ScreenName.splashscreen, (route) => false);
+                                      initialLocale = CacheHelper.getData(
+                                          key: CacheKeys.initialLocale);
+                                      Navigator.pushNamedAndRemoveUntil(
+                                          context,
+                                          ScreenName.splashscreen,
+                                          (route) => false);
                                     });
-
                                   });
                                 },
                                 child: const Text(
@@ -244,7 +272,8 @@ class FreelancerCentersScreen extends StatelessWidget {
                       height: 20.h,
                       title: LocaleKeys.complaints.tr(),
                       onTap: () {
-                        Navigator.pushNamed(context, ScreenName.complainsScreen);
+                        Navigator.pushNamed(
+                            context, ScreenName.complainsScreen);
                       },
                     ),
                     SizedBox(

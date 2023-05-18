@@ -6,7 +6,8 @@ import '../../../../core/assets_path/font_path.dart';
 import '../../../../translations/locale_keys.g.dart';
 import '../../../freelancer/presentation/widgets/custom_vendor_button.dart';
 class DeleteAccAlert extends StatelessWidget {
-  const DeleteAccAlert({Key? key, }) : super(key: key);
+  final String text;
+  const DeleteAccAlert({Key? key, required this.text, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class DeleteAccAlert extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
-              child: Text(LocaleKeys.delete_account_request.tr(),style: TextStyle(color: Colors.black,fontSize: 16.sp,fontFamily: FontPath.poppinsRegular),),
+              child: Text(text,style: TextStyle(color: Colors.black,fontSize: 16.sp,fontFamily: FontPath.poppinsRegular),),
             ),
             SizedBox(height: 30.h,),
             CustomVendorButton(

@@ -26,6 +26,7 @@ class UserProfileScreen extends StatefulWidget {
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
   bool isDeleteAcc = false;
+
   @override
   void didChangeDependencies() {
     if (AuthCubit.get(context).getUserModel == null) {
@@ -66,10 +67,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             color: AppColorsLightTheme.primaryColor),
                         child: Row(
                           children: [
-                          SizedBox(
-                          height: 22.h,
-                          width: 22.w,
-                          ),
+                            SizedBox(
+                              height: 22.h,
+                              width: 22.w,
+                            ),
                             Expanded(
                               child: Text(
                                 LocaleKeys.profile.tr(),
@@ -162,49 +163,60 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
               ),
               Expanded(
-                child:
-                    state is! GetUserDataLoading && cubit.getUserModel != null
-                        ? ListView(
-                            padding: EdgeInsets.symmetric(horizontal: 12.w),
-                            children: [
-                              FormItemBuilder(
-                                  image: SvgPath.profileFilledColorIcon,
-                                  itemTitle: LocaleKeys.user_name.tr(),
-                                  title: cubit.getUserModel!.fullName!),
-                              // const Divider(),
-                              // const FormItemBuilder(
-                              //     image: SvgPath.location,
-                              //     itemTitle: 'العنوان',
-                              //     title: cubit.getUserModel!.),
-                              const Divider(),
-                              FormItemBuilder(
-                                  image: SvgPath.email,
-                                  itemTitle: LocaleKeys.email.tr(),
-                                  title: cubit.getUserModel!.email!),
-                              const Divider(),
-                              FormItemBuilder(
-                                  image: SvgPath.profileFilledColorIcon,
-                                  itemTitle: LocaleKeys.phone_number.tr(),
-                                  title: cubit.getUserModel!.phoneNumber!),
-                              const Divider(),
-                              InkWell(
-                                onTap: (){
-                                  showProgressIndicator(context);
-                                  Future.delayed(const Duration(seconds: 2),(){
-                                    Navigator.pop(context);
-                                    showDialog(context: context, builder: (context) => const DeleteAccAlert());
-                                  });
+                child: state is! GetUserDataLoading &&
+                        cubit.getUserModel != null
+                    ? ListView(
+                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        children: [
+                          FormItemBuilder(
+                              image: SvgPath.profileFilledColorIcon,
+                              itemTitle: LocaleKeys.user_name.tr(),
+                              title: cubit.getUserModel!.fullName!),
+                          // const Divider(),
+                          // const FormItemBuilder(
+                          //     image: SvgPath.location,
+                          //     itemTitle: 'العنوان',
+                          //     title: cubit.getUserModel!.),
+                          const Divider(),
+                          FormItemBuilder(
+                              image: SvgPath.email,
+                              itemTitle: LocaleKeys.email.tr(),
+                              title: cubit.getUserModel!.email!),
+                          const Divider(),
+                          FormItemBuilder(
+                              image: SvgPath.profileFilledColorIcon,
+                              itemTitle: LocaleKeys.phone_number.tr(),
+                              title: cubit.getUserModel!.phoneNumber!),
+                          const Divider(),
+                          BlocConsumer<AuthCubit, AuthState>(
+                            listener: (context, state) {
+                              if(state is DeleteAccountLoading){
+                                showProgressIndicator(context);
+                              }
+                              if(state is DeleteAccountSuccess){
+                                Navigator.pop(context);
+                                showDialog(context: context, builder: (context) => DeleteAccAlert(text:state.message,));
+                              }
+                            },
+                            builder: (context, state) {
+                              var cubit = AuthCubit.get(context);
+                              return InkWell(
+                                onTap: () {
+                                  cubit.deleteUserAccount();
                                 },
                                 child: FormItemBuilder(
                                     image: SvgPath.edit,
                                     itemTitle: LocaleKeys.delete_account.tr(),
-                                    title: LocaleKeys.click_to_delete_account.tr()),
-                              ),
-                            ],
-                          )
-                        : const Center(
-                            child: CircularProgressIndicator.adaptive(),
+                                    title: LocaleKeys.click_to_delete_account
+                                        .tr()),
+                              );
+                            },
                           ),
+                        ],
+                      )
+                    : const Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      ),
               )
             ],
           );

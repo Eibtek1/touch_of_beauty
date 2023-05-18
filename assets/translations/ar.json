@@ -242,5 +242,6 @@
   "rate_ser_prov": "مقدم الخدمة",
   "serviceRating": "تقييم الخدمة",
   "serviceProviderRating": "تقييم مقدم الخدمة",
-  "sendRate": "ارسال"
+  "sendRate": "ارسال",
+  "done": "تم"
 }

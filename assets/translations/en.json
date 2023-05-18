@@ -240,6 +240,7 @@
   "choose_rate_type": "Choose to rate service or service provider",
   "rate_serv": "Service rating",
   "rate_ser_prov": "Service provider rating",
-  "sendRate": "Send"
+  "sendRate": "Send",
+  "done": "Ok"
 
 }
