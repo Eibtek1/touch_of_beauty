@@ -23,13 +23,11 @@ class VendorHomeScreen extends StatefulWidget {
 
 
 class _VendorHomeScreenState extends State<VendorHomeScreen> {
-  late String value;
+  String? value;
   late int homeZeroOrCenterOne;
   @override
   void initState() {
-    value = vendorItemsList.first;
     homeZeroOrCenterOne = 0;
-    VReservationCubit.get(context).getTodayOrders(inHome: false);
     super.initState();
   }
   @override
@@ -107,6 +105,8 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                     ),
                     child: DropdownButton(
                       isExpanded: true,
+                      hint: Text("اختر نوع الخدمة", style: TextStyle(fontSize: 11.sp,color: Colors.grey,fontFamily: FontPath.almaraiRegular),),
+
                       underline: const SizedBox.shrink(),
                       items: vendorItemsList
                           .map((e) => DropdownMenuItem(

@@ -92,7 +92,7 @@ class VendorServicesCubit extends Cubit<VendorServicesState> {
       for (var element in mainResponse.data) {
         mainSectionsFeaturedList.add(MainSectionsModel.fromJson(element));
       }
-      mainSectionValue = servicesModel==null?mainSectionsFeaturedList.first.title!:servicesModel!.mainSection!.title!;
+      mainSectionValue = servicesModel==null?null:servicesModel!.mainSection!.title!;
       emit(GetMainSectionsSuccess());
     } catch (error) {
       emit(GetMainSectionsError(error: error.toString()));

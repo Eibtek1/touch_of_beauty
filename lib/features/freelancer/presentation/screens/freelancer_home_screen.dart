@@ -24,12 +24,11 @@ class FreelancerHomeScreen extends StatefulWidget {
 
 
 class _FreelancerHomeScreenState extends State<FreelancerHomeScreen> {
-  String value = freelancerItemsList.first;
+  String? value ;
   int homeZeroOrCenterOne = 0;
 
   @override
   void initState() {
-    VReservationCubit.get(context).getTodayOrders(inHome: false);
     super.initState();
   }
 
@@ -108,6 +107,8 @@ class _FreelancerHomeScreenState extends State<FreelancerHomeScreen> {
                     ),
                     child: DropdownButton(
                       isExpanded: true,
+                      hint: Text("اختر نوع الخدمة", style: TextStyle(fontSize: 11.sp,color: Colors.grey,fontFamily: FontPath.almaraiRegular),),
+
                       underline: const SizedBox.shrink(),
                       items: freelancerItemsList
                           .map((e) => DropdownMenuItem(
