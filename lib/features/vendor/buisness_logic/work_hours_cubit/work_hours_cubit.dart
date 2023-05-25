@@ -42,6 +42,10 @@ class WorkHoursCubit extends Cubit<WorkHoursState> {
       if(mainResponse.errorCode == 0){
         isUpdateOrAdd = false;
         emit(AddWorkHoursSuccess());
+      }else{
+        print(mainResponse);
+        isUpdateOrAdd = false;
+        emit(UpdateWorkHoursSuccess());
       }
     }catch(error){
       isUpdateOrAdd = false;
@@ -55,6 +59,10 @@ class WorkHoursCubit extends Cubit<WorkHoursState> {
       final response = await VendorServicesRepository.updateWorkHours(day: day, from: from!, to: to!, id: id);
       mainResponse  = MainResponse.fromJson(response.data);
       if(mainResponse.errorCode == 0){
+        isUpdateOrAdd = false;
+        emit(UpdateWorkHoursSuccess());
+      }else{
+        print(mainResponse);
         isUpdateOrAdd = false;
         emit(UpdateWorkHoursSuccess());
       }

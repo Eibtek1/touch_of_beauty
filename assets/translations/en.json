@@ -241,6 +241,11 @@
   "rate_serv": "Service rating",
   "rate_ser_prov": "Service provider rating",
   "sendRate": "Send",
-  "done": "Ok"
+  "done": "Ok",
+  "service_time": "Service duration",
+  "hour": "Hour",
+  "yesterday": "yesterday",
+  "chooseServicesType": "choose service type",
+  "chooseDayType": "choose time"
 
 }

@@ -51,6 +51,7 @@ class EndPoints{
   static const getQuestions = '/QuestionsAndAnswers/GetAll';
   static const addresses = '/Addresses';
   static const employees = '/Employees';
+  static const employeesForCenterToUser = '/Employees/EmployeesByProvider';
   static const applePublish = '/ApplePublish';
   static const addOrder = '/OrderUsers/AddOrder';
   static const getOrdersForUser = '/OrderUsers/GetOrders';

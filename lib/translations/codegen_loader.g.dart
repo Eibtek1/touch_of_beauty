@@ -259,7 +259,12 @@ class CodegenLoader extends AssetLoader{
   "serviceRating": "تقييم الخدمة",
   "serviceProviderRating": "تقييم مقدم الخدمة",
   "sendRate": "ارسال",
-  "done": "تم"
+  "done": "تم",
+  "service_time": "مدة الخدمة",
+  "hour": "ساعة",
+  "yesterday": "الأمس",
+  "chooseServicesType": "اختر نوع الخدمة",
+  "chooseDayType": "اختر التوقيت"
 };
 static const Map<String,dynamic> en = {
   "dczdc": "xczzxc",
@@ -504,7 +509,12 @@ static const Map<String,dynamic> en = {
   "rate_serv": "Service rating",
   "rate_ser_prov": "Service provider rating",
   "sendRate": "Send",
-  "done": "Ok"
+  "done": "Ok",
+  "service_time": "Service duration",
+  "hour": "Hour",
+  "yesterday": "yesterday",
+  "chooseServicesType": "choose service type",
+  "chooseDayType": "choose time"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

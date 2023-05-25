@@ -246,5 +246,10 @@ abstract class  LocaleKeys {
   static const serviceProviderRating = 'serviceProviderRating';
   static const sendRate = 'sendRate';
   static const done = 'done';
+  static const service_time = 'service_time';
+  static const hour = 'hour';
+  static const yesterday = 'yesterday';
+  static const chooseServicesType = 'chooseServicesType';
+  static const chooseDayType = 'chooseDayType';
 
 }

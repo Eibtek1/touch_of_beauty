@@ -243,5 +243,10 @@
   "serviceRating": "تقييم الخدمة",
   "serviceProviderRating": "تقييم مقدم الخدمة",
   "sendRate": "ارسال",
-  "done": "تم"
+  "done": "تم",
+  "service_time": "مدة الخدمة",
+  "hour": "ساعة",
+  "yesterday": "الأمس",
+  "chooseServicesType": "اختر نوع الخدمة",
+  "chooseDayType": "اختر التوقيت"
 }

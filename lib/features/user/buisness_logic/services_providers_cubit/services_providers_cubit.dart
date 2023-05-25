@@ -193,12 +193,18 @@ class ServicesProvidersCubit extends Cubit<ServicesProvidersState> {
     try{
       final response = await ServicesProvidersRepository.getSliderPhotos();
       mainResponse = MainResponse.fromJson(response.data);
-      for(var element in mainResponse.data){
-        sliderPhotosList.add(SliderModel.fromJson(element));
+      if(mainResponse.data!=null){
+        for(var element in mainResponse.data){
+          sliderPhotosList.add(SliderModel.fromJson(element));
+        }
+        getSliderPhotosLoading = false;
+        emit(GetSliderPhotosSuccess());
+      }else{
+        getSliderPhotosLoading = false;
+        emit(GetSliderPhotosSuccess());
       }
-      getSliderPhotosLoading = false;
-      emit(GetSliderPhotosSuccess());
     }catch(error){
+      print(error);
       emit(GetSliderPhotosError(error: error.toString()));
     }
   }

@@ -138,6 +138,14 @@ class VendorServicesRepository {
     return response;
   }
 
+  static Future<Response> getEmployeeForCenterToUser({required String providerId}) async {
+    final response =
+        await DioHelper.getData(url: EndPoints.employeesForCenterToUser, bearerToken: token,query: {
+          'providerId':providerId
+        });
+    return response;
+  }
+
   static Future<Response> getConfirmedOrders() async {
     final response = await DioHelper.getData(
       url: EndPoints.confirmedOrders,
@@ -222,13 +230,15 @@ class VendorServicesRepository {
     required DateTime from,
     required DateTime to,
   }) async {
+    print( "${from.toIso8601String()}z");
+    print( "${to.toIso8601String()}z");
     final response =
-        await DioHelper.postData(url: EndPoints.workHours, token: token, data: {
+        await DioHelper.postData(url: EndPoints.workHours, token: token, data: [{
       "day": day,
-      'from': from.toIso8601String(),
-      "to": to.toIso8601String(),
+      'from': "${from.toIso8601String()}z",
+      "to": "${to.toIso8601String()}z",
       "moreData": "moreData"
-    });
+    }]);
     return response;
   }
 

@@ -112,7 +112,7 @@ class AllCentersItemBuilder extends StatelessWidget {
                       RatingBar.builder(
                         itemSize: 14.r,
                         ignoreGestures: true,
-                        initialRating: 4,
+                        initialRating: servicesProviderModel.numberOfStar!,
                         minRating: 1,
                         unratedColor: Colors.white,
                         direction: Axis.horizontal,

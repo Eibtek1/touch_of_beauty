@@ -430,6 +430,10 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                                           .servicesByMainSectionAndServicesProviderList[
                                               index]
                                           .id!);
+                                  print(cubit
+                                      .servicesByMainSectionAndServicesProviderList[
+                                  index]
+                                      .id!);
                                 },
                                 child: CenterServicesCategoryItem(
                                   servicesModel: cubit

@@ -10,10 +10,11 @@ import 'package:touch_of_beauty/features/user/presentation/widgets/custom_button
 import '../../../../../../core/app_router/screens_name.dart';
 import '../../../../../../core/app_theme/light_theme.dart';
 import '../../../../../../core/assets_path/font_path.dart';
-import '../../../../../../core/assets_path/images_path.dart';
 import '../../../../../../translations/locale_keys.g.dart';
+import '../../../../../vendor/buisness_logic/employees_cubit/employees_cubit.dart';
 import '../../../../buisness_logic/services_cubit/services_cubit.dart';
 import '../../../../buisness_logic/services_cubit/services_state.dart';
+import '../../../widgets/center_employee_widget.dart';
 import '../../../widgets/home_screen_widgets/order_item_widget.dart';
 class ReserveOrderScreenArguments{
   final dynamic servicesModel;
@@ -22,23 +23,25 @@ class ReserveOrderScreenArguments{
 
   ReserveOrderScreenArguments({this.servicesModel, this.isFav = false ,this.isBottomSheet = false, });
 }
-class ReserveOrderScreen extends StatelessWidget {
-  ReserveOrderScreen({Key? key, required this.servicesModel, required this.isFav, this.isBottomSheet =false}) : super(key: key);
-  final List<Map<String, dynamic>> itemsList = [
-    {'image': ImagePath.babyCare, 'title': "سارة"},
-    {'image': ImagePath.beautyCenter, 'title': "فاتن"},
-    {'image': ImagePath.hairCare, 'title': "هند"},
-    {'image': ImagePath.makeup, 'title': "هدي"},
-    {'image': ImagePath.naturalTherapy, 'title': "حنان"},
-    {'image': ImagePath.photography, 'title': "هاله"},
-    {'image': ImagePath.selfCare, 'title': "اميره"},
-    {'image': ImagePath.skinCare, 'title': "سعاد"},
-  ];
+class ReserveOrderScreen extends StatefulWidget {
+  const ReserveOrderScreen({Key? key, required this.servicesModel, required this.isFav, this.isBottomSheet =false}) : super(key: key);
+
   final dynamic servicesModel;
   final bool isFav;
   final bool isBottomSheet;
+
+  @override
+  State<ReserveOrderScreen> createState() => _ReserveOrderScreenState();
+}
+
+class _ReserveOrderScreenState extends State<ReserveOrderScreen> {
   final TextEditingController controller = TextEditingController();
 
+  @override
+  void initState() {
+    EmployeesCubit.get(context).getEmployeeForCenterToUser(providerId:widget.servicesModel.serviceProvider?.id??"");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,8 +145,8 @@ class ReserveOrderScreen extends StatelessWidget {
                 ],
               ),
               OrderItemWidget(
-                servicesModel: servicesModel,
-                isBottomSheet: isBottomSheet,
+                servicesModel: widget.servicesModel,
+                isBottomSheet: widget.isBottomSheet,
               ),
               SizedBox(
                 height: 10.h,
@@ -159,6 +162,7 @@ class ReserveOrderScreen extends StatelessWidget {
                     initialDate: cubit.dateTime ?? DateTime.now(),
                     firstDate: DateTime.now(),
                     lastDate: DateTime(2024),
+
                     builder: (context, child) {
                       return Theme(
                         data: ThemeData().copyWith(
@@ -257,8 +261,8 @@ class ReserveOrderScreen extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      if (servicesModel.inHome == true &&
-                          servicesModel.inCenter == true) {
+                      if (widget.servicesModel.inHome == true &&
+                          widget.servicesModel.inCenter == true) {
                         cubit.changeButtonState(onPressed: () {
                           cubit.reserveOrderStatusInHome =
                               !cubit.reserveOrderStatusInHome;
@@ -302,38 +306,7 @@ class ReserveOrderScreen extends StatelessWidget {
               SizedBox(
                 height: 14.h,
               ),
-              SizedBox(
-                height: 120.h,
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: 1.h),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 8,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        Container(
-                          height: 71.h,
-                          width: 71.w,
-                          padding: EdgeInsets.all(2.r),
-                          decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: Colors.grey, width: 0.9.w),
-                              shape: BoxShape.circle),
-                          child: Image.asset(itemsList[index]['image']),
-                        ),
-                        Text(itemsList[index]['title'],
-                            style: TextStyle(
-                                fontSize: 16.sp,
-                                fontFamily: FontPath.almaraiBold,
-                                color: index != 0
-                                    ? const Color(0xff1E2432)
-                                    : const Color(0xffB83561)))
-                      ],
-                    );
-                  },
-                ),
-              ),
+              const EmployeesComponentBuilderForUser(),
               Text(
                 LocaleKeys.reserve_time.tr(),
                 style: TextStyle(
@@ -362,7 +335,7 @@ class ReserveOrderScreen extends StatelessWidget {
                               color: const Color(0xff1E2432)),
                         ),
                         Text(
-                          '${servicesModel.finalPrice}  رس',
+                          '${widget.servicesModel.finalPrice}  رس',
                           style: TextStyle(
                             fontSize: 12.sp,
                             fontFamily: FontPath.almaraiRegular,
@@ -392,7 +365,7 @@ class ReserveOrderScreen extends StatelessWidget {
                             );
                           } else {
                             cubit.addOrder(
-                                serviceId: isFav?servicesModel.serviceId:servicesModel.id!,
+                                serviceId: widget.isFav?widget.servicesModel.serviceId:widget.servicesModel.id!,
                                 addressId: cubit.addressModel!.id!,
                                 dateTime: cubit.dateTime!.toIso8601String(),
                                 inHome: cubit.reserveOrderStatusInHome);
