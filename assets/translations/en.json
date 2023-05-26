@@ -246,6 +246,7 @@
   "hour": "Hour",
   "yesterday": "yesterday",
   "chooseServicesType": "choose service type",
-  "chooseDayType": "choose time"
+  "chooseDayType": "choose time",
+  "changeTime": "click to choose time"
 
 }

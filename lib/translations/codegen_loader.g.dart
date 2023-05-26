@@ -10,7 +10,7 @@ class CodegenLoader extends AssetLoader{
   const CodegenLoader();
 
   @override
-  Future<Map<String, dynamic>> load(String fullPath, Locale locale ) {
+  Future<Map<String, dynamic>?> load(String path, Locale locale) {
     return Future.value(mapLocales[locale.toString()]);
   }
 
@@ -264,7 +264,8 @@ class CodegenLoader extends AssetLoader{
   "hour": "ساعة",
   "yesterday": "الأمس",
   "chooseServicesType": "اختر نوع الخدمة",
-  "chooseDayType": "اختر التوقيت"
+  "chooseDayType": "اختر التوقيت",
+  "changeTime": "اضغط لاختيار التوقيت"
 };
 static const Map<String,dynamic> en = {
   "dczdc": "xczzxc",
@@ -514,7 +515,8 @@ static const Map<String,dynamic> en = {
   "hour": "Hour",
   "yesterday": "yesterday",
   "chooseServicesType": "choose service type",
-  "chooseDayType": "choose time"
+  "chooseDayType": "choose time",
+  "changeTime": "click to choose time"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

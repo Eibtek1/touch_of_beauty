@@ -37,6 +37,7 @@ class EndPoints{
   static const deleteServices = '/Services/DeleteService/';
   static const contactUs = '/ContactUs/ContactUs';
   static const workHours = '/WorkHours';
+  static const availableWorkHours = '/WorkHours/WorkHoursByProvider';
   static const getTodayOrders = '/OrderProviders/GetAllOrders';
   static const changeOrderStatus = '/OrderProviders/ChangeOrderStatus';
   static const confirmedOrders = '/OrderProviders/ConfirmedOrders';

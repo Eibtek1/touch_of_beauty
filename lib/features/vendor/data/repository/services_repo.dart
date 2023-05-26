@@ -225,10 +225,23 @@ class VendorServicesRepository {
     return response;
   }
 
+
+
+  static Future<Response> getAvailableWorkHours({required String providerId}) async {
+    final response = await DioHelper.getData(
+        url: EndPoints.availableWorkHours,
+        bearerToken: token,
+        query: {
+          "providerId":providerId,
+        }
+    );
+    return response;
+  }
   static Future<Response> addWorkHours({
     required int day,
     required DateTime from,
     required DateTime to,
+    required DateTime moreData,
   }) async {
     print( "${from.toIso8601String()}z");
     print( "${to.toIso8601String()}z");
@@ -237,7 +250,7 @@ class VendorServicesRepository {
       "day": day,
       'from': "${from.toIso8601String()}z",
       "to": "${to.toIso8601String()}z",
-      "moreData": "moreData"
+      "moreData": moreData.toIso8601String()
     }]);
     return response;
   }
@@ -247,6 +260,7 @@ class VendorServicesRepository {
     required int id,
     required DateTime from,
     required DateTime to,
+    required DateTime moreData,
   }) async {
     final response =
         await DioHelper.putData(url: EndPoints.workHours, token: token, data: {
@@ -254,7 +268,7 @@ class VendorServicesRepository {
       "day": day,
       "from": from.toIso8601String(),
       "to": to.toIso8601String(),
-      "moreData": "moreData"
+      "moreData": moreData.toIso8601String(),
     });
     return response;
   }

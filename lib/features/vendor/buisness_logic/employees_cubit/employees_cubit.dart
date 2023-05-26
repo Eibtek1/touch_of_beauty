@@ -81,6 +81,7 @@ class EmployeesCubit extends Cubit<EmployeesState> {
 
   void getEmployeeForCenterToUser({required String providerId})async{
     try{
+      employeesListForUser =[];
       emit(GetEmployeeLoading());
       final response = await VendorServicesRepository.getEmployeeForCenterToUser(providerId: providerId);
       mainResponse = MainResponse.fromJson(response.data);

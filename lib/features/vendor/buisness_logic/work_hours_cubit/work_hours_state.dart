@@ -14,6 +14,15 @@ class WorkHoursError extends WorkHoursState {
   WorkHoursError(this.error);
 }
 
+
+class GetAvailableWorkHoursLoading extends WorkHoursState {}
+class GetAvailableWorkHoursSuccess extends WorkHoursState {}
+class GetAvailableWorkHoursError extends WorkHoursState {
+  final String error;
+
+  GetAvailableWorkHoursError(this.error);
+}
+
 class AddWorkHoursLoading extends WorkHoursState {}
 class AddWorkHoursSuccess extends WorkHoursState {}
 class AddWorkHoursError extends WorkHoursState {

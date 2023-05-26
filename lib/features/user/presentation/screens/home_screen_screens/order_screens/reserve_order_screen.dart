@@ -14,6 +14,7 @@ import '../../../../../../translations/locale_keys.g.dart';
 import '../../../../../vendor/buisness_logic/employees_cubit/employees_cubit.dart';
 import '../../../../buisness_logic/services_cubit/services_cubit.dart';
 import '../../../../buisness_logic/services_cubit/services_state.dart';
+import '../../../widgets/calender_widget.dart';
 import '../../../widgets/center_employee_widget.dart';
 import '../../../widgets/home_screen_widgets/order_item_widget.dart';
 class ReserveOrderScreenArguments{
@@ -156,60 +157,9 @@ class _ReserveOrderScreenState extends State<ReserveOrderScreen> {
                 height: 15.h,
               ),
               InkWell(
-                onTap: () {
-                  showDatePicker(
-                    context: context,
-                    initialDate: cubit.dateTime ?? DateTime.now(),
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime(2024),
-
-                    builder: (context, child) {
-                      return Theme(
-                        data: ThemeData().copyWith(
-                          colorScheme: const ColorScheme.light(
-                              primary: AppColorsLightTheme.primaryColor,
-                              secondary: Colors.white),
-                          dialogBackgroundColor: Colors.white,
-                        ),
-                        child: child!,
-                      );
+                onTap: () async{
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>SelectDate(providerId: widget.servicesModel.serviceProvider?.id??"",)));
                     },
-                  ).then((value) {
-                    cubit.changeButtonState(onPressed: () {
-                      cubit.dateTime = value!;
-                    });
-                    showTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay(
-                          hour: cubit.dateTime!.hour,
-                          minute: cubit.dateTime!.minute),
-                      builder: (context, child) {
-                        return Theme(
-                          data: ThemeData().copyWith(
-                            colorScheme: const ColorScheme.light(
-                                primary: AppColorsLightTheme.primaryColor,
-                                secondary: Colors.white),
-                            dialogBackgroundColor: Colors.white,
-                          ),
-                          child: child!,
-                        );
-                      },
-                    ).then((value) {
-                      cubit.changeButtonState(onPressed: () {
-                        cubit.dateTime = DateTime(
-                            cubit.dateTime!.year,
-                            cubit.dateTime!.month,
-                            cubit.dateTime!.day,
-                            value!.hour,
-                            value.minute);
-                      });
-                    }).catchError((error) {
-                      return;
-                    });
-                  }).catchError((error) {
-                    return;
-                  });
-                },
                 child: Row(
                   children: [
                     Icon(

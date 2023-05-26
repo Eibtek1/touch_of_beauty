@@ -1,25 +1,26 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touch_of_beauty/core/app_theme/light_theme.dart';
 
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../translations/locale_keys.g.dart';
+import '../../../buisness_logic/work_hours_cubit/work_hours_cubit.dart';
+import '../../../buisness_logic/work_hours_cubit/work_hours_state.dart';
+import '../../../data/models/work_hours_model.dart';
+
 class TimeContainerWidget extends StatelessWidget {
-  final String title;
   final bool isThereWorkingTime;
-  final String? from;
-  final String? to;
+  final WorkHoursModel? workHoursModel;
   final void Function() onPressed;
   final void Function()? onLongPress;
 
-  const TimeContainerWidget(
-      {Key? key,
-      required this.title,
-        required this.isThereWorkingTime ,
-       this.from,
-       this.to,
-      required this.onPressed, this.onLongPress})
+  const TimeContainerWidget({Key? key,
+    required this.workHoursModel,
+    required this.isThereWorkingTime,
+    required this.onPressed,
+    this.onLongPress})
       : super(key: key);
 
   @override
@@ -43,17 +44,18 @@ class TimeContainerWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
-              width: 13.w,
+              width: 5.w,
             ),
-            Text(
-              title,
+            if(workHoursModel!=null)Text(
+              DateFormat('yMMMd').format(DateTime.parse(
+                  workHoursModel!.moreData!)),
               style: TextStyle(
                   color: const Color(0xff3C475C),
                   fontSize: 10.sp,
                   fontFamily: FontPath.almaraiRegular),
             ),
             SizedBox(
-              width: 12.w,
+              width: 2.w,
             ),
             Text(
               LocaleKeys.from.tr(),
@@ -78,7 +80,9 @@ class TimeContainerWidget extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    isThereWorkingTime?from!.substring(0,5):"",
+                    isThereWorkingTime
+                        ? workHoursModel?.from?.substring(0, 5) ?? ""
+                        : "",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: const Color(0xff3C475C),
@@ -87,7 +91,7 @@ class TimeContainerWidget extends StatelessWidget {
                   ),
                 )),
             SizedBox(
-              width: 10.w,
+              width: 5.w,
             ),
             Text(
               LocaleKeys.to.tr(),
@@ -112,9 +116,10 @@ class TimeContainerWidget extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    isThereWorkingTime?to!.substring(0,5):"",
+                    isThereWorkingTime
+                        ? workHoursModel?.to?.substring(0, 5) ?? ""
+                        : "",
                     textAlign: TextAlign.center,
-
                     style: TextStyle(
                         color: const Color(0xff3C475C),
                         fontFamily: FontPath.almaraiRegular,
@@ -124,10 +129,12 @@ class TimeContainerWidget extends StatelessWidget {
             SizedBox(
               width: 7.w,
             ),
-            TextButton(
+            if(workHoursModel==null)TextButton(
               onPressed: onPressed,
               child: Text(
-                isThereWorkingTime ?LocaleKeys.edit.tr() : LocaleKeys.add.tr(),
+                isThereWorkingTime
+                    ? LocaleKeys.edit.tr()
+                    : LocaleKeys.add.tr(),
                 style: TextStyle(
                   fontSize: 10.sp,
                   fontFamily: FontPath.almaraiBold,

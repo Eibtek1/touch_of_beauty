@@ -248,5 +248,6 @@
   "hour": "ساعة",
   "yesterday": "الأمس",
   "chooseServicesType": "اختر نوع الخدمة",
-  "chooseDayType": "اختر التوقيت"
+  "chooseDayType": "اختر التوقيت",
+  "changeTime": "اضغط لاختيار التوقيت"
 }

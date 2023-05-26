@@ -251,5 +251,6 @@ abstract class  LocaleKeys {
   static const yesterday = 'yesterday';
   static const chooseServicesType = 'chooseServicesType';
   static const chooseDayType = 'chooseDayType';
+  static const changeTime = 'changeTime';
 
 }
