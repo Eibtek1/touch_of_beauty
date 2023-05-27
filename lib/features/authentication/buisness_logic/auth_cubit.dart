@@ -122,6 +122,18 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  void deleteUserAccount() async {
+    emit(DeleteAccountLoading());
+    try {
+      final response = await AuthRepository.deleteUserAccount();
+      mainResponse = MainResponse.fromJson(response.data);
+      print(response);
+      emit(DeleteAccountSuccess(mainResponse.errorMessage));
+    } catch (error) {
+      emit(DeleteAccountError(error.toString()));
+    }
+  }
+
   void userRegister({
     required String userName,
     required String password,

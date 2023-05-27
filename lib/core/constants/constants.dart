@@ -30,6 +30,11 @@ List<String> vendorItemsList = [
   LocaleKeys.in_center.tr(),
   LocaleKeys.in_home.tr(),
 ];
+
+List<String> todayTo = [
+  LocaleKeys.today.tr(),
+  LocaleKeys.yesterday.tr(),
+];
 String? token = CacheHelper.getData(key: CacheKeys.token);
 String initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale)??"ar";
 String? userId = CacheHelper.getData(key: CacheKeys.userId);

@@ -131,6 +131,7 @@ class VendorServicesScreen extends StatelessWidget {
                         cubit.inCenter = false;
                         cubit.inHome = false;
                         cubit.isAvailable = false;
+                        cubit.mainSectionValue = null;
                         Navigator.pushNamed(
                             context, ScreenName.vendorAddToServicesScreen,
                             arguments: AddToServicesArguments(

@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-// ignore_for_file: prefer_single_quotes, avoid_renaming_method_parameters
+// ignore_for_file: prefer_single_quotes
 
 import 'dart:ui';
 
@@ -10,7 +10,7 @@ class CodegenLoader extends AssetLoader{
   const CodegenLoader();
 
   @override
-  Future<Map<String, dynamic>> load(String fullPath, Locale locale ) {
+  Future<Map<String, dynamic>?> load(String path, Locale locale) {
     return Future.value(mapLocales[locale.toString()]);
   }
 
@@ -242,7 +242,7 @@ class CodegenLoader extends AssetLoader{
   "add_image": "اضافة الصورة",
   "delete_photo_validation": "هل انت متأكد من حذف الصورة",
   "delete_time_validation": "هل انت متأكد من حذف التوقيت",
-  "section": "القسم",
+  "section": "اختر القسم",
   "client_name": "اسم العميل",
   "total_services_budget": "اجمالي سعر الخدمة",
   "watch_order_details": "عرض تفاصيل الطلب",
@@ -258,7 +258,14 @@ class CodegenLoader extends AssetLoader{
   "rate_ser_prov": "مقدم الخدمة",
   "serviceRating": "تقييم الخدمة",
   "serviceProviderRating": "تقييم مقدم الخدمة",
-  "sendRate": "ارسال"
+  "sendRate": "ارسال",
+  "done": "تم",
+  "service_time": "مدة الخدمة",
+  "hour": "ساعة",
+  "yesterday": "الأمس",
+  "chooseServicesType": "اختر نوع الخدمة",
+  "chooseDayType": "اختر التوقيت",
+  "changeTime": "اضغط لاختيار التوقيت"
 };
 static const Map<String,dynamic> en = {
   "dczdc": "xczzxc",
@@ -489,7 +496,7 @@ static const Map<String,dynamic> en = {
   "add_image": "Add image",
   "delete_photo_validation": "Are you sure to delete the image?",
   "delete_time_validation": "Are you sure to delete the time?",
-  "section": "The section",
+  "section": "Choose the section",
   "client_name": "Client name",
   "total_services_budget": "Total service budget",
   "watch_order_details": "View order details",
@@ -502,7 +509,14 @@ static const Map<String,dynamic> en = {
   "choose_rate_type": "Choose to rate service or service provider",
   "rate_serv": "Service rating",
   "rate_ser_prov": "Service provider rating",
-  "sendRate": "Send"
+  "sendRate": "Send",
+  "done": "Ok",
+  "service_time": "Service duration",
+  "hour": "Hour",
+  "yesterday": "yesterday",
+  "chooseServicesType": "choose service type",
+  "chooseDayType": "choose time",
+  "changeTime": "click to choose time"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

@@ -17,6 +17,7 @@ class EmployeesCubit extends Cubit<EmployeesState> {
 
   late MainResponse mainResponse;
   List<EmployeeModel> employeesList = [];
+  List<EmployeeModel> employeesListForUser = [];
   ImagePicker picker = ImagePicker();
   File? profileImage;
 
@@ -78,6 +79,25 @@ class EmployeesCubit extends Cubit<EmployeesState> {
     }
   }
 
+  void getEmployeeForCenterToUser({required String providerId})async{
+    try{
+      employeesListForUser =[];
+      emit(GetEmployeeLoading());
+      final response = await VendorServicesRepository.getEmployeeForCenterToUser(providerId: providerId);
+      mainResponse = MainResponse.fromJson(response.data);
+      if(mainResponse.errorCode == 0){
+        for(var element in mainResponse.data){
+          if(!employeesListForUser.contains(EmployeeModel.fromJson(element))){
+            employeesListForUser.add(EmployeeModel.fromJson(element));
+          }
+        }
+      }
+      emit(GetEmployeeSuccess());
+    }catch(error){
+      emit(GetEmployeeError(error: error.toString()));
+    }
+  }
+
 
 
   Future<void> getImagePick() async {
@@ -89,4 +109,6 @@ class EmployeesCubit extends Cubit<EmployeesState> {
       emit(GetPickedImageErrorState());
     }
   }
+
+
 }

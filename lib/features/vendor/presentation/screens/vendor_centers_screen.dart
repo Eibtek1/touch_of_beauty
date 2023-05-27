@@ -133,19 +133,31 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                       height: 10.h,
                     ),
                     const Divider(),
-                    BuildCenterItem(
-                      svgImage: SvgPath.edit,
-                      width: 20.w,
-                      height: 20.h,
-                      title: LocaleKeys.delete_account.tr(),
-                      onTap: () {
-                        showProgressIndicator(context);
-                        Future.delayed(const Duration(seconds: 2), () {
+                    BlocConsumer<AuthCubit, AuthState>(
+                      listener: (context, state) {
+                        if (state is DeleteAccountLoading) {
+                          showProgressIndicator(context);
+                        }
+                        if (state is DeleteAccountSuccess) {
                           Navigator.pop(context);
                           showDialog(
                               context: context,
-                              builder: (context) => const DeleteAccAlert());
-                        });
+                              builder: (context) => DeleteAccAlert(
+                                text: state.message,
+                              ));
+                        }
+                      },
+                      builder: (context, state) {
+                        var cubit = AuthCubit.get(context);
+                        return BuildFreelancerProfileItem(
+                          svgImage: SvgPath.edit,
+                          width: 20.w,
+                          height: 20.h,
+                          title: LocaleKeys.delete_account.tr(),
+                          onTap: () {
+                            cubit.deleteUserAccount();
+                          },
+                        );
                       },
                     ),
                     SizedBox(

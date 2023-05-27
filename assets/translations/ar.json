@@ -226,7 +226,7 @@
   "add_image": "اضافة الصورة",
   "delete_photo_validation": "هل انت متأكد من حذف الصورة",
   "delete_time_validation": "هل انت متأكد من حذف التوقيت",
-  "section": "القسم",
+  "section": "اختر القسم",
   "client_name": "اسم العميل",
   "total_services_budget": "اجمالي سعر الخدمة",
   "watch_order_details": "عرض تفاصيل الطلب",
@@ -242,5 +242,12 @@
   "rate_ser_prov": "مقدم الخدمة",
   "serviceRating": "تقييم الخدمة",
   "serviceProviderRating": "تقييم مقدم الخدمة",
-  "sendRate": "ارسال"
+  "sendRate": "ارسال",
+  "done": "تم",
+  "service_time": "مدة الخدمة",
+  "hour": "ساعة",
+  "yesterday": "الأمس",
+  "chooseServicesType": "اختر نوع الخدمة",
+  "chooseDayType": "اختر التوقيت",
+  "changeTime": "اضغط لاختيار التوقيت"
 }

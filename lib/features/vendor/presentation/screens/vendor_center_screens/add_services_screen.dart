@@ -15,6 +15,8 @@ import '../../../../../core/app_router/screens_name.dart';
 import '../../../../../core/app_theme/light_theme.dart';
 import '../../../../../core/assets_path/font_path.dart';
 import '../../../../../core/assets_path/svg_path.dart';
+import '../../../../../core/cache_manager/cache_keys.dart';
+import '../../../../../core/cache_manager/shared_preferences.dart';
 import '../../../../../core/network/api_end_points.dart';
 import '../../../../../translations/locale_keys.g.dart';
 import '../../../../freelancer/presentation/widgets/custom_vendor_button.dart';
@@ -547,20 +549,25 @@ class _AddServicesScreenState extends State<AddServicesScreen> {
                                       );
                                     }
                                     else{
-                                      cubit.addServicesOfCenter(
-                                        titleAr: aNameController.text,
-                                        titleEn: eNameController.text,
-                                        description: detailsController.text,
-                                        price: double.parse(
-                                            priceController.text.toString()),
-                                        finalPrice: double.parse(
-                                            finalPriceController.text.toString()),
-                                        empNumber: double.parse(emNumberController
-                                            .text
-                                            .toString())
-                                            .round(),
-                                        duration: timeController.text,
-                                      );
+                                      if(cubit.mainSectionValue!=null){
+                                        cubit.addServicesOfCenter(
+                                          titleAr: aNameController.text,
+                                          titleEn: eNameController.text,
+                                          description: detailsController.text,
+                                          price: double.parse(
+                                              priceController.text.toString()),
+                                          finalPrice: double.parse(
+                                              finalPriceController.text.toString()),
+                                          empNumber: double.parse(emNumberController
+                                              .text
+                                              .toString())
+                                              .round(),
+                                          duration: timeController.text,
+                                        );
+                                      }else{
+                                        initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale)??"ar";
+                                        Fluttertoast.showToast(msg: initialLocale == 'ar'?"يجب اختيار القسم العام":"You must choose the section",backgroundColor: Colors.red);
+                                      }
                                     }
                                   } else if (widget.type == 1) {
                                     if(widget.servicesModel!=null){

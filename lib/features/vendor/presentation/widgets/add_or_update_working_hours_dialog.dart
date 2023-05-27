@@ -6,17 +6,20 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:touch_of_beauty/features/freelancer/presentation/widgets/custom_vendor_button.dart';
 
+import '../../../../core/app_theme/light_theme.dart';
 import '../../../../core/assets_path/font_path.dart';
 import '../../../../translations/locale_keys.g.dart';
 import '../../buisness_logic/work_hours_cubit/work_hours_cubit.dart';
 import '../../buisness_logic/work_hours_cubit/work_hours_state.dart';
+import '../../data/models/work_hours_model.dart';
 
 class AddOrUpdateWorkingHoursDialog extends StatelessWidget {
-  final int? id;
-  final int day;
+  final WorkHoursModel? workHoursModel;
 
-  const AddOrUpdateWorkingHoursDialog({Key? key, this.id, required this.day})
-      : super(key: key);
+  const AddOrUpdateWorkingHoursDialog({
+    Key? key,
+    this.workHoursModel,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +30,7 @@ class AddOrUpdateWorkingHoursDialog extends StatelessWidget {
           Navigator.pop(context);
           cubit.from = null;
           cubit.to = null;
+          cubit.moreData = null;
           cubit.getWorkHours();
         } else if (state is UpdateWorkHoursSuccess) {
           Navigator.pop(context);
@@ -185,19 +189,57 @@ class AddOrUpdateWorkingHoursDialog extends StatelessWidget {
                       ],
                     ),
                   ),
-                  !cubit.isUpdateOrAdd
+
+                  BlocConsumer<WorkHoursCubit, WorkHoursState>(
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      var cubit = WorkHoursCubit.get(context);
+                      return InkWell(
+                        onTap: () {
+                          showDatePicker(
+                            context: context,
+                            initialDate: cubit.moreData ?? DateTime.now(),
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime(2024),
+                            builder: (context, child) {
+                              return Theme(
+                                data: ThemeData().copyWith(
+                                  colorScheme: const ColorScheme.light(
+                                      primary:
+                                          AppColorsLightTheme.primaryColor,
+                                      secondary: Colors.white),
+                                  dialogBackgroundColor: Colors.white,
+                                ),
+                                child: child!,
+                              );
+                            },
+                          ).then((value) {
+                            cubit.moreData = value;
+                            cubit.changeDate();
+                          });
+                        },
+                        child: Text(
+                          cubit.moreData==null?LocaleKeys.changeTime.tr():DateFormat('yMMMd').format(cubit.moreData!),
+                          style: TextStyle(
+                            color: const Color(0xff3C475C),
+                            fontSize: 10.sp,
+                            fontFamily: FontPath.almaraiRegular,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  workHoursModel==null?!cubit.isUpdateOrAdd
                       ? CustomVendorButton(
                           buttonTitle: LocaleKeys.add.tr(),
                           isTapped: () {
-                            if (cubit.from == null || cubit.to == null) {
+                            if (cubit.from == null || cubit.to == null||cubit.moreData==null) {
                               Fluttertoast.showToast(
                                   msg: LocaleKeys.please_select_time.tr(),
                                   gravity: ToastGravity.CENTER,
                                   backgroundColor: Colors.red);
-                            } else if (id != null) {
-                              cubit.updateWorkHours(day: day, id: id!);
                             } else {
-                              cubit.addWorkHours(day: day);
+                              cubit.addWorkHours(day: 0);
                             }
                           },
                           width: 200.w,
@@ -206,7 +248,7 @@ class AddOrUpdateWorkingHoursDialog extends StatelessWidget {
                         )
                       : const Center(
                           child: CircularProgressIndicator.adaptive(),
-                        )
+                        ):SizedBox.shrink(),
                 ],
               ),
             ),

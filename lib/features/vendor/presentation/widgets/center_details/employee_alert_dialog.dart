@@ -93,7 +93,7 @@ class _EmployeeAlertDialogState extends State<EmployeeAlertDialog> {
                     controller: nameController,
                     hintText: LocaleKeys.name.tr(),
                     validator: (value){
-                      initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale);
+                      initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale)??"ar";
                       if(value!.isEmpty){
                         return LocaleKeys.short_name.tr();
                       }else if(value.length<5){

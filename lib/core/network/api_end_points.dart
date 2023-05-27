@@ -11,6 +11,7 @@ class EndPoints{
   static const logout = '/Users/logout';
   static const changePassword = '/Users/changeoldPassword';
   static const getUserData = '/Users/GetUserInfo';
+  static const deleteUserAccount = '/Users/DeleteAccount';
   static const getAllPicturesForProvider = '/PicturesLibrary/GetAllForProvider';
   static const addPictureToLibrary = '/PicturesLibrary/';
   static const forgetPassword = '/Users/ForgetPassword';
@@ -36,6 +37,7 @@ class EndPoints{
   static const deleteServices = '/Services/DeleteService/';
   static const contactUs = '/ContactUs/ContactUs';
   static const workHours = '/WorkHours';
+  static const availableWorkHours = '/WorkHours/WorkHoursByProvider';
   static const getTodayOrders = '/OrderProviders/GetAllOrders';
   static const changeOrderStatus = '/OrderProviders/ChangeOrderStatus';
   static const confirmedOrders = '/OrderProviders/ConfirmedOrders';
@@ -50,6 +52,7 @@ class EndPoints{
   static const getQuestions = '/QuestionsAndAnswers/GetAll';
   static const addresses = '/Addresses';
   static const employees = '/Employees';
+  static const employeesForCenterToUser = '/Employees/EmployeesByProvider';
   static const applePublish = '/ApplePublish';
   static const addOrder = '/OrderUsers/AddOrder';
   static const getOrdersForUser = '/OrderUsers/GetOrders';

@@ -278,24 +278,16 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                       shrinkWrap: true,
                       itemCount: widget.servicesProvidersModel.workDays!.length,
                       itemBuilder: (BuildContext context, int index) {
+                        print(widget
+                            .servicesProvidersModel.workDays![index].moreData!);
                         int day =
                             widget.servicesProvidersModel.workDays![index].day!;
                         return Padding(
                           padding: EdgeInsets.symmetric(vertical: 10.h),
                           child: availableTimeWidget(
-                            title: day == 0
-                                ? LocaleKeys.saturday.tr()
-                                : day == 1
-                                    ? LocaleKeys.sunday.tr()
-                                    : day == 2
-                                        ? LocaleKeys.monday.tr()
-                                        : day == 3
-                                            ? LocaleKeys.tuesday.tr()
-                                            : day == 4
-                                                ? LocaleKeys.wednesday.tr()
-                                                : day == 5
-                                                    ? LocaleKeys.thuresday.tr()
-                                                    : LocaleKeys.friday.tr(),
+                            title: "${DateFormat('EEEE',initialLocale).format(DateTime.parse(widget
+                                .servicesProvidersModel.workDays![index].moreData!))} ${DateFormat('yMMMd',initialLocale).format(DateTime.parse(widget
+                                .servicesProvidersModel.workDays![index].moreData!))}",
                             from: widget
                                 .servicesProvidersModel.workDays![index].from!
                                 .substring(0, 4),
@@ -430,6 +422,10 @@ class _CenterDetailsBottomSheetState extends State<CenterDetailsBottomSheet> {
                                           .servicesByMainSectionAndServicesProviderList[
                                               index]
                                           .id!);
+                                  print(cubit
+                                      .servicesByMainSectionAndServicesProviderList[
+                                  index]
+                                      .id!);
                                 },
                                 child: CenterServicesCategoryItem(
                                   servicesModel: cubit

@@ -1,15 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:touch_of_beauty/features/authentication/data/models/main_response.dart';
 import 'package:touch_of_beauty/features/vendor/data/repository/services_repo.dart';
+import '../../../user/data/models/available_time_data_model.dart';
 import '../../data/models/work_hours_model.dart';
 import '../work_hours_cubit/work_hours_state.dart';
 class WorkHoursCubit extends Cubit<WorkHoursState> {
   WorkHoursCubit() : super(WorkHoursInitial());
   static WorkHoursCubit get(context) => BlocProvider.of(context);
   List<WorkHoursModel> workOursList = [];
+  List<AvailableDateModel> availableWorkOursList = [];
   late MainResponse mainResponse;
   DateTime? from;
   DateTime? to;
+  DateTime? moreData;
   bool isUpdateOrAdd = false;
   void changeDate(){
     emit(ChangeDate());
@@ -37,11 +40,15 @@ class WorkHoursCubit extends Cubit<WorkHoursState> {
     isUpdateOrAdd = true;
     emit(AddWorkHoursLoading());
     try{
-      final response = await VendorServicesRepository.addWorkHours(day: day, from: from!, to: to!);
+      final response = await VendorServicesRepository.addWorkHours(day: day, from: from!, to: to!, moreData: moreData!);
       mainResponse  = MainResponse.fromJson(response.data);
       if(mainResponse.errorCode == 0){
         isUpdateOrAdd = false;
         emit(AddWorkHoursSuccess());
+      }else{
+        print(mainResponse);
+        isUpdateOrAdd = false;
+        emit(UpdateWorkHoursSuccess());
       }
     }catch(error){
       isUpdateOrAdd = false;
@@ -52,9 +59,13 @@ class WorkHoursCubit extends Cubit<WorkHoursState> {
     isUpdateOrAdd = true;
     emit(UpdateWorkHoursLoading());
     try{
-      final response = await VendorServicesRepository.updateWorkHours(day: day, from: from!, to: to!, id: id);
+      final response = await VendorServicesRepository.updateWorkHours(day: day, from: from!, to: to!, id: id, moreData: moreData!);
       mainResponse  = MainResponse.fromJson(response.data);
       if(mainResponse.errorCode == 0){
+        isUpdateOrAdd = false;
+        emit(UpdateWorkHoursSuccess());
+      }else{
+        print(mainResponse);
         isUpdateOrAdd = false;
         emit(UpdateWorkHoursSuccess());
       }
@@ -76,6 +87,28 @@ class WorkHoursCubit extends Cubit<WorkHoursState> {
       }
     } catch (error) {
       emit(DeleteWorkHoursError(error.toString()));
+    }
+  }
+
+
+  void getAvailableWorkHours({required String providerId})async{
+    emit(GetAvailableWorkHoursLoading());
+    try{
+      final response = await VendorServicesRepository.getAvailableWorkHours(providerId:providerId);
+      mainResponse  = MainResponse.fromJson(response.data);
+      if(mainResponse.errorCode == 0){
+        availableWorkOursList = [];
+        for(var element in mainResponse.data){
+          availableWorkOursList.add(AvailableDateModel.fromJson(element));
+        }
+        emit(GetAvailableWorkHoursSuccess());
+      }else{
+        availableWorkOursList = [];
+        emit(GetAvailableWorkHoursSuccess());
+      }
+      print(availableWorkOursList);
+    }catch(error){
+      emit(GetAvailableWorkHoursError(error.toString()));
     }
   }
 }

@@ -93,6 +93,17 @@ class LogoutError extends AuthState {
   LogoutError(this.error);
 }
 
+class DeleteAccountLoading extends AuthState {}
+class DeleteAccountSuccess extends AuthState {
+ final String message;
+
+  DeleteAccountSuccess(this.message);
+}
+class DeleteAccountError extends AuthState {
+  final String error;
+  DeleteAccountError(this.error);
+}
+
 
 class UpdateProfileLoading extends AuthState {}
 class UpdateProfileSuccess extends AuthState {}

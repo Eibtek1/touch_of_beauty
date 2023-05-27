@@ -24,12 +24,12 @@ class FreelancerHomeScreen extends StatefulWidget {
 
 
 class _FreelancerHomeScreenState extends State<FreelancerHomeScreen> {
-  String value = freelancerItemsList.first;
+  String? value ;
+  String? dayValue ;
   int homeZeroOrCenterOne = 0;
 
   @override
   void initState() {
-    VReservationCubit.get(context).getTodayOrders(inHome: false);
     super.initState();
   }
 
@@ -81,19 +81,35 @@ class _FreelancerHomeScreenState extends State<FreelancerHomeScreen> {
                   Container(
                     height: 40.h,
                     width: 160.w,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 27.w,
+                    ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(26.r),
                       color: AppColorsLightTheme.authTextFieldFillColor,
                     ),
-                    child: Center(
-                      child: Text(
-                        LocaleKeys.today.tr(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontFamily: FontPath.almaraiRegular,
-                            fontSize: 14.sp),
-                      ),
+                    child: DropdownButton(
+                      isExpanded: true,
+                      underline: const SizedBox.shrink(),
+                      hint: Text(LocaleKeys.chooseDayType.tr(), style: TextStyle(fontSize: 11.sp,color: Colors.grey,fontFamily: FontPath.almaraiRegular),),
+                      items: todayTo
+                          .map((e) => DropdownMenuItem(
+                        value: e,
+                        child: Text(
+                          e,
+                          style: TextStyle(
+                              color: const Color(0xff666666),
+                              fontFamily: FontPath.almaraiRegular,
+                              fontSize: 14.sp),
+                        ),
+                      ))
+                          .toList(),
+                      onChanged: (val) {
+                        setState(() {
+                          dayValue = val!;
+                        });
+                      },
+                      value: dayValue,
                     ),
                   ),
                   Container(
@@ -108,6 +124,8 @@ class _FreelancerHomeScreenState extends State<FreelancerHomeScreen> {
                     ),
                     child: DropdownButton(
                       isExpanded: true,
+                      hint: Text(LocaleKeys.chooseServicesType.tr(), style: TextStyle(fontSize: 11.sp,color: Colors.grey,fontFamily: FontPath.almaraiRegular),),
+
                       underline: const SizedBox.shrink(),
                       items: freelancerItemsList
                           .map((e) => DropdownMenuItem(

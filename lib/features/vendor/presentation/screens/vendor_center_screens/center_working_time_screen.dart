@@ -42,403 +42,112 @@ class CenterWorkingTimeScreen extends StatelessWidget {
             SizedBox(
               height: 140.h,
             ),
+            Center(
+              child: Text(
+                LocaleKeys.long_press_delete_time.tr(),
+                style: TextStyle(
+                    color: const Color(0xff3C475C),
+                    fontSize: 14.sp,
+                    fontFamily: FontPath.almaraiRegular),
+              ),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
             BlocConsumer<WorkHoursCubit, WorkHoursState>(
               listener: (context, state) {},
               builder: (context, state) {
                 var cubit = WorkHoursCubit.get(context);
-                return Expanded(
-                  child: state is! WorkHoursLoading
-                      ? ListView(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 24.w, vertical: 16.w),
-                          children: [
-                            Center(
-                              child: Text(
-                                LocaleKeys.long_press_delete_time.tr(),
-                                style: TextStyle(
-                                    color: const Color(0xff3C475C),
-                                    fontSize: 14.sp,
-                                    fontFamily: FontPath.almaraiRegular),
+                return cubit.workOursList.isNotEmpty
+                    ? Expanded(
+                        child: state is! WorkHoursLoading
+                            ? ListView.builder(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 24.w, vertical: 16.w),
+                                itemBuilder: (BuildContext context, int index) {
+                                  print(cubit.workOursList[index].moreData);
+                                  return Column(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 10.h),
+                                        child: TimeContainerWidget(
+                                          workHoursModel:
+                                              cubit.workOursList[index],
+                                          isThereWorkingTime: true,
+                                          onLongPress: () {
+                                            if (cubit.workOursList.any(
+                                                (element) =>
+                                                    element.day == 0)) {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    DeleteWorkTimeDialog(
+                                                  id: cubit.workOursList
+                                                      .firstWhere((element) =>
+                                                          element.day == 0)
+                                                      .id!,
+                                                ),
+                                              );
+                                            } else {
+                                              Fluttertoast.showToast(
+                                                msg: LocaleKeys
+                                                    .no_time_to_delete
+                                                    .tr(),
+                                                gravity: ToastGravity.CENTER,
+                                                backgroundColor: Colors.red,
+                                              );
+                                            }
+                                          },
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  AddOrUpdateWorkingHoursDialog(
+                                                workHoursModel:
+                                                    cubit.workOursList[index],
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      if (index ==
+                                          cubit.workOursList.length - 1)
+                                        TimeContainerWidget(
+                                            workHoursModel: null,
+                                            isThereWorkingTime: false,
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    const AddOrUpdateWorkingHoursDialog(
+                                                  workHoursModel: null,
+                                                ),
+                                              );
+                                            }),
+                                    ],
+                                  );
+                                },
+                                itemCount: cubit.workOursList.length,
+                              )
+                            : const Center(
+                                child: CircularProgressIndicator(),
                               ),
-                            ),
-                            SizedBox(height: 20.h,),
-                            TimeContainerWidget(
-                              onLongPress: () {
-                                if(cubit.workOursList
-                                    .any((element) => element.day == 0)){
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => DeleteWorkTimeDialog(
-                                      id: cubit.workOursList
-                                          .firstWhere(
-                                              (element) => element.day == 0)
-                                          .id!,
-                                    ),
-                                  );
-                                }else{
-                                  Fluttertoast.showToast(msg: LocaleKeys.no_time_to_delete.tr(),gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
-                                }
-                              },
-                              title: LocaleKeys.saturday.tr(),
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) =>
-                                      AddOrUpdateWorkingHoursDialog(
-                                    day: 0,
-                                    id: cubit.workOursList
-                                            .any((element) => element.day == 0)
-                                        ? cubit.workOursList
-                                            .firstWhere(
-                                                (element) => element.day == 0)
-                                            .id!
-                                        : null,
-                                  ),
-                                );
-                              },
-                              isThereWorkingTime: cubit.workOursList
-                                  .any((element) => element.day == 0),
-                              from: cubit.workOursList
-                                      .any((element) => element.day == 0)
-                                  ? cubit.workOursList
-                                      .firstWhere((element) => element.day == 0)
-                                      .from!
-                                  : null,
-                              to: cubit.workOursList
-                                      .any((element) => element.day == 0)
-                                  ? cubit.workOursList
-                                      .firstWhere((element) => element.day == 0)
-                                      .to!
-                                  : null,
-                            ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            TimeContainerWidget(
-                                onLongPress: () {
-                                  if(cubit.workOursList
-                                      .any((element) => element.day == 1)){
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => DeleteWorkTimeDialog(
-                                        id: cubit.workOursList
-                                            .firstWhere(
-                                                (element) => element.day == 1)
-                                            .id!,
-                                      ),
-                                    );
-                                  }else{
-                                    Fluttertoast.showToast(msg: LocaleKeys.no_time_to_delete.tr(),gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
-                                  }
-                                },
-                                title: LocaleKeys.sunday.tr(),
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        AddOrUpdateWorkingHoursDialog(
-                                      day: 1,
-                                      id: cubit.workOursList.any(
-                                              (element) => element.day == 1)
-                                          ? cubit.workOursList
-                                              .firstWhere(
-                                                  (element) => element.day == 1)
-                                              .id!
-                                          : null,
-                                    ),
-                                  );
-                                },
-                                isThereWorkingTime: cubit.workOursList
-                                    .any((element) => element.day == 1),
-                                from: cubit.workOursList
-                                        .any((element) => element.day == 1)
-                                    ? cubit.workOursList
-                                        .firstWhere(
-                                            (element) => element.day == 1)
-                                        .from!
-                                    : null,
-                                to: cubit.workOursList
-                                        .any((element) => element.day == 1)
-                                    ? cubit.workOursList
-                                        .firstWhere(
-                                            (element) => element.day == 1)
-                                        .to!
-                                    : null),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            TimeContainerWidget(
-                                onLongPress: () {
-                                  if(cubit.workOursList
-                                      .any((element) => element.day == 2)){
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => DeleteWorkTimeDialog(
-                                        id: cubit.workOursList
-                                            .firstWhere(
-                                                (element) => element.day == 2)
-                                            .id!,
-                                      ),
-                                    );
-                                  }else{
-                                    Fluttertoast.showToast(msg: LocaleKeys.no_time_to_delete.tr(),gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
-                                  }
-                                },
-                                title: LocaleKeys.monday.tr(),
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        AddOrUpdateWorkingHoursDialog(
-                                      day: 2,
-                                      id: cubit.workOursList.any(
-                                              (element) => element.day == 2)
-                                          ? cubit.workOursList
-                                              .firstWhere(
-                                                  (element) => element.day == 2)
-                                              .id!
-                                          : null,
-                                    ),
-                                  );
-                                },
-                                isThereWorkingTime: cubit.workOursList
-                                    .any((element) => element.day == 2),
-                                from: cubit.workOursList
-                                        .any((element) => element.day == 2)
-                                    ? cubit.workOursList
-                                        .firstWhere(
-                                            (element) => element.day == 2)
-                                        .from!
-                                    : null,
-                                to: cubit.workOursList
-                                        .any((element) => element.day == 2)
-                                    ? cubit.workOursList
-                                        .firstWhere(
-                                            (element) => element.day == 2)
-                                        .to!
-                                    : null),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            TimeContainerWidget(
-                                onLongPress: () {
-                                  if(cubit.workOursList
-                                      .any((element) => element.day == 3)){
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => DeleteWorkTimeDialog(
-                                        id: cubit.workOursList
-                                            .firstWhere(
-                                                (element) => element.day == 3)
-                                            .id!,
-                                      ),
-                                    );
-                                  }else{
-                                    Fluttertoast.showToast(msg: LocaleKeys.no_time_to_delete.tr(),gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
-                                  }
-                                },
-                                title:LocaleKeys.tuesday.tr(),
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        AddOrUpdateWorkingHoursDialog(
-                                      day: 3,
-                                      id: cubit.workOursList.any(
-                                              (element) => element.day == 3)
-                                          ? cubit.workOursList
-                                              .firstWhere(
-                                                  (element) => element.day == 3)
-                                              .id!
-                                          : null,
-                                    ),
-                                  );
-                                },
-                                isThereWorkingTime: cubit.workOursList
-                                    .any((element) => element.day == 3),
-                                from: cubit.workOursList
-                                        .any((element) => element.day == 3)
-                                    ? cubit.workOursList
-                                        .firstWhere(
-                                            (element) => element.day == 3)
-                                        .from!
-                                    : null,
-                                to: cubit.workOursList
-                                        .any((element) => element.day == 3)
-                                    ? cubit.workOursList
-                                        .firstWhere(
-                                            (element) => element.day == 3)
-                                        .to!
-                                    : null),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            TimeContainerWidget(
-                                onLongPress: () {
-                                  if(cubit.workOursList
-                                      .any((element) => element.day == 4)){
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => DeleteWorkTimeDialog(
-                                        id: cubit.workOursList
-                                            .firstWhere(
-                                                (element) => element.day == 4)
-                                            .id!,
-                                      ),
-                                    );
-                                  }else{
-                                    Fluttertoast.showToast(msg: LocaleKeys.no_time_to_delete.tr(),gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
-                                  }
-                                },
-                                title: LocaleKeys.wednesday.tr(),
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        AddOrUpdateWorkingHoursDialog(
-                                      day: 4,
-                                      id: cubit.workOursList.any(
-                                              (element) => element.day == 4)
-                                          ? cubit.workOursList
-                                              .firstWhere(
-                                                  (element) => element.day == 4)
-                                              .id!
-                                          : null,
-                                    ),
-                                  );
-                                },
-                                isThereWorkingTime: cubit.workOursList
-                                    .any((element) => element.day == 4),
-                                from: cubit.workOursList
-                                        .any((element) => element.day == 4)
-                                    ? cubit.workOursList
-                                        .firstWhere(
-                                            (element) => element.day == 4)
-                                        .from!
-                                    : null,
-                                to: cubit.workOursList
-                                        .any((element) => element.day == 4)
-                                    ? cubit.workOursList
-                                        .firstWhere(
-                                            (element) => element.day == 4)
-                                        .to!
-                                    : null),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            TimeContainerWidget(
-                                onLongPress: () {
-                                  if(cubit.workOursList
-                                      .any((element) => element.day == 5)){
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => DeleteWorkTimeDialog(
-                                        id: cubit.workOursList
-                                            .firstWhere(
-                                                (element) => element.day == 5)
-                                            .id!,
-                                      ),
-                                    );
-                                  }else{
-                                    Fluttertoast.showToast(msg: LocaleKeys.no_time_to_delete.tr(),gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
-                                  }
-                                },
-                                title: LocaleKeys.thuresday.tr(),
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        AddOrUpdateWorkingHoursDialog(
-                                      day: 5,
-                                      id: cubit.workOursList.any(
-                                              (element) => element.day == 5)
-                                          ? cubit.workOursList
-                                              .firstWhere(
-                                                  (element) => element.day == 5)
-                                              .id!
-                                          : null,
-                                    ),
-                                  );
-                                },
-                                isThereWorkingTime: cubit.workOursList
-                                    .any((element) => element.day == 5),
-                                from: cubit.workOursList
-                                        .any((element) => element.day == 5)
-                                    ? cubit.workOursList
-                                        .firstWhere(
-                                            (element) => element.day == 5)
-                                        .from!
-                                    : null,
-                                to: cubit.workOursList
-                                        .any((element) => element.day == 5)
-                                    ? cubit.workOursList
-                                        .firstWhere(
-                                            (element) => element.day == 5)
-                                        .to!
-                                    : null),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            TimeContainerWidget(
-                                onLongPress: () {
-                                  if(cubit.workOursList
-                                      .any((element) => element.day == 6)){
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => DeleteWorkTimeDialog(
-                                        id: cubit.workOursList
-                                            .firstWhere(
-                                                (element) => element.day == 6)
-                                            .id!,
-                                      ),
-                                    );
-                                  }else{
-                                    Fluttertoast.showToast(msg: LocaleKeys.no_time_to_delete.tr(),gravity: ToastGravity.CENTER,backgroundColor: Colors.red,);
-                                  }
-                                },
-                                title: LocaleKeys.friday.tr(),
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        AddOrUpdateWorkingHoursDialog(
-                                      day: 6,
-                                      id: cubit.workOursList.any(
-                                              (element) => element.day == 6)
-                                          ? cubit.workOursList
-                                              .firstWhere(
-                                                  (element) => element.day == 6)
-                                              .id!
-                                          : null,
-                                    ),
-                                  );
-                                },
-                                isThereWorkingTime: cubit.workOursList
-                                    .any((element) => element.day == 6),
-                                from: cubit.workOursList
-                                        .any((element) => element.day == 6)
-                                    ? cubit.workOursList
-                                        .firstWhere(
-                                            (element) => element.day == 6)
-                                        .from!
-                                    : null,
-                                to: cubit.workOursList
-                                        .any((element) => element.day == 6)
-                                    ? cubit.workOursList
-                                        .firstWhere(
-                                            (element) => element.day == 6)
-                                        .to!
-                                    : null),
-                            SizedBox(
-                              height: 30.h,
-                            ),
-
-                          ]
-                        )
-                      : const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                );
+                      )
+                    : Center(
+                        child: TimeContainerWidget(
+                            workHoursModel: null,
+                            isThereWorkingTime: false,
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    const AddOrUpdateWorkingHoursDialog(
+                                  workHoursModel: null,
+                                ),
+                              );
+                            }),
+                      );
               },
             )
           ],
