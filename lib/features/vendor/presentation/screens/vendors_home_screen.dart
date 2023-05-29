@@ -12,11 +12,8 @@ import '../../../../core/constants/constants.dart';
 import '../../../../translations/locale_keys.g.dart';
 import '../../buisness_logic/v_reservations_cubit/v_reservation_cubit.dart';
 import '../../buisness_logic/v_reservations_cubit/v_reservation_state.dart';
-import '../../buisness_logic/work_hours_cubit/work_hours_cubit.dart';
-import '../../buisness_logic/work_hours_cubit/work_hours_state.dart';
 import '../widgets/order_item_builder.dart';
 import '../widgets/screen_layout_widget.dart';
-import '../widgets/should_add_work_hours.dart';
 
 class VendorHomeScreen extends StatefulWidget {
   const VendorHomeScreen({Key? key}) : super(key: key);
@@ -36,18 +33,6 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
     super.initState();
   }
 
-  Widget checkWorkTimeList() {
-    print('ll');
-    return BlocConsumer<WorkHoursCubit, WorkHoursState>(
-      listener: (context, state) {
-        var cubit = WorkHoursCubit.get(context);
-        if(cubit.workOursList.isEmpty){
-          showDialog(context: context, builder: (context)=>const ShouldAddWorkHoursDialog(isCenterOrFreelancer: 1,));
-        }
-      },
-      builder: (context, state)=>const SizedBox.shrink(),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -245,7 +230,6 @@ class _VendorHomeScreenState extends State<VendorHomeScreen> {
                                     fontSize: 17.sp),
                               ),
                   ),
-                  checkWorkTimeList()
                 ],
               );
             },
