@@ -252,5 +252,8 @@ abstract class  LocaleKeys {
   static const chooseServicesType = 'chooseServicesType';
   static const chooseDayType = 'chooseDayType';
   static const changeTime = 'changeTime';
+  static const shouldUpdateWorkHours = 'shouldUpdateWorkHours';
+  static const youShouldAddWorkHours = 'youShouldAddWorkHours';
+  static const goToAdd = 'goToAdd';
 
 }

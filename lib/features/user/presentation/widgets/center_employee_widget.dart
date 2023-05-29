@@ -80,8 +80,8 @@ class EmployeesComponentBuilderForUser extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                fontSize: 16.sp,
-                                fontFamily: FontPath.almaraiBold,
+                                fontSize: 14.sp,
+                                fontFamily: FontPath.almaraiRegular,
                                 color: const Color(0xff1E2432),
                               ),
                             ),

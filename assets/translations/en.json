@@ -247,6 +247,12 @@
   "yesterday": "yesterday",
   "chooseServicesType": "choose service type",
   "chooseDayType": "choose time",
-  "changeTime": "click to choose time"
+  "changeTime": "click to choose time",
+  "shouldUpdateWorkHours": "Work hours must be constantly updated",
+  "youShouldAddWorkHours": "There are no timings for your services, please add",
+  "goToAdd": "Go to add"
+
+
+
 
 }

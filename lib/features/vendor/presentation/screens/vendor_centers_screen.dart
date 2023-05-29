@@ -182,6 +182,10 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                                         LocaleKeys.in_center.tr(),
                                         LocaleKeys.in_home.tr(),
                                       ];
+                                      todayTo = [
+                                        LocaleKeys.today.tr(),
+                                        LocaleKeys.yesterday.tr(),
+                                      ];
                                       initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale);
                                       Navigator.pushNamedAndRemoveUntil(context, ScreenName.splashscreen, (route) => false);
                                     });
@@ -201,6 +205,10 @@ class _VendorCentersScreenState extends State<VendorCentersScreen> {
                                       vendorItemsList = [
                                         LocaleKeys.in_center.tr(),
                                         LocaleKeys.in_home.tr(),
+                                      ];
+                                      todayTo = [
+                                        LocaleKeys.today.tr(),
+                                        LocaleKeys.yesterday.tr(),
                                       ];
                                       initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale);
                                       Navigator.pushNamedAndRemoveUntil(context, ScreenName.splashscreen, (route) => false);

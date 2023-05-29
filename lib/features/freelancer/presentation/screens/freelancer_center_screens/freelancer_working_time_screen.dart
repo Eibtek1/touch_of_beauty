@@ -27,7 +27,7 @@ class FreelancerWorkingTimeScreen extends StatelessWidget {
         toolbarHeight: 60.h,
         centerTitle: true,
         title: Text(
-          'تعديل بيانات المركز',
+          LocaleKeys.edit_center_details.tr(),
           style: TextStyle(
             fontSize: 17.sp,
             fontFamily: FontPath.almaraiBold,
@@ -52,7 +52,19 @@ class FreelancerWorkingTimeScreen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 20.h,
+              height: 10.h,
+            ),
+            Center(
+              child: Text(
+                LocaleKeys.shouldUpdateWorkHours.tr(),
+                style: TextStyle(
+                    color: const Color(0xff3C475C),
+                    fontSize: 14.sp,
+                    fontFamily: FontPath.almaraiRegular),
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
             ),
             BlocConsumer<WorkHoursCubit, WorkHoursState>(
               listener: (context, state) {},
@@ -60,94 +72,94 @@ class FreelancerWorkingTimeScreen extends StatelessWidget {
                 var cubit = WorkHoursCubit.get(context);
                 return cubit.workOursList.isNotEmpty
                     ? Expanded(
-                  child: state is! WorkHoursLoading
-                      ? ListView.builder(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 24.w, vertical: 16.w),
-                    itemBuilder: (BuildContext context, int index) {
-                      print(cubit.workOursList[index].moreData);
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 10.h),
-                            child: TimeContainerWidget(
-                              workHoursModel:
-                              cubit.workOursList[index],
-                              isThereWorkingTime: true,
-                              onLongPress: () {
-                                if (cubit.workOursList.any(
-                                        (element) =>
-                                    element.day == 0)) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        DeleteWorkTimeDialog(
-                                          id: cubit.workOursList
-                                              .firstWhere((element) =>
-                                          element.day == 0)
-                                              .id!,
+                        child: state is! WorkHoursLoading
+                            ? ListView.builder(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 24.w, vertical: 16.w),
+                                itemBuilder: (BuildContext context, int index) {
+                                  print(cubit.workOursList[index].moreData);
+                                  return Column(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 10.h),
+                                        child: TimeContainerWidget(
+                                          workHoursModel:
+                                              cubit.workOursList[index],
+                                          isThereWorkingTime: true,
+                                          onLongPress: () {
+                                            if (cubit.workOursList.any(
+                                                (element) =>
+                                                    element.day == 0)) {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    DeleteWorkTimeDialog(
+                                                  id: cubit.workOursList
+                                                      .firstWhere((element) =>
+                                                          element.day == 0)
+                                                      .id!,
+                                                ),
+                                              );
+                                            } else {
+                                              Fluttertoast.showToast(
+                                                msg: LocaleKeys
+                                                    .no_time_to_delete
+                                                    .tr(),
+                                                gravity: ToastGravity.CENTER,
+                                                backgroundColor: Colors.red,
+                                              );
+                                            }
+                                          },
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  AddOrUpdateWorkingHoursDialog(
+                                                workHoursModel:
+                                                    cubit.workOursList[index],
+                                              ),
+                                            );
+                                          },
                                         ),
-                                  );
-                                } else {
-                                  Fluttertoast.showToast(
-                                    msg: LocaleKeys
-                                        .no_time_to_delete
-                                        .tr(),
-                                    gravity: ToastGravity.CENTER,
-                                    backgroundColor: Colors.red,
-                                  );
-                                }
-                              },
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) =>
-                                      AddOrUpdateWorkingHoursDialog(
-                                        workHoursModel:
-                                        cubit.workOursList[index],
                                       ),
-                                );
-                              },
-                            ),
-                          ),
-                          if (index ==
-                              cubit.workOursList.length - 1)
-                            TimeContainerWidget(
-                                workHoursModel: null,
-                                isThereWorkingTime: false,
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                    const AddOrUpdateWorkingHoursDialog(
-                                      workHoursModel: null,
-                                    ),
+                                      if (index ==
+                                          cubit.workOursList.length - 1)
+                                        TimeContainerWidget(
+                                            workHoursModel: null,
+                                            isThereWorkingTime: false,
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    const AddOrUpdateWorkingHoursDialog(
+                                                  workHoursModel: null,
+                                                ),
+                                              );
+                                            }),
+                                    ],
                                   );
-                                }),
-                        ],
-                      );
-                    },
-                    itemCount: cubit.workOursList.length,
-                  )
-                      : const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
+                                },
+                                itemCount: cubit.workOursList.length,
+                              )
+                            : const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                      )
                     : Center(
-                  child: TimeContainerWidget(
-                      workHoursModel: null,
-                      isThereWorkingTime: false,
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) =>
-                          const AddOrUpdateWorkingHoursDialog(
+                        child: TimeContainerWidget(
                             workHoursModel: null,
-                          ),
-                        );
-                      }),
-                );
+                            isThereWorkingTime: false,
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    const AddOrUpdateWorkingHoursDialog(
+                                  workHoursModel: null,
+                                ),
+                              );
+                            }),
+                      );
               },
             )
           ],

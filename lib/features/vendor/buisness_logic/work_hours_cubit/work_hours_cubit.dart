@@ -25,8 +25,12 @@ class WorkHoursCubit extends Cubit<WorkHoursState> {
       if(mainResponse.errorCode == 0){
         workOursList = [];
         for(var element in mainResponse.data){
-          workOursList.add(WorkHoursModel.fromJson(element));
+          if(!DateTime.parse(element['moreData']).isBefore(DateTime.now().subtract(const Duration(days: 1)))){
+            workOursList.add(WorkHoursModel.fromJson(element));
+          }
         }
+        print(workOursList.length);
+        print(response);
         emit(WorkHoursSuccess());
       }else{
         workOursList = [];

@@ -265,7 +265,10 @@ class CodegenLoader extends AssetLoader{
   "yesterday": "الأمس",
   "chooseServicesType": "اختر نوع الخدمة",
   "chooseDayType": "اختر التوقيت",
-  "changeTime": "اضغط لاختيار التوقيت"
+  "changeTime": "اضغط لاختيار التوقيت",
+  "shouldUpdateWorkHours": "يجب تحديث المواعيد بأستمرار",
+  "youShouldAddWorkHours": "لا يوجد مواقيت لخدماتك من فضلك قم بالأضافة",
+  "goToAdd": "اذهب للأضافة"
 };
 static const Map<String,dynamic> en = {
   "dczdc": "xczzxc",
@@ -516,7 +519,10 @@ static const Map<String,dynamic> en = {
   "yesterday": "yesterday",
   "chooseServicesType": "choose service type",
   "chooseDayType": "choose time",
-  "changeTime": "click to choose time"
+  "changeTime": "click to choose time",
+  "shouldUpdateWorkHours": "Work hours must be constantly updated",
+  "youShouldAddWorkHours": "There are no timings for your services, please add",
+  "goToAdd": "Go to add"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

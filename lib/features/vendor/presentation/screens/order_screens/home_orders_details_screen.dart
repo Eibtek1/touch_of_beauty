@@ -91,7 +91,7 @@ class HomeOrderDetailsScreen extends StatelessWidget {
                                     Text(
                                       Jiffy(cubit.reserveModel!.createdOn!
                                               .toString())
-                                          .yMMMd,
+                                          .yMMMdjm,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           color: Colors.white,

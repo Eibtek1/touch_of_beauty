@@ -249,5 +249,8 @@
   "yesterday": "الأمس",
   "chooseServicesType": "اختر نوع الخدمة",
   "chooseDayType": "اختر التوقيت",
-  "changeTime": "اضغط لاختيار التوقيت"
+  "changeTime": "اضغط لاختيار التوقيت",
+  "shouldUpdateWorkHours": "يجب تحديث المواعيد بأستمرار",
+  "youShouldAddWorkHours": "لا يوجد مواقيت لخدماتك من فضلك قم بالأضافة",
+  "goToAdd": "اذهب للأضافة"
 }

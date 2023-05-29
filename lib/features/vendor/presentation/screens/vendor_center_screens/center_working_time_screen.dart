@@ -52,7 +52,19 @@ class CenterWorkingTimeScreen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 20.h,
+              height: 10.h,
+            ),
+            Center(
+              child: Text(
+                LocaleKeys.shouldUpdateWorkHours.tr(),
+                style: TextStyle(
+                    color: const Color(0xff3C475C),
+                    fontSize: 14.sp,
+                    fontFamily: FontPath.almaraiRegular),
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
             ),
             BlocConsumer<WorkHoursCubit, WorkHoursState>(
               listener: (context, state) {},
@@ -155,5 +167,4 @@ class CenterWorkingTimeScreen extends StatelessWidget {
       ),
     );
   }
-// TimeContainerWidget(title:'الاحد')
 }
