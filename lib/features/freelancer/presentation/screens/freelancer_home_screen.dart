@@ -12,10 +12,7 @@ import '../../../../core/constants/constants.dart';
 import '../../../../translations/locale_keys.g.dart';
 import '../../../vendor/buisness_logic/v_reservations_cubit/v_reservation_cubit.dart';
 import '../../../vendor/buisness_logic/v_reservations_cubit/v_reservation_state.dart';
-import '../../../vendor/buisness_logic/work_hours_cubit/work_hours_cubit.dart';
-import '../../../vendor/buisness_logic/work_hours_cubit/work_hours_state.dart';
 import '../../../vendor/presentation/widgets/order_item_builder.dart';
-import '../../../vendor/presentation/widgets/should_add_work_hours.dart';
 import '../widgets/screen_layout_widget.dart';
 
 class FreelancerHomeScreen extends StatefulWidget {
@@ -34,20 +31,9 @@ class _FreelancerHomeScreenState extends State<FreelancerHomeScreen> {
 
   @override
   void initState() {
-    checkWorkTimeList();
     super.initState();
   }
 
-  void checkWorkTimeList() {
-    BlocListener<WorkHoursCubit, WorkHoursState>(
-      listener: (context, state) {
-        var cubit = WorkHoursCubit.get(context);
-        if(cubit.workOursList.isEmpty){
-          showDialog(context: context, builder: (context)=>const ShouldAddWorkHoursDialog(isCenterOrFreelancer: 1,));
-        }
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
