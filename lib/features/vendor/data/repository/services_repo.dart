@@ -194,14 +194,16 @@ class VendorServicesRepository {
     return response;
   }
 
-  static Future<Response> getTodayOrders({required bool inHome}) async {
+  static Future<Response> getTodayOrders({required bool inHome, required String startDate, required String endDate}) async {
     final response = await DioHelper.getData(
         url: EndPoints.getTodayOrders,
         bearerToken: token,
         query: {
           'InHome': inHome,
-          'Start': DateTime.now().subtract(const Duration(days: 1)).toString(),
-          'End': DateTime.now().add(const Duration(days: 1)).toString(),
+          'Start': startDate,
+          // 'Start': DateTime.now().subtract(const Duration(days: 1)).toString(),
+          'End': endDate,
+          // 'End': DateTime.now().add(const Duration(days: 1)).toString(),
         });
     return response;
   }

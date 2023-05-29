@@ -248,7 +248,7 @@ class AddOrUpdateWorkingHoursDialog extends StatelessWidget {
                         )
                       : const Center(
                           child: CircularProgressIndicator.adaptive(),
-                        ):SizedBox.shrink(),
+                        ):const SizedBox.shrink(),
                 ],
               ),
             ),

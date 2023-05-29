@@ -176,6 +176,10 @@ class FreelancerCentersScreen extends StatelessWidget {
                                       freelancerItemsList = [
                                         LocaleKeys.in_home.tr(),
                                       ];
+                                      todayTo = [
+                                        LocaleKeys.today.tr(),
+                                        LocaleKeys.yesterday.tr(),
+                                      ];
                                       initialLocale = CacheHelper.getData(
                                           key: CacheKeys.initialLocale);
                                       Navigator.pushNamedAndRemoveUntil(
@@ -204,6 +208,10 @@ class FreelancerCentersScreen extends StatelessWidget {
                                         .whenComplete(() {
                                       freelancerItemsList = [
                                         LocaleKeys.in_home.tr(),
+                                      ];
+                                      todayTo = [
+                                        LocaleKeys.today.tr(),
+                                        LocaleKeys.yesterday.tr(),
                                       ];
                                       initialLocale = CacheHelper.getData(
                                           key: CacheKeys.initialLocale);

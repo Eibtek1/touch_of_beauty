@@ -66,10 +66,13 @@ class VReservationCubit extends Cubit<VReservationState> {
       emit(GetConfirmedOrdersError(error: error.toString()));
     }
   }
-  void getTodayOrders({required bool inHome})async{
+
+  String startDate = DateTime.now().subtract(const Duration(days: 1)).toString();
+  String endDate = DateTime.now().add(const Duration(days: 1)).toString();
+  void getTodayOrders({required bool inHome,})async{
     try{
       emit(GetTodayOrdersLoading());
-      final response = await VendorServicesRepository.getTodayOrders(inHome: inHome);
+      final response = await VendorServicesRepository.getTodayOrders(inHome: inHome, startDate: startDate, endDate: endDate);
       mainResponse = MainResponse.fromJson(response.data);
       getTodayOrdersList.clear();
       if(mainResponse.errorCode == 0){

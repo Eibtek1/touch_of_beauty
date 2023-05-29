@@ -159,8 +159,10 @@ class AuthCubit extends Cubit<AuthState> {
         message = mainResponse.errorMessage.toString();
         emit(RegisterErrorInData(message!));
       }
+      print(response);
 
     } catch (error) {
+      print(error.toString());
       emit(RegisterError(error.toString()));
     }
   }
