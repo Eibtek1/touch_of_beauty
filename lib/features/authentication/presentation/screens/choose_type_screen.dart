@@ -37,7 +37,9 @@ class ChooseTypeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 25.h,),
+            SizedBox(
+              height: 25.h,
+            ),
             Text(
               LocaleKeys.register_as.tr(),
               style: TextStyle(
@@ -45,15 +47,19 @@ class ChooseTypeScreen extends StatelessWidget {
                   fontFamily: FontPath.almaraiBold,
                   fontSize: 18.sp),
             ),
-            SizedBox(height: 12.h,),
+            SizedBox(
+              height: 12.h,
+            ),
             Text(
-    LocaleKeys.services_provider_or_user.tr(),
+              LocaleKeys.services_provider_or_user.tr(),
               style: TextStyle(
                   color: const Color(0xff696969),
                   fontFamily: FontPath.almaraiRegular,
                   fontSize: 14.sp),
             ),
-            SizedBox(height: 30.h,),
+            SizedBox(
+              height: 30.h,
+            ),
             StatefulBuilder(
               builder: (context, setState) {
                 return Row(
@@ -64,7 +70,7 @@ class ChooseTypeScreen extends StatelessWidget {
                       height: 44.h,
                       child: OutlinedButton(
                         onPressed: () {
-                          setState((){
+                          setState(() {
                             type = true;
                           });
                         },
@@ -76,20 +82,24 @@ class ChooseTypeScreen extends StatelessWidget {
                           ),
                           side: MaterialStateProperty.all(
                             BorderSide(
-                                color: type?AppColorsLightTheme.primaryColor:AppColorsLightTheme.smoothPageIndicatorGreyColor,
+                                color: type
+                                    ? AppColorsLightTheme.primaryColor
+                                    : AppColorsLightTheme
+                                        .smoothPageIndicatorGreyColor,
                                 width: 0.8.w),
                           ),
                         ),
                         child: Row(
                           children: [
-                            if(type)const Icon(
-                              Icons.check_circle,
-                              color: AppColorsLightTheme.primaryColor,
-                            ),
+                            if (type)
+                              const Icon(
+                                Icons.check_circle,
+                                color: AppColorsLightTheme.primaryColor,
+                              ),
                             Expanded(
                               child: Text(
                                 LocaleKeys.user.tr(),
-                                textAlign:TextAlign.center,
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: const Color(0xff666666),
                                     fontFamily: FontPath.almaraiBold,
@@ -105,7 +115,7 @@ class ChooseTypeScreen extends StatelessWidget {
                       height: 44.h,
                       child: OutlinedButton(
                         onPressed: () {
-                          setState((){
+                          setState(() {
                             type = false;
                           });
                         },
@@ -117,20 +127,24 @@ class ChooseTypeScreen extends StatelessWidget {
                           ),
                           side: MaterialStateProperty.all(
                             BorderSide(
-                                color: !type?AppColorsLightTheme.primaryColor:AppColorsLightTheme.smoothPageIndicatorGreyColor,
+                                color: !type
+                                    ? AppColorsLightTheme.primaryColor
+                                    : AppColorsLightTheme
+                                        .smoothPageIndicatorGreyColor,
                                 width: 0.8.w),
                           ),
                         ),
                         child: Row(
                           children: [
-                            if(!type)const Icon(
-                              Icons.check_circle,
-                              color: AppColorsLightTheme.primaryColor,
-                            ),
+                            if (!type)
+                              const Icon(
+                                Icons.check_circle,
+                                color: AppColorsLightTheme.primaryColor,
+                              ),
                             Expanded(
                               child: Text(
-                                LocaleKeys.services_provide.tr() ,
-                                textAlign:TextAlign.center,
+                                LocaleKeys.services_provide.tr(),
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: const Color(0xff666666),
                                     fontFamily: FontPath.almaraiBold,
@@ -145,12 +159,16 @@ class ChooseTypeScreen extends StatelessWidget {
                 );
               },
             ),
-            SizedBox(height: 30.h,),
+            SizedBox(
+              height: 30.h,
+            ),
             AuthButton(
               buttonTitle: LocaleKeys.continue_text.tr(),
               isTapped: () {
-                if(type)Navigator.pushNamed(context, ScreenName.userRegister);
-                if(!type)Navigator.pushNamed(context, ScreenName.vendorRegister);
+                if (type) Navigator.pushNamed(context, ScreenName.userRegister);
+                if (!type) {
+                  Navigator.pushNamed(context, ScreenName.vendorRegister);
+                }
               },
               width: double.infinity,
             ),

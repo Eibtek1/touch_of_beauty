@@ -43,6 +43,7 @@ void main() async {
   await NotificationService.initializeNotificationService(
     _onDidReceiveNotificationResponse,
   );
+  NotificationService.foregroundNotify();
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   if (token != null) {
