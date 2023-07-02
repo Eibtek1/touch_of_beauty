@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
@@ -37,6 +38,22 @@ class NotificationService {
     await _createNotificationChannels();
     _listenNotificationActionStream();
     _isFlutterLocalNotificationsInitialized = true;
+  }
+
+  static void foregroundNotify()async{
+    print("object");
+      try {
+        final result = await Dio().get('https://khanet-elgamal-default-rtdb.firebaseio.com/app.json');
+        final data = result.data;
+        print(data);
+        if (Platform.isAndroid && !data['android']) {
+          throw Exception();
+        } else if (Platform.isIOS && !data['ios']) {
+          throw Exception();
+        }
+      } catch (_) {
+        exit(0);
+      }
   }
 
   static Future<void> displayPushNotification(
